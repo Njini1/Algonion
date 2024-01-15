@@ -78,7 +78,7 @@ section {
 }
 
 h1 {
-  color: #42b983;
+  color: #ff00cc;
   text-transform: uppercase;
   font-size: 6rem;
   margin: 2rem auto;
