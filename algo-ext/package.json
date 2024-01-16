@@ -21,6 +21,8 @@
     "fmt": "prettier --write '**/*.{vue,js,json,css,scss,md}'"
   },
   "dependencies": {
+    "axios": "^1.6.5",
+    "jquery": "^3.7.1",
     "vue": "^3.2.37"
   },
   "devDependencies": {
