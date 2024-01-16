@@ -27,6 +27,13 @@ export default defineManifest({
       matches: ['http://*/*', 'https://*/*'],
       js: ['src/contentScript/index.js'],
     },
+    {
+      matches: [
+        "https://school.programmers.co.kr/learn/courses/30/lessons/*"
+      ],
+      js: ['src/contentScript/programmers/getPageInfo.js'],
+      run_at: "document_idle"
+    },
   ],
   side_panel: {
     default_path: 'sidepanel.html',
