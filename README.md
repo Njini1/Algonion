@@ -5,6 +5,7 @@ E1I5
 FE : 김예지, 전소현, 정원종
 BE : 김수환, 신유진, 엄예진
 
+
 # Git convention
 ## 1. Commit Convention
 ### **Commit 메시지 구조**
