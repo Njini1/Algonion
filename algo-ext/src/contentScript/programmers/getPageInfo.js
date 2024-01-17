@@ -1,3 +1,5 @@
+import { default as axios } from "axios";
+const api = import.meta.env.VITE_BACKEND;
 console.log("[E1I5] 프로그래머스 문제 페이지 입니다");
 const btnSubmit = document.querySelector('#submit-code');
 const modal = document.querySelector('.modal');
@@ -24,7 +26,10 @@ const parseData = () => {
 const modalMutationObserver = new MutationObserver(mutations => {
     if (!mutations.length) return;
     const data = parseData();
-    console.log(data);
+    axios.post(`${api}/programmers/programmers`, data).then(res => {
+        console.log("[ALGO] 업로드 성공");
+    });
+
     modalMutationObserver.disconnect();
 });
 
