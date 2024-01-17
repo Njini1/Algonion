@@ -1,44 +1,38 @@
 import {findUsername, findResultUsername, parsingResultTableList, parsingCorrectResultTableList} from "./baekjoon/baekjoon.js";
-// import {convertImageTagAbsoluteURL} from "./baekjoon/util.js";
+import {isNull, isEmpty, unescapeHtml, convertImageTagAbsoluteURL} from "./baekjoon/util.js";
+// import {findSubmission} from "./baekjoon/submission.js"
 
 const url = window.location.href;
+// console.log(url)
 
 // BaekJoon
 const baekjoonUrl = url.startsWith("https://www.acmicpc.net/")? url:null;
 if (baekjoonUrl) {
+    // console.log(baekjoonUrl)
     const username = findUsername();
     const resultUsername = findResultUsername(baekjoonUrl);
+    // console.log("username:", username);
+    // console.log("resultUsername:", resultUsername)
     
     if (username === resultUsername) {
-        const resultTable = parsingResultTableList();
+        const resultTable = parsingResultTableList(document);
         const correctResultTable = parsingCorrectResultTableList(resultTable)
         const correctLastestResult = correctResultTable? correctResultTable[0]:null
         
-        console.log("username:", username);
-        console.log("resultUsername:", resultUsername)
-        console.log("resultTable:", resultTable)
-        console.log("correctResultTable:", correctResultTable)
-        console.log("correctLastestResult:", correctLastestResult)
+        // console.log("resultTable:", resultTable)
+        // console.log("correctResultTable:", correctResultTable)
+        // console.log("correctLastestResult:", correctLastestResult)
+        
+        const problemId = correctLastestResult? correctLastestResult.problemId:null
+        const submissionId = correctLastestResult? correctLastestResult.submissionId:null
+        console.log("problemId:", problemId)
+        console.log("submissionId:", submissionId)
         console.log("--------------------------")  
         // 아래는 확인 중인 코드입니다.
-        
-        // async function fetchSubmitCodeById(submissionId) {
-        //     return fetch(`https://www.acmicpc.net/source/download/${submissionId}`, { method: 'GET' })
-        //       .then((res) => {
-        //         res.text()
-        //         console.log(res)
-        //     })
-        //   }
 
-        // async function getSubmitCodeById(submissionId) {
-        // let code = await getSubmitCodeFromStats(submissionId);
-        // if (isNull(code)) {
-        //     code = await fetchSubmitCodeById(submissionId);
-        //     updateSubmitCodeFromStats({ submissionId, code }); // not await
-        // }
-        // return code;
-        // }
+        // const submission = submissionId? await findSubmission(submissionId):null
+        // let submission = findSubmission(submissionId)
 
-        // fetchSubmitCodeById(correctLastestResult.submissionId)
+        // console.log("submission:", submission)
     }
 }

@@ -29,49 +29,25 @@ export default defineManifest({
       ],
       js: [
         "src/contentScript/index.js",
-        "src/contentScript/baekjoon/util.js",
         "src/contentScript/baekjoon/baekjoon.js",
+        "src/contentScript/baekjoon/submission.js",
+        "src/contentScript/baekjoon/storage.js",
+        "src/contentScript/baekjoon/util.js",
       ],
-      "run_at": "document_idle"
+      run_at: "document_idle"
     },
   ],
   side_panel: {
     default_path: 'sidepanel.html',
   },
-  // web_accessible_resources: [
-  //   {
-  //     resources: ['img/logo-16.png', 'img/logo-34.png', 'img/logo-48.png', 'img/logo-128.png'],
-  //     matches: [],
-  //   },
-  // ],
-  // permissions: ['sidePanel', 'storage'],
+  web_accessible_resources: [
+    {
+      resources: ['img/logo-16.png', 'img/logo-34.png', 'img/logo-48.png', 'img/logo-128.png'],
+      matches: [],
+    },
+  ],
+  permissions: ['sidePanel', 'storage'],
   // chrome_url_overrides: {
   //   newtab: 'newtab.html',
   // },
-  permissions: [
-    "unlimitedStorage",
-    "storage",
-    // "declarativeNetRequest",
-    // "declarativeNetRequestWithHostAccess"
-  ],
-  host_permissions: [
-    "https://www.acmicpc.net/",
-    // "https://school.programmers.co.kr/",
-    // "https://github.com/",
-    // "https://swexpertacademy.com/",
-    "https://solved.ac/api/v3/*"
-  ],
-  web_accessible_resources: [
-    {
-      matches: [
-        "<all_urls>"
-      ],
-      resources: [
-        // "library/jquery-3.3.1.min.js",
-        // "library/semantic.min.js",
-        "src/popup/index.js",
-        "src/popup/popup.vue",
-      ]
-    }
-  ],
 })

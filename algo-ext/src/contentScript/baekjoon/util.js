@@ -1,3 +1,11 @@
+export function isNull(value) {
+  return value === null || value === undefined;
+}
+
+export function isEmpty(value) {
+  return isNull(value) || (value.hasOwnProperty('length') && value.length === 0);
+}
+
 // 문제 제출 페이지의 테이블 헤더를 분류하는 함수
 export function convertResultTableHeader(header) {
     switch (header) {
@@ -78,11 +86,11 @@ String.prototype.unescapeHtml = function () {
 };
 
 // 이미지에 상대 경로가 있을 수 있으므로 이미지 경로를 절대 경로로 전환하는 함수
-// export function convertImageTagAbsoluteURL() {
-//     if(document !== null) return;
-//     // img tag replace Relative URL to Absolute URL.
-//     Array.from(document.getElementsByTagName('img'), (x) => {
-//       x.setAttribute('src', x.currentSrc);
-//       return x;
-//     });
-//   }
+export async function convertImageTagAbsoluteURL() {
+    if(document !== null) return;
+    // img tag replace Relative URL to Absolute URL.
+    Array.from(document.getElementsByTagName('img'), (x) => {
+      x.setAttribute('src', x.currentSrc);
+      return x;
+    });
+  }

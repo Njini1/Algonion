@@ -1,14 +1,13 @@
-import { extractRuntimeProps } from "vue/compiler-sfc";
-import {convertResultTableHeader, convertResultTableList, unescapeHtml} from "./util.js";
+import {convertResultTableHeader, convertResultTableList, unescapeHtml, isNull, isEmpty} from "./util.js";
 
 // 로그인된 유저의 이름을 가져오는 함수
 export function findUsername() {
     const el = document.querySelector('a.username');
-    if (el === null) return null;
+    if (isNull(el)) return null;
 
     const username = el?.innerText?.trim();
-    if (username) return username;
-    else return null;
+    if (isEmpty(username)) return null;
+    return username;
   }
 
 // 문제 제출 페이지에서의 유저의 이름을 가져오는 함수
@@ -19,8 +18,8 @@ export function findResultUsername(baekjoonUrl) {
 }
 
 // 문제 제출 페이지에서 테이블을 가져오는 함수
-export function parsingResultTableList() {
-    const table = document.getElementById('status-table');
+export function parsingResultTableList(doc) {
+    const table = doc.getElementById('status-table');
     if (table === null || table === undefined || table.length === 0) return [];
     
     const headers = Array.from(table.rows[0].cells, (x) => convertResultTableHeader(x.innerText.trim()));
@@ -41,9 +40,10 @@ export function parsingResultTableList() {
     return list;
 }
 
+// 문제 제출 페이지에서 맞은 제출 테이블을 가져오는 함수
 export function parsingCorrectResultTableList(table) {
     // console.log(table);
-    if (table === null) return null;
+    if (isNull(table)) return null;
     
     const list = [];
     // console.log(list);
