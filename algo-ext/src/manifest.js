@@ -29,6 +29,16 @@ export default defineManifest({
     },
     {
       matches: [
+        "https://www.acmicpc.net/*"
+      ],
+      js: [
+        "src/contentScript/index.js",
+        "src/contentScript/boj/submission.js",
+      ],
+      run_at: "document_idle"
+    },
+    {
+      matches: [
         "https://school.programmers.co.kr/learn/courses/30/lessons/*"
       ],
       js: ['src/contentScript/programmers/getPageInfo.js'],
