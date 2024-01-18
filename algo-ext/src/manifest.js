@@ -22,6 +22,16 @@ export default defineManifest({
     service_worker: 'src/background/index.js',
     type: 'module',
   },
+
+  declarative_net_request: {
+    rule_resources: [
+      {
+        id: "ruleset",
+        enabled: true,
+        path: "rules.json"
+      }
+    ]
+  },
   content_scripts: [
     {
       matches: ['http://*/*', 'https://*/*'],
@@ -34,6 +44,13 @@ export default defineManifest({
       js: ['src/contentScript/programmers/getPageInfo.js'],
       run_at: "document_idle"
     },
+    {
+      matches: [
+        "https://www.acmicpc.net/*"
+      ],
+      js: ['src/contentScript/boj/getPageInfo.js'],
+      run_at: "document_idle"
+    },
   ],
   side_panel: {
     default_path: 'sidepanel.html',
@@ -44,7 +61,14 @@ export default defineManifest({
       matches: [],
     },
   ],
-  permissions: ['sidePanel', 'storage'],
+  permissions: ['sidePanel', 'storage', 'declarativeNetRequest', 'declarativeNetRequestWithHostAccess'],
+  host_permissions: [
+    'https://www.acmicpc.net/',
+    'https://school.programmers.co.kr/',
+    'https://github.com/',
+    'https://swexpertacademy.com/',
+    'https://solved.ac/api/v3/*'
+  ],
   // chrome_url_overrides: {
   //   newtab: 'newtab.html',
   // },
