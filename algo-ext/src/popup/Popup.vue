@@ -20,6 +20,16 @@ watch(count, (newCount) => {
 
   chrome.runtime.sendMessage({ type: 'COUNT', count: count.value })
 })
+
+document.addEventListener('DOMContentLoaded', function(){
+  var link = document.getElementById('getURL');
+
+  link.addEventListener('click', function(){
+    getTabUrl(function(url){
+      renderURL(url);
+    })
+  })
+})
 </script>
 
 <template>

@@ -44,13 +44,22 @@ export default defineManifest({
       js: ['src/contentScript/programmers/getPageInfo.js'],
       run_at: "document_idle"
     },
+    {
+      matches: [
+        "https://swexpertacademy.com/*"
+      ],
+      js: [
+        "src/contentScript/swea/SubmissionCode.js",
+      ],
+      run_at: "document_idle"
+    }
   ],
   side_panel: {
     default_path: 'sidepanel.html',
   },
   web_accessible_resources: [
     {
-      resources: ['img/logo-16.png', 'img/logo-34.png', 'img/logo-48.png', 'img/logo-128.png'],
+      resources: [],
       matches: [],
     },
   ],
