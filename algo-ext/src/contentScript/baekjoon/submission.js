@@ -1,5 +1,5 @@
 async function findSubmission(submissionId) {
-    const res = await fetch(`https://www.acmicpc.net/source/download/58426504`, { method: 'GET' });   
+    const res = await fetch(`https://www.acmicpc.net/source/download/66998181`, { method: 'GET' });   
     const data = await res.text();
     return data;
 }
