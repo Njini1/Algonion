@@ -31,15 +31,23 @@ public class ProblemController {
     @PostMapping("/programmers")
     public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
-        problemService.saveProblem(problem);
-
+        problemService.saveProblem(problem, "programmers");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/boj")
     public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
-//        problemService.saveProblem(problem);
+
+        problemService.saveProblem(problem, "boj");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/swea")
+    public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem) throws Exception {
+        log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
+
+        problemService.saveProblem(problem, "swea");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
