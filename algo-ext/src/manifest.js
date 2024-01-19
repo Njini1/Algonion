@@ -50,6 +50,12 @@ export default defineManifest({
       ],
       js: [
         "src/contentScript/swea/SubmissionCode.js",
+        "src/contentScript/swea/storage.js",
+        "src/contentScript/swea/parsing.js",
+        "src/contentScript/swea/swexpertacademy.js",
+        "src/contentScript/swea/uploadfunctions.js",
+        "src/contentScript/swea/util.js",       
+        "src/contentScript/swea/variables.js",       
       ],
       run_at: "document_idle"
     }

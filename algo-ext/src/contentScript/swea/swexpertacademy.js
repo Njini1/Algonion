@@ -28,7 +28,7 @@ function startLoader() {
     // 제출 후 채점하기 결과가 성공적으로 나왔다면 코드를 파싱하고,
     // 결과 페이지로 안내한다.
     else if (getSolvedResult().includes('pass입니다')) {
-      log('정답이 나왔습니다. 코드를 파싱합니다');
+      console.log('정답이 나왔습니다. 코드를 파싱합니다');
       stopLoader();
       try {
         const { contestProbId } = await parseCode();
@@ -39,7 +39,7 @@ function startLoader() {
           + `nickName=${getNickname()}&`
           + `extension=BaekjoonHub`);
       } catch (error) {
-        log(error);
+        console.log(error);
       }
     }
   }, 2000);
@@ -55,7 +55,7 @@ function stopLoader() {
 
 /* 파싱 직후 실행되는 함수 */
 async function beginUpload(bojData) {
-  log('bojData', bojData);
+  console.log('bojData', bojData);
   startUpload();
   if (isNotEmpty(bojData)) {
     const stats = await getStats();
@@ -70,7 +70,7 @@ async function beginUpload(bojData) {
     /* 현재 제출하려는 소스코드가 기존 업로드한 내용과 같다면 중지 */
     cachedSHA = await getStatsSHAfromPath(`${hook}/${bojData.directory}/${bojData.fileName}`)
     calcSHA = calculateBlobSHA(bojData.code)
-    log('cachedSHA', cachedSHA, 'calcSHA', calcSHA)
+    console.log('cachedSHA', cachedSHA, 'calcSHA', calcSHA)
     // if (cachedSHA == calcSHA) {
     //   markUploadedCSS(stats.branches, bojData.directory);
     //   console.log(`현재 제출번호를 업로드한 기록이 있습니다. problemIdID ${bojData.problemId}`);
@@ -81,11 +81,11 @@ async function beginUpload(bojData) {
   }
 }
 
-async function versionUpdate() {
-  log('start versionUpdate');
-  const stats = await updateLocalStorageStats();
-  // update version.
-  stats.version = getVersion();
-  await saveStats(stats);
-  log('stats updated.', stats);
-}
+// async function versionUpdate() {
+//   console.log('start versionUpdate');
+//   const stats = await updateLocalStorageStats();
+//   // update version.
+//   stats.version = getVersion();
+//   await saveStats(stats);
+//   console.log('stats updated.', stats);
+// }
