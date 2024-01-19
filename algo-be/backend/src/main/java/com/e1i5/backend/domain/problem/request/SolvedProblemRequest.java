@@ -25,7 +25,11 @@ public class SolvedProblemRequest {
     }
 
     @Builder
-    public SolvedProblemRequest(String problemNum, String level, String title, String selectedLanguage, String code) {
+    public SolvedProblemRequest(String problemNum,
+                                String level,
+                                String title,
+                                String selectedLanguage,
+                                String code) {
         this.problemNum = problemNum;
         this.level = level;
         this.title = title;

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class SolvedProblem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long problemIdx;
+    private long solvedProblemIdx;
 
     @Column
     private String siteName;
@@ -26,7 +26,7 @@ public class SolvedProblem {
 
 
     @Column
-    private String level;
+    private String level; //TODO problem으로 넘겨줘
     @Column
     private String title;
     @Column
@@ -45,8 +45,17 @@ public class SolvedProblem {
 //    private String failedTestCase;
 
     @Builder
-    public SolvedProblem(long problemIdx, String siteName, String problemNum, String level, String title, String selectedLanguage, String code, String memo, boolean isDelete) {
-        this.problemIdx = problemIdx;
+    public SolvedProblem(long solvedProblemIdx,
+                         String siteName,
+                         String problemNum,
+                         String level,
+                         String title,
+                         String selectedLanguage,
+                         String code,
+                         String memo,
+                         boolean isDelete)
+    {
+        this.solvedProblemIdx = solvedProblemIdx;
         this.siteName = siteName;
         this.problemNum = problemNum;
         this.level = level;

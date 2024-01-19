@@ -1,6 +1,7 @@
 package com.e1i5.backend.domain.problem.controller;
 
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
+import com.e1i5.backend.domain.problem.response.SolvedProblemResponse;
 import com.e1i5.backend.domain.problem.service.ProblemService;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -49,5 +52,13 @@ public class ProblemController {
 
         problemService.saveProblem(problem, "swea");
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    
+    //TODO 내가 푼 문제 전체 가져오기 할 예정
+    @PostMapping("/getsolved")
+    public ResponseEntity<List<SolvedProblemResponse>> getSolved(@RequestBody String userId) throws Exception {
+        problemService.getSolvedProblem(userId);
+        return null;
     }
 }
