@@ -49,13 +49,8 @@ export default defineManifest({
         "https://swexpertacademy.com/*"
       ],
       js: [
-        "src/contentScript/swea/SubmissionCode.js",
-        "src/contentScript/swea/storage.js",
-        "src/contentScript/swea/parsing.js",
-        "src/contentScript/swea/swexpertacademy.js",
-        "src/contentScript/swea/uploadfunctions.js",
-        "src/contentScript/swea/util.js",       
-        "src/contentScript/swea/variables.js",       
+        "src/contentScript/swea/answerSite.js",
+        "src/contentScript/swea/submissionSite.js",
       ],
       run_at: "document_idle"
     }
