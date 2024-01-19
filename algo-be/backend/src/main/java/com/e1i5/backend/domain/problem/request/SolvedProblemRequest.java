@@ -13,8 +13,15 @@ public class SolvedProblemRequest {
     private String selectedLanguage;
     private String code;
 
-    public SolvedProblem toEntity() {
-        return SolvedProblem.builder().problemNum(problemNum).level(level).title(title).selectedLanguage(selectedLanguage).code(code).build();
+    public SolvedProblem toEntity(String name) {
+        return SolvedProblem.builder()
+                .problemNum(problemNum)
+                .siteName(name)
+                .level(level)
+                .title(title)
+                .selectedLanguage(selectedLanguage)
+                .code(code)
+                .build();
     }
 
     @Builder

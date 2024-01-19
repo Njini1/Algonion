@@ -2,6 +2,7 @@ package com.e1i5.backend.domain.problem.controller;
 
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.service.ProblemService;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +22,17 @@ public class ProblemController {
     @Autowired
     ProblemService problemService;
 
+//    For Test
+//    @GetMapping("/programmers")
+//    public void getProg() {
+//        System.out.println("들어옴?????");
+//    }
+
     @PostMapping("/programmers")
     public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
         problemService.saveProblem(problem);
 
-//        SolvedProblemRequest test = SolvedProblemRequest.builder().title("sdf").selectedLanguage("jav").code("code").level("sdf").build();
-//        System.out.println("test 값 : " + test.toString());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

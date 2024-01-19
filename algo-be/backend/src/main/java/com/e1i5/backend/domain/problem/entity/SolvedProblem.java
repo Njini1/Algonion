@@ -17,8 +17,14 @@ public class SolvedProblem {
 
     @Column
     private String siteName;
+
+    //TODO: 나중에 유저,문제테이블 조인해야 함 지금은 임의의 값 넣을거임 해줘
+    @Column
+    private String userNo;
     @Column
     private String problemNum;
+
+
     @Column
     private String level;
     @Column

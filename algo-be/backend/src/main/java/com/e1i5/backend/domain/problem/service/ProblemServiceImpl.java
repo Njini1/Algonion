@@ -20,9 +20,10 @@ public class ProblemServiceImpl implements ProblemService {
      */
     @Override
     public void saveProblem(SolvedProblemRequest solvedProblem) {
-        //현재는 사용자 데이터와 문제 데이터를 한번에 넣지만 추후에 각각 테이블로 나누어 저장 예정
-        problemRepository.save(solvedProblem.toEntity());
+        //TODO: 현재는 사용자 데이터와 문제 데이터를 한번에 넣지만 추후에 각각 테이블로 나누어 저장 예정
+        problemRepository.save(solvedProblem.toEntity("백준"));
     }
+
 
     /**
      * 사용자가 문제 푼 데이터에서 메모 수정
