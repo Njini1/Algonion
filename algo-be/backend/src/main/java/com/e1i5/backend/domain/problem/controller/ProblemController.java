@@ -26,7 +26,7 @@ public class ProblemController {
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
         problemService.saveProblem(problem);
 
-        SolvedProblemRequest test = SolvedProblemRequest.builder().title("sdf").selectedLanguage("jav").code("code").level("sdf").build();
+//        SolvedProblemRequest test = SolvedProblemRequest.builder().title("sdf").selectedLanguage("jav").code("code").level("sdf").build();
 //        System.out.println("test 값 : " + test.toString());
         return new ResponseEntity<>(HttpStatus.OK);
     }
