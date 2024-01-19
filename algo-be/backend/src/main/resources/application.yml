@@ -16,7 +16,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: algo
-    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/algo?serverTimezone=UTC
     password: ssafyalgo!1@
   jpa:
     properties:

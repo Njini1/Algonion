@@ -7,16 +7,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "problem")
+@Table(name = "solved_problem")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Problem {
+public class SolvedProblem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long problemIdx;
 
     @Column
-    private String problemId;
+    private String siteName;
+    @Column
+    private String problemNum;
     @Column
     private String level;
     @Column
@@ -27,6 +29,8 @@ public class Problem {
     private String code;
     @Column
     private String memo;
+    @Column
+    private boolean isDelete;
 //    @Column
 //    private String isSuccess;
 //    @Column
@@ -34,16 +38,19 @@ public class Problem {
 //    @Column
 //    private String failedTestCase;
 
-
     @Builder
-    public Problem(String problemId, String level, String title, String selectedLanguage, String code, String memo) {
-        this.problemId = problemId;
+    public SolvedProblem(long problemIdx, String siteName, String problemNum, String level, String title, String selectedLanguage, String code, String memo, boolean isDelete) {
+        this.problemIdx = problemIdx;
+        this.siteName = siteName;
+        this.problemNum = problemNum;
         this.level = level;
         this.title = title;
         this.selectedLanguage = selectedLanguage;
         this.code = code;
         this.memo = memo;
+        this.isDelete = isDelete;
     }
+
 
     public void updateMemo(String memo) {
         this.memo = memo;

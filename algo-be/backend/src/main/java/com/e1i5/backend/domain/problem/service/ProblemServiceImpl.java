@@ -1,6 +1,6 @@
 package com.e1i5.backend.domain.problem.service;
 
-import com.e1i5.backend.domain.problem.entity.Problem;
+import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.exception.SolvedProblemNotFoundException;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
@@ -32,7 +32,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Transactional
     @Override
     public void updateProblem(long idx, String memo) throws Exception { // 추후 에러 던지는 거 변경 RuntimeException으로?
-        Problem problem = problemRepository.findById(idx).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //추후 상태코드로 변경
+        SolvedProblem problem = problemRepository.findById(idx).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //추후 상태코드로 변경
         problem.updateMemo(memo);
     }
 }
