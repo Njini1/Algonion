@@ -34,8 +34,18 @@ export default defineManifest({
   },
   content_scripts: [
     {
-      matches: ['http://*/*', 'https://*/*'],
-      js: ['src/contentScript/index.js'],
+      matches: [
+        "https://www.acmicpc.net/*"
+      ],
+      js: [
+        "src/contentScript/index.js",
+        "src/contentScript/baekjoon/baekjoon.js",
+        "src/contentScript/baekjoon/user.js",
+        "src/contentScript/baekjoon/submission.js",
+        "src/contentScript/baekjoon/storage.js",
+        "src/contentScript/baekjoon/util.js",
+      ],
+      run_at: "document_idle"
     },
     {
       matches: [
