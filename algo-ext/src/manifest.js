@@ -54,13 +54,6 @@ export default defineManifest({
       js: ['src/contentScript/programmers/getPageInfo.js'],
       run_at: "document_idle"
     },
-    {
-      matches: [
-        "https://www.acmicpc.net/*"
-      ],
-      js: ['src/contentScript/boj/getPageInfo.js'],
-      run_at: "document_idle"
-    },
   ],
   side_panel: {
     default_path: 'sidepanel.html',
