@@ -30,6 +30,7 @@ export default defineManifest({
       js: [
         "src/contentScript/index.js",
         "src/contentScript/baekjoon/baekjoon.js",
+        "src/contentScript/baekjoon/user.js",
         "src/contentScript/baekjoon/submission.js",
         "src/contentScript/baekjoon/storage.js",
         "src/contentScript/baekjoon/util.js",
