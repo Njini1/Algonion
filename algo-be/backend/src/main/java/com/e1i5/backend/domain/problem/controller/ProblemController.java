@@ -49,7 +49,6 @@ public class ProblemController {
     @PostMapping("/swea")
     public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
-
         problemService.saveProblem(problem, "swea");
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -59,6 +58,7 @@ public class ProblemController {
     @PostMapping("/getsolved")
     public ResponseEntity<List<SolvedProblemResponse>> getSolved(@RequestBody String userId) throws Exception {
         problemService.getSolvedProblem(userId);
+        System.out.println("test");
         return null;
     }
 }
