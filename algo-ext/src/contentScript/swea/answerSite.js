@@ -7,6 +7,8 @@
 //   - code : 소스코드 내용
 // */
 
+// const { parse } = require("vue/compiler-sfc");
+
 /**
  * 문제 내 데이터를 가져옵니다.
  * @param {string} problemId 문제 번호
@@ -32,7 +34,7 @@ async function parseData() {
   // 문제 링크
   const link = `${window.location.origin}/main/code/problem/problemDetail.do?contestProbId=${contestProbId}`;
 
-  // 문제 언어, 메모리, 시간소요
+  // 문제 언어, 메모리, 시간소요, 코드 길이
   const language = document.querySelector('#problemForm div.info > ul > li:nth-child(1) > span:nth-child(1)').textContent.trim();
   const memory = document.querySelector('#problemForm div.info > ul > li:nth-child(2) > span:nth-child(1)').textContent.trim().toUpperCase();
   const runtime = document.querySelector('#problemForm div.info > ul > li:nth-child(3) > span:nth-child(1)').textContent.trim();
@@ -58,13 +60,7 @@ async function parseData() {
   return { link, language, problemId, level, title,  runtime, memory, length,submissionTime };
 } 
 
-async function render() {
-  const data = await parseData();
-  const fetchedData = data.data;
-  return fetchedData;
-}
-console.log(render())
-
+console.log(parseData())
 // Promise {fulfilled: {...}}의 하위 요소의 [[PromiseResult]]: Object 안에 들어있는 값을 가져옵니다.
 
 // async function extractData() {
