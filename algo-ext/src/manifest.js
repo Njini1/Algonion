@@ -43,6 +43,7 @@ export default defineManifest({
         "src/contentScript/baekjoon/user.js",
         "src/contentScript/baekjoon/submission.js",
         "src/contentScript/baekjoon/storage.js",
+        "src/contentScript/baekjoon/variable.js",
         "src/contentScript/baekjoon/util.js",
       ],
       run_at: "document_idle"

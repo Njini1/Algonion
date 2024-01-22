@@ -1,7 +1,7 @@
 
 import {findUsername, findResultUsername} from "./user.js";
-import {parsingResultTableList, parsingCorrectResultTableList, getSubmission} from "./submission.js";
-// import {isNull, isEmpty, unescapeHtml, convertImageTagAbsoluteURL} from "./util.js";
+import {parsingResultTableList, parsingCorrectResultTableList, getProblem, getSubmission} from "./submission.js";
+import {bj_level} from "./variable.js"
 
 const url = window.location.href;
 // console.log(url)
@@ -9,31 +9,49 @@ const url = window.location.href;
 // BaekJoon
 const baekjoonUrl = url.startsWith("https://www.acmicpc.net/")? url:null;
 if (baekjoonUrl) {
-    // console.log(baekjoonUrl)
+    const baekjoon = {
+        "submissionId": null,
+        "problemId": null,
+        "memory": null,
+        "runtime": null,
+        "language": null,
+        "submissionCode": null,
+        "codeLength": null,
+        "submissionTime": null,
+        "url": null,
+        "problemTitle": null,
+        "problemCategory": null,
+        "problemLevel": null,
+    }
     const username = findUsername();
     const resultUsername = findResultUsername(baekjoonUrl);
-    console.log("username:", username);
-    console.log("resultUsername:", resultUsername);
     
     if (username === resultUsername) {
-        const resultTable = parsingResultTableList(document);
-        const correctResultTable = parsingCorrectResultTableList(resultTable);
+        const resultTableList = parsingResultTableList(document);
+        const correctResultTable = parsingCorrectResultTableList(resultTableList);
         const correctLastestResult = correctResultTable? correctResultTable[0]:null;
+        console.log(resultTableList)
+
+        baekjoon.submissionId = correctLastestResult.submissionId;
+        baekjoon.problemId = correctLastestResult.problemId;
+        baekjoon.memory = correctLastestResult.memory;
+        baekjoon.runtime = correctLastestResult.runtime;
+        baekjoon.language = correctLastestResult.language;
+        baekjoon.codeLength = correctLastestResult.codeLength;
+        baekjoon.submissionTime = correctLastestResult.submissionTime;
+        baekjoon.url = `https://www.acmicpc.net/problem/${correctLastestResult.problemId}`;
         
-        console.log("resultTable:", resultTable);
-        console.log("correctResultTable:", correctResultTable);
-        console.log("correctLastestResult:", correctLastestResult);
         
-        const problemId = correctLastestResult? correctLastestResult.problemId:null;
-        const submissionId = correctLastestResult? correctLastestResult.submissionId:null;
-        console.log("problemId:", problemId);
-        console.log("submissionId:", submissionId);
-        console.log("--------------------------");
-        // 아래는 확인 중인 코드입니다.
+        getSubmission(baekjoon.submissionId).then(res => {
+            baekjoon.submissionCode = res;
+        })
+        
+        getProblem(baekjoon.problemId).then(res => {
+            baekjoon.problemTitle = res[0];
+            baekjoon.problemCategory = res[1];
+            baekjoon.problemLevel = [res[2], bj_level[res[2]]];
+        })
 
-        let submission = submissionId? getSubmission(submissionId):null;
-
-        console.log("submission:", submission);
-
+        console.log(baekjoon)
     }
 }

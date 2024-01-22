@@ -3,7 +3,7 @@ import {convertResultTableHeader, convertResultTableList, isNull, isEmpty} from 
 // 문제 제출 페이지에서 테이블을 가져오는 함수
 export function parsingResultTableList(doc) {
     const table = doc.getElementById('status-table');
-    if (table === null || table === undefined || table.length === 0) return [];
+    if (table === null || table === undefined || table.length === 0) return null;
     
     const headers = Array.from(table.rows[0].cells, (x) => convertResultTableHeader(x.innerText.trim()));
 
@@ -41,6 +41,8 @@ export function parsingCorrectResultTableList(table) {
     return list;
 }
 
+
+
 export async function getSubmission(submissionId) {
     const res = await fetch(`https://www.acmicpc.net/source/download/${submissionId}`, {
         method: 'GET',
@@ -49,4 +51,21 @@ export async function getSubmission(submissionId) {
     const code = await res.text();
     // console.log(code)
     return code;
+}
+
+  
+export async function getProblem(problemId) {
+    const res = await fetch(`https://www.acmicpc.net/problem/${problemId}`, {
+        method: 'GET',
+    });
+
+    
+    const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+
+    const title = doc.querySelector("title").innerText.split(": ")[1];
+    const categories = doc.querySelector(".spoiler-list").querySelectorAll("li");
+    const category = Array.from(categories).map((category) => category.innerText.trim());
+    const level = doc.querySelector(".solvedac-tier").src.split("/tier/")[1].split(".svg")[0];
+
+    return [title, category, level]
 }
