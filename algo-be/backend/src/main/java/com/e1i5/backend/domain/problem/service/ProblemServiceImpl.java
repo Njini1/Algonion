@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProblemServiceImpl implements ProblemService {
@@ -25,8 +24,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public void saveProblem(SolvedProblemRequest solvedProblem, String siteName) {
         //TODO: 현재는 사용자 데이터와 문제 데이터를 한번에 넣지만 추후에 각각 테이블로 나누어 저장 예정
-        //TODO: 로그인 기능 미구현이라 지금은 유저정보(userNo)를 "1"로 저장함 나중에 현재 로그인 정보를 받아서 저장하는 걸로 바꿔야 함
-        problemRepository.save(solvedProblem.toEntity(siteName, "1"));
+        problemRepository.save(solvedProblem.toEntity(siteName));
     }
 
 
@@ -43,21 +41,8 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public List<SolvedProblem> getSolvedProblem(String userNo, boolean isDelete) throws Exception {
-        return problemRepository.findAllByUserNoAndIsDelete(userNo, isDelete);
-    }
-
-    @Override
-    public List<SolvedProblem> getSolvedProblemLevel(String userId, String level) throws Exception {
-        return problemRepository.findAllByUserNoAndLevel(userId, level);
-    }
-
-    @Override
-    public void hideSolvedProblem(Long id) throws Exception {
-        Optional<SolvedProblem> OptionalProblem = problemRepository.findById(id);
-        SolvedProblem problem = OptionalProblem.get();
-
-
+    public void getSolvedProblem(String userId) throws Exception {
+//        List<SolvedProblemResponse> list = problemRepository.findAllBy()
 
     }
 }

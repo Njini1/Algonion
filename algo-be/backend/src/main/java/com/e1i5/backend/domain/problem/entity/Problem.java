@@ -30,13 +30,7 @@ public class Problem {
     private String ourLevel;
 
     @Builder
-    public Problem(long problemIdx,
-                   String siteName,
-                   String problemNum,
-                   String problemName,
-                   String problemLink,
-                   String originLevel,
-                   String ourLevel) {
+    public Problem(long problemIdx, String siteName, String problemNum, String problemName, String problemLink, String originLevel, String ourLevel) {
         this.problemIdx = problemIdx;
         this.siteName = siteName;
         this.problemNum = problemNum;

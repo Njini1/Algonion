@@ -1,6 +1,5 @@
 package com.e1i5.backend.domain.problem.controller;
 
-import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemResponse;
 import com.e1i5.backend.domain.problem.service.ProblemService;
@@ -55,28 +54,11 @@ public class ProblemController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-
-
-    //
-    //TODO need to change param AND separated package
-    //
-
-    //내가 푼 몬든 문제
-    @PostMapping("/getSolved")
-    public List<SolvedProblem> getSolved(@RequestBody SolvedProblem param) throws Exception {
-        return problemService.getSolvedProblem(param.getUserNo(), param.isDelete());
-    }
-
-    //내가 푼 문제 중 레벨별 검색
-    @PostMapping("/getLevel")
-    public List<SolvedProblem> getSolvedLevel(@RequestBody SolvedProblem param) throws Exception {
-        return problemService.getSolvedProblemLevel(param.getUserNo(), param.getLevel());
-    }
-
-    @PostMapping("/hideSolvedProblem")
-    public ResponseEntity<Void> hideSolvedProblem(@RequestBody SolvedProblem param) throws Exception {
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    
+    //TODO 내가 푼 문제 전체 가져오기 할 예정
+    @PostMapping("/getsolved")
+    public ResponseEntity<List<SolvedProblemResponse>> getSolved(@RequestBody String userId) throws Exception {
+        problemService.getSolvedProblem(userId);
+        return null;
     }
 }

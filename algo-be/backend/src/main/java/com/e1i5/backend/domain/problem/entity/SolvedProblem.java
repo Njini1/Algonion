@@ -44,21 +44,19 @@ public class SolvedProblem {
 //    @Column
 //    private String failedTestCase;
 
-
     @Builder
     public SolvedProblem(long solvedProblemIdx,
                          String siteName,
-                         String userNo,
                          String problemNum,
                          String level,
                          String title,
                          String selectedLanguage,
                          String code,
                          String memo,
-                         boolean isDelete) {
+                         boolean isDelete)
+    {
         this.solvedProblemIdx = solvedProblemIdx;
         this.siteName = siteName;
-        this.userNo = userNo;
         this.problemNum = problemNum;
         this.level = level;
         this.title = title;
@@ -68,23 +66,8 @@ public class SolvedProblem {
         this.isDelete = isDelete;
     }
 
+
     public void updateMemo(String memo) {
         this.memo = memo;
-    }
-
-    @Override
-    public String toString() {
-        return "SolvedProblem{" +
-                "solvedProblemIdx=" + solvedProblemIdx +
-                ", siteName='" + siteName + '\'' +
-                ", userNo='" + userNo + '\'' +
-                ", problemNum='" + problemNum + '\'' +
-                ", level='" + level + '\'' +
-                ", title='" + title + '\'' +
-                ", selectedLanguage='" + selectedLanguage + '\'' +
-                ", code='" + code + '\'' +
-                ", memo='" + memo + '\'' +
-                ", isDelete=" + isDelete +
-                '}';
     }
 }

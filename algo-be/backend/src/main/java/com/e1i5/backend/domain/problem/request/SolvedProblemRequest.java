@@ -13,11 +13,10 @@ public class SolvedProblemRequest {
     private String selectedLanguage;
     private String code;
 
-    public SolvedProblem toEntity(String siteName, String userNo) {
+    public SolvedProblem toEntity(String name) {
         return SolvedProblem.builder()
                 .problemNum(problemNum)
-                .siteName(siteName)
-                .userNo(userNo)
+                .siteName(name)
                 .level(level)
                 .title(title)
                 .selectedLanguage(selectedLanguage)
