@@ -26,3 +26,7 @@ test : 테스트 코드, 리펙토링 테스트 코드 추가
 chore : 빌드 업무 수정, 패키지 매니저 수정
 
 ## 2.  Branch Convention
+
+---
+
+[Gerrit]("https://i10b108.p.ssafy.io:8989")
