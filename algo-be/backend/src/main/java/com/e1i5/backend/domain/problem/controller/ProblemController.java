@@ -1,5 +1,6 @@
 package com.e1i5.backend.domain.problem.controller;
 
+import com.e1i5.backend.domain.problem.request.BojProblemRequest;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemResponse;
 import com.e1i5.backend.domain.problem.service.ProblemService;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/solvedProblem")
+@RequestMapping("api/v1/solved-problem")
 @Slf4j
 public class ProblemController {
 
@@ -25,31 +26,24 @@ public class ProblemController {
     @Autowired
     ProblemService problemService;
 
-//    For Test
-//    @GetMapping("/programmers")
-//    public void getProg() {
-//        System.out.println("들어옴?????");
-//    }
+    @PostMapping("/baekjoon")
+    public ResponseEntity<Void> saveBojProblem(@RequestBody BojProblemRequest problem) throws Exception {
+        log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
+        problemService.saveBoj(problem);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PostMapping("/programmers")
     public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
-        problemService.saveProblem(problem, "programmers");
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping("/boj")
-    public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
-        log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
-
-        problemService.saveProblem(problem, "boj");
+//        problemService.saveProblem(problem, "programmers");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/swea")
     public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
-        problemService.saveProblem(problem, "swea");
+//        problemService.saveProblem(problem, "swea");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

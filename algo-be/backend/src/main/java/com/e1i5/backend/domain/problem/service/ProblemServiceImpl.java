@@ -3,6 +3,7 @@ package com.e1i5.backend.domain.problem.service;
 import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.exception.SolvedProblemNotFoundException;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
+import com.e1i5.backend.domain.problem.request.BojProblemRequest;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,21 @@ public class ProblemServiceImpl implements ProblemService {
      * 사용자가 문제 푼 사용자 데이터와 문제 데이터 저장
      * @param solvedProblem 사용자가 문제 푼 데이터
      */
+    
+    //이거 안쓸거임 내가 지울 예정
     @Override
     public void saveProblem(SolvedProblemRequest solvedProblem, String siteName) {
-        //TODO: 현재는 사용자 데이터와 문제 데이터를 한번에 넣지만 추후에 각각 테이블로 나누어 저장 예정
-        problemRepository.save(solvedProblem.toEntity(siteName));
+//        problemRepository.save(solvedProblem.toEntity(siteName));
     }
 
+
+    @Override
+    public void saveBoj(BojProblemRequest problem) {
+        //TODO 첫 번째 파라미터 값은 유저 id(pk값)이라서 나중에 추가 지금은 임의데이터(1)로 진행
+        //TODO 같은 문제 번호를 비교해 주고 제출번호 비교해서 없으면 저장으로 바꿔
+        //TODO 문제번호 비교해서 점수 더하는 거도 추가해줘
+        problemRepository.save(problem.toEntity(1, "boj"));
+    }
 
     /**
      * 사용자가 문제 푼 데이터에서 메모 수정

@@ -13,16 +13,17 @@ public class SolvedProblemRequest {
     private String selectedLanguage;
     private String code;
 
-    public SolvedProblem toEntity(String name) {
-        return SolvedProblem.builder()
-                .problemNum(problemNum)
-                .siteName(name)
-                .level(level)
-                .title(title)
-                .selectedLanguage(selectedLanguage)
-                .code(code)
-                .build();
-    }
+    //TODO toEntity 참고 (수정 필요)
+//    public SolvedProblem toEntity(long name) {
+//        return SolvedProblem.builder()
+//                .problemNum(problemNum)
+//                .siteName(name)
+//                .level(level)
+////                .title(title)
+////                .selectedLanguage(selectedLanguage)
+//                .code(code)
+//                .build();
+//    }
 
     @Builder
     public SolvedProblemRequest(String problemNum,
