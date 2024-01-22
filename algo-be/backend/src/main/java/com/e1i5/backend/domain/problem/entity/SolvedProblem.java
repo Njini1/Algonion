@@ -19,11 +19,11 @@ public class SolvedProblem {
     private long solvedProblemIdx;
 
     @Column
-    private String submissionNum; //제출 번호
+    private String submissionId; //제출 번호
     @Column
-    private String problemNum; //문제 번호
+    private String problemId; //문제 번호
     @Column
-    private String problemName; //문제 이름
+    private String problemTitle; //문제 이름
     @Column
     private String siteName;
 
@@ -32,7 +32,7 @@ public class SolvedProblem {
     private long userNo;
 
     @Column
-    private String level; //problem table로??
+    private String problemLevel; //problem table로??
     @Column
     private String language;
 
@@ -53,19 +53,19 @@ public class SolvedProblem {
     @Column
     private LocalDateTime submissionTime; //문제 푼 날짜,시간
     @Column
-    private String link;
+    private String url;
 
     @Column
-    private boolean isDelete;
+    private boolean visible;
 
     @Builder
     public SolvedProblem(long solvedProblemIdx,
-                         String submissionNum,
-                         String problemNum,
-                         String problemName,
+                         String submissionId,
+                         String problemId,
+                         String problemTitle,
                          String siteName,
                          long userNo,
-                         String level,
+                         String problemLevel,
                          String language,
                          String submissionCode,
                          String memo,
@@ -73,15 +73,15 @@ public class SolvedProblem {
                          String runtime,
                          String codeLength,
                          LocalDateTime submissionTime,
-                         String link,
-                         boolean isDelete) {
+                         String url,
+                         boolean visible) {
         this.solvedProblemIdx = solvedProblemIdx;
-        this.submissionNum = submissionNum;
-        this.problemNum = problemNum;
-        this.problemName = problemName;
+        this.submissionId = submissionId;
+        this.problemId = problemId;
+        this.problemTitle = problemTitle;
         this.siteName = siteName;
         this.userNo = userNo;
-        this.level = level;
+        this.problemLevel = problemLevel;
         this.language = language;
         this.submissionCode = submissionCode;
         this.memo = memo;
@@ -89,8 +89,8 @@ public class SolvedProblem {
         this.runtime = runtime;
         this.codeLength = codeLength;
         this.submissionTime = submissionTime;
-        this.link = link;
-        this.isDelete = isDelete;
+        this.url = url;
+        this.visible = visible;
     }
 
     public void updateMemo(String memo) {
