@@ -15,37 +15,28 @@ public class Problem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long problemIdx;
 
+    //TODO 연결은 나중에
     @Column
-    private String problemId;
+    private String siteName;
     @Column
-    private String level;
+    private String problemNum;
     @Column
-    private String title;
+    private String problemName;
     @Column
-    private String selectedLanguage;
+    private String problemLink;
     @Column
-    private String code;
+    private String originLevel;
     @Column
-    private String memo;
-//    @Column
-//    private String isSuccess;
-//    @Column
-//    private String passedTestCase;
-//    @Column
-//    private String failedTestCase;
-
+    private String ourLevel;
 
     @Builder
-    public Problem(String problemId, String level, String title, String selectedLanguage, String code, String memo) {
-        this.problemId = problemId;
-        this.level = level;
-        this.title = title;
-        this.selectedLanguage = selectedLanguage;
-        this.code = code;
-        this.memo = memo;
-    }
-
-    public void updateMemo(String memo) {
-        this.memo = memo;
+    public Problem(long problemIdx, String siteName, String problemNum, String problemName, String problemLink, String originLevel, String ourLevel) {
+        this.problemIdx = problemIdx;
+        this.siteName = siteName;
+        this.problemNum = problemNum;
+        this.problemName = problemName;
+        this.problemLink = problemLink;
+        this.originLevel = originLevel;
+        this.ourLevel = ourLevel;
     }
 }

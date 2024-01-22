@@ -1,25 +1,36 @@
 package com.e1i5.backend.domain.problem.request;
 
-import com.e1i5.backend.domain.problem.entity.Problem;
+import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import lombok.*;
 
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SolvedProblemRequest {
-    private String problemId;
+    private String problemNum;
     private String level;
     private String title;
     private String selectedLanguage;
     private String code;
 
-    public Problem toEntity() {
-        return Problem.builder().problemId(problemId).level(level).title(title).selectedLanguage(selectedLanguage).code(code).build();
+    public SolvedProblem toEntity(String name) {
+        return SolvedProblem.builder()
+                .problemNum(problemNum)
+                .siteName(name)
+                .level(level)
+                .title(title)
+                .selectedLanguage(selectedLanguage)
+                .code(code)
+                .build();
     }
 
     @Builder
-    public SolvedProblemRequest(String problemId, String level, String title, String selectedLanguage, String code) {
-        this.problemId = problemId;
+    public SolvedProblemRequest(String problemNum,
+                                String level,
+                                String title,
+                                String selectedLanguage,
+                                String code) {
+        this.problemNum = problemNum;
         this.level = level;
         this.title = title;
         this.selectedLanguage = selectedLanguage;
