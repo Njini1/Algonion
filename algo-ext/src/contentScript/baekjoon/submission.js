@@ -25,7 +25,7 @@ export function parsingResultTableList(doc) {
 }
 
 // 문제 제출 페이지에서 맞은 제출 테이블을 가져오는 함수
-export function parsingCorrectResultTableList(table) {
+export function parsingCorrectResultTable(table) {
     // console.log(table);
     if (isNull(table)) return null;
     
@@ -38,12 +38,12 @@ export function parsingCorrectResultTableList(table) {
         } 
     }
     // console.log(list);
-    return list;
+    return list[0];
 }
 
 
-
-export async function getSubmission(submissionId) {
+// 제출 코드를 가져오는 함수 
+export async function getSubmissionCode(submissionId) {
     const res = await fetch(`https://www.acmicpc.net/source/download/${submissionId}`, {
         method: 'GET',
     });
@@ -53,9 +53,9 @@ export async function getSubmission(submissionId) {
     return code;
 }
 
-  
-export async function getProblem(problemId) {
-    const res = await fetch(`https://www.acmicpc.net/problem/${problemId}`, {
+// 문제의 정보를 가져오는 함수
+export async function getProblem(problemNum) {
+    const res = await fetch(`https://www.acmicpc.net/problem/${problemNum}`, {
         method: 'GET',
     });
 
