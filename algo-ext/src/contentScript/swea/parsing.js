@@ -31,6 +31,7 @@ async function parseCode() {
 
 
 async function parseData() {
+  if (getNickname() !== nickname) return;
   const nickname = document.querySelector('#Beginner').textContent;
 
   // 문제 제목
