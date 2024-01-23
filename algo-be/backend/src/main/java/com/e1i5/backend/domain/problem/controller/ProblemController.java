@@ -3,7 +3,6 @@ package com.e1i5.backend.domain.problem.controller;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemResponse;
 import com.e1i5.backend.domain.problem.service.ProblemService;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/solvedProblem")
+@RequestMapping("api/v1/solved-problem")
 @Slf4j
 public class ProblemController {
 
@@ -25,40 +24,39 @@ public class ProblemController {
     @Autowired
     ProblemService problemService;
 
-//    For Test
-//    @GetMapping("/programmers")
-//    public void getProg() {
-//        System.out.println("들어옴?????");
-//    }
+    @PostMapping("/baekjoon")
+    public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
+        log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
+        problemService.saveSolvedProblem(problem, "boj");
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PostMapping("/programmers")
     public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
-        problemService.saveProblem(problem, "programmers");
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @PostMapping("/boj")
-    public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
-        log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
-
-        problemService.saveProblem(problem, "boj");
+        problemService.saveSolvedProblem(problem, "programmers");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/swea")
     public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
-        problemService.saveProblem(problem, "swea");
+        problemService.saveSolvedProblem(problem, "swea");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    
-    //TODO 내가 푼 문제 전체 가져오기 할 예정
-    @PostMapping("/getsolved")
-    public ResponseEntity<List<SolvedProblemResponse>> getSolved(@RequestBody String userId) throws Exception {
-        problemService.getSolvedProblem(userId);
-        System.out.println("test");
-        return null;
+
+
+
+
+
+    @GetMapping("/mysolved")
+    public List<SolvedProblemResponse> getSolved(@RequestParam long username) throws Exception {
+        return problemService.getSolvedProblem(username);
+    }
+
+    @GetMapping("/mysolved/detail")
+    public SolvedProblemResponse getSolvedDetail(@RequestParam long username, long solvednum) throws Exception {
+        return problemService.getSolvedProblemDetail(username, solvednum);
     }
 }
