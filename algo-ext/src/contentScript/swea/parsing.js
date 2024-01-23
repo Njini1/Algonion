@@ -1,19 +1,34 @@
-// /*
-//   문제 요약과 코드를 파싱합니다.
-//   - directory : 레포에 기록될 폴더명
-//   - message : 커밋 메시지
-//   - fileName : 파일명
-//   - readme : README.md에 작성할 내용 
-//   - code : 소스코드 내용
-// */
-
-// const { parse } = require("vue/compiler-sfc");
 
 /**
  * 문제 내 데이터를 가져옵니다.
  * @param {string} problemId 문제 번호
  * @returns {object} 문제 내 데이터
  */
+const url = window.location.href;
+
+if (url.indexOf('/main/solvingProblem/solvingProblem.do') && document.querySelector('header > h1 > span').textContent === '모의테스트') {
+  (async () => {
+    const codeInfo = await parseCode();
+    console.log(codeInfo)
+    window.location.href = `${window.location.origin}/main/code/problem/problemSolver.do?contestProbId=${codeInfo.contestProbId}&nickname=${codeInfo.nickname}`;
+  
+  })
+} else if (url.indexOf('/main/code/problem/problemSolver.do')) {
+  (async () => {
+    const problemData = await parseData();    
+    console.log(problemData)
+    })
+}
+
+async function parseCode() {
+    
+  const ProbId = document.querySelector('div.problem_box > h3').innerText.replace(/\..*$/, '').trim();
+  const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
+  const code = document.querySelector('#textSource').value;
+
+  return { ProbId, contestProbId, code };
+}
+
 
 async function parseData() {
   const nickname = document.querySelector('#Beginner').textContent;
@@ -25,13 +40,10 @@ async function parseData() {
     .replace(/^[^.]*/, '')
     .substr(1)
     .trim();
-  // 문제 난이도
+  // 문제 난이도, 번호, 인덱스, 링크
   const level = document.querySelector('div.problem_box > p.problem_title > span.badge')?.textContent || 'Unrated';
-  // 문제 번호
   const problemId = document.querySelector('body > div.container > div.container.sub > div > div.problem_box > p').innerText.split('.')[0].trim();
-  // 문제 콘테스트 인덱스
   const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
-  // 문제 링크
   const link = `${window.location.origin}/main/code/problem/problemDetail.do?contestProbId=${contestProbId}`;
 
   // 문제 언어, 메모리, 시간소요, 코드 길이
@@ -42,6 +54,7 @@ async function parseData() {
 
   // 제출날짜
   const submissionTime = document.querySelector('.smt_txt > dd').textContent.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/g)[0];
+
   // 로컬스토리지에서 기존 코드에 대한 정보를 불러올 수 없다면 코드 디테일 창으로 이동 후 제출하도록 이동
   // const data = await getProblemData(problemId);
   
@@ -60,27 +73,25 @@ async function parseData() {
   return { link, language, problemId, level, title,  runtime, memory, length,submissionTime };
 } 
 
-console.log(parseData())
-// Promise {fulfilled: {...}}의 하위 요소의 [[PromiseResult]]: Object 안에 들어있는 값을 가져옵니다.
+// async function updateProblemData(problemId, obj) {
+//   return getObjectFromLocalStorage('swea').then((data) => {
+//     if (isNull(data[problemId])) data[problemId] = {};
+//     data[problemId] = { ...data[problemId], ...obj, save_date: Date.now() };
 
-// async function extractData() {
-//   const problemId = document.querySelector('body > div.container > div.container.sub > div > div.problem_box > p').innerText.split('.')[0].trim();
-//   const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
-//   const title = document.querySelector('div.problem_box > p.problem_title')
-//     .innerText
-//     .replace(/ D[0-9]$/, '')
-//     .replace(/^[^.]*/, '')
-//     .substr(1)
-//     .trim();
-//   const level = document.querySelector('div.problem_box > p.problem_title > span.badge')?.textContent || 'Unrated';
-//   const language = document.querySelector('#problemForm div.info > ul > li:nth-child(1) > span:nth-child(1)').textContent.trim();
-//   const memory = document.querySelector('#problemForm div.info > ul > li:nth-child(2) > span:nth-child(1)').textContent.trim().toUpperCase();
-//   const runtime = document.querySelector('#problemForm div.info > ul > li:nth-child(3) > span:nth-child(1)').textContent.trim();
-//   const submitTime = document.querySelector('.smt_txt > dd').textContent.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/g)[0];
-//   const link = `${window.location.origin}/main/code/problem/problemDetail.do?contestProbId=${contestProbId}`;
-
-//   const data = getProblemData(problemId);
-  
-//   return { problemId, contestProbId, title, level, language, memory, runtime, submitTime, link, data};
+//     // 기존에 저장한 문제 중 일주일이 경과한 문제 내용들은 모두 삭제합니다.
+//     const date_week_ago = Date.now() - 7 * 86400000;
+//     for (const [key, value] of Object.entries(data)) {
+//       // 무한 방치를 막기 위해 저장일자가 null이면 삭제
+//       if (isNull(value) || isNull(value.save_date)) {
+//         delete data[key];
+//       }
+//       const save_date = new Date(value.save_date);
+//       // 1주가 지난 문제는 삭제
+//       if (date_week_ago > save_date) {
+//         delete data[key];
+//       }
+//     }
+//     saveObjectInLocalStorage({ swea: data });
+//     return data;
+//   });
 // }
-// console.log(extractData())
