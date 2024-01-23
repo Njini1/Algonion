@@ -49,8 +49,12 @@ export default defineManifest({
         "https://swexpertacademy.com/*"
       ],
       js: [
-        "src/contentScript/swea/parsing.js",
+        "src/contentScript/swea/enable.js",
         "src/contentScript/swea/storage.js",
+        "src/contentScript/swea/variables.js",
+        "src/contentScript/swea/util.js",
+        "src/contentScript/swea/parsing.js",
+        "src/contentScript/swea/swexpertacademy.js",
       ],
       run_at: "document_idle"
     }
@@ -60,11 +64,32 @@ export default defineManifest({
   },
   web_accessible_resources: [
     {
-      resources: [],
-      matches: [],
+      resources: [
+        // "library/jquery-3.3.1.min.js",
+        // "library/semantic.min.js",
+        // "popup.html",
+        // "popup.js",
+        // "welcome.html",
+        // "welcome.js"
+      ],
+      matches: [
+        "<all_urls>"
+      ],
     },
   ],
-  permissions: ['sidePanel', 'storage'],
+  permissions: [
+    'sidePanel', 
+    "unlimitedStorage",
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  host_permissions: [
+    "https://www.acmicpc.net/",
+    "https://school.programmers.co.kr/",
+    "https://swexpertacademy.com/",
+    "https://solved.ac/api/v3/*"
+  ],
   // chrome_url_overrides: {
   //   newtab: 'newtab.html',
   // },
