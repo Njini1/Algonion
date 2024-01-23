@@ -1,19 +1,57 @@
-
 /**
  * 문제 내 데이터를 가져옵니다.
  * @param {string} problemId 문제 번호
  * @returns {object} 문제 내 데이터
  */
-const url = window.location.href;
+let loader;
 
-if (url.indexOf('/main/solvingProblem/solvingProblem.do') && document.querySelector('header > h1 > span').textContent === '모의테스트') {
+const currentUrl = window.location.href;
+
+if (
+  currentUrl.includes('/main/solvingProblem/solvingProblem.do') 
+  && document.querySelector('header > h1 > span').textContent === '모의 테스트'
+  ) startLoader();
+else if (
+  currentUrl.includes('/main/code/problem/problemSolver.do') 
+  && currentUrl.includes('extension=BaekjoonHub')
+  ) parseAndUpload();
+
+function startLoader() {
+  loader = setInterval(async () => {
+    // 제출 후 채점하기 결과가 성공적으로 나왔다면 코드를 파싱하고,
+    // 결과 페이지로 안내한다.
+    if (getSolvedResult().includes('pass입니다')) {
+      stopLoader();
+      try {
+        const { contestProbId } = await parseCode();
+        // prettier-ignore
+        await makeSubmitButton(`${window.location.origin}`
+          + `/main/code/problem/problemSolver.do?`
+          + `contestProbId=${contestProbId}&`
+          + `nickName=${nickname}&`
+          + `extension=BaekjoonHub`);
+      } catch (error) {
+        log(error);
+      } 
+    }
+  }, 2000); 
+}
+
+function getSolvedResult() {
+  return document.querySelector('div.popup_layer.show > div > p.txt')?.innerText.trim().toLowerCase() || '';
+}
+
+function stopLoader() {
+  clearInterval(loader);
+}
+
+if (currentUrl.indexOf('/main/solvingProblem/solvingProblem.do') && document.querySelector('header > h1 > span').textContent === '모의 테스트') {
   (async () => {
     const codeInfo = await parseCode();
     console.log(codeInfo)
-    window.location.href = `${window.location.origin}/main/code/problem/problemSolver.do?contestProbId=${codeInfo.contestProbId}&nickname=${codeInfo.nickname}`;
-  
+    // window.location.href = `${window.location.origin}/main/code/problem/problemSolver.do?contestProbId=${codeInfo.contestProbId}&nickname=${codeInfo.nickname}`;
   })
-} else if (url.indexOf('/main/code/problem/problemSolver.do')) {
+} else if (currentUrl.indexOf('/main/code/problem/problemSolver.do')) {
   (async () => {
     const problemData = await parseData();    
     console.log(problemData)
@@ -22,11 +60,11 @@ if (url.indexOf('/main/solvingProblem/solvingProblem.do') && document.querySelec
 
 async function parseCode() {
     
-  const ProbId = document.querySelector('div.problem_box > h3').innerText.replace(/\..*$/, '').trim();
+  const problemNum = document.querySelector('div.problem_box > h3').innerText.replace(/\..*$/, '').trim();
   const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
   const code = document.querySelector('#textSource').value;
 
-  return { ProbId, contestProbId, code };
+  return { problemNum, contestProbId, code };
 }
 
 
@@ -43,7 +81,7 @@ async function parseData() {
     .trim();
   // 문제 난이도, 번호, 인덱스, 링크
   const level = document.querySelector('div.problem_box > p.problem_title > span.badge')?.textContent || 'Unrated';
-  const problemId = document.querySelector('body > div.container > div.container.sub > div > div.problem_box > p').innerText.split('.')[0].trim();
+  const problemNum = document.querySelector('body > div.container > div.container.sub > div > div.problem_box > p').innerText.split('.')[0].trim();
   const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
   const link = `${window.location.origin}/main/code/problem/problemDetail.do?contestProbId=${contestProbId}`;
 
@@ -71,7 +109,7 @@ async function parseData() {
   // const code = data.code;
   // console.log('파싱 완료');
 
-  return { link, language, problemId, level, title,  runtime, memory, length,submissionTime };
+  return { link, language, problemNum, level, title,  runtime, memory, length,submissionTime };
 } 
 
 // async function updateProblemData(problemId, obj) {
@@ -96,3 +134,4 @@ async function parseData() {
 //     return data;
 //   });
 // }
+

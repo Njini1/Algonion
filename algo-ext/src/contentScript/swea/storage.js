@@ -1,4 +1,4 @@
-import { codeInfo, problemData } from './parsing';
+// import { codeInfo, problemData } from './parsing';
 
-console.log(codeInfo);
-console.log(problemData);
+// console.log(codeInfo);
+// console.log(problemData);
