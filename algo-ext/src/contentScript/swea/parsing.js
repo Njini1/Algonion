@@ -19,8 +19,8 @@ export async function parseCode() {
   const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
   updateTextSourceEvent();
   const code = document.querySelector('#textSource').value;
-  await updateProblemData(problemNum, { code, contestProbId });
-  console.log('im not here')
+  const a = await updateProblemData(problemNum, { code, contestProbId });
+  console.log(a)
   
   return { problemNum, contestProbId };
 }

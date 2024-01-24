@@ -13,7 +13,6 @@ export async function saveObjectInLocalStorage(obj) {
     return new Promise((resolve, reject) => {
         try {
             chrome.storage.local.set(obj, function () {
-                console.log('is set to' + obj)
                 resolve();
             });
         } catch (ex) {
@@ -41,11 +40,13 @@ export async function getProblemData(problemNum) {
 export async function updateProblemData(problemNum, obj) {
     return getObjectFromLocalStorage('swea').then((data) => {
         if (isNull(data[problemNum])) 
+        console.log(obj)
         data[problemNum] = {};
         data[problemNum] = { ...data[problemNum], ...obj, save_date: Date.now() };
-    
+        console.log(data)
         // 기존에 저장한 문제 중 일주일이 경과한 문제 내용들은 모두 삭제합니다.
         const date_week_ago = Date.now() - 7 * 86400000;
+        console.log(date_week_ago)
         for (const [key, value] of Object.entries(data)) {
             // 무한 방치를 막기 위해 저장일자가 null이면 삭제
             if (isNull(value) || isNull(value.save_date)) {

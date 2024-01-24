@@ -29,7 +29,6 @@ async function combineParsedData() {
 function startLoader() {
   loader = setInterval(async () => {
     console.log('Ready to parse')
-    // console.log(loader)
     // 제출 후 채점하기 결과가 성공적으로 나왔다면 코드를 파싱하고,
     // 결과 페이지로 안내한다.
     if (getSolvedResult().includes('pass입니다')) {
