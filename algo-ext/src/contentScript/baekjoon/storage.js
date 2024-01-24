@@ -34,7 +34,7 @@ export function saveData(table) {
     getSubmissionCode(baekjoonInfo.submissionId).then(res => {
         baekjoonInfo.submissionCode = res;
     });
-    
+
     getProblem(baekjoonInfo.problemNum).then(res => {
         baekjoonInfo.problemTitle = res[0];
         baekjoonInfo.problemCategory = res[1];

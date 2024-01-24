@@ -8,7 +8,7 @@ console.log("[E1I5] 백준 문제 페이지 입니다");
 const username = findUsername();
 const resultUsername = findResultUsername(url);
 
-if (username === resultUsername) {
+// if (username === resultUsername) {
     const lastResultCategory = document.querySelector('.result-text');
 
     const status = document.querySelector('.result-text').dataset.color;
@@ -16,4 +16,4 @@ if (username === resultUsername) {
 
     mutationObserver(lastResultCategory);
 
-}
+// }
