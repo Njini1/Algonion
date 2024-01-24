@@ -1,7 +1,7 @@
 
 import { baekjoonInfo } from "./storage.js";
 import { parsingResultTableList, parsingCorrectResultTable } from "./submission.js";
-import { saveData, uploadData } from "./storage.js";
+import { saveData, uploadData} from "./storage.js";
 
 export let resultTableList = []
 

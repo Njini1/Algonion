@@ -4,7 +4,7 @@ import { bj_level } from "./variable.js"
 import { default as axios } from "axios";
 
 const api = import.meta.env.VITE_BACKEND;
-console.log("[E1I5] 백준 문제 페이지 입니다");
+
 
 export let baekjoonInfo = {
     "submissionId": null,
@@ -43,9 +43,13 @@ export function saveData(table) {
 }
 
 export function uploadData(data) {
-    // await fetch(`${api}/api/v1/solved-problems/baekjoon`, {
+    // fetch(`${api}/api/v1/solved-problems/baekjoon`, {
     //     method: 'POST',
+    // })
+    // .then(res => {
+    //     console.log("[ALGO] 업로드 성공");
     // });
+
 
     axios.post(`${api}/api/v1/solved-problems/baekjoon`, data)
     .then(res => {
