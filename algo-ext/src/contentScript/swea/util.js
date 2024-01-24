@@ -1,3 +1,7 @@
+export function isNull(value) {
+  return value === null || value === undefined;
+}
+
 function startUpload() {
   let elem = document.getElementById('AlgoHub_progress_anchor_element');
   if (elem !== undefined) {

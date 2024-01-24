@@ -20,14 +20,10 @@ if (currentUrl.includes('/main/solvingProblem/solvingProblem.do') && document.qu
 }
 
 async function combineParsedData() {
-  try { 
     const ProbData = await parseData();
     console.log(ProbData);
     // 이제 ProbData와 ProbCodedata를 함께 사용할 수 있습니다.
     // await beginUpload(bojData);
-  } catch (error) {
-    console.error(error);
-  }
 }
 
 function startLoader() {
@@ -37,12 +33,12 @@ function startLoader() {
     // 제출 후 채점하기 결과가 성공적으로 나왔다면 코드를 파싱하고,
     // 결과 페이지로 안내한다.
     if (getSolvedResult().includes('pass입니다')) {
-      console.log('정답이 나왔습니다. 코드를 파싱합니다');
+      console.log('정답입니다. 코드를 파싱합니다');
       stopLoader();
       try {
         console.log('try code parsing')
         const ProbCodedata = await parseCode();
-        
+
         console.log(ProbCodedata)
         console.log(ProbCodedata.contestProbId)
         // prettier-ignore
@@ -77,7 +73,6 @@ function stopLoader() {
 //     console.log('cachedSHA', cachedSHA, 'calcSHA', calcSHA)
 //     if (cachedSHA == calcSHA) {
 //       markUploadedCSS(stats.branches, bojData.directory);
-//       console.log(`현재 제출번호를 업로드한 기록이 있습니다. problemIdID ${bojData.problemId}`);
 //       return;
 //     }
 //     /* 신규 제출 번호라면 새롭게 커밋  */
