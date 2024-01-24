@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SolvedProblemRequest {
+
     private String submissionId; //제출번호
     private String problemId; //문제번호
     private String problemTitle; //문제 제목

@@ -25,23 +25,23 @@ public class ProblemController {
     ProblemService problemService;
 
     @PostMapping("/baekjoon")
-    public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
-        log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
-        problemService.saveSolvedProblem(problem, "boj");
+    public ResponseEntity<String> saveBojProblem(@RequestBody SolvedProblemRequest request) throws Exception {
+        log.info("ProblemController 백준 SolvedProblemRequest problem: {}", request.toString());
+        problemService.saveSolvedProblem(request, "boj");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/programmers")
-    public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
-        log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
-        problemService.saveSolvedProblem(problem, "programmers");
+    public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest request) throws Exception {
+        log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", request.toString());
+        problemService.saveSolvedProblem(request, "programmers");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/swea")
-    public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem) throws Exception {
-        log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
-        problemService.saveSolvedProblem(problem, "swea");
+    public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest request) throws Exception {
+        log.info("ProblemController SWEA SolvedProblemRequest problem: {}", request.toString());
+        problemService.saveSolvedProblem(request, "swea");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
