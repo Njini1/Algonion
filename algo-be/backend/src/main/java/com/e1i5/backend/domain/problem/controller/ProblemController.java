@@ -50,13 +50,13 @@ public class ProblemController {
 
 
 
-    @GetMapping("/mysolved")
-    public List<SolvedProblemResponse> getSolved(@RequestParam long username) throws Exception {
-        return problemService.getSolvedProblem(username);
-    }
-
-    @GetMapping("/mysolved/detail")
-    public SolvedProblemResponse getSolvedDetail(@RequestParam long username, long solvednum) throws Exception {
-        return problemService.getSolvedProblemDetail(username, solvednum);
+//    @GetMapping("/mysolved")
+//    public List<SolvedProblemResponse> getSolved(@RequestParam long username) throws Exception {
+//        return problemService.getSolvedProblem(username);
+//    }
+//
+//    @GetMapping("/mysolved/detail")
+//    public SolvedProblemResponse getSolvedDetail(@RequestParam long username, long solvednum) throws Exception {
+//        return problemService.getSolvedProblemDetail(username, solvednum);
     }
 }
