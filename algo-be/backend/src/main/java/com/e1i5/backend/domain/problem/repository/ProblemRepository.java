@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface ProblemRepository extends JpaRepository<Problem, Long> {
 //    List<SolvedProblem> findAllByUserNoAndVisible(long userNo, boolean visible);
 //    SolvedProblem findAllBySolvedProblemIdxAndUserNo(long solvedProblemIdx, long userNo);
-    Optional<Problem> findBySiteNameAndProblemNum(String siteName, Integer problemNum);
+    Optional<Problem> findBySiteNameAndProblemNum(String siteName, String problemNum);
 }

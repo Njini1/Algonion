@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 public class SolvedProblemRequest {
 
     private String submissionId; //제출번호
-    private String problemId; //문제번호
+    private String problemNum; //문제번호
     private String problemTitle; //문제 제목
-    private String problemLevel;
+    private String problemLevel; // 문제 난이도
     private String memory;
     private String runtime; //코드 실행 시간
     private String language; 
@@ -26,8 +26,9 @@ public class SolvedProblemRequest {
     private String url;
 
     public SolvedProblemRequest(String submissionId,
-                                String problemId,
+                                String problemNum,
                                 String problemTitle,
+                                String problemLevel,
                                 String memory,
                                 String runtime,
                                 String language,
@@ -36,8 +37,9 @@ public class SolvedProblemRequest {
                                 LocalDateTime submissionTime,
                                 String url) {
         this.submissionId = submissionId;
-        this.problemId = problemId;
+        this.problemNum = problemNum;
         this.problemTitle = problemTitle;
+        this.problemLevel = problemLevel;
         this.memory = memory;
         this.runtime = runtime;
         this.language = language;
@@ -47,52 +49,52 @@ public class SolvedProblemRequest {
         this.url = url;
     }
 
-    public SolvedProblem toBojEntity(long userNo, String siteName) {
-        return SolvedProblem.builder()
-                .submissionId(submissionId)
-                .problemId(problemId)
-                .siteName(siteName)
-                .userNo(userNo)
-                .memory(memory)
-                .runtime(runtime)
-                .language(language)
-                .submissionCode(submissionCode)
-                .codeLength(codeLength)
-                .submissionTime(LocalDateTime.now())
-                .url(url)
-                .visible(true)
-                .build();
-    }
-
-    public SolvedProblem toSweaEntity(long userNo, String siteName) {
-        return SolvedProblem.builder()
-                .submissionId(submissionId)
-                .problemId(problemId)
-                .problemTitle(problemTitle)
-                .siteName(siteName)
-                .userNo(userNo)
-                .memory(memory)
-                .runtime(runtime)
-                .language(language)
-                .submissionCode(submissionCode)
-                .codeLength(codeLength)
-                .submissionTime(LocalDateTime.now())
-                .url(url)
-                .visible(true)
-                .build();
-    }
-
-    public SolvedProblem toProgrammersEntity(long userNo, String siteName) {
-        return SolvedProblem.builder()
-                .submissionId(submissionId)
-                .problemLevel(problemLevel)
-                .problemTitle(problemTitle)
-                .language(language)
-                .submissionCode(submissionCode)
-                .userNo(userNo)
-                .siteName(siteName)
-                .submissionTime(LocalDateTime.now())
-                .visible(true)
-                .build();
-    }
+//    public SolvedProblem toBojEntity(long userNo, String siteName) {
+//        return SolvedProblem.builder()
+//                .submissionId(submissionId)
+//                .problemId(problemId)
+//                .siteName(siteName)
+//                .userNo(userNo)
+//                .memory(memory)
+//                .runtime(runtime)
+//                .language(language)
+//                .submissionCode(submissionCode)
+//                .codeLength(codeLength)
+//                .submissionTime(LocalDateTime.now())
+//                .url(url)
+//                .visible(true)
+//                .build();
+//    }
+//
+//    public SolvedProblem toSweaEntity(long userNo, String siteName) {
+//        return SolvedProblem.builder()
+//                .submissionId(submissionId)
+//                .problemId(problemId)
+//                .problemTitle(problemTitle)
+//                .siteName(siteName)
+//                .userNo(userNo)
+//                .memory(memory)
+//                .runtime(runtime)
+//                .language(language)
+//                .submissionCode(submissionCode)
+//                .codeLength(codeLength)
+//                .submissionTime(LocalDateTime.now())
+//                .url(url)
+//                .visible(true)
+//                .build();
+//    }
+//
+//    public SolvedProblem toProgrammersEntity(long userNo, String siteName) {
+//        return SolvedProblem.builder()
+//                .submissionId(submissionId)
+//                .problemLevel(problemLevel)
+//                .problemTitle(problemTitle)
+//                .language(language)
+//                .submissionCode(submissionCode)
+//                .userNo(userNo)
+//                .siteName(siteName)
+//                .submissionTime(LocalDateTime.now())
+//                .visible(true)
+//                .build();
+//    }
 }

@@ -1,5 +1,6 @@
 package com.e1i5.backend.domain.problem.service;
 
+import com.e1i5.backend.domain.problem.entity.Problem;
 import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.exception.SolvedProblemNotFoundException;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProblemServiceImpl implements ProblemService {
@@ -30,17 +32,42 @@ public class ProblemServiceImpl implements ProblemService {
         //TODO 같은 문제 번호를 비교해 주고 제출번호 비교해서 없으면 저장으로 바꿔
         //TODO 문제번호 비교해서 점수 더하는 거도 추가해줘
 
-        switch (siteName) {
-            case "boj" :
-                problemRepository.save(problem.toBojEntity(1, siteName));
-                break;
-            case "swea" :
-                problemRepository.save(problem.toSweaEntity(1, siteName));
-                break;
-            case "programmers" :
-                problemRepository.save(problem.toProgrammersEntity(1, siteName));
-                break;
+        String problemName = request.getProblemTitle();
+        String problemNum = request.getProblemNum();
+
+        Optional<Problem> existingProblem = problemRepository.findBySiteNameAndProblemNum(siteName, problemNum);
+
+        Problem problem;
+        if (existingProblem.isPresent()) {
+            problem = existingProblem.get();
+        } else {
+            // If the problem doesn't exist, create a new one
+            problem = new Problem(siteName, problemNum);
+            problem.setSiteName(siteName);
+            problem.setProblemNum(problemNum);
+            problem.setProblemName(problemName);
+            // Set other attributes as needed
+            problem = problemRepository.save(problem);
         }
+
+        // Create and save SolvedProblem entity
+        SolvedProblem solvedProblem = new SolvedProblem(problem, request.getSubmissionId(), request.getLanguage());
+
+        solvedProblemRepository.save(solvedProblem);
+    }
+
+
+//        switch (siteName) {
+//            case "boj" :
+//                problemRepository.save(problem.toBojEntity(1, siteName));
+//                break;
+//            case "swea" :
+//                problemRepository.save(problem.toSweaEntity(1, siteName));
+//                break;
+//            case "programmers" :
+//                problemRepository.save(problem.toProgrammersEntity(1, siteName));
+//                break;
+//        }
 
     }
 

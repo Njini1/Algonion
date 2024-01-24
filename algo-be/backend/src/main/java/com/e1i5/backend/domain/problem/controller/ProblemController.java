@@ -58,5 +58,5 @@ public class ProblemController {
 //    @GetMapping("/mysolved/detail")
 //    public SolvedProblemResponse getSolvedDetail(@RequestParam long username, long solvednum) throws Exception {
 //        return problemService.getSolvedProblemDetail(username, solvednum);
-    }
+//    }
 }
