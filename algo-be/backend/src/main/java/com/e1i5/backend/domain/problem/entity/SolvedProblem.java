@@ -68,6 +68,9 @@ public class SolvedProblem {
         this.visible = visible;
     }
 
+    public SolvedProblem(Problem problem, String submissionId, String language) {
+    }
+
     public void updateMemo(String memo) {
         this.memo = memo;
     }

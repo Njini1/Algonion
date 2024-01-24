@@ -43,9 +43,6 @@ public class ProblemServiceImpl implements ProblemService {
         } else {
             // If the problem doesn't exist, create a new one
             problem = new Problem(siteName, problemNum);
-            problem.setSiteName(siteName);
-            problem.setProblemNum(problemNum);
-            problem.setProblemName(problemName);
             // Set other attributes as needed
             problem = problemRepository.save(problem);
         }
@@ -69,7 +66,7 @@ public class ProblemServiceImpl implements ProblemService {
 //                break;
 //        }
 
-    }
+//    }
 
     /**
      * 사용자가 문제 푼 데이터에서 메모 수정

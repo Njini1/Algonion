@@ -40,4 +40,7 @@ public class Problem {
         this.originLevel = originLevel;
         this.ourLevel = ourLevel;
     }
+
+    public Problem(String siteName, String problemNum) {
+    }
 }
