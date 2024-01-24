@@ -49,7 +49,6 @@ export default defineManifest({
         "https://swexpertacademy.com/*"
       ],
       js: [
-        "src/contentScript/swea/enable.js",
         "src/contentScript/swea/storage.js",
         "src/contentScript/swea/variables.js",
         "src/contentScript/swea/util.js",

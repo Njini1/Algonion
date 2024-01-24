@@ -1,17 +1,37 @@
-// 문제 풀고나서 코드 파싱 (로컬스토리지 저장 제외)
-async function parseCode() {
+import { getNickname } from './util';
+
+/**
+ * 문제 내 데이터를 가져옵니다.
+ * @param {string} problemId 문제 번호
+ * @returns {object} 문제 내 데이터
+ */
+let loader;
+
+const currentUrl = window.location.href;
+
+
+export function getSolvedResult() {
+  return document.querySelector('div.popup_layer.show > div > p.txt')?.innerText.trim().toLowerCase() || '';
+}
+
+function stopLoader() {
+  clearInterval(loader);
+}
+
+export async function parseCode() {
     
   const problemNum = document.querySelector('div.problem_box > h3').innerText.replace(/\..*$/, '').trim();
   const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
   const code = document.querySelector('#textSource').value;
-
+  
   return { problemNum, contestProbId, code };
 }
 
 
-async function parseData() {
-  if (getNickname() !== nickname) return;
+export async function parseData() {
   const nickname = document.querySelector('#Beginner').textContent;
+
+  if (getNickname() !== nickname) return;
 
   // 문제 제목
   const title = document
@@ -35,22 +55,13 @@ async function parseData() {
   // 제출날짜
   const submissionTime = document.querySelector('.smt_txt > dd').textContent.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/g)[0];
 
-  // 로컬스토리지에서 기존 코드에 대한 정보를 불러올 수 없다면 코드 디테일 창으로 이동 후 제출하도록 이동
-  // const data = await getProblemData(problemId);
+    // 기존 문제 데이터를 로컬스토리지에 저장하고 코드 보기 페이지로 이동
+  const contestHistoryId = document.querySelector('div.box-list > div > div > span > a').href.replace(/^.*'(.*)'.*$/, '$1');
+    // console.error('소스코드 데이터가 없습니다.');
   
-  // console.log('data', data);
-  // if (isNull(data?.code)) {
-  //   // 기존 문제 데이터를 로컬스토리지에 저장하고 코드 보기 페이지로 이동
-  //   await updateProblemData(problemId, { level, contestProbId, link, language, memory, runtime, length, extension });
-  //   const contestHistoryId = document.querySelector('div.box-list > div > div > span > a').href.replace(/^.*'(.*)'.*$/, '$1');
-  //   window.location.href = `${window.location.origin}/main/solvingProblem/solvingProblem.do?contestProbId=${contestProbId}`;
-  //   console.error('소스코드 데이터가 없습니다.');
-  //   return;
-  // }
-  // const code = data.code;
-  // console.log('파싱 완료');
+  console.log('파싱 완료');
 
-  return { link, language, problemNum, level, title,  runtime, memory, length,submissionTime };
+  return { link, language, problemNum, level, title, runtime, memory, length, submissionTime };
 } 
 
 // async function updateProblemData(problemId, obj) {
