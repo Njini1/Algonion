@@ -1,17 +1,17 @@
 server:
   ssl:
-    key-store-password: ssafyalgo
+    key-store-password: ssafyalgo!
     key-store-type: PKCS12
     enabled: 'true'
     key-store: classpath:keystore/ssafy.p12
     key-alias: ssafy
-  port: '8443'
+  port: '443'
   http:
     port: '8080'
 trust:
   store:
     nodeValue: classpath:keystore/ssafy.p12
-    password: ssafyalgo
+    password: ssafyalgo!
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

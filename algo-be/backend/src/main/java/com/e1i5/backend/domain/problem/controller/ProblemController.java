@@ -15,7 +15,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/v1/solved-problem")
+@RequestMapping("api/v1/solved-problems")
 @Slf4j
 public class ProblemController {
 
@@ -46,10 +46,6 @@ public class ProblemController {
     }
 
 
-
-
-
-
     @GetMapping("/mysolved")
     public List<SolvedProblemResponse> getSolved(@RequestParam long username) throws Exception {
         return problemService.getSolvedProblem(username);
@@ -58,5 +54,10 @@ public class ProblemController {
     @GetMapping("/mysolved/detail")
     public SolvedProblemResponse getSolvedDetail(@RequestParam long username, long solvednum) throws Exception {
         return problemService.getSolvedProblemDetail(username, solvednum);
+    }
+
+    @GetMapping("/test")
+    public void test() {
+        System.out.println("test success!");
     }
 }
