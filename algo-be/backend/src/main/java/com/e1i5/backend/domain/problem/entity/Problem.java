@@ -34,10 +34,10 @@ public class Problem {
         this.problemIdx = problemIdx;
         this.siteName = siteName;
         this.problemNum = problemNum;
-        this.problemTitle = (problemTitle != null) ? problemTitle : "기본 제목";
-        this.url = (url != null) ? url : "기본 URL";
-        this.originLevel = (originLevel != null) ? originLevel : "기본 원본 레벨";
-        this.ourLevel = (ourLevel != null) ? ourLevel : "기본 우리 레벨";
+        this.problemTitle = problemTitle;
+        this.url = url;
+        this.originLevel = originLevel;
+        this.ourLevel = ourLevel;
     }
 
 }
