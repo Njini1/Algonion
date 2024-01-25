@@ -3,6 +3,7 @@ package com.e1i5.backend.domain.problem.controller;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemResponse;
 import com.e1i5.backend.domain.problem.service.ProblemService;
+import com.e1i5.backend.domain.problem.service.WebClientServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,6 @@ public class ProblemController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
     @GetMapping("/mysolved")
     public List<SolvedProblemResponse> getSolved(@RequestParam long username) throws Exception {
         return problemService.getSolvedProblem(username);
@@ -59,5 +59,11 @@ public class ProblemController {
     @GetMapping("/test")
     public void test() {
         System.out.println("test success!");
+    }
+
+    @GetMapping("/test2")
+    public void test2() {
+        WebClientServiceImpl service = new WebClientServiceImpl();
+        service.get();
     }
 }

@@ -50,6 +50,7 @@ public class ProblemServiceImpl implements ProblemService {
         SolvedProblem problem = problemRepository.findById(idx).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //추후 상태코드로 변경
         problem.updateMemo(memo);
     }
+    //dirty checking 티어랑 점수 update해주는거 보기
 
     @Override
     public List<SolvedProblemResponse> getSolvedProblem(long userId) throws Exception {

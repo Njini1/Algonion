@@ -2,6 +2,10 @@ package com.e1i5.backend.domain.problem.request;
 
 import lombok.*;
 
+
+//TODO !!!!!!!!!!!!!이거는 지울 예정 쓰지마세요!!!!!!!!!!!!!
+//참조하고 있는 파일이 있어서 내버려 두었습니다 나중에 다 제거할 예정입니다 ㅎㅎ
+
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -11,8 +15,7 @@ public class WillDeleteSolvedProblemRequest {
     private String title;
     private String selectedLanguage;
     private String code;
-
-    //TODO toEntity 참고 (수정 필요)
+    
 //    public SolvedProblem toEntity(long name) {
 //        return SolvedProblem.builder()
 //                .problemNum(problemNum)

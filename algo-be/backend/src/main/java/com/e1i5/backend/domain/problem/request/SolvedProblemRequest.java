@@ -24,6 +24,7 @@ public class SolvedProblemRequest {
     private LocalDateTime submissionTime; //제출한 시간
     private String url;
 
+    @Builder
     public SolvedProblemRequest(String submissionId,
                                 String problemId,
                                 String problemTitle,
