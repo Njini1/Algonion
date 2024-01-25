@@ -15,7 +15,6 @@ if (currentUrl.includes('/main/solvingProblem/solvingProblem.do') && document.qu
 //  console.log(currentUrl)
 } else if (currentUrl.includes('/main/code/problem/problemSolver.do')) {
   // 제출 이후에 정답(결과) 페이지
-  console.log("111")
   combineParsedData();
 }
 

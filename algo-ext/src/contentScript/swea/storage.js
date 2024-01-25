@@ -6,9 +6,7 @@ getObjectFromLocalStorage('swea')
     .then((data) => {
         console.log(data);
         if (isNull(data)) {
-            saveObjectInLocalStorage({ swea: {} })
-            console.log('getting obj from local storage')
-                ;
+            saveObjectInLocalStorage({ swea: {} })                ;
         }
     });
 
@@ -39,13 +37,17 @@ export async function getObjectFromLocalStorage(key) {
 }
 
 export async function getProblemData(problemNum) {
-    return getObjectFromLocalStorage('swea').then((data) => data[problemNum]);
+    return getObjectFromLocalStorage('swea').then((data) => {
+        const check = data['swea']
+        console.log(check)
+        data[problemNum]
+    });
 }
 
 export async function updateProblemData(problemNum, obj) {
     return getObjectFromLocalStorage('swea').then((data) => {
-        console.log(problemNum)
-        if (isNull(data[problemNum])) data[problemNum] = {};
+        console.log(data)
+        if (isNull(data)) data[problemNum] = {};
         data[problemNum] = { ...data[problemNum], ...obj, save_date: Date.now() };
 
         saveObjectInLocalStorage({ swea: data });

@@ -61,6 +61,7 @@ export async function parseData() {
   // 제출날짜
   const submissionTime = document.querySelector('.smt_txt > dd').textContent.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/g)[0];
   const data = await getProblemData(problemNum);
+  console.log(data)
 
     // 기존 문제 데이터를 로컬스토리지에 저장하고 코드 보기 페이지로 이동
   await updateProblemData(problemNum, { level, contestProbId, link, language, memory, runtime, length });
