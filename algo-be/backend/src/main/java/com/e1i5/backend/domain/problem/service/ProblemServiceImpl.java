@@ -40,17 +40,27 @@ public class ProblemServiceImpl implements ProblemService {
         Problem problem;
         if (existingProblem.isPresent()) {
             problem = existingProblem.get();
+
         } else {
-            // If the problem doesn't exist, create a new one
-            problem = new Problem(siteName, problemNum);
+            System.out.println("else 들어옴");
+             // If the problem doesn't exist, create a new one
+//            problem = new Problem(siteName, problemNum);
+//            System.out.println(problem);
+//            System.out.println(siteName);
+//            System.out.println(problemNum);
             // Set other attributes as needed
-            problem = problemRepository.save(problem);
+//            Problem test = Problem.builder().siteName(siteName).problemNum(problemNum).build();
+//            System.out.println("problem: " + problem.toString());
+            problem = Problem.builder().siteName(siteName).problemNum(problemNum).build();
+            problemRepository.save(problem);
+            System.out.println("else3 들어옴");
         }
 
         // Create and save SolvedProblem entity
-        SolvedProblem solvedProblem = new SolvedProblem(problem, request.getSubmissionId(), request.getLanguage());
+        SolvedProblem saveV = SolvedProblem.builder().problem(problem).submissionId(request.getSubmissionId()).language(request.getLanguage()).build();
+//        SolvedProblem solvedProblem = new SolvedProblem(problem, request.getSubmissionId(), request.getLanguage());
 
-        solvedProblemRepository.save(solvedProblem);
+        solvedProblemRepository.save(saveV);
     }
 
 

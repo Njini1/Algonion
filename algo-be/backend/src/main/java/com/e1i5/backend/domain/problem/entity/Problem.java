@@ -1,10 +1,7 @@
 package com.e1i5.backend.domain.problem.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "problem")
@@ -30,17 +27,17 @@ public class Problem {
     @Column
     private String ourLevel;
 
+
+
     @Builder
     public Problem(long problemIdx, String siteName, String problemNum, String problemTitle, String url, String originLevel, String ourLevel) {
         this.problemIdx = problemIdx;
         this.siteName = siteName;
         this.problemNum = problemNum;
-        this.problemTitle = problemTitle;
-        this.url = url;
-        this.originLevel = originLevel;
-        this.ourLevel = ourLevel;
+        this.problemTitle = (problemTitle != null) ? problemTitle : "기본 제목";
+        this.url = (url != null) ? url : "기본 URL";
+        this.originLevel = (originLevel != null) ? originLevel : "기본 원본 레벨";
+        this.ourLevel = (ourLevel != null) ? ourLevel : "기본 우리 레벨";
     }
 
-    public Problem(String siteName, String problemNum) {
-    }
 }

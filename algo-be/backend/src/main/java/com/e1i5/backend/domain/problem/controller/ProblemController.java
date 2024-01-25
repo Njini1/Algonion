@@ -27,7 +27,7 @@ public class ProblemController {
     @PostMapping("/baekjoon")
     public ResponseEntity<String> saveBojProblem(@RequestBody SolvedProblemRequest request) throws Exception {
         log.info("ProblemController 백준 SolvedProblemRequest problem: {}", request.toString());
-        problemService.saveSolvedProblem(request, "boj");
+        problemService.saveSolvedProblem(request, "baekjoon");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
