@@ -49,9 +49,9 @@ export default defineManifest({
         "https://swexpertacademy.com/*"
       ],
       js: [
+        "src/contentScript/swea/util.js",
         "src/contentScript/swea/storage.js",
         "src/contentScript/swea/variables.js",
-        "src/contentScript/swea/util.js",
         "src/contentScript/swea/parsing.js",
         "src/contentScript/swea/swexpertacademy.js",
       ],
@@ -64,7 +64,7 @@ export default defineManifest({
   web_accessible_resources: [
     {
       resources: [
-        // "library/jquery-3.3.1.min.js",
+        // "library/jquery-3.5.0.min.js",
         // "library/semantic.min.js",
         // "popup.html",
         // "popup.js",

@@ -63,12 +63,11 @@ export async function parseData() {
   const data = await getProblemData(problemNum);
 
     // 기존 문제 데이터를 로컬스토리지에 저장하고 코드 보기 페이지로 이동
-  await updateProblemData(problemNum, { level, contestProbId, link, language, memory, runtime, length, extension });
+  await updateProblemData(problemNum, { level, contestProbId, link, language, memory, runtime, length });
     // console.error('소스코드 데이터가 없습니다.');
   
   const code = data.code;
-
-  console.log('파싱 완료');
+  console.log('파싱 완료', code);
 
   return { link, language, problemNum, level, title, runtime, code, memory, length, submissionTime };
 } 
