@@ -32,7 +32,6 @@ public class ProblemServiceImpl implements ProblemService {
         //TODO 같은 문제 번호를 비교해 주고 제출번호 비교해서 없으면 저장으로 바꿔
         //TODO 문제번호 비교해서 점수 더하는 거도 추가해줘
 
-        String problemName = request.getProblemTitle();
         String problemNum = request.getProblemNum();
 
         Optional<Problem> existingProblem = problemRepository.findBySiteNameAndProblemNum(siteName, problemNum);
@@ -40,27 +39,37 @@ public class ProblemServiceImpl implements ProblemService {
         Problem problem;
         if (existingProblem.isPresent()) {
             problem = existingProblem.get();
-
         } else {
-            System.out.println("else 들어옴");
-             // If the problem doesn't exist, create a new one
-//            problem = new Problem(siteName, problemNum);
-//            System.out.println(problem);
-//            System.out.println(siteName);
-//            System.out.println(problemNum);
+
             // Set other attributes as needed
-//            Problem test = Problem.builder().siteName(siteName).problemNum(problemNum).build();
 //            System.out.println("problem: " + problem.toString());
-            problem = Problem.builder().siteName(siteName).problemNum(problemNum).build();
+            // TODO: ourlevel 변환 필요
+            problem = Problem.builder()
+                    .siteName(siteName)
+                    .problemNum(problemNum)
+                    .problemTitle(request.getProblemTitle())
+                    .url(request.getUrl())
+                    .originLevel(request.getProblemLevel())
+                    .ourLevel(request.getProblemLevel())
+                    .build();
             problemRepository.save(problem);
-            System.out.println("else3 들어옴");
         }
 
         // Create and save SolvedProblem entity
-        SolvedProblem saveV = SolvedProblem.builder().problem(problem).submissionId(request.getSubmissionId()).language(request.getLanguage()).build();
-//        SolvedProblem solvedProblem = new SolvedProblem(problem, request.getSubmissionId(), request.getLanguage());
+        // TODO: userNo 제공해줘야함
+        SolvedProblem solvedProblem = SolvedProblem.builder()
+                .problem(problem)
+                .submissionId(request.getSubmissionId())
+                .submissionCode(request.getSubmissionCode())
+                .memo(request.getMemo())
+                .language(request.getLanguage())
+                .memory(request.getMemory())
+                .runtime(request.getRuntime())
+                .codeLength(request.getCodeLength())
+                .submissionTime(request.getSubmissionTime())
+                .build();
 
-        solvedProblemRepository.save(saveV);
+        solvedProblemRepository.save(solvedProblem);
     }
 
 

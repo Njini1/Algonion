@@ -53,7 +53,18 @@ public class SolvedProblem {
     private boolean visible;
 
     @Builder
-    public SolvedProblem(long solvedProblemIdx, Problem problem, long userNo, String submissionId, String submissionCode, String memo, String language, String memory, String runtime, String codeLength, LocalDateTime submissionTime, boolean visible) {
+    public SolvedProblem(long solvedProblemIdx,
+                         Problem problem,
+                         long userNo,
+                         String submissionId,
+                         String submissionCode,
+                         String memo,
+                         String language,
+                         String memory,
+                         String runtime,
+                         String codeLength,
+                         LocalDateTime submissionTime,
+                         boolean visible) {
         this.solvedProblemIdx = solvedProblemIdx;
         this.problem = problem;
         this.userNo = userNo;

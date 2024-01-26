@@ -17,7 +17,8 @@ public class SolvedProblemRequest {
     private String problemNum; //문제번호
     private String problemTitle; //문제 제목
     private String problemLevel; // 문제 난이도
-    private String memory;
+    private String memo; // 메모
+    private String memory; // 답안 메모리
     private String runtime; //코드 실행 시간
     private String language; 
     private String submissionCode; //내가 푼 코드
@@ -29,6 +30,7 @@ public class SolvedProblemRequest {
                                 String problemNum,
                                 String problemTitle,
                                 String problemLevel,
+                                String memo,
                                 String memory,
                                 String runtime,
                                 String language,
@@ -40,6 +42,7 @@ public class SolvedProblemRequest {
         this.problemNum = problemNum;
         this.problemTitle = problemTitle;
         this.problemLevel = problemLevel;
+        this.memo = memo;
         this.memory = memory;
         this.runtime = runtime;
         this.language = language;
@@ -48,6 +51,22 @@ public class SolvedProblemRequest {
         this.submissionTime = submissionTime;
         this.url = url;
     }
+
+//    public SolvedProblem toSolvedProblemEntity(long userNo, String siteName) {
+//        return SolvedProblem.builder()
+//                .submissionId(submissionId)
+//                .submissionCode(submissionCode)
+//                .memo(memo)
+//                .language(language)
+//                .memory(memory)
+//                .runtime(runtime)
+//                .codeLength(codeLength)
+//                .submissionTime(LocalDateTime.now())
+//                .visible(true)
+//                .build();
+//    }
+
+
 
 //    public SolvedProblem toBojEntity(long userNo, String siteName) {
 //        return SolvedProblem.builder()
