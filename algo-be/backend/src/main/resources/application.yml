@@ -5,7 +5,7 @@ server:
     enabled: 'true'
     key-store: classpath:keystore/ssafy.p12
     key-alias: ssafy
-  port: '8443'
+  port: '443'
   http:
     port: '8080'
 trust:
