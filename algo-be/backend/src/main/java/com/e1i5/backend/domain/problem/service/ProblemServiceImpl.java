@@ -59,7 +59,7 @@ public class ProblemServiceImpl implements ProblemService {
                                 uriBuilder
                                         .path("/api/v3/search/problem")
                                         .queryParam("query", "")
-                                        .queryParam("page", "1")
+                                        .queryParam("page", problemNum)
                                         .build())
                         .retrieve()
                         .bodyToMono(Map.class)
@@ -84,12 +84,12 @@ public class ProblemServiceImpl implements ProblemService {
             }
 
             String url = BOJ_URL + Integer.toString(problemId);
-            System.out.println("ProblemId : " + problemId);
-            System.out.println("Title : " + titleKo);
-            System.out.println("Level : " + level);
-            System.out.println("AlgoGroup : " + algoGroup);
-            System.out.println("url : https://www.acmicpc.net/problem/" + Integer.toString(problemId));
-            System.out.println("====================================================");
+//            System.out.println("ProblemId : " + problemId);
+//            System.out.println("Title : " + titleKo);
+//            System.out.println("Level : " + level);
+//            System.out.println("AlgoGroup : " + algoGroup);
+//            System.out.println("url : https://www.acmicpc.net/problem/" + Integer.toString(problemId));
+//            System.out.println("====================================================");
 
             // 1. 문제 저장 -> 이미 있는 값은 레벨만 변경, 없으면 새로 저장
             Problem problem = Problem.builder()
@@ -97,6 +97,7 @@ public class ProblemServiceImpl implements ProblemService {
                     .problemTitle(titleKo)
                     .problemLevel(Integer.toString(level))
                     .url(url).build();
+            problem.updateSiteName(ProblemSite.BAEKJOON.getProblemSite());
             Problem newProblem = saveOrUpdateProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
 
             // 2. 문제의 인덱스를 가지고 문제 알고리즘 분류
