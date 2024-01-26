@@ -2,13 +2,13 @@ import { isNull } from "./util";
 /*
     로컬스토리지에 swea 객체가 없는 경우 생성
 */
-getObjectFromLocalStorage('swea')
-    .then((data) => {
-        console.log(data);
-        if (isNull(data)) {
-            saveObjectInLocalStorage({ swea: {} })                ;
-        }
-    });
+// getObjectFromLocalStorage('swea')
+//     .then((data) => {
+//         console.log(data);
+//         if (isNull(data)) {
+//             saveObjectInLocalStorage({ swea: {} })                ;
+//         }
+//     });
 
 
 export async function saveObjectInLocalStorage(obj) {
