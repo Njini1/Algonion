@@ -1,5 +1,6 @@
 package com.e1i5.backend.domain.problem.service;
 
+import com.e1i5.backend.domain.problem.model.entity.AlgoGroup;
 import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.exception.SolvedProblemNotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -115,14 +117,26 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public List<SolvedProblemListResponse> getSolvedProblemListByUser() {
         //TODO 페이징 처리
+        //TODO 사용자 정보 추가
         List<SolvedProblemListResponse> solvedProblemList = new ArrayList<>();
-        List<SolvedProblem> allByUserUserId = solvedProblemRepo.findAllByUser_UserId(1);
+        List<SolvedProblem> solvedProblemListEntity = solvedProblemRepo.findAllByUser_UserId(2);
 
-        if (allByUserUserId.isEmpty()) return solvedProblemList;
+        if (solvedProblemListEntity.isEmpty()) return solvedProblemList;
 
-        for (SolvedProblem solvedProblem : allByUserUserId) {
-            solvedProblemList.add(SolvedProblemListResponse.builder().solvedProblem(solvedProblem).build());
+        for (SolvedProblem solvedProblem : solvedProblemListEntity) {
+            // 분류 값 추가
+            List<AlgoGroup> algoGroups = solvedProblem.getProblem().getAlgoGroup();
+            List<String> classifications = algoGroups.stream()
+                    .map(AlgoGroup::getClassification)
+                    .collect(Collectors.toList());
+
+            SolvedProblemListResponse solvedProblemListResponse = SolvedProblemListResponse.builder()
+                    .solvedProblem(solvedProblem)
+                    .classification(classifications)
+                    .build();
+            solvedProblemList.add(solvedProblemListResponse);
         }
+
         return solvedProblemList;
     }
 

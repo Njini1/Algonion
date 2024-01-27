@@ -19,7 +19,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/v1/solved-problem")
+@RequestMapping("api/v1/solved-problems")
 @Slf4j
 public class ProblemController {
 

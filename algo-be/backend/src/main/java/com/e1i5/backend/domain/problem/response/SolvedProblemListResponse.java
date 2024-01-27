@@ -1,9 +1,11 @@
 package com.e1i5.backend.domain.problem.response;
 
+import com.e1i5.backend.domain.problem.model.entity.AlgoGroup;
 import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @ToString
@@ -17,11 +19,11 @@ public class SolvedProblemListResponse {
     private LocalDateTime submissionTime; //제출한 시간
     private String url;
 //    private Problem problem;
-//    private AlgoGroup algoGroup;
+    private List<String> classification;
 
 
     @Builder
-    public SolvedProblemListResponse(SolvedProblem solvedProblem) {
+    public SolvedProblemListResponse(SolvedProblem solvedProblem,List<String> classification) {
         this.siteName = solvedProblem.getProblem().getSiteName();
         this.problemNum = solvedProblem.getProblem().getProblemNum();
         this.problemTitle = solvedProblem.getProblem().getProblemTitle();
@@ -29,5 +31,7 @@ public class SolvedProblemListResponse {
         this.language = solvedProblem.getProblem().getProblemLevel();
         this.submissionTime = solvedProblem.getSubmissionTime();
         this.url = solvedProblem.getProblem().getUrl();
+        this.classification = classification;
     }
+
 }
