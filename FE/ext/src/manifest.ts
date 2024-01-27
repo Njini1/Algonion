@@ -1,5 +1,5 @@
 import { defineManifest } from '@crxjs/vite-plugin'
-import packageData from '../package.json'
+import packageData from '../package.json' assert { type: 'json' }
 
 export default defineManifest({
   name: packageData.name,
@@ -22,10 +22,36 @@ export default defineManifest({
     service_worker: 'src/background/index.ts',
     type: 'module',
   },
+
+  declarative_net_request: {
+    rule_resources: [
+      {
+        id: 'ruleset',
+        enabled: true,
+        path: 'rules.json',
+      },
+    ],
+  },
   content_scripts: [
     {
       matches: ['http://*/*', 'https://*/*'],
       js: ['src/contentScript/index.ts'],
+    },
+    {
+      matches: ['https://www.acmicpc.net/*'],
+      js: [
+        'src/contentScript/baekjoon/baekjoon.js',
+        'src/contentScript/baekjoon/user.js',
+        'src/contentScript/baekjoon/submission.js',
+        'src/contentScript/baekjoon/storage.js',
+        'src/contentScript/baekjoon/util.js',
+      ],
+      run_at: 'document_idle',
+    },
+    {
+      matches: ['https://school.programmers.co.kr/learn/courses/30/lessons/*'],
+      js: ['src/contentScript/programmers/getPageInfo.ts'],
+      run_at: 'document_idle',
     },
   ],
   side_panel: {
@@ -37,8 +63,20 @@ export default defineManifest({
       matches: [],
     },
   ],
-  permissions: ['sidePanel', 'storage'],
-  chrome_url_overrides: {
-    newtab: 'newtab.html',
-  },
+  permissions: [
+    'sidePanel',
+    'storage',
+    'declarativeNetRequest',
+    'declarativeNetRequestWithHostAccess',
+  ],
+  host_permissions: [
+    'https://www.acmicpc.net/',
+    'https://school.programmers.co.kr/',
+    'https://github.com/',
+    'https://swexpertacademy.com/',
+    'https://solved.ac/api/v3/*',
+  ],
+  // chrome_url_overrides: {
+  //   newtab: 'newtab.html',
+  // },
 })
