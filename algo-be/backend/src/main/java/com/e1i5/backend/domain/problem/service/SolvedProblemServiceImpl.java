@@ -9,6 +9,7 @@ import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
+import com.e1i5.backend.domain.problem.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Transactional
     @Override
     public void saveSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
-
+        //TODO 사용자 정보 추가
+        //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
         User user = User.builder().userId(2).nickname("hi").email("email22").build();
 //        User testUser = userRepository.save(user); //임의로 사용자 저장
 
@@ -51,14 +53,13 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
 //        saveSolvedProblem(solvedProblemReq, problem);
 
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
-                .ifPresentOrElse( // orElseGet으로?
+                .ifPresentOrElse( //TODO orElseGet으로?
                         solvedProblem -> {
                             log.info("ProblemServiceImpl saveSolvedProblem already exist solvedProblem");
                             System.out.println("이미 푼 문제가 존재");
                         },
                         () -> saveSolvedProblem(solvedProblemReq, user, problem)
                 );
-
     }
 
     /**
@@ -71,6 +72,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, User user, Problem problem) {
         //TODO 문제번호 비교해서 점수 더하는 거도 추가해줘
+        //TODO solvedProblemReq말고 Entity로 바꾼 값으로 매개변수 받는 거로 변경? 고민
         SolvedProblem solvedProblemEntity = solvedProblemReq.toSolvedProblemEntity();
         solvedProblemEntity.updateUserAndProblem(user, problem);
         solvedProblemRepo.save(solvedProblemEntity);
@@ -118,8 +120,9 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     public List<SolvedProblemListResponse> getSolvedProblemListByUser() {
         //TODO 페이징 처리
         //TODO 사용자 정보 추가
+        //TODO visible true인것만 보이게 추가
         List<SolvedProblemListResponse> solvedProblemList = new ArrayList<>();
-        List<SolvedProblem> solvedProblemListEntity = solvedProblemRepo.findAllByUser_UserId(2);
+        List<SolvedProblem> solvedProblemListEntity = solvedProblemRepo.findAllByUser_UserIdAndVisible(2, true);
 
         if (solvedProblemListEntity.isEmpty()) return solvedProblemList;
 
@@ -151,5 +154,17 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected solvedProblem"));
         return SolvedProblemDetailResponse.builder()
                 .solvedProblem(solvedProblem).build();
+    }
+
+    /**
+     * 스트릭 만드는 메서드
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<StreakResponseInterface> makeStreak(int userId) {
+        //TODO 사용자가 푼 문제를 어떤 식으로 카운트할지 -> 같은 문제라도 언어가 다르면 문제 카운트 + 1을 할지, 아니면 같은 문제 하나로 취급할지
+        List<StreakResponseInterface> streak = solvedProblemRepo.findSubmissionTimeAndCountByUserId(2);
+        return streak;
     }
 }

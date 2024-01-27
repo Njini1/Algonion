@@ -1,10 +1,10 @@
 package com.e1i5.backend.domain.problem.controller;
 
 import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
-import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
+import com.e1i5.backend.domain.problem.response.StreakResponseInterface;
 import com.e1i5.backend.domain.problem.service.ProblemService;
 import com.e1i5.backend.domain.problem.service.SolvedProblemService;
 import lombok.extern.slf4j.Slf4j;
@@ -70,19 +70,42 @@ public class ProblemController {
      * @return 사용자가 푼 문제 데이터
      */
     @GetMapping("/mysolved/detail")
-    public SolvedProblemDetailResponse getSolvedDetail(@RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId){
+    public ResponseEntity<SolvedProblemDetailResponse> getSolvedDetail(@RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId){
         //TODO 현재 로그인한 사람과 같은지 검사
-        return solvedProblemService.getSolvedProblemDetail(username, solvedProblemId);
+        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.getSolvedProblemDetail(username, solvedProblemId);
+        return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
     }
 
+    /**
+     * 사용자가 푼 문제 메모 수정
+     * @param username 사용자 이름
+     * @param solvedProblemId 수정할 문제 인덱스
+     * @param memo 수정할 메모
+     * @return 수정한 푼 문제 데이터
+     */
     @PutMapping("/mysolved")
-    public SolvedProblemDetailResponse updateSolvedProblemMemo(@RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId, String memo){
-        return solvedProblemService.updateSolvedProblem(solvedProblemId, memo);
+    public ResponseEntity<SolvedProblemDetailResponse> updateSolvedProblemMemo(@RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId, String memo){
+        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateSolvedProblem(solvedProblemId, memo);
+        return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
     }
 
+    /**
+     * solved.ac에서 데이터 받아와서 분류하고 저장하는 메서드
+     */
     // TODO solved.ac test
     @GetMapping("/solved-ac")
     public void saveSolvedAcApiProblem() {
         problemService.saveBojProblemAndClassification(2);
+    }
+
+    /**
+     * 스트릭 만드는 메서드
+     * @param username
+     * @return 날짜와 그 날짜에 푼 문제 개수 리스트 반환
+     */
+    @GetMapping("/streak")
+    public ResponseEntity<List<StreakResponseInterface>> getStreak(@RequestParam("username") String username) {
+        List<StreakResponseInterface> streakResponses = solvedProblemService.makeStreak(2);
+        return new ResponseEntity<>(streakResponses, HttpStatus.OK);
     }
 }
