@@ -1,5 +1,5 @@
 import { getNickname } from './util';
-import { getProblemData, updateProblemData } from './storage';
+import { getProblemData, removeObjectFromLocalStorage, updateProblemData } from './storage';
 /**
  * 문제 내 데이터를 가져옵니다.
  * @param {string} problemNum 문제 번호
@@ -35,7 +35,7 @@ function updateTextSourceEvent() {
 }
 
 export async function parseData() {
-  const nickname = document.querySelector('#Beginner').textContent;
+  const nickname = document.querySelector('#searchinput').value;
 
   if (getNickname() !== nickname) return;
 
@@ -65,8 +65,9 @@ export async function parseData() {
 
     // 기존 문제 데이터를 로컬스토리지에 저장하고 코드 보기 페이지로 이동
   await updateProblemData(problemNum, { level, contestProbId, link, language, memory, runtime, length });
-    // console.error('소스코드 데이터가 없습니다.');
   
+
+
   const code = data.code;
   console.log('파싱 완료', code);
 

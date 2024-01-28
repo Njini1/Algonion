@@ -35,6 +35,18 @@ export async function getObjectFromLocalStorage(key) {
         }
     });
 }
+export async function updateProblemData(problemNum, obj) {
+    return getObjectFromLocalStorage('swea').then((data) => {
+        console.log(data)
+        if (isNull(data)) data = { swea: {} };
+        if (!data.swea) data.swea = {};
+        data.swea[problemNum] = obj;
+        
+        saveObjectInLocalStorage({ swea: data });
+        console.log(data)
+        return data;
+    });
+}
 
 export async function getProblemData(problemNum) {
     return getObjectFromLocalStorage('swea').then((data) => {
@@ -44,18 +56,6 @@ export async function getProblemData(problemNum) {
     });
 }
 
-export async function updateProblemData(problemNum, obj) {
-    return getObjectFromLocalStorage('swea').then((data) => {
-        console.log(data)
-        if (isNull(data)) data[problemNum] = {};
-        data[problemNum] = { ...data[problemNum], ...obj, save_date: Date.now() };
-
-        saveObjectInLocalStorage({ swea: data });
-        console.log(data)
-
-        return data;
-    });
-}
 
 export async function removeObjectFromLocalStorage(keys) {
     return new Promise((resolve, reject) => {
