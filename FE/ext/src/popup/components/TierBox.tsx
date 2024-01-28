@@ -1,10 +1,10 @@
-import { motion } from 'framer-motion';
+import { Variants, motion } from 'framer-motion';
 import getAsset from '../utils/getAsset';
 import classes from './TierBox.module.scss';
 
-export function TierBox() {
+export function TierBox(props: { item: Variants | undefined; }) {
   return (
-    <div className={classes.box}>
+    <motion.div className={classes.box} variants={props.item}>
       {/* <img src={getAsset('tier/star_master.svg')} alt="tier-master" /> */}
       <motion.img
         src={getAsset('tier/star_master.svg')}
@@ -24,6 +24,6 @@ export function TierBox() {
           <p className={classes.tier}>MASTER</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

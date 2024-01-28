@@ -1,7 +1,8 @@
+import { Variants, motion } from 'framer-motion';
 import classes from './StreakBox.module.scss';
-export function StreakBox() {
+export function StreakBox(props: { item: Variants | undefined }) {
   return (
-    <div className={classes.box}>
+    <motion.div className={classes.box} variants={props.item}>
       <p className={classes.title}>연속</p>
       <p className={classes.continuous}>
         <strong>5일 째🔥</strong>
@@ -20,7 +21,7 @@ export function StreakBox() {
           더보기
         </a>
       </div>
-    </div>
+    </motion.div>
   );
 }
 export default StreakBox;
