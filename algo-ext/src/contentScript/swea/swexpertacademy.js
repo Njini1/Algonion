@@ -1,4 +1,5 @@
 import {parseCode, parseData} from './parsing'
+import { getNickname } from './util';
 // import { makeSubmitButton } from './util';
 // import { getNickname } from './util';
 /* 
@@ -10,7 +11,6 @@ let loader;
 const currentUrl = window.location.href;
 
 if (currentUrl.includes('/main/solvingProblem/solvingProblem.do') && document.querySelector('header > h1 > span').textContent === '모의 테스트') {
-  // 코드 제출하는 페이지
  startLoader();
 //  console.log(currentUrl)
 } else if (currentUrl.includes('/main/code/problem/problemSolver.do')) {
@@ -38,10 +38,18 @@ function startLoader() {
         console.log('try code parsing')
         const ProbCodedata = await parseCode();
 
-        console.log(ProbCodedata)
         console.log(ProbCodedata.contestProbId)
-        // prettier-ignore
-        // window.location.href = `${window.location.origin}/main/code/problem/problemSolver.do?contestProbId=${ProbCodedata.contestProbId}`; 
+
+        // const a = document.querySelector("body > div.popup_layer.show > div > div > a");
+
+        // a.addEventListener("click", function() {
+          // 버튼을 클릭하면 해당 URL로 이동한다.
+          window.location.href = `${window.location.origin}`
+            + `/main/code/problem/problemSolver.do?`
+            + `contestProbId=${ProbCodedata.contestProbId}&`
+            + `nickName=${getNickname()}&`;
+        // });
+
         // makeSubmitButton(`${window.location.origin}`
         //   + `/main/code/problem/problemSolver.do?`
         //   + `contestProbId=${contestProbId}&`
