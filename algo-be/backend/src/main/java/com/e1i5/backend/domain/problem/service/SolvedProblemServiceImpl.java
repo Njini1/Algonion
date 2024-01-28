@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,7 +47,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     public void saveSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
-        User user = User.builder().userId(2).nickname("hi").email("email22").build();
+        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email22").build();
 //        User testUser = userRepository.save(user); //임의로 사용자 저장
 
         Problem problem = saveOrGetProblem(solvedProblemReq, siteName);

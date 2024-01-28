@@ -5,36 +5,65 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
-@Entity
-@Table(name = "users")
-@Getter
+import java.util.UUID;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+@Getter
+@Entity
+public class User{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "id", updatable = false)
     private int userId;
 
-    @Column(name = "nickname")
+    @Column(name = "nickname", unique = false)
     private String nickname;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "user_uuid"/*, nullable = false*/, columnDefinition = "BINARY(16)")
+    private UUID userUuid;
+
+//    @Enumerated(value = EnumType.STRING)
+//    private Platform flatform;
+
+    @Column(length = 500)
+    private String refreshToken;
+
+//    @Builder
+//    public User(int userId, String nickname, String email, String refreshToken) {
+//        this.userId = userId;
+//        this.nickname = nickname;
+//        this.email = email;
+//        this.refreshToken = refreshToken;
+//    }
+
     @Builder
-    public User(int userId, String nickname, String email) {
-        this.userId = userId;
+    public User(String nickname, String email, UUID userUuid, String refreshToken) {
         this.nickname = nickname;
         this.email = email;
+        this.userUuid = userUuid;
+        this.refreshToken = refreshToken;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", nickname='" + nickname + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+    public User update(String nickname) {
+        this.nickname = nickname;
+        return this;
+    }
+
+    public User updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+        return this;
+    }
+
+    public User updateUuid(UUID uuid) {
+        this.userUuid = uuid;
+        return this;
     }
 }
