@@ -10,9 +10,11 @@ export const Popup = () => {
   return (
     <main className="container">
       <TierBox />
-      <LogoBox />
-      <TodayBox />
-      <div className="box"></div>
+      <div>
+        <LogoBox />
+        <TodayBox />
+        <div className="box"></div>
+      </div>
       <StreakBox />
     </main>
   );
