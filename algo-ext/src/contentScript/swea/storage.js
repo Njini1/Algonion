@@ -11,9 +11,10 @@ import { isNull } from "./util";
 
 export async function saveObjectInLocalStorage(obj) {
     return new Promise((resolve, reject) => {
+        console.log('local save')
         try {
             chrome.storage.local.set(obj, function () {
-                resolve();
+                resolve('set success');
             });
         } catch (ex) {
             reject(ex);
@@ -25,7 +26,40 @@ export async function getObjectFromLocalStorage(key) {
     return new Promise((resolve, reject) => {
         try {
             chrome.storage.local.get(key, function (value) {
-                resolve(value[key]);
+                resolve(value);
+            });
+        } catch (ex) {
+            reject(ex);
+        }
+    });
+}
+export async function updateProblemData(problemNum, obj) {
+    return getObjectFromLocalStorage('swea').then((data) => {
+        console.log(data)
+        if (isNull(data)) data = { swea: {} };
+        if (!data.swea) data.swea = {};
+        data.swea[problemNum] = obj;
+        
+        saveObjectInLocalStorage({ swea: data });
+        console.log(data)
+        return data;
+    });
+}
+
+export async function getProblemData(problemNum) {
+    return getObjectFromLocalStorage('swea').then((data) => {
+        const check = data['swea']
+        console.log(check)
+        data[problemNum]
+    });
+}
+
+
+export async function removeObjectFromLocalStorage(keys) {
+    return new Promise((resolve, reject) => {
+        try {
+            chrome.storage.local.remove(keys, function () {
+                resolve();
             });
         } catch (ex) {
             reject(ex);

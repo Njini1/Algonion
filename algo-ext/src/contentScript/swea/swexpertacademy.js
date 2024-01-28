@@ -13,17 +13,18 @@ const currentUrl = window.location.href;
 if (currentUrl.includes('/main/solvingProblem/solvingProblem.do') && document.querySelector('header > h1 > span').textContent === '모의 테스트') {
  startLoader();
 //  console.log(currentUrl)
-} else if (currentUrl.includes('/main/code/problem/problemSolver.do')) {
+} else if (currentUrl.includes('/main/code/problem/problemSolver.do') && currentUrl.includes('&nickname=')) {
   // 제출 이후에 정답(결과) 페이지
-  console.log("111")
   combineParsedData();
 }
 
 async function combineParsedData() {
-    const ProbData = await parseData();
-    console.log(ProbData);
-    // 이제 ProbData와 ProbCodedata를 함께 사용할 수 있습니다.
-    // await beginUpload(bojData);
+  const ProbData = await parseData();
+  console.log(ProbData);
+  // 이제 ProbData와 ProbCodedata를 함께 사용할 수 있습니다.
+  // await beginUpload(bojData);
+  // 서버로 데이터를 전송하고 localstrage에 있는 데이터 삭제
+  await removeObjectFromLocalStorage(problemNum)
 }
 
 function startLoader() {
