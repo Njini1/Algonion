@@ -1,10 +1,11 @@
+import classes from './TodayBox.module.scss';
 export function TodayBox() {
   return (
-    <div className="today-box">
-      <p className="today-title">TODAY</p>
-      <div className="today-solved">
-        <p className="today-solved-count1">15</p>
-        <p className="today-solved-count2">문제</p>
+    <div className={classes.box}>
+      <p className={classes.title}>오늘</p>
+      <div className={classes.solved}>
+        <strong className={classes.count1}>15</strong>
+        <span className={classes.count2}>문제</span>
       </div>
     </div>
   );
