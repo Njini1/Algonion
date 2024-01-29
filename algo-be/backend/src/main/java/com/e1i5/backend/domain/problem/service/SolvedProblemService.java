@@ -15,6 +15,7 @@ public interface SolvedProblemService {
     void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, User user, Problem problem);
     Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName);
     SolvedProblemDetailResponse updateSolvedProblem(int solvedProblemId, String memo);
+    SolvedProblemDetailResponse updateVisibility(int solvedProblemId);
     List<SolvedProblemListResponse> getSolvedProblemListByUser();
     SolvedProblemDetailResponse getSolvedProblemDetail(int username, int solvedProblemId);
     List<StreakResponseInterface> makeStreak(int userId);

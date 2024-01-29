@@ -135,6 +135,20 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     }
 
     /**
+     * 사용자가 문제 푼 데이터에서 메모 수정
+     * @param solvedProblemId  수정할 문제 인덱스
+     */
+    @Transactional
+    @Override
+    public SolvedProblemDetailResponse updateVisibility(int solvedProblemId) {
+        SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
+        solvedProblem.updateVisible(!solvedProblem.isVisible());
+        SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);
+        return SolvedProblemDetailResponse.builder()
+                .solvedProblem(saveProblem).build();
+    }
+
+    /**
      * 사용자가 푼 문제 리스트 반환하는 함수
      *
      * @return 사용자가 푼 문제 리스트

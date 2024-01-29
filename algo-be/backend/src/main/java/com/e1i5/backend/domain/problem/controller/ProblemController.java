@@ -97,8 +97,8 @@ public class ProblemController {
      * @return 수정한 푼 문제 데이터
      */
     @PutMapping("/visible")
-    public ResponseEntity<SolvedProblemDetailResponse> updateVisibility(@RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId, @RequestParam("visible") boolean visible) {
-        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateVisibility(solvedProblemId, visible);
+    public ResponseEntity<SolvedProblemDetailResponse> updateVisibility(@RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId) {
+        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateVisibility(solvedProblemId);
         return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
     }
 

@@ -76,6 +76,10 @@ public class SolvedProblem {
         this.memo = memo;
     }
 
+    public void updateVisible(boolean visible) {
+        this.visible = visible;
+    }
+
     public void updateUserAndProblem(User user, Problem problem) {
 
         this.user = user;
