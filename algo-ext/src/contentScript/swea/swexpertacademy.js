@@ -19,6 +19,7 @@ if (currentUrl.includes('/main/solvingProblem/solvingProblem.do') && document.qu
 }
 
 async function combineParsedData() {
+  console.log('11')
   const ProbData = await parseData();
   console.log(ProbData);
   // 이제 ProbData와 ProbCodedata를 함께 사용할 수 있습니다.
@@ -45,10 +46,10 @@ function startLoader() {
 
         // a.addEventListener("click", function() {
           // 버튼을 클릭하면 해당 URL로 이동한다.
-          window.location.href = `${window.location.origin}`
-            + `/main/code/problem/problemSolver.do?`
-            + `contestProbId=${ProbCodedata.contestProbId}&`
-            + `nickName=${getNickname()}&`;
+          // window.location.href = `${window.location.origin}`
+          //   + `/main/code/problem/problemSolver.do?`
+          //   + `contestProbId=${ProbCodedata.contestProbId}&`
+          //   + `nickName=${getNickname()}&`;
         // });
 
         // makeSubmitButton(`${window.location.origin}`
