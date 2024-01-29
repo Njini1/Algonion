@@ -1,0 +1,59 @@
+server:
+  ssl:
+    key-store-password: ssafyalgo
+    key-store-type: PKCS12
+    enabled: 'true'
+    key-store: classpath:keystore/ssafy.p12
+    key-alias: ssafy
+  port: '443'
+  http:
+    port: '8080'
+trust:
+  store:
+    nodeValue: classpath:keystore/ssafy.p12
+    password: ssafyalgo
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: algo
+    url: jdbc:mysql://localhost:3306/algo?serverTimezone=UTC
+    password: ssafyalgo!1@
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 654835900073-j0dfsqomert8kv80mb5ast7ebfb7gguc.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+          kakao:
+            # 앱 설정 -> 앱 키 -> REST API 키
+            client-id: 22e6c492ebd402646a35739869230bc9
+            # 제품 설정 -> 카카오 로그인 -> 보안 -> Client Secret
+            client-secret: ygElZ6Y4GVQfIkmozo8XhVEyIHc5PdEx
+            redirect-uri: https://localhost/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            client-authentication-method: client_secret_post
+            client-name: Kakao
+            scope:
+              - profile_nickname
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+jwt:
+  issuer: ajufresh@gmail.com
+  secret-key: ssafyalgo
+  access-token-expiration-time: 1800
+  refresh-token-expiration-time: 604800

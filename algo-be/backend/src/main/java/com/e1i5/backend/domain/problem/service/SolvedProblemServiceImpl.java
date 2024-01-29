@@ -11,6 +11,7 @@ import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
 import com.e1i5.backend.domain.problem.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.User;
+import com.e1i5.backend.domain.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,9 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Autowired
     ProblemRepository problemRepo;
 
+    @Autowired
+    UserRepository userRepository;
+
     /**
      * 사용자가 푼 문제 저장하는 메서드
      * : 푼 문제가 problem T에 존재하는 지 확인 후
@@ -44,11 +48,13 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Transactional
     @Override
-    public void saveSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+    public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
-        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email22").build();
+//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email").build();
 //        User testUser = userRepository.save(user); //임의로 사용자 저장
+//        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
+        Optional<User> user = userRepository.findById(1);
 
         Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
 //        saveSolvedProblem(solvedProblemReq, problem);
@@ -59,8 +65,24 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                             log.info("ProblemServiceImpl saveSolvedProblem already exist solvedProblem");
                             System.out.println("이미 푼 문제가 존재");
                         },
-                        () -> saveSolvedProblem(solvedProblemReq, user, problem)
+                        () -> saveSolvedProblem(solvedProblemReq, user.get(), problem)
                 );
+    }
+
+    @Transactional
+    @Override
+    public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+        //TODO 사용자 정보 추가
+        //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
+//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email").build();
+//        User testUser = userRepository.save(user); //임의로 사용자 저장
+//        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
+        Optional<User> user = userRepository.findById(1);
+
+        Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
+//        saveSolvedProblem(solvedProblemReq, problem);
+
+        saveSolvedProblem(solvedProblemReq, user.get(), problem);
     }
 
     /**

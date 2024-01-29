@@ -34,21 +34,21 @@ public class ProblemController {
     @PostMapping("/baekjoon")
     public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveSolvedProblemAndProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
+        solvedProblemService.saveBOJSolvedProblemAndProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/programmers")
     public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite());
+        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/swea")
     public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveSolvedProblemAndProblem(problem, ProblemSite.SWEA.getProblemSite());
+        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.SWEA.getProblemSite());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
