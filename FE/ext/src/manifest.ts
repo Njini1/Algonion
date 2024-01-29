@@ -41,10 +41,12 @@ export default defineManifest({
       matches: ['https://www.acmicpc.net/*'],
       js: [
         'src/contentScript/baekjoon/baekjoon.js',
+        'src/contentScript/baekjoon/observer.js',
         'src/contentScript/baekjoon/user.js',
         'src/contentScript/baekjoon/submission.js',
         'src/contentScript/baekjoon/storage.js',
         'src/contentScript/baekjoon/util.js',
+        'src/contentScript/baekjoon/variable.js',
       ],
       run_at: 'document_idle',
     },
@@ -53,6 +55,19 @@ export default defineManifest({
       js: ['src/contentScript/programmers/getPageInfo.ts'],
       run_at: 'document_idle',
     },
+    {
+      matches: [
+        "https://swexpertacademy.com/*"
+      ],
+      js: [
+        "src/contentScript/swea/util.js",
+        "src/contentScript/swea/storage.js",
+        "src/contentScript/swea/variables.js",
+        "src/contentScript/swea/parsing.js",
+        "src/contentScript/swea/swexpertacademy.js",
+      ],
+      run_at: "document_idle"
+    }
   ],
   side_panel: {
     default_path: 'sidepanel.html',
@@ -60,11 +75,14 @@ export default defineManifest({
   web_accessible_resources: [
     {
       resources: ['img/logo-16.png', 'img/logo-34.png', 'img/logo-48.png', 'img/logo-128.png'],
-      matches: [],
+      matches: [
+        "<all_urls>"
+      ],
     },
   ],
   permissions: [
     'sidePanel',
+    "unlimitedStorage",
     'storage',
     'declarativeNetRequest',
     'declarativeNetRequestWithHostAccess',
