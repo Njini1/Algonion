@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {parseCode, parseData} from './parsing'
 import { getNickname } from './util';
 // import { makeSubmitButton } from './util';
@@ -18,15 +19,6 @@ if (currentUrl.includes('/main/solvingProblem/solvingProblem.do') && document.qu
   combineParsedData();
 }
 
-async function combineParsedData() {
-  console.log('11')
-  const ProbData = await parseData();
-  console.log(ProbData);
-  // 이제 ProbData와 ProbCodedata를 함께 사용할 수 있습니다.
-  // await beginUpload(bojData);
-  // 서버로 데이터를 전송하고 localstrage에 있는 데이터 삭제
-  // await removeObjectFromLocalStorage(problemNum)
-}
 
 function startLoader() {
   loader = setInterval(async () => {
@@ -69,6 +61,9 @@ function startLoader() {
     const ProbData = await parseData();
     console.log(ProbData);
     // 이제 ProbData와 ProbCodedata를 함께 사용할 수 있습니다.
+    // axios.post(url, ProbData).then{
+    //   console.log(ProbData)
+    // }
     // await beginUpload(bojData);
     // 서버로 데이터를 전송하고 localstrage에 있는 데이터 삭제
     // await removeObjectFromLocalStorage(problemNum)
