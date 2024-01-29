@@ -1,4 +1,4 @@
-import {convertResultTableHeader, convertResultTableList, unescapeHtml, isNull, isEmpty} from "./util.js";
+import { isNull, isEmpty } from "./util.js";
 
 // 로그인된 유저의 이름을 가져오는 함수
 export function findUsername() {

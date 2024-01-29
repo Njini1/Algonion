@@ -1,93 +1,58 @@
-import {isNull, isEmpty} from "./util.js";
+import { getProblem, getSubmissionCode } from "./submission.js";
+import { bj_level } from "./variable.js"
 
-class TTLCacheStats {
-  constructor(name) {
-  this.name = name;
-  this.stats = null;
-  this.saveTimer = null;
-  }
+import { default as axios } from "axios";
 
-  async forceLoad() {
-  this.stats = await getStats();
-  if (isNull(this.stats[this.name])) {
-      this.stats[this.name] = {};
-  }
-  }
+const api = import.meta.env.VITE_BACKEND;
 
-  async load() {
-  if (this.stats === null) {
-      await this.forceLoad();
-  }
-  }
 
-  async save() {
-  // 부하가 많이 일어나는 것을 막기 위해 1초에 한번만 저장
-  if (this.saveTimer) {
-      clearTimeout(this.saveTimer);
-  }
-  this.saveTimer = setTimeout(async () => {
-      const clone = this.stats[this.name]; // 얇은 복사
-      console.log('Saving stats...', clone);
-      await this.forceLoad(); // 최신화
-      this.stats[this.name] = clone; // 업데이트
-      await saveStats(this.stats);
-      this.saveTimer = null;
-  }, 1000);
-  }
-
-  async expired() {
-  await this.load();
-  if (!this.stats[this.name].last_check_date) {
-      this.stats[this.name].last_check_date = Date.now();
-      this.save(this.stats);
-      log('Initialized stats date', this.stats[this.name].last_check_date);
-      return;
-  }
-
-  const date_yesterday = Date.now() - 86400000; // 1day
-  log('금일 로컬스토리지 정리를 완료하였습니다.');
-  if (date_yesterday < this.stats[this.name].last_check_date) return;
-
-  // 1 주가 지난 문제 내용은 삭제
-  const date_week_ago = Date.now() - 7 * 86400000;
-  log('stats before deletion', this.stats);
-  log('date a week ago', date_week_ago);
-  // eslint-disable-next-line no-restricted-syntax
-  for (const [key, value] of Object.entries(this.stats[this.name])) {
-      // 무한 방치를 막기 위해 저장일자가 null이면 삭제
-      if (!value || !value.save_date) {
-      delete this.stats[this.name][key];
-      } else {
-      const save_date = new Date(value.save_date);
-      // 1주가 지난 코드는 삭제
-      if (date_week_ago > save_date) {
-          delete this.stats[this.name][key];
-      }
-      }
-  }
-  this.stats[this.name].last_check_date = Date.now();
-  log('stats after deletion', this.stats);
-  await this.save();
-  }
-
-  async update(data) {
-  await this.expired();
-  await this.load();
-  this.stats[this.name][data.id] = {
-      ...data,
-      save_date: Date.now(),
-  };
-  log('date', this.stats[this.name][data.id].save_date);
-  log('stats', this.stats);
-  await this.save();
-  }
-
-  async get(id) {
-  await this.load();
-  const cur = this.stats[this.name];
-  if (isNull(cur)) return null;
-  return cur[id];
-  }
+export let baekjoonInfo = {
+    "submissionId": null,
+    "problemNum": null,
+    "memory": null,
+    "runtime": null,
+    "language": null,
+    "submissionCode": null,
+    "codeLength": null,
+    "submissionTime": null,
+    "url": null,
+    "problemTitle": null,
+    "problemCategory": null,
+    "problemLevel": null,
 }
 
-export const submitCodeCache = new TTLCacheStats('scode');
+export function saveData(table) {
+    baekjoonInfo.submissionId = table.submissionId;
+    baekjoonInfo.problemNum = table.problemId;
+    baekjoonInfo.memory = table.memory;
+    baekjoonInfo.runtime = table.runtime;
+    baekjoonInfo.language = table.language;
+    baekjoonInfo.codeLength = table.codeLength;
+    baekjoonInfo.submissionTime = table.submissionTime;
+    baekjoonInfo.url = `https://www.acmicpc.net/problem/${table.problemId}`;
+            
+    getSubmissionCode(baekjoonInfo.submissionId).then(res => {
+        baekjoonInfo.submissionCode = res;
+    });
+
+    getProblem(baekjoonInfo.problemNum).then(res => {
+        baekjoonInfo.problemTitle = res[0];
+        baekjoonInfo.problemCategory = res[1];
+        baekjoonInfo.problemLevel = [res[2], bj_level[res[2]]];
+    });
+}
+
+export function uploadData(data) {
+    // fetch(`${api}/api/v1/solved-problems/baekjoon`, {
+    //     method: 'POST',
+    // })
+    // .then(res => {
+    //     console.log("[ALGO] 업로드 성공");
+    // });
+
+
+    axios.post(`${api}/api/v1/solved-problems/baekjoon`, data)
+    .then(res => {
+        console.log("[ALGO] 업로드 성공");
+    });
+}
