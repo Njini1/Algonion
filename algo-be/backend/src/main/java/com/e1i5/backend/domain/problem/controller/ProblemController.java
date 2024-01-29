@@ -90,6 +90,19 @@ public class ProblemController {
     }
 
     /**
+     * 푼 문제 숨기기
+     * @param username 사용자 이름
+     * @param solvedProblemId 수정할 문제 인덱스
+     * @param visible 숨기기 여부
+     * @return 수정한 푼 문제 데이터
+     */
+    @PutMapping("/visible")
+    public ResponseEntity<SolvedProblemDetailResponse> updateVisibility(@RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId, @RequestParam("visible") boolean visible) {
+        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateVisibility(solvedProblemId, visible);
+        return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
+    }
+
+    /**
      * solved.ac에서 데이터 받아와서 분류하고 저장하는 메서드
      */
     // TODO solved.ac test

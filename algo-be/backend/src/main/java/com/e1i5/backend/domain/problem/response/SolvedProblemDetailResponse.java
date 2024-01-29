@@ -21,6 +21,7 @@ public class SolvedProblemDetailResponse {
     private LocalDateTime submissionTime; //제출한 시간
     private String url;
     private String memo;
+    private boolean visible;
 
     @Builder
     public SolvedProblemDetailResponse(SolvedProblem solvedProblem) {
@@ -36,5 +37,8 @@ public class SolvedProblemDetailResponse {
         this.submissionTime = solvedProblem.getSubmissionTime();
         this.url = solvedProblem.getProblem().getUrl();
         this.memo = solvedProblem.getMemo();
+        this.visible = solvedProblem.isVisible();
     }
+
+
 }
