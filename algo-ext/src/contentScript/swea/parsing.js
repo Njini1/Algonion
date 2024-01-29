@@ -19,6 +19,7 @@ export async function parseCode() {
   const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
   updateTextSourceEvent();
   const code = document.querySelector('#textSource').value;
+  console.log('go to update problem data')
   await updateProblemData(problemNum, { code, contestProbId });
   
   return { problemNum, contestProbId };
@@ -34,9 +35,9 @@ function updateTextSourceEvent() {
 }
 
 export async function parseData() {
-  const nickname = document.querySelector('#searchinput').value;
+  // const nickname = document.querySelector('#searchinput').value;
 
-  if (getNickname() !== nickname) return;
+  // if (getNickname() !== nickname) return;
 
   // 문제 제목
   const title = document
@@ -60,15 +61,15 @@ export async function parseData() {
   // 제출날짜
   const submissionTime = document.querySelector('.smt_txt > dd').textContent.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/g)[0];
   const data = await getProblemData(problemNum);
-  console.log(data)
-    // 기존 문제 데이터를 로컬스토리지에 저장하고 코드 보기 페이지로 이동
-  await updateProblemData(problemNum, { level, contestProbId, link, language, memory, runtime, length});
-    // console.error('소스코드 데이터가 없습니다.');
   
+    // 기존 문제 데이터를 로컬스토리지에 저장하고 코드 보기 페이지로 이동
+  // await updateProblemData(problemNum, { level, contestProbId, link, language, memory, runtime, length});
+    // console.error('소스코드 데이터가 없습니다.');
+  // chrome.storage.local.clear()
 
-
+  // console.log(data)
   const code = data.code;
-  console.log('파싱 완료', code);
+  // console.log('파싱 완료', code);
 
   return { link, language, problemNum, level, title, runtime, code, memory, length, submissionTime };
 } 
