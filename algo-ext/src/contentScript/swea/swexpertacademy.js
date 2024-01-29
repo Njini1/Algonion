@@ -32,17 +32,14 @@ function startLoader() {
         console.log('try code parsing')
         const ProbCodedata = await parseCode();
         
-        // console.log(ProbCodedata.contestProbId)
-        
-        // const a = document.querySelector("body > div.popup_layer.show > div > div > a");
-        
-        // a.addEventListener("click", function() {
-          // 버튼을 클릭하면 해당 URL로 이동한다.
+        setTimeout(() => {
+          // const el = document.querySelector("body > div.popup_layer.show > div > p");
+          // el.textContent += ' 5초후 결과페이지로 이동합니다';
           window.location.href = `${window.location.origin}`
-            + `/main/code/problem/problemSolver.do?`
-            + `contestProbId=${ProbCodedata.contestProbId}&`
-            + `nickName=${getNickname()}&`;
-          // });
+              + `/main/code/problem/problemSolver.do?`
+              + `contestProbId=${ProbCodedata.contestProbId}&`
+              + `nickName=${getNickname()}&`;
+        }, 6000);
           
           // makeSubmitButton(`${window.location.origin}`
           //   + `/main/code/problem/problemSolver.do?`
