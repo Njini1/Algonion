@@ -159,7 +159,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     public SolvedProblemDetailResponse getSolvedProblemDetail(int username, int solvedProblemId) {
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected solvedProblem"));
-        System.out.println("디테일 정보: " + solvedProblem.toString());
         return SolvedProblemDetailResponse.builder()
                 .solvedProblem(solvedProblem).build();
     }

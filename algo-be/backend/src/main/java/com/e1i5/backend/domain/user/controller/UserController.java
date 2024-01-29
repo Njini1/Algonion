@@ -1,26 +1,32 @@
-//package com.e1i5.backend.domain.user.controller;
-//
-//import lombok.extern.slf4j.Slf4j;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.web.bind.annotation.CrossOrigin;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RestController;
-//import org.springframework.web.multipart.MultipartFile;
-//
-//import java.io.File;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
-//
-//@CrossOrigin("*")
-//@RestController
-//@RequestMapping("api/v1")
-//@Slf4j
-//public class UserController {
-//
-//    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+package com.e1i5.backend.domain.user.controller;
+
+import com.e1i5.backend.domain.user.dto.request.CreateAccessTokenRequest;
+import com.e1i5.backend.domain.user.dto.response.CreateAccessTokenResponse;
+import com.e1i5.backend.domain.user.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+@CrossOrigin("*")
+@RestController
+@RequestMapping("api/v1/user")
+@Slf4j
+public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @Autowired
+    UserService userService;
 //    @Value("${file.path}")
 //    private String uploadPath;
 //
@@ -29,7 +35,7 @@
 //
 //    @Value("${file.path.upload-files}")
 //    private String uploadFilePath;
-//
+
 //    @PostMapping("/profile")
 //    public void saveUserProfile(MultipartFile profileImg) {
 //        if (profileImg != null) {
@@ -67,13 +73,14 @@
 //            return exceptionHandling(e);
 //        }
 //    }
-//
-////    @PostMapping("/token")
-////    public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(@RequestBody CreateAccessTokenRequest request) {
-////        String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
-////
-////        return ResponseEntity.status(HttpStatus.CREATED)
-////                .body(new CreateAccessTokenResponse(newAccessToken));
-////    }
-//
-//}
+
+    @PostMapping("/token")
+    public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(@RequestBody CreateAccessTokenRequest request) {
+//        String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
+        String newAccessToken = userService.createNewAccessToken(request.getRefreshToken());
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new CreateAccessTokenResponse(newAccessToken));
+    }
+
+}
