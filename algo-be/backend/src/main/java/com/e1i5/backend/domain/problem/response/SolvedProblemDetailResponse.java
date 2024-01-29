@@ -40,4 +40,6 @@ public class SolvedProblemDetailResponse {
         this.memo = solvedProblem.getMemo();
         this.visible = solvedProblem.isVisible();
     }
+
+
 }

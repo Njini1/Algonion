@@ -48,12 +48,13 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Transactional
     @Override
-    public void saveSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+    public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
-        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email").build();
-        User testUser = userRepository.save(user); //임의로 사용자 저장
-//        Optional<User> user = userRepository.findById(1);
+//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email").build();
+//        User testUser = userRepository.save(user); //임의로 사용자 저장
+//        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
+        Optional<User> user = userRepository.findById(1);
 
         Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
 //        saveSolvedProblem(solvedProblemReq, problem);
@@ -64,8 +65,24 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                             log.info("ProblemServiceImpl saveSolvedProblem already exist solvedProblem");
                             System.out.println("이미 푼 문제가 존재");
                         },
-                        () -> saveSolvedProblem(solvedProblemReq, user, problem)
+                        () -> saveSolvedProblem(solvedProblemReq, user.get(), problem)
                 );
+    }
+
+    @Transactional
+    @Override
+    public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+        //TODO 사용자 정보 추가
+        //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
+//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email").build();
+//        User testUser = userRepository.save(user); //임의로 사용자 저장
+//        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
+        Optional<User> user = userRepository.findById(1);
+
+        Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
+//        saveSolvedProblem(solvedProblemReq, problem);
+
+        saveSolvedProblem(solvedProblemReq, user.get(), problem);
     }
 
     /**
@@ -113,6 +130,20 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
 
         solvedProblem.updateMemo(memo);
+        SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);
+        return SolvedProblemDetailResponse.builder()
+                .solvedProblem(saveProblem).build();
+    }
+
+    /**
+     * 사용자가 문제 푼 데이터에서 visible 수정
+     * @param solvedProblemId  수정할 문제 인덱스
+     */
+    @Transactional
+    @Override
+    public SolvedProblemDetailResponse updateVisibility(int solvedProblemId) {
+        SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
+        solvedProblem.updateVisible(!solvedProblem.isVisible());
         SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);
         return SolvedProblemDetailResponse.builder()
                 .solvedProblem(saveProblem).build();

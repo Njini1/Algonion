@@ -10,10 +10,12 @@ import com.e1i5.backend.domain.user.entity.User;
 import java.util.List;
 
 public interface SolvedProblemService {
-    void saveSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName);
+    void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName);
+    void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName);
     void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, User user, Problem problem);
     Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName);
     SolvedProblemDetailResponse updateSolvedProblem(int solvedProblemId, String memo);
+    SolvedProblemDetailResponse updateVisibility(int solvedProblemId);
     List<SolvedProblemListResponse> getSolvedProblemListByUser();
     SolvedProblemDetailResponse getSolvedProblemDetail(int username, int solvedProblemId);
     List<StreakResponseInterface> makeStreak(int userId);

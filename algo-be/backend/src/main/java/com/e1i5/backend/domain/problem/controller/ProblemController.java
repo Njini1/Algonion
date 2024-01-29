@@ -34,23 +34,21 @@ public class ProblemController {
     @PostMapping("/baekjoon")
     public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
-        System.out.println("백준 data: " + problem);
-        solvedProblemService.saveSolvedProblemAndProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
+        solvedProblemService.saveBOJSolvedProblemAndProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/programmers")
     public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
-        System.out.println("프로그래머스");
-//        solvedProblemService.saveSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite());
+        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/swea")
     public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveSolvedProblemAndProblem(problem, ProblemSite.SWEA.getProblemSite());
+        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.SWEA.getProblemSite());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -88,6 +86,18 @@ public class ProblemController {
     @PutMapping("/mysolved")
     public ResponseEntity<SolvedProblemDetailResponse> updateSolvedProblemMemo(@RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId, String memo){
         SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateSolvedProblem(solvedProblemId, memo);
+        return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
+    }
+
+    /**
+     * 푼 문제 숨기기
+     * @param username 사용자 이름
+     * @param solvedProblemId 수정할 문제 인덱스
+     * @return 수정한 푼 문제 데이터
+     */
+    @PutMapping("/visible")
+    public ResponseEntity<SolvedProblemDetailResponse> updateVisibility(@RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId) {
+        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateVisibility(solvedProblemId);
         return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
     }
 
