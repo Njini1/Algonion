@@ -16,7 +16,8 @@ public class SolvedProblemListResponse {
     private String problemTitle; //문제 제목
     private String problemLevel;
     private String language;
-    private LocalDateTime submissionTime; //제출한 시간
+    private String submissionTime; //제출한 시간
+//    private LocalDateTime submissionTime; //제출한 시간
     private String url;
 //    private Problem problem;
     private List<String> classification;

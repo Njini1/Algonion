@@ -21,7 +21,8 @@ public class SolvedProblemRequest {
     private String submissionCode; //내가 푼 코드
     private String memo;
     private String codeLength; //코드 길이
-    private LocalDateTime submissionTime; //제출한 시간
+    private String submissionTime; //제출한 시간
+//    private LocalDateTime submissionTime; //제출한 시간
     private String url;
 
     public SolvedProblem toSolvedProblemEntity() {
@@ -32,7 +33,7 @@ public class SolvedProblemRequest {
                 .memo(memo)
                 .runtime(runtime)
                 .codeLength(codeLength)
-                .submissionTime(submissionTime)
+//                .submissionTime(submissionTime)
                 .visible(true).build();
     }
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/v1/solved-problems")
+@RequestMapping("/api/v1/solved-problems")
 @Slf4j
 public class ProblemController {
 
@@ -34,6 +34,7 @@ public class ProblemController {
     @PostMapping("/baekjoon")
     public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
+        System.out.println("백준 data: " + problem);
         solvedProblemService.saveSolvedProblemAndProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -41,7 +42,8 @@ public class ProblemController {
     @PostMapping("/programmers")
     public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite());
+        System.out.println("프로그래머스");
+//        solvedProblemService.saveSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -108,4 +110,10 @@ public class ProblemController {
         List<StreakResponseInterface> streakResponses = solvedProblemService.makeStreak(2);
         return new ResponseEntity<>(streakResponses, HttpStatus.OK);
     }
+    
+    @GetMapping("/test")
+    public ResponseEntity<Void> test() {
+        System.out.println("test입니당");
+        return new ResponseEntity<>(HttpStatus.OK);
+    };
 }

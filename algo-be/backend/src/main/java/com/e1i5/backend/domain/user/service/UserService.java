@@ -38,4 +38,8 @@ public class UserService {
         User user = userRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new AccessDeniedException("refresh token으로 사용자를 찾을 수 없음"));
         return tokenProvider.createAccessToken(user);
     }
+
+    public void saveUserProfile() {
+
+    }
 }

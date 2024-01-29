@@ -30,6 +30,10 @@ public class User{
     @Column(name = "user_uuid"/*, nullable = false*/, columnDefinition = "BINARY(16)")
     private UUID userUuid;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profile_id")
+    private UserProfile userProfile;
+
 //    @Enumerated(value = EnumType.STRING)
 //    private Platform flatform;
 

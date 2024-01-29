@@ -18,9 +18,11 @@ public class SolvedProblemDetailResponse {
     private String language;
     private String submissionCode; //내가 푼 코드
     private String codeLength; //코드 길이
-    private LocalDateTime submissionTime; //제출한 시간
+//    private LocalDateTime submissionTime; //제출한 시간
+    private String submissionTime;
     private String url;
     private String memo;
+    private boolean visible;
 
     @Builder
     public SolvedProblemDetailResponse(SolvedProblem solvedProblem) {
@@ -36,5 +38,6 @@ public class SolvedProblemDetailResponse {
         this.submissionTime = solvedProblem.getSubmissionTime();
         this.url = solvedProblem.getProblem().getUrl();
         this.memo = solvedProblem.getMemo();
+        this.visible = solvedProblem.isVisible();
     }
 }

@@ -29,12 +29,12 @@ public class SecurityConfig {
     private final UserRepository userRepository;
     private final UserService userService;
 
-    @Bean
-    public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring()
-//                .requestMatchers(toH2Console())
-                .requestMatchers("/img/**", "/css/**", "/js/**");
-    }
+//    @Bean
+//    public WebSecurityCustomizer configure() {
+//        return (web) -> web.ignoring()
+////                .requestMatchers(toH2Console())
+//                .requestMatchers("/img/**", "/css/**", "/js/**");
+//    }
 
 
     @Bean

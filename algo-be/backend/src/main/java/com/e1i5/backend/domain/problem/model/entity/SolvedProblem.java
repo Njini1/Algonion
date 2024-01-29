@@ -2,10 +2,7 @@ package com.e1i5.backend.domain.problem.model.entity;
 
 import com.e1i5.backend.domain.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "solved_problem")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class SolvedProblem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,13 +50,14 @@ public class SolvedProblem {
     private String codeLength;
 
     @Column(name = "submission_time")
-    private LocalDateTime submissionTime; //문제 푼 날짜,시간
+//    private LocalDateTime submissionTime; //문제 푼 날짜,시간
+    private String submissionTime;
 
     @Column(name = "visible")
     private boolean visible;
 
     @Builder
-    public SolvedProblem(String submissionId, User user, Problem problem, String language, String submissionCode, String memo, String memory, String runtime, String codeLength, LocalDateTime submissionTime, boolean visible) {
+    public SolvedProblem(String submissionId, User user, Problem problem, String language, String submissionCode, String memo, String memory, String runtime, String codeLength, String submissionTime, boolean visible) {
         this.submissionId = submissionId;
         this.user = user;
         this.problem = problem;
