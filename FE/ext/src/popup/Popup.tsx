@@ -29,11 +29,13 @@ const item = {
 export const Popup = () => {
   return (
     <motion.main className="container" variants={container} initial="hidden" animate="visible">
-      <TierBox item={item} />
-      <div>
-        <LogoBox item={item}/>
-        <TodayBox item={item}/>
-        <motion.div className="box" variants={item}></motion.div>
+      <div className="first-line">
+        <TierBox item={item} />
+        <div>
+          <LogoBox item={item} />
+          <TodayBox item={item} />
+          <motion.div className="box" variants={item}></motion.div>
+        </div>
       </div>
       <StreakBox item={item} />
     </motion.main>
