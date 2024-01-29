@@ -41,8 +41,10 @@ const parseData = () => {
 const modalMutationObserver = new MutationObserver((mutations) => {
   if (!mutations.length) return;
   const data = parseData();
+  console.log("보낼준비");
+  console.log(JSON.stringify(data));
   axios
-    .post(`${api}/programmers/programmers`, data)
+    .post(`${api}/api/v1/solved-problems/programmers`, data)
     .then((res) => {
       console.log('[ALGO] 업로드 성공');
     })
