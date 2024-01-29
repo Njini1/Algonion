@@ -1,3 +1,6 @@
+import { default as axios } from "axios";
+const api = import.meta.env.VITE_BACKEND;
+
 export function isNull(value) {
   return value === null || value === undefined;
 }
@@ -35,18 +38,33 @@ export function makeSubmitButton(link) {
   }
 }
 
-function markUploadedCSS(branches, directory) {
-  uploadState.uploading = false;
-  const elem = document.getElementById('BaekjoonHub_progress_elem');
-  elem.className = 'markuploaded';
-  const uploadedUrl = "https://github.com/" +
-              Object.keys(branches)[0] + "/tree/" + 
-              branches[Object.keys(branches)[0]] + "/" + directory;
-  elem.addEventListener("click", function() {
-    window.location.href = uploadedUrl;
+export function uploadData(data) {
+  // fetch(`${api}/api/v1/solved-problems/swea`, {
+  //     method: 'POST',
+  // })
+  // .then(res => {
+  //     console.log("[ALGO] 업로드 성공");
+  // });
+
+
+  axios.post(`${api}/api/v1/solved-problems/swea`, data)
+  .then(res => {
+      console.log("[ALGO] 업로드 성공");
   });
-  elem.style.cursor = "pointer";
 }
+
+// function markUploadedCSS(branches, directory) {
+//   uploadState.uploading = false;
+//   const elem = document.getElementById('BaekjoonHub_progress_elem');
+//   elem.className = 'markuploaded';
+//   const uploadedUrl = "https://github.com/" +
+//               Object.keys(branches)[0] + "/tree/" + 
+//               branches[Object.keys(branches)[0]] + "/" + directory;
+//   elem.addEventListener("click", function() {
+//     window.location.href = uploadedUrl;
+//   });
+//   elem.style.cursor = "pointer";
+// }
 
 export function getNickname() {
   return document.querySelector('#Beginner')?.innerText || document.querySelector('header > div > span.name')?.innerText || '';

@@ -1,6 +1,5 @@
-import axios from 'axios';
 import {parseCode, parseData} from './parsing'
-import { getNickname } from './util';
+import { getNickname, uploadData } from './util';
 // import { makeSubmitButton } from './util';
 // import { getNickname } from './util';
 /* 
@@ -58,13 +57,13 @@ function startLoader() {
   }
 
   async function combineParsedData() {
+    // parsecode를 localstorage에 저장하고 update하면서 데이터 합침
     const ProbData = await parseData();
     console.log(ProbData);
-    // 이제 ProbData와 ProbCodedata를 함께 사용할 수 있습니다.
-    // axios.post(url, ProbData).then{
-    //   console.log(ProbData)
-    // }
-    // await beginUpload(bojData);
+
+    // 데이터 서버로 전송
+    uploadData(ProbData)
+
     // 서버로 데이터를 전송하고 localstrage에 있는 데이터 삭제
     // await removeObjectFromLocalStorage(problemNum)
   }
