@@ -37,13 +37,12 @@ export function convertResultTableHeader(header) {
         return 'unknown';
     }
   }
-
 // 문제 제출 페이지의 테이블 내용을 분류하는 함수
-export function convertResultTableList(x, headerIndex) {
+export function convertResultTableList(x, headerIndex) {	  
     switch (headerIndex) {
         case 'result':
-            return { result: x.innerText.trim(), resultCategory: x.firstChild.getAttribute('data-color').replace('-eng', '').trim() };
-        case 'language':
+            return { result: x.innerText.trim(), resultCategory:  x.firstChild.getAttribute('data-color').replace('-eng', '').trim() };
+		case 'language':
             return x.innerText.unescapeHtml().replace(/\/.*$/g, '').trim();
         case 'submissionTime':
             const el = x.querySelector('a.show-date');
@@ -59,6 +58,7 @@ export function convertResultTableList(x, headerIndex) {
             return x.innerText.trim();
         }
 }
+
 
 // 코드를 문자로 변환하는 함수
 export function unescapeHtml(text) {
@@ -84,13 +84,3 @@ export function unescapeHtml(text) {
 String.prototype.unescapeHtml = function () {
     return unescapeHtml(this);
 };
-
-// 이미지에 상대 경로가 있을 수 있으므로 이미지 경로를 절대 경로로 전환하는 함수
-export async function convertImageTagAbsoluteURL() {
-    if(document !== null) return;
-    // img tag replace Relative URL to Absolute URL.
-    Array.from(document.getElementsByTagName('img'), (x) => {
-      x.setAttribute('src', x.currentSrc);
-      return x;
-    });
-  }
