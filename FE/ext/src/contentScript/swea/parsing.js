@@ -58,6 +58,9 @@ export async function parseData() {
   const runtime = document.querySelector('#problemForm div.info > ul > li:nth-child(3) > span:nth-child(1)').textContent.trim();
   const length = document.querySelector('#problemForm div.info > ul > li:nth-child(4) > span:nth-child(1)').textContent.trim();
 
+  // 정답률
+  // const correctRate = document.querySelector("body > div.container > div.container.sub > div > div.problem_infobox2 > div.info > ul > li:nth-child(4) > span:nth-child(1)").textContent;
+
   // 제출날짜
   const submissionTime = document.querySelector('.smt_txt > dd').textContent.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/g)[0];
   const data = await getProblemData(problemNum);
