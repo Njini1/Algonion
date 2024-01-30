@@ -20,8 +20,7 @@ public class AuthServiceImpl implements AuthService{
     private final AuthRepository authRepo;
     @Autowired
     private final TokenProvider tokenProvider;
-    @Autowired
-    private final UserProfileRepository userProfileRepo;
+
 
     public User findById(UUID userId) {
         return authRepo.findByUserUuid(userId)
@@ -44,9 +43,4 @@ public class AuthServiceImpl implements AuthService{
         return tokenProvider.createAccessToken(user);
     }
 
-    public void saveUserProfile(String originalFileName, String saveFileName) {
-        userProfileRepo.save(ProfileFileInfo.builder().
-                originalFile(originalFileName)
-                .saveFile(saveFileName).build());
-    }
 }
