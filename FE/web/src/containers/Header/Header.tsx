@@ -1,5 +1,5 @@
 import React from "react";
-import {Avatar} from "@nextui-org/react";
+// import {Avatar} from "@nextui-org/react";
 
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button } from "@nextui-org/react";
