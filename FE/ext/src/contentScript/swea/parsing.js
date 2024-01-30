@@ -40,14 +40,14 @@ export async function parseData() {
   // if (getNickname() !== nickname) return;
 
   // 문제 제목
-  const title = document
+  const problemTitle = document
     .querySelector('div.problem_box > p.problem_title')
     .innerText.replace(/ D[0-9]$/, '')
     .replace(/^[^.]*/, '')
     .substr(1)
     .trim();
   // 문제 난이도, 번호, 인덱스, 링크
-  const level = document.querySelector('div.problem_box > p.problem_title > span.badge')?.textContent || 'Unrated';
+  const problemLevel = document.querySelector('div.problem_box > p.problem_title > span.badge')?.textContent || 'Unrated';
   const problemNum = document.querySelector('body > div.container > div.container.sub > div > div.problem_box > p').innerText.split('.')[0].trim();
   const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
   const link = `${window.location.origin}/main/code/problem/problemDetail.do?contestProbId=${contestProbId}`;
@@ -56,7 +56,7 @@ export async function parseData() {
   const language = document.querySelector('#problemForm div.info > ul > li:nth-child(1) > span:nth-child(1)').textContent.trim();
   const memory = document.querySelector('#problemForm div.info > ul > li:nth-child(2) > span:nth-child(1)').textContent.trim().toUpperCase();
   const runtime = document.querySelector('#problemForm div.info > ul > li:nth-child(3) > span:nth-child(1)').textContent.trim();
-  const length = document.querySelector('#problemForm div.info > ul > li:nth-child(4) > span:nth-child(1)').textContent.trim();
+  const codeLength = document.querySelector('#problemForm div.info > ul > li:nth-child(4) > span:nth-child(1)').textContent.trim();
 
   // 정답률
   const correctRate = document.querySelector("body > div.container > div.container.sub > div > div.problem_infobox2 > div.info > ul > li:nth-child(4) > span:nth-child(1)").textContent;
@@ -71,8 +71,8 @@ export async function parseData() {
   // chrome.storage.local.clear()
 
   // console.log(data)
-  const code = data.code;
+  const submissionCode = data.code;
   // console.log('파싱 완료', code);
 
-  return { link, language, problemNum, level, title, runtime, code, memory, length, correctRate ,submissionTime };
+  return { link, language, problemNum, problemLevel, title, runtime, submissionCode, memory, codeLength, correctRate ,submissionTime };
 } 
