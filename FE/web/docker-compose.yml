@@ -1,0 +1,11 @@
+version: '3.2'
+services:
+  sample:
+    build:
+      context: .
+      dockerfile: DockerFile
+    ports:
+      - "5173:5173"
+    container_name: front
+    restart: always
+    image: ssafy10b108/algo-fe:test
