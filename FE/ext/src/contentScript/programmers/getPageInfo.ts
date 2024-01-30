@@ -8,39 +8,38 @@ const modalMutationOption = {
 };
 
 const parseData = () => {
-  const problemId = (document.querySelector('div.main > div.lesson-content') as HTMLDivElement).getAttribute(
+  const problemNum = (document.querySelector('div.main > div.lesson-content') as HTMLDivElement).getAttribute(
     'data-lesson-id',
   );
-  const level = (document.querySelector('body > div.main > div.lesson-content') as HTMLDivElement).getAttribute(
+  const problemLevel = (document.querySelector('body > div.main > div.lesson-content') as HTMLDivElement).getAttribute(
     'data-challenge-level',
   );
-  const title = (document.querySelector('body > div.main > div.lesson-content') as HTMLDivElement).getAttribute(
+  const problemTitle = (document.querySelector('body > div.main > div.lesson-content') as HTMLDivElement).getAttribute(
     'data-lesson-title',
   );
-  const selectedLanguage = (
+  const language = (
     document.querySelector('div.editor > ul > li.nav-item > a') as HTMLAnchorElement
   ).getAttribute('data-language');
-  const code = (document.querySelector('textarea#code') as HTMLTextAreaElement).value;
-  const modalTitle = (document.querySelector('.modal-title') as HTMLHeadingElement).innerHTML;
-  const isSuccess = modalTitle.includes('정답');
+  const submissionCode = (document.querySelector('textarea#code') as HTMLTextAreaElement).value;
+
   const passedTestCase = document.querySelectorAll('td.result.passed').length;
   const failedTestCase = document.querySelectorAll('td.result.failed').length;
 
   return {
-    problemId,
-    level,
-    title,
-    selectedLanguage,
-    code,
-    isSuccess,
-    passedTestCase,
-    failedTestCase,
+    problemNum,
+    problemLevel,
+    problemTitle,
+    language,
+    submissionCode,
   };
 };
 
 const modalMutationObserver = new MutationObserver((mutations) => {
   if (!mutations.length) return;
+  const modalTitle = (document.querySelector('.modal-title') as HTMLHeadingElement).innerHTML;
+  const isSuccess = modalTitle.includes('정답');
   const data = parseData();
+  if (!isSuccess) return;
   console.log("보낼준비");
   console.log(JSON.stringify(data));
   axios
