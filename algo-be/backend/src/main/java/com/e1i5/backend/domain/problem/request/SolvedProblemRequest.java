@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Clob;
 import java.time.LocalDateTime;
 
 @Getter
@@ -33,7 +34,8 @@ public class SolvedProblemRequest {
                 .memo(memo)
                 .runtime(runtime)
                 .codeLength(codeLength)
-//                .submissionTime(submissionTime)
+                .memory(memory)
+                .submissionTime(submissionTime)
                 .visible(true).build();
     }
 

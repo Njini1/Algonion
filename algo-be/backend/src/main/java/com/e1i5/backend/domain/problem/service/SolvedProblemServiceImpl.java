@@ -11,7 +11,7 @@ import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
 import com.e1i5.backend.domain.problem.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.User;
-import com.e1i5.backend.domain.user.repository.UserRepository;
+import com.e1i5.backend.domain.user.repository.AuthRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +33,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     ProblemRepository problemRepo;
 
     @Autowired
-    UserRepository userRepository;
+    AuthRepository userRepository;
 
     /**
      * 사용자가 푼 문제 저장하는 메서드
@@ -158,7 +157,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     public List<SolvedProblemListResponse> getSolvedProblemListByUser() {
         //TODO 페이징 처리
         //TODO 사용자 정보 추가
-        //TODO visible true인것만 보이게 추가
         List<SolvedProblemListResponse> solvedProblemList = new ArrayList<>();
         List<SolvedProblem> solvedProblemListEntity = solvedProblemRepo.findAllByUser_UserIdAndVisible(1, true);
 

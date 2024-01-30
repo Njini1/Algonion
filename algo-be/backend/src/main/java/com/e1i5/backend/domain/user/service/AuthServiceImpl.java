@@ -1,30 +1,35 @@
 package com.e1i5.backend.domain.user.service;
 
+import com.e1i5.backend.domain.user.entity.ProfileFileInfo;
 import com.e1i5.backend.domain.user.entity.User;
-import com.e1i5.backend.domain.user.repository.UserRepository;
+import com.e1i5.backend.domain.user.repository.UserProfileRepository;
+import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class AuthServiceImpl implements AuthService{
 
-    private final UserRepository userRepository;
+    @Autowired
+    private final AuthRepository authRepo;
+    @Autowired
     private final TokenProvider tokenProvider;
-
+    @Autowired
+    private final UserProfileRepository userProfileRepo;
 
     public User findById(UUID userId) {
-        return userRepository.findByUserUuid(userId)
+        return authRepo.findByUserUuid(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
 
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email)
+        return authRepo.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
 
@@ -35,11 +40,13 @@ public class UserService {
         }
 
         // db의 리프레시 토큰값과도 같은 지도 확인
-        User user = userRepository.findByRefreshToken(refreshToken).orElseThrow(() -> new AccessDeniedException("refresh token으로 사용자를 찾을 수 없음"));
+        User user = authRepo.findByRefreshToken(refreshToken).orElseThrow(() -> new AccessDeniedException("refresh token으로 사용자를 찾을 수 없음"));
         return tokenProvider.createAccessToken(user);
     }
 
-    public void saveUserProfile() {
-
+    public void saveUserProfile(String originalFileName, String saveFileName) {
+        userProfileRepo.save(ProfileFileInfo.builder().
+                originalFile(originalFileName)
+                .saveFile(saveFileName).build());
     }
 }

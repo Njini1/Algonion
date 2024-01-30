@@ -4,6 +4,7 @@ import com.e1i5.backend.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Clob;
 import java.time.LocalDateTime;
 
 @Entity
@@ -31,11 +32,11 @@ public class SolvedProblem {
     private String language;
 
     //@Lob 어노테이션은 DB에서 varchar보다 더 많은 데이터를 담으려고 사용한 거임 코드나 메모는 길어질 수 있으니까
-    @Column(name = "submission_code")
+    @Column(name = "submission_code", columnDefinition = "TEXT")
     @Lob
     private String submissionCode;
 
-    @Column(name = "memo")
+    @Column(name = "memo", columnDefinition = "TEXT")
     @Lob
     private String memo;
 

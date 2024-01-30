@@ -32,7 +32,7 @@ public class User{
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
-    private UserProfile userProfile;
+    private ProfileFileInfo userProfile;
 
 //    @Enumerated(value = EnumType.STRING)
 //    private Platform flatform;

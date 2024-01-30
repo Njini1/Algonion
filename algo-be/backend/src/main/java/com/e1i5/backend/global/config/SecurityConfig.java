@@ -1,7 +1,7 @@
 package com.e1i5.backend.global.config;
 
-import com.e1i5.backend.domain.user.repository.UserRepository;
-import com.e1i5.backend.domain.user.service.UserService;
+import com.e1i5.backend.domain.user.repository.AuthRepository;
+import com.e1i5.backend.domain.user.service.AuthServiceImpl;
 import com.e1i5.backend.global.jwt.TokenAuthenticationFilter;
 import com.e1i5.backend.global.jwt.TokenProvider;
 import com.e1i5.backend.global.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,8 +25,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
     private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
-    private final UserRepository userRepository;
-    private final UserService userService;
+    private final AuthRepository userRepository;
+    private final AuthServiceImpl userService;
 
 //    @Bean
 //    public WebSecurityCustomizer configure() {

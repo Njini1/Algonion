@@ -1,7 +1,7 @@
 package com.e1i5.backend.global.oauth;
 
 import com.e1i5.backend.domain.user.entity.User;
-import com.e1i5.backend.domain.user.repository.UserRepository;
+import com.e1i5.backend.domain.user.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -10,13 +10,12 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
-    private final UserRepository userRepository;
+    private final AuthRepository userRepository;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

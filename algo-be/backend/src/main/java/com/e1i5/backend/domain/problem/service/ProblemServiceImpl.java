@@ -3,18 +3,13 @@ package com.e1i5.backend.domain.problem.service;
 import com.e1i5.backend.domain.problem.model.entity.AlgoGroup;
 import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
-import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.repository.AlgoGroupRepository;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
-import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
-import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
-import com.e1i5.backend.domain.user.entity.User;
-import com.e1i5.backend.domain.user.repository.UserRepository;
+import com.e1i5.backend.domain.user.repository.AuthRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.*;
@@ -29,7 +24,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Autowired
     ProblemRepository problemRepo;
     @Autowired
-    UserRepository userRepo;
+    AuthRepository userRepo;
     @Autowired
     AlgoGroupRepository algoGroupRepo;
 

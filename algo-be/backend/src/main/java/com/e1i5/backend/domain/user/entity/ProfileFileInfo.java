@@ -10,18 +10,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "user_file_info")
-public class UserProfile {
+public class ProfileFileInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "profile_id", updatable = false)
     private int userFileInfoId;
-    private String saveFolder;
     private String originalFile;
     private String saveFile;
 
     @Builder
-    public UserProfile(String saveFolder, String originalFile, String saveFile) {
-        this.saveFolder = saveFolder;
+    public ProfileFileInfo(String originalFile, String saveFile) {
         this.originalFile = originalFile;
         this.saveFile = saveFile;
     }

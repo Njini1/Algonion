@@ -1,8 +1,8 @@
 package com.e1i5.backend.global.oauth;
 
 import com.e1i5.backend.domain.user.entity.User;
-import com.e1i5.backend.domain.user.repository.UserRepository;
-import com.e1i5.backend.domain.user.service.UserService;
+import com.e1i5.backend.domain.user.repository.AuthRepository;
+import com.e1i5.backend.domain.user.service.AuthServiceImpl;
 import com.e1i5.backend.global.jwt.TokenProvider;
 import com.e1i5.backend.global.util.CookieUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,9 +31,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     private final TokenProvider tokenProvider;
     //    private final RefreshTokenRepository refreshTokenRepository;
-    private final UserRepository userRepository;
+    private final AuthRepository userRepository;
     private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
-    private final UserService userService;
+    private final AuthServiceImpl userService;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
@@ -41,7 +41,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         System.out.println("로그인 유저 값: "+oAuth2User.toString());
         System.out.println("로그인한 유저 email: " + oAuth2User.getEmail());
 //        System.out.println("로그인한 유저 email: " + oAuth2User.getAttributes().get("email"));
-        User user = userService.findByEmail(oAuth2User.getEmail()); //TODO uuid로 변경
+        User user = userService.findByEmail(oAuth2User.getEmail());
         user.updateUuid(UUID.randomUUID());
 
         // 리프레시 토큰 생성 -> 저장 -> 쿠키에 사용
@@ -49,7 +49,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //        saveRefreshToken(user.getId(), refreshToken);
         saveRefreshToken(user, refreshToken);
 
-        addRefreshTokenToCookie(request, response, refreshToken);
+        addRefreshTokenToCookie(request, response, refreshToken); //TODO ResponseCookie 변경
         //액세스 토큰 생성 -> 패스에 액세스 토큰 추가
         String accessToken = tokenProvider.createAccessToken(user);
         String targetUrl = getTargetUrl(accessToken);
@@ -75,7 +75,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //        refreshTokenRepository.save(refreshToken);
 //    }
     private void saveRefreshToken(User user, String newRefreshToken) { //refreshtoken 테이블과 분리시킬지 아님 같이 할지
-        UUID uuid = UUID.randomUUID();
+        UUID uuid = UUID.randomUUID(); //TODO UUID도 저장
         User newUser = userRepository.findByEmail(user.getEmail())
                 .map(entity -> entity.updateRefreshToken(newRefreshToken)) // user.updateRefreshToken(newRefreshToken); 깉은 뜻
                 .orElseThrow(() -> new IllegalArgumentException("not found user"));
