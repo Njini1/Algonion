@@ -4,10 +4,9 @@ import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
-import com.e1i5.backend.domain.problem.response.StreakResponseInterface;
+import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.User;
 
-import java.sql.Clob;
 import java.util.List;
 
 public interface SolvedProblemService {

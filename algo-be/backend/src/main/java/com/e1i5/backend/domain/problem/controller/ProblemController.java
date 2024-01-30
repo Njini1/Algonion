@@ -4,7 +4,7 @@ import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
-import com.e1i5.backend.domain.problem.response.StreakResponseInterface;
+import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.problem.service.ProblemService;
 import com.e1i5.backend.domain.problem.service.SolvedProblemService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Clob;
 import java.util.List;
 
 @CrossOrigin("*")

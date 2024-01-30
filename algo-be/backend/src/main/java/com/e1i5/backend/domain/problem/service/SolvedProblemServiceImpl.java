@@ -9,7 +9,7 @@ import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
-import com.e1i5.backend.domain.problem.response.StreakResponseInterface;
+import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
 import lombok.extern.slf4j.Slf4j;
