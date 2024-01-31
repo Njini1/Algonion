@@ -2,7 +2,6 @@ package com.e1i5.backend.domain.user.controller;
 
 
 import com.e1i5.backend.domain.user.service.DashboardService;
-import com.e1i5.backend.domain.user.service.ProfileService;
 import com.e1i5.backend.domain.problem.model.entity.Problem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 @CrossOrigin("*")
