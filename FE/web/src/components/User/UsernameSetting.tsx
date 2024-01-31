@@ -14,7 +14,7 @@ function UserPage() {
 	return (
     <div className={classes.page}>
       <div className={classes.textbox}>
-        <p><b>알고</b>를 이용하기 위해,</p>
+        <p><b>알고니온</b>을 이용하기 위해,</p>
         <p>닉네임 설정이 필요합니다.</p>
       </div>
       {/* <form onSubmit={handleSubmit}> */}
