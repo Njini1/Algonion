@@ -1,4 +1,4 @@
-import classes from "./UsernameSetting.module.scss"
+import classes from "./UserNicknameSetting.module.scss"
 
 // import React, { useState } from 'react';
 
@@ -31,6 +31,8 @@ function UserPage() {
         </form>
       </div>
     </div>
+
+    
     // 중복 확인 코드 필요
   )
 }
