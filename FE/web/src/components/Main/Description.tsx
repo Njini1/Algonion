@@ -18,7 +18,6 @@ function Description(props: items) {
       </div>
     </div>
   );
-)
 }
   
 export default Description
