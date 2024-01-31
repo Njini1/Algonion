@@ -26,7 +26,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     //    public static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
 //    public static final Duration ACCESS_TOKEN_DURATION = Duration.ofDays(1);
-    public static final String REDIRECT_PATH = "https://localhost:5173/login/success";
+    public static final String REDIRECT_PATH = "https://localhost:5173/success";
 //    public static final String REDIRECT_PATH = "https://localhost/login/oauth_google_check";
 
     private final TokenProvider tokenProvider;
@@ -42,12 +42,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         System.out.println("로그인한 유저 email: " + oAuth2User.getEmail());
 //        System.out.println("로그인한 유저 email: " + oAuth2User.getAttributes().get("email"));
         User user = userService.findByEmail(oAuth2User.getEmail());
-        user.updateUuid(UUID.randomUUID());
+//        user = user.updateUuid(UUID.randomUUID());
 
         // 리프레시 토큰 생성 -> 저장 -> 쿠키에 사용
         String refreshToken = tokenProvider.createRefreshToken(user);
 //        saveRefreshToken(user.getId(), refreshToken);
-        saveRefreshToken(user, refreshToken);
+//        saveRefreshToken(user, refreshToken);
 
         addRefreshTokenToCookie(request, response, refreshToken); //TODO ResponseCookie 변경
         //액세스 토큰 생성 -> 패스에 액세스 토큰 추가
@@ -74,13 +74,14 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //
 //        refreshTokenRepository.save(refreshToken);
 //    }
-    private void saveRefreshToken(User user, String newRefreshToken) { //refreshtoken 테이블과 분리시킬지 아님 같이 할지
-        UUID uuid = UUID.randomUUID(); //TODO UUID도 저장
-        User newUser = userRepository.findByEmail(user.getEmail())
-                .map(entity -> entity.updateRefreshToken(newRefreshToken)) // user.updateRefreshToken(newRefreshToken); 깉은 뜻
-                .orElseThrow(() -> new IllegalArgumentException("not found user"));
-        userRepository.save(newUser);
-    }
+//    private void saveRefreshToken(User user, String newRefreshToken) { //refreshtoken 테이블과 분리시킬지 아님 같이 할지
+//        System.out.println("refresh token 저장, user정보 : " + user.toString());
+//        UUID uuid = UUID.randomUUID(); //TODO UUID도 저장
+//        User newUser = userRepository.findByEmail(user.getEmail())
+//                .map(entity -> entity.updateRefreshToken(newRefreshToken)) // user.updateRefreshToken(newRefreshToken); 깉은 뜻
+//                .orElseThrow(() -> new IllegalArgumentException("not found user"));
+//        userRepository.save(newUser);
+//    }
 
     // 생성된 리프레시 토큰을 쿠키에 저장
     private void addRefreshTokenToCookie(HttpServletRequest request, HttpServletResponse response, String refreshToken) {

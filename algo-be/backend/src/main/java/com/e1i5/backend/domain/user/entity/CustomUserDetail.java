@@ -36,7 +36,7 @@ public class CustomUserDetail implements UserDetails {
 
     @Override
     public String getUsername() { // 유니크한 값이어야 함
-        return user.getUserUuid().toString();
+        return String.valueOf(user.getUserId());
     }
 
     @Override

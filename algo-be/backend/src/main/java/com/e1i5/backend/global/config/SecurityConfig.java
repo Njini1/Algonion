@@ -53,7 +53,7 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .requestMatchers("/**").permitAll()
 //                .requestMatchers("/api/token").permitAll()
-//                .requestMatchers("/api/**").authenticated()
+//                .requestMatchers("/success/**").authenticated()
                 .anyRequest().permitAll();
 
         http.oauth2Login()

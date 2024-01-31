@@ -45,7 +45,7 @@ public class TokenProvider {
         Date expiryDate = new Date(now.getTime() + ACCESS_TOKEN_EXPIRATION);
 
         return Jwts.builder()
-                .setSubject(user.getUserUuid().toString()) // // 내용 sub : 유저의 이메일
+                .setSubject(String.valueOf(user.getUserId())) // // 내용 sub : 유저의 이메일
 //                .claim("nickname", user.getNickname().toString()) // 클레임 id : 유저의 닉네임 -> 권한으로 변경
 //                .claim(AUTHORITIES_KEY, role) // role
                 .setIssuedAt(now)
@@ -60,15 +60,32 @@ public class TokenProvider {
      * @return 생성된 리프레시 토큰
      */
     public String createRefreshToken(User user) {
-
+        //TODO 토큰의 값을 uuid 또는 jwt
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + REFRESH_TOKEN_EXPIRATION);
 
         return Jwts.builder()
+                .setSubject(String.valueOf(user.getUserId()))
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
+    }
+
+    public String createNewAccessToken(String refreshToken) {
+        // 토큰 유효성 검사에 실패하면 예외 발생
+        Claims claims = getClaims(refreshToken);
+
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + ACCESS_TOKEN_EXPIRATION);
+
+        return Jwts.builder()
+                .setSubject(String.valueOf(claims.getSubject()))
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
+                .compact();
+//      return tokenProvider.createAccessToken(user);
     }
 
     /**

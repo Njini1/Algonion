@@ -22,11 +22,6 @@ public class AuthServiceImpl implements AuthService{
     private final TokenProvider tokenProvider;
 
 
-    public User findById(UUID userId) {
-        return authRepo.findByUserUuid(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
-    }
-
     public User findByEmail(String email) {
         return authRepo.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
@@ -38,9 +33,9 @@ public class AuthServiceImpl implements AuthService{
             throw new IllegalArgumentException("Unexpected token");
         }
 
-        // db의 리프레시 토큰값과도 같은 지도 확인
-        User user = authRepo.findByRefreshToken(refreshToken).orElseThrow(() -> new AccessDeniedException("refresh token으로 사용자를 찾을 수 없음"));
-        return tokenProvider.createAccessToken(user);
+        System.out.println("토큰 만료 재발급");
+        return tokenProvider.createNewAccessToken(refreshToken);
+//        return tokenProvider.createAccessToken(user);
     }
 
 }

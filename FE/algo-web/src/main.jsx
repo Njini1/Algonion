@@ -5,7 +5,7 @@ import LoginView from './LoginView.jsx'
 import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 const router = createBrowserRouter([
-  { path: '/login/success', element: <LoginView /> }, { path: '/', element: <App /> }
+  { path: '/success', element: <LoginView /> }, { path: '/', element: <App /> }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

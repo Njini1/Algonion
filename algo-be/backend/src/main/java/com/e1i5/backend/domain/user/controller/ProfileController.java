@@ -21,7 +21,7 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    @PostMapping("/upload")
+    @PostMapping("/profile-img")
     public ResponseEntity<Void> saveUserProfile(MultipartFile profileImg) {
         profileService.saveUserProfile(profileImg);
         return new ResponseEntity<>(HttpStatus.OK);
