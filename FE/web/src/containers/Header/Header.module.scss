@@ -1,0 +1,30 @@
+.img{
+  margin: 5px
+}
+
+.avatar {
+  border-color: linear-gradient(to right, #FF0000, #00FF00, #0000FF);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+
+  animation: rainbow 10s infinite linear;
+}
+
+@keyframes rainbow {
+  0% {
+    border-color: #FF0000;
+  }
+  25% {
+    border-color: #FFFF00;
+  }
+  50% {
+    border-color: #00FF00;
+  }
+  75% {
+    border-color: #00FFFF;
+  }
+  100% {
+    border-color: #FF0000;
+  }
+}

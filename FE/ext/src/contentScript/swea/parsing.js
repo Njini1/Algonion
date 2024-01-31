@@ -74,5 +74,5 @@ export async function parseData() {
   const submissionCode = data.code;
   // console.log('파싱 완료', code);
 
-  return { link, language, problemNum, problemLevel, title, runtime, submissionCode, memory, codeLength, correctRate ,submissionTime };
+  return { link, language, problemNum, problemLevel, problemTitle, runtime, submissionCode, memory, codeLength, correctRate ,submissionTime };
 } 
