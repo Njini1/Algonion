@@ -51,9 +51,10 @@ public class SecurityConfig {
 
 
         http.authorizeRequests()
+                .requestMatchers("/user/token").permitAll()
+                .requestMatchers("/user/test").authenticated()
                 .requestMatchers("/**").permitAll()
 //                .requestMatchers("/api/token").permitAll()
-//                .requestMatchers("/success/**").authenticated()
                 .anyRequest().permitAll();
 
         http.oauth2Login()
@@ -64,9 +65,9 @@ public class SecurityConfig {
                 .successHandler(oAuth2SuccessHandler())
                 .userInfoEndpoint()
                 .userService(oAuth2UserCustomService);
-//
-//        http.logout()
-//                .logoutSuccessUrl("/login");
+
+        http.logout()
+                .logoutSuccessUrl("/login");
 
         http.exceptionHandling()
                 .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),

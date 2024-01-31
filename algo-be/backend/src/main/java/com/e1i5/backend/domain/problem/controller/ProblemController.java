@@ -122,8 +122,8 @@ public class ProblemController {
     }
     
     @GetMapping("/test")
-    public ResponseEntity<Void> test() {
+    public ResponseEntity<String> test() {
         System.out.println("test입니당");
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<String>("test", HttpStatus.OK);
     };
 }

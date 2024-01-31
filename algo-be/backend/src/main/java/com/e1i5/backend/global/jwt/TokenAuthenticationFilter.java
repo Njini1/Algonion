@@ -1,5 +1,9 @@
 package com.e1i5.backend.global.jwt;
 
+import com.e1i5.backend.domain.user.exception.AccessDeniedException;
+import com.e1i5.backend.global.error.GlobalErrorCode;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,16 +44,35 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
 
         // 가져온 토큰이 유효한지 확인하고, 유효한 때는 인증 정보 설정
-        TokenValidResultResponse tokenValidResultResponse = tokenProvider.validateToken(token);
-        if (tokenValidResultResponse.isValid()) {
-            Authentication authentication = tokenProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication); // 인증 정보 설정
-        } else {
-            log.error(tokenValidResultResponse.getErrMsg());
-            // SecurityConfig에서 addFilterAfter 코드를 http.addFilterAfter(tokenAuthenticationFilter(), BasicAuthenticationFilter.class);로 바꾸면 사용가능
-//            response.sendError(tokenValidResultResponse.getStatusCode(), tokenValidResultResponse.getErrMsg());
-//            return;
+//        TokenValidResultResponse tokenValidResultResponse = tokenProvider.validateToken(token);
+//        if (tokenProvider.validateToken(token)) {
+//            Authentication authentication = tokenProvider.getAuthentication(token);
+//            SecurityContextHolder.getContext().setAuthentication(authentication); // 인증 정보 설정
+//            System.out.println("인증 정보 설정 : " + authentication.getName());
+//        } else {
+//            log.error(tokenValidResultResponse.getErrMsg());
+//            // SecurityConfig에서 addFilterAfter 코드를 http.addFilterAfter(tokenAuthenticationFilter(), BasicAuthenticationFilter.class);로 바꾸면 사용가능
+////            response.sendError(tokenValidResultResponse.getStatusCode(), tokenValidResultResponse.getErrMsg());
+////            return;
+//        }
+        Claims claims;
+        try {
+            claims = tokenProvider.getClaims(token);
+        }/* catch (ExpiredJwtException e) {
+            log.error("expired access token", e);
+            request.setAttribute("exception", GlobalErrorCode.TOKEN_EXPIRED);
+            filterChain.doFilter(request, response);
+            return;
+
+        } */catch (Exception e) {
+            System.out.println("필터에서 토큰 검사 오류");
+            log.info("jwt exception message : {} token : {}", e.getMessage(), token);
+            filterChain.doFilter(request, response);
+            return;
         }
+
+        Authentication authentication = tokenProvider.getAuthentication(token);
+        SecurityContextHolder.getContext().setAuthentication(authentication); // 인증 정보 설정
         filterChain.doFilter(request, response);
     }
 

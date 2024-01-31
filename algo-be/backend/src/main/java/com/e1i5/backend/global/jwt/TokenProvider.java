@@ -2,15 +2,12 @@ package com.e1i5.backend.global.jwt;
 
 import com.e1i5.backend.domain.user.entity.User;
 import io.jsonwebtoken.*;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -93,25 +90,41 @@ public class TokenProvider {
      * @param authToken
      * @return true: 유효한 토큰, false: 유효하지 않은 토큰
      */
-    public TokenValidResultResponse validateToken(String authToken) {
-        try {
-            log.info("유효한 토큰인지 검사할 토큰값: {}", authToken);
-            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);  // 비밀값으로 복호화하여 JWT 클레임을 구문 분석하고 확인
-//            return new TokenValidResultResponse(true, HttpServletResponse.SC_OK, null); // Valid token
-            return TokenValidResultResponse.builder().isValid(true).statusCode(HttpServletResponse.SC_OK).build();
-        } catch (SignatureException e) {
-            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_UNAUTHORIZED).errMsg("Invalid signature").build();
-        } catch (MalformedJwtException e) {
-            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_UNAUTHORIZED).errMsg("Malformed JWT token").build();
-        } catch (ExpiredJwtException e) {
-            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_UNAUTHORIZED).errMsg("Expired JWT token").build();
-        } catch (UnsupportedJwtException e) {
-            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_BAD_REQUEST).errMsg("Unsupported JWT token").build();
-        } catch (IllegalArgumentException e) {
-            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_BAD_REQUEST).errMsg("Invalid arguments").build();
-        } catch (Exception e) {
-            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).errMsg("exception token").build();
-        }
+//    public TokenValidResultResponse validateToken(String authToken) {
+//        try {
+//            log.info("유효한 토큰인지 검사할 토큰값: {}", authToken);
+//            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);  // 비밀값으로 복호화하여 JWT 클레임을 구문 분석하고 확인
+////            return new TokenValidResultResponse(true, HttpServletResponse.SC_OK, null); // Valid token
+//            return TokenValidResultResponse.builder().isValid(true).statusCode(HttpServletResponse.SC_OK).build();
+//        } catch (SignatureException e) {
+//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_UNAUTHORIZED).errMsg("Invalid signature").build();
+//        } catch (MalformedJwtException e) {
+//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_UNAUTHORIZED).errMsg("Malformed JWT token").build();
+//        } catch (ExpiredJwtException e) {
+//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_UNAUTHORIZED).errMsg("Expired JWT token").build();
+//        } catch (UnsupportedJwtException e) {
+//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_BAD_REQUEST).errMsg("Unsupported JWT token").build();
+//        } catch (IllegalArgumentException e) {
+//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_BAD_REQUEST).errMsg("Invalid arguments").build();
+//        } catch (Exception e) {
+//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).errMsg("exception token").build();
+//        }
+//    }
+//    public boolean validateToken(String token) {
+//        try {
+//            Jwts.parser()
+//                    .setSigningKey(SECRET_KEY)
+//                    .parseClaimsJws(token);
+//            System.out.println("token 필터일 때 true");
+//            return true;
+//        } catch (Exception e) {
+//            System.out.println("token 필터일 때 fasle");
+//            System.out.println("token error: " + e.getMessage());
+//            return false;
+//        }
+//    }
+    public Claims getClaims(String token) {
+        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
     /**
@@ -131,13 +144,6 @@ public class TokenProvider {
 
         return new UsernamePasswordAuthenticationToken(new org.springframework.security.core.userdetails.User(claims.getSubject
                 (), "", authorities), token, authorities);
-    }
-
-    private Claims getClaims(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET_KEY)
-                .parseClaimsJws(token)
-                .getBody();
     }
 
     /**
