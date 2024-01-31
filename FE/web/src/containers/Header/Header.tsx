@@ -1,10 +1,10 @@
 import classes from "./Header.module.scss"
 import React from "react";
 import {Avatar} from "@nextui-org/react";
-import App from "./searchModal";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
 import getAsset from "../../utils/getAsset";
+import SearchModal from "./searchModal";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -59,7 +59,7 @@ export default function Header() {
           
           <NavbarItem isActive>
             <Link href="#" aria-current="page">
-              <App/>
+              <SearchModal/>
             </Link>
           </NavbarItem>
           

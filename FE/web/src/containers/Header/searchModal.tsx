@@ -1,15 +1,16 @@
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Link} from "@nextui-org/react";
 import getAsset from "../../utils/getAsset";
 import {MyInput} from "./MyInput"
+import styles from "./searchModal.module.scss"
 
-export default function App() {
+export default function SearchModal() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   return (
     <div className="flex flex-col gap-2">
-      <Link onPress={onOpen} className="max-w-fit">
+      <Link onPress={onOpen} color="secondary" className="max-w-fit ">
+        <img src={getAsset('search_icon.svg')} className={styles.img} />
         유저검색
-        <img src={getAsset('search_icon.svg')} className="text-zinc-500" />
       </Link>    
         {/* <Button onPress={onOpen}>Open Modal</Button> */}
         <Modal
@@ -32,10 +33,10 @@ export default function App() {
                   />
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
+                  <Button color="secondary" variant="light" onPress={onClose}>
                     Close
                   </Button>
-                  <Button color="primary" onPress={onClose}>
+                  <Button color="secondary" onPress={onClose}>
                     Search
                   </Button>
                 </ModalFooter>
