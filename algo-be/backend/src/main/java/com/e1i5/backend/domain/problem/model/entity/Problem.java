@@ -54,6 +54,19 @@ public class Problem {
         return this;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Problem{" +
+//                "problemId=" + problemId +
+//                ", siteName='" + siteName + '\'' +
+//                ", problemNum='" + problemNum + '\'' +
+//                ", problemTitle='" + problemTitle + '\'' +
+//                ", problemLevel='" + problemLevel + '\'' +
+//                ", url='" + url + '\'' +
+//                ", algoGroup=" + algoGroup +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "Problem{" +
@@ -63,7 +76,6 @@ public class Problem {
                 ", problemTitle='" + problemTitle + '\'' +
                 ", problemLevel='" + problemLevel + '\'' +
                 ", url='" + url + '\'' +
-                ", algoGroup=" + algoGroup +
                 '}';
     }
 }

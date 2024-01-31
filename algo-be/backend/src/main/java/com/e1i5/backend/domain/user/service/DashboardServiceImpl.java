@@ -23,6 +23,7 @@ public class DashboardServiceImpl implements DashboardService {
     public List<Problem> getProblemsByNickname(String nickname) {
         int userId = getUserIdByNickname(nickname);
         List<Integer> distinctProblemIds = dashboardRepository.findDistinctProblemIdsByUserId(userId);
+        System.out.println("/////////////////////////////n/n/n");
         return dashboardRepository.findAllByProblemIdIn(distinctProblemIds);
     }
 
