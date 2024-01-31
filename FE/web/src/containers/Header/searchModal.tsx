@@ -36,7 +36,7 @@ export default function App() {
                     Close
                   </Button>
                   <Button color="primary" onPress={onClose}>
-                    Action
+                    Search
                   </Button>
                 </ModalFooter>
               </>
