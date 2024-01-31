@@ -45,7 +45,7 @@ function startLoader() {
           //   + `/main/code/problem/problemSolver.do?`
           //   + `contestProbId=${contestProbId}&`
           //   + `nickName=${getNickname()}&`
-          //   + `extension=AlgoHub`);
+          //   + `extension=AlGONION`);
         } catch (error) {
           // console.log(error);
         }

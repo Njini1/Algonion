@@ -1,6 +1,6 @@
 import { default as axios } from 'axios';
 const api = import.meta.env.VITE_BACKEND;
-console.log('[ALGO] 프로그래머스 문제 페이지 입니다');
+console.log('[ALGONION] 프로그래머스 문제 페이지 입니다');
 const btnSubmit = document.querySelector('#submit-code');
 const modal = document.querySelector('.modal') as HTMLDivElement;
 const modalMutationOption = {

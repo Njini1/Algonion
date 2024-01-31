@@ -31,7 +31,7 @@ export function makeSubmitButton(link) {
     elem.style = 'cursor:pointer';
     elem.href = link;
   }
-  elem.innerHTML = '알고허브로 업로드';
+  elem.innerHTML = '알고니온으로 업로드';
   const target = document.querySelector('body > div.popup_layer.show > div > div');
   if (!isNull(target)) {
     target.append(elem);

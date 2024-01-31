@@ -53,6 +53,6 @@ export function uploadData(data) {
 
     axios.post(`${api}/api/v1/solved-problems/baekjoon`, data)
     .then(res => {
-        console.log("[ALGO] 업로드 성공");
+        console.log("[ALGONION] 업로드 성공");
     });
 }
