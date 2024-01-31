@@ -37,12 +37,13 @@ public class DashboardController {
 
     /**
      * 난이도 기준 top100 문제 가져오기
+     * @param nickname
      * @return 난이도 상위 100문제 리스트 반환
      */
-//    @GetMapping("/rating/top100")
-//    public ResponseEntity<List<Problem>> getTop100ProblemsByNickname(@RequestParam("nickname") String nickname) {
-//        List<Problem> top100Problems = dashboardService.getTop100ProblemsByNickname(nickname);
-//        return new ResponseEntity<>(top100Problems, HttpStatus.OK);
-//    }
+    @GetMapping("/rating/top100")
+    public ResponseEntity<List<DashBoardProblemListResponse>> getTop2ProblemsByNickname(@RequestParam("nickname") String nickname) {
+        List<DashBoardProblemListResponse> top2ProblemsList = dashboardService.getTop2ProblemsByNickname(nickname);
+        return new ResponseEntity<>(top2ProblemsList, HttpStatus.OK);
+    }
 }
 

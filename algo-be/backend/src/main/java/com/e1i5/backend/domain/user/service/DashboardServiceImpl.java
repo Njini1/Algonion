@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,10 +42,20 @@ public class DashboardServiceImpl implements DashboardService {
                 .map(DashBoardProblemListResponse::new)
                 .collect(Collectors.toList());
 
-
-        System.out.println("/////////////////////////////n/n/n");
-
         return solvedProblemsList;
+    }
+
+    @Override
+    public List<DashBoardProblemListResponse> getTop2ProblemsByNickname(String nickname) {
+        List<DashBoardProblemListResponse> solvedProblemsList = getProblemsByNickname(nickname);
+
+        // 문제 목록을 level을 기준으로 top 2만 가져옴
+        List<DashBoardProblemListResponse> top2ProblemsList = solvedProblemsList.stream()
+                .sorted(Comparator.comparing(DashBoardProblemListResponse::getProblemLevel).reversed())
+                .limit(2)
+                .collect(Collectors.toList());
+
+        return top2ProblemsList;
     }
 
     private int getUserIdByNickname(String nickname) {
