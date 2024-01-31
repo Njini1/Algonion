@@ -2,8 +2,8 @@ import './App.css';
 import Header from './containers/Header/Header.tsx';
 import UserPage from './pages/UserPage/UserPage.tsx';
 import Footer from './containers/Footer/Footer.tsx';
-import UsernameSetting from './components/User/UsernameSetting.tsx'
-import AuthPage from './pages/AuthPage/AuthPage.tsx'
+// import UsernameSetting from './components/User/UsernameSetting.tsx'
+// import AuthPage from './pages/AuthPage/AuthPage.tsx'
 
 const App: React.FC = () => {
   return (

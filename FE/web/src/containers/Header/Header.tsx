@@ -1,13 +1,12 @@
 import classes from "./Header.module.scss"
 import React from "react";
 import {Avatar} from "@nextui-org/react";
-// import {MyInput} from "./MyInput"
-
+import App from "./searchModal";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
 import getAsset from "../../utils/getAsset";
 
-function Header() {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuItems = [
     "Profile",
@@ -60,19 +59,12 @@ function Header() {
           
           <NavbarItem isActive>
             <Link href="#" aria-current="page">
-              유저검색
-              <img src={getAsset('search_icon.svg')} className="text-zinc-500" />
+              <App/>
             </Link>
           </NavbarItem>
           
           {/* design B */}
-            {/* <MyInput
-              isClearable
-              placeholder="Search..."
-              radius="md"
-              size="md"
-              startContent={<img src={getAsset('search_icon.svg')} className="text-zinc-500" />}
-            /> */}
+            
 
         </NavbarContent>
         
@@ -116,5 +108,3 @@ function Header() {
     </NextUIProvider>
   )
 }
-
-export default Header
