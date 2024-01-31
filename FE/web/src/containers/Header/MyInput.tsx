@@ -1,7 +1,7 @@
 // MyInput.tsx
 import {extendVariants, Input} from "@nextui-org/react";
 
-const MyInput = extendVariants(Input, {
+export const MyInput = extendVariants(Input, {
   variants: { // <- modify/add variants
     color: {
       stone: { // <- add a new color variant
