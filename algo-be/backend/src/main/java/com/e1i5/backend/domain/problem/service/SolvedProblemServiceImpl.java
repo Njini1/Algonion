@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +53,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
-//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email").build();
+//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("22").email("email2").build();
 //        User testUser = userRepository.save(user); //임의로 사용자 저장
 //        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
         Optional<User> user = userRepository.findById(1);

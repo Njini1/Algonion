@@ -30,6 +30,9 @@ public class Problem {
     @Column(name = "level")
     private String problemLevel;
 
+    @Column(name = "algo_score")
+    private int algoScore; // 우리 사이트 점수
+
     @Column(name = "url")
     private String url;
 
@@ -37,11 +40,12 @@ public class Problem {
     private List<AlgoGroup> algoGroup;
 
     @Builder
-    public Problem(String siteName, String problemNum, String problemTitle, String problemLevel, String url) {
+    public Problem(String siteName, String problemNum, String problemTitle, String problemLevel, int algoScore, String url) {
         this.siteName = siteName;
         this.problemNum = problemNum;
         this.problemTitle = problemTitle;
         this.problemLevel = problemLevel;
+        this.algoScore = algoScore;
         this.url = url;
     }
 
@@ -54,6 +58,19 @@ public class Problem {
         return this;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Problem{" +
+//                "problemId=" + problemId +
+//                ", siteName='" + siteName + '\'' +
+//                ", problemNum='" + problemNum + '\'' +
+//                ", problemTitle='" + problemTitle + '\'' +
+//                ", problemLevel='" + problemLevel + '\'' +
+//                ", url='" + url + '\'' +
+//                ", algoGroup=" + algoGroup +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "Problem{" +
@@ -62,8 +79,8 @@ public class Problem {
                 ", problemNum='" + problemNum + '\'' +
                 ", problemTitle='" + problemTitle + '\'' +
                 ", problemLevel='" + problemLevel + '\'' +
+                ", algoScore='" + algoScore + '\'' +
                 ", url='" + url + '\'' +
-                ", algoGroup=" + algoGroup +
                 '}';
     }
 }
