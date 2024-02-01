@@ -1,10 +1,8 @@
 package com.e1i5.backend.domain.user.dto.response;
 
 import com.e1i5.backend.domain.problem.model.entity.Problem;
-import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import lombok.*;
 
-import java.util.List;
 
 @Getter
 @ToString
