@@ -8,7 +8,7 @@ const GoogleLoginButton = () => {
     return (
       <div className={classes.gSignInWrapper}>
         {/* <span className={classes.label}>Sign in with:</span> */}
-          <div className={`${classes.customBtn} ${classes.customGPlusSignIn}`} >
+          <div className={`${classes["google-button"]} ${classes.customGPlusSignIn}`} >
             <span className={classes.icon}></span>
             <span className={classes.buttonText}>구글 로그인</span>
           </div>

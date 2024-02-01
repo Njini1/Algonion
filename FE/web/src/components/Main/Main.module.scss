@@ -1,12 +1,23 @@
 .main_container {
   text-align: center;
+  background-color: #CBA6F7;
 }
 
+.slogan_container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.slogan_container h1 {
+  font-size: 2em;
+  color: #333;
+  font-weight: bold;
+}
 .login-buttons-container {
   display: flex;
   margin: 2rem;
 }
 
-.login-buttons-container button {
-  margin: 1rem;
-}
+// .login-buttons-container button {
+//   // margin: 1rem;
+// }
