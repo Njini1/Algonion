@@ -16,7 +16,7 @@ const items = [
     },
 ]
 
-function MainPage() {
+export default function MainPage() {
 	return (
     <div className={classes.page}>
       <div className={classes.main}>
@@ -36,5 +36,3 @@ function MainPage() {
     </div>
   )
 }
-  
-export default MainPage

@@ -47,7 +47,7 @@ export default function Header() {
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
             <Link color="foreground" href="#">
-              제출코드
+              코드로그
             </Link>
           </NavbarItem>
           

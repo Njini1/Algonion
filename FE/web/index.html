@@ -5,7 +5,19 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <title>Algonion</title>
+    <!-- 카카오 SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js" 
+    integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8" crossorigin="anonymous"></script>
+    <!-- 구글 SDK -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script>
+       Kakao.init('JAVASCRIPT_KEY');
+
+      // SDK 초기화 여부를 판단합니다.
+      console.log(Kakao.isInitialized());
+    </script>
   </head>
   <body>
     <div id="root"></div>
@@ -13,4 +25,5 @@
   </body>
   <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+
 </html>
