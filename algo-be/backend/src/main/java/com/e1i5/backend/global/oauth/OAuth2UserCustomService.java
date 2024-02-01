@@ -9,14 +9,14 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Map;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
-    private final AuthRepository userRepository;
+    private final AuthRepository authRepo;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -33,30 +33,21 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
         Map<String, Object> attributes = oAuth2User.getAttributes();
         OAuthAttributes oAuthAttributes = OAuthAttributes.of(registrationId, attributes);
 
-        System.out.println("attributes.get(email): " + attributes.get("email"));
-        System.out.println("attributes.get(name)" + attributes.get("name"));
-
         String email = (String) oAuthAttributes.getEmail();
         String name = (String) oAuthAttributes.getNickname();
 //        Platform platform = oAuthAttributes.getPlatform();
 
-//        String email = (String) oAuthAttributes.getUser().getEmail();
-//        String name = (String) oAuthAttributes.getUser().getNickname();
-//        Platform platform = oAuthAttributes.getUser().getPlatform();
         System.out.println("email: " + email);
         System.out.println(name);
-//        System.out.println(platform);
-//        UUID uuid = UUID.randomUUID();
 
-        User user = userRepository.findByEmail(email) // email로 이미 회원가입 여부 확인
+        User user = authRepo.findByEmail(email) // email로 이미 회원가입 여부 확인
                 .map(entity -> entity.update(name))
                 .orElse(User.builder()
                         .email(email)
                         .nickname(name)
-//                        .userUuid(UUID.randomUUID())
-//                        .platform(platform)
+                        .regDate(LocalDate.now())
                         .build());
-        userRepository.save(user);
+        authRepo.save(user);
         return new CustomOAuth2User(
                 oAuth2User.getAuthorities(),
                 oAuth2User.getAttributes(),

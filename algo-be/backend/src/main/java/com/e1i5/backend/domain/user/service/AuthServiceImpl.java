@@ -38,36 +38,7 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public String createNewAccessToken(String refreshToken/*, HttpServletRequest httpServletRequest*/) {
         // 토큰 유효성 검사에 실패하면 예외 발생
-//        System.out.println("createNewAccessToken token 에러값" + tokenProvider.validateToken(refreshToken).getErrMsg());
-//        if(!tokenProvider.validateToken(refreshToken)) { // 받은 토큰을 가지고 비밀키로 복호화해서 유효성 확인
-//            throw new IllegalArgumentException("Unexpected token");
-//        }
-
-        // 1. refresh token 유효성 검사
-//        try {
-//            tokenProvider.getClaims(refreshToken);
-//        } catch (ExpiredJwtException e) {
-//            System.out.println("리프레시 토큰 만료");
-//            log.error("invalid refresh token", e);
-//            throw new AccessDeniedException(GlobalErrorCode.TOKEN_EXPIRED);
-////            throw new ExpiredJwtException(null, null, "refresh token has expired");
-//        } catch (Exception e) {
-//            System.out.println("리프레시 토큰 오류");
-//            log.error("invalid refresh token", e);
-//            throw new AccessDeniedException(GlobalErrorCode.ACCESS_DENIED);
-////            throw new IllegalArgumentException("createNewAccessToken Unexpected refresh token");
-//        }
-//        // 2. access token 만료된 토큰 검사
-//        String authorizationHeader = httpServletRequest.getHeader(HEADER_AUTHORIZATION);
-//        String accessToken = getAccessToken(authorizationHeader);
-//        try {
-//            tokenProvider.getClaims(accessToken);
-//            // ExpiredJwtException 예외가 catch되지 않았을 때 IllegalArgumentException
-//            throw new AccessDeniedException(GlobalErrorCode.ACCESS_DENIED);
-//        } catch (ExpiredJwtException e) {
-//            System.out.println("토큰 만료 재발급");
-//            return tokenProvider.createNewAccessToken(refreshToken);
-//        }
+        // refresh token 유효성 검사
         try {
             tokenProvider.getClaims(refreshToken);
             // ExpiredJwtException 예외가 catch되지 않았을 때 AccessDeniedException
@@ -76,9 +47,6 @@ public class AuthServiceImpl implements AuthService{
             System.out.println("refresh token 재발급 오류" + e.getMessage());
             throw new AccessDeniedException(GlobalErrorCode.ACCESS_DENIED);
         }
-
-
-//        return tokenProvider.createAccessToken(user);
     }
 
     /**
@@ -98,12 +66,12 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public String generateRandomNickname() {
         Random random = new Random();
-        
+
         while(true) {
             String adjective = RandomNickname.ADJECTIVES[random.nextInt(RandomNickname.ADJECTIVES.length)];
             String noun = RandomNickname.NOUNS[random.nextInt(RandomNickname.NOUNS.length)];
             String newNickname = adjective + " " + noun;
-            
+
             if (duplicateCheckNickname(newNickname)) return newNickname;
         }
     }

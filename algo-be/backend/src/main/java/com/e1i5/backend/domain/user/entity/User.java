@@ -5,9 +5,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
-import java.util.UUID;
+import java.time.LocalDate;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -25,42 +24,34 @@ public class User{
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-//    @GeneratedValue(generator = "uuid2")
-//    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-//    @Column(name = "user_uuid"/*, nullable = false*/, columnDefinition = "BINARY(16)")
-//    private UUID userUuid;
+    private String tier;
+
+    private int score;
+
+    private LocalDate regDate;
+
+    private boolean status; // 탈퇴 여부
+
+    private LocalDate delDate;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profile_id")
     private ProfileFileInfo userProfile;
 
-//    @Enumerated(value = EnumType.STRING)
+    //TODO 배경이미지 추가
+
+    //    @Enumerated(value = EnumType.STRING)
 //    private Platform flatform;
-
-//    @Column(length = 500)
-//    private String refreshToken;
-
-//    @Builder
-//    public User(int userId, String nickname, String email, String refreshToken) {
-//        this.userId = userId;
-//        this.nickname = nickname;
-//        this.email = email;
-//        this.refreshToken = refreshToken;
-//    }
-
     @Builder
-    public User(String nickname, String email) {
+    public User(String nickname, String email, LocalDate regDate) {
         this.nickname = nickname;
         this.email = email;
+        this.regDate = regDate;
     }
 
     public User update(String nickname) {
         this.nickname = nickname;
         return this;
     }
-//
-//    public User updateUuid(UUID uuid) {
-//        this.userUuid = uuid;
-//        return this;
-//    }
+
 }
