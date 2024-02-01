@@ -1,5 +1,6 @@
 package com.e1i5.backend.domain.user.service;
 
+import com.e1i5.backend.domain.user.dto.RandomNickname;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.exception.AccessDeniedException;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Random;
 
 @RequiredArgsConstructor
 @Service
@@ -26,11 +29,13 @@ public class AuthServiceImpl implements AuthService{
     private final static String TOKEN_PREFIX = "Bearer ";
 
 
+    @Override
     public User findByEmail(String email) {
         return authRepo.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
 
+    @Override
     public String createNewAccessToken(String refreshToken/*, HttpServletRequest httpServletRequest*/) {
         // 토큰 유효성 검사에 실패하면 예외 발생
 //        System.out.println("createNewAccessToken token 에러값" + tokenProvider.validateToken(refreshToken).getErrMsg());
@@ -86,11 +91,28 @@ public class AuthServiceImpl implements AuthService{
         return !authRepo.existsByNickname(nickname);
     }
 
-    private String getAccessToken(String authorizationHeader) {
-        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
-            return authorizationHeader.substring(TOKEN_PREFIX.length());
+    /**
+     * 닉네임 만드는 함수
+     * @return 랜덤 닉네임
+     */
+    @Override
+    public String generateRandomNickname() {
+        Random random = new Random();
+        
+        while(true) {
+            String adjective = RandomNickname.ADJECTIVES[random.nextInt(RandomNickname.ADJECTIVES.length)];
+            String noun = RandomNickname.NOUNS[random.nextInt(RandomNickname.NOUNS.length)];
+            String newNickname = adjective + " " + noun;
+            
+            if (duplicateCheckNickname(newNickname)) return newNickname;
         }
-        return null;
     }
+
+//    private String getAccessToken(String authorizationHeader) {
+//        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
+//            return authorizationHeader.substring(TOKEN_PREFIX.length());
+//        }
+//        return null;
+//    }
 
 }

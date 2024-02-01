@@ -9,4 +9,5 @@ public interface AuthService {
     User findByEmail(String email);
     String createNewAccessToken(String refreshToken);
     boolean duplicateCheckNickname(String nickname);
+    String generateRandomNickname();
 }
