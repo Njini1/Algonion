@@ -119,6 +119,7 @@ public class ProblemServiceImpl implements ProblemService {
         problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName)
                 .map(entity -> entity.updateLevel(problem.getProblemLevel()))
                 .orElse(problem);
+
         return problemRepo.save(problem);
     }
 }
