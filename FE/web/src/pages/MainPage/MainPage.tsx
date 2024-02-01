@@ -1,3 +1,5 @@
+import UserDashboard from "../../components/User/UserDashboard"
+
 import Description from "../../components/Main/Description"
 import classes from "./MainPage.module.scss"
 

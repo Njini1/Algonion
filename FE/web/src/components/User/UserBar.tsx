@@ -1,4 +1,4 @@
-import UserMain from './UserMain.tsx'
+import UserInfo from './UserInfo.tsx'
 // import UserDashboard from './UserDashboard.tsx'
 // import UserRecommendation from './UserRecommendation.tsx'
 // import UserFriendList from './UserFriendList.tsx'
@@ -8,7 +8,7 @@ function UserBar() {
     return (
       <div>
         {/* 1. 메인 정보 */}
-        <UserMain/>
+        <UserInfo/>
         {/* 2. 대시 보드 */}
         {/* <UserDashboard/> */}
         {/* 3. 문제 추천 */}

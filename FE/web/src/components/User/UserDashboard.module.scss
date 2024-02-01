@@ -1,0 +1,24 @@
+.component {
+  .graphTable {
+    margin: 1rem;
+
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f2fd; 
+    border-radius: 0.5rem;
+
+    p {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .graph {
+      background-color: #FFFFFF; 
+
+      padding: 1rem;
+      display: inline-flex;
+      justify-content: center;
+    }   
+  }
+}
