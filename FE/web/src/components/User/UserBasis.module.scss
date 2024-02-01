@@ -1,0 +1,50 @@
+// UserPage.module.scss
+
+.userPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileBackground {
+  width: 100%;
+  height: 200px;
+  background-color: #ccc;
+}
+
+.profilePicture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.nickname {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.expBar {
+  width: 80%;
+  height: 20px;
+  background-color: #f0f0f0;
+}
+
+.userBar {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+
+  button {
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+
+    &.activeTab {
+      font-weight: bold;
+    }
+  }
+}
