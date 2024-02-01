@@ -2,7 +2,6 @@ import './App.css';
 import Header from './containers/Header/Header.tsx';
 import Footer from './containers/Footer/Footer.tsx';
 import Mainpage from './pages/MainPage/MainPage.tsx'
-// import UserPage from './pages/UserPage/UserPage.tsx';
 // import UserNicknameSetting from './components/User/UserNicknameSetting.tsx'
 
 const App: React.FC = () => {
@@ -25,8 +24,6 @@ const App: React.FC = () => {
         <Mainpage/>
         {/* 2. 비정상 로그인 상태 (닉네임 설정 페이지) */}
         {/* <UsernameSetting/> */}
-        {/* 3. 정상 로그인 상태 */}
-        {/* <UserPage/> */}
       </div>
       <Footer/>
     </div>
