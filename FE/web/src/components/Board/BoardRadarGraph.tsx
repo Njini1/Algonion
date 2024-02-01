@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Chart from "react-apexcharts";
 
-function BoardRadarGraph(props) {
+function BoardRadarGraph() {
   const [state, setState] = useState({
     options: {
       chart: {
