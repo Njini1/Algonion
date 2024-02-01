@@ -8,19 +8,21 @@ class BoardRoundGraph extends Component {
 
     this.state = {
       options: {
-        chart: {
-          id: "basic-bar"
+        colors: ['#AD5600', '#435F7A', '#EC9A00', '#26E3A4', '#00B4FC', '#9F22FF'],
+        labels: ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master'],
+        dataLabels: {
+          enabled: true,
         },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-        }
+        plotOptions: {
+          pie: {
+            expandOnClick: false,
+            donut: {
+              size: '30%',
+            },
+          }
+        },
       },
-      series: [
-        {
-          name: "series-1",
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
-        }
-      ]
+      series: [44, 55, 41, 17, 15, 22],
     };
   }
 
@@ -32,7 +34,7 @@ class BoardRoundGraph extends Component {
             <Chart
               options={this.state.options}
               series={this.state.series}
-              type="bar"
+              type="donut"
               width="500"
             />
           </div>

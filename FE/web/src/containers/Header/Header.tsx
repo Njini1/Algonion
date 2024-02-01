@@ -1,6 +1,6 @@
 import classes from "./Header.module.scss"
 import React from "react";
-import {Avatar} from "@nextui-org/react";
+import { Avatar } from "@nextui-org/react";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
 import getAsset from "../../utils/getAsset";
@@ -29,7 +29,7 @@ export default function Header() {
   // ]
 
   return (
-    <NextUIProvider>
+    <NextUIProvider className={classes.header}>
       <Navbar onMenuOpenChange={setIsMenuOpen}>
         <NavbarContent>
           <NavbarMenuToggle
