@@ -1,3 +1,17 @@
-// .kakao-button{
-  
-// }
+.page {
+  .main {
+    height: 50rem;
+  }
+
+  .descriptions{
+    display: flex;
+    flex-direction: column;
+
+    .description1{
+    }
+
+    .description2{
+      text-align: right;
+    }
+  }
+}

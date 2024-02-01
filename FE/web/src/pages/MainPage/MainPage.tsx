@@ -1,4 +1,5 @@
 import Description from "../../components/Main/Description"
+import classes from "./MainPage.module.scss"
 
 const items = [
     {
@@ -8,7 +9,7 @@ const items = [
     {
         "title": '코드·기록',
         "description": ['내 코드 기록', '성장의 기쁨까지'],
-    },
+    },                                                                                                                                                                                         
     {
         "title": '커뮤니티',
         "description": ['모각코·모함코', '실시간 피드백까지'],
@@ -17,13 +18,22 @@ const items = [
 
 function MainPage() {
 	return (
-        <div>
-            <p>Main</p>
-            <Description items={items[0]} />
-            {/* <Description items={items[1]} /> */}
-            {/* <Description items={items[2]} /> */}
-
+    <div className={classes.page}>
+      <div className={classes.main}>
+        <p>main 컴포넌트</p>
+      </div>
+      <div className={classes.descriptions}>
+        <div className={classes.description1}>
+          <Description items={items[0]} />
         </div>
+        <div className={classes.description2}>
+          <Description items={items[1]} />
+        </div>
+        <div className={classes.description1}>
+          <Description items={items[2]} />
+        </div>
+      </div>
+    </div>
   )
 }
   
