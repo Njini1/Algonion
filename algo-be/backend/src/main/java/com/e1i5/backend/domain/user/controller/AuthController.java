@@ -42,7 +42,7 @@ public class AuthController {
         String refreshToken = CookieUtil.findCookie(httpServletRequest, "refresh_token");
 
         // 2. refresh token을 사용하여 새로운 access token 생성 또는 기능 수행
-        String newAccessToken = authService.createNewAccessToken(refreshToken, httpServletRequest);
+        String newAccessToken = authService.createNewAccessToken(refreshToken);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new CreateAccessTokenResponse(newAccessToken));

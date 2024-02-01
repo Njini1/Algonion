@@ -2,6 +2,7 @@ package com.e1i5.backend.global.config;
 
 import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.domain.user.service.AuthServiceImpl;
+import com.e1i5.backend.global.jwt.JwtAuthenticationEntryPoint;
 import com.e1i5.backend.global.jwt.TokenAuthenticationFilter;
 import com.e1i5.backend.global.jwt.TokenProvider;
 import com.e1i5.backend.global.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
@@ -11,12 +12,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
@@ -27,6 +31,7 @@ public class SecurityConfig {
     private final TokenProvider tokenProvider;
     private final AuthRepository userRepository;
     private final AuthServiceImpl userService;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
 //    @Bean
 //    public WebSecurityCustomizer configure() {
@@ -46,14 +51,14 @@ public class SecurityConfig {
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+//        http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 //        http.addFilterBefore(tokenAuthenticationFilter(), BasicAuthenticationFilter.class); // filter의 에러값을 받을 수 있음
-
+//        http.addFilterBefore(new TokenAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), tokenProvider), BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
                 .requestMatchers("/user/token").permitAll()
                 .requestMatchers("/user/test").authenticated()
-                .requestMatchers("/**").permitAll()
 //                .requestMatchers("/api/token").permitAll()
                 .anyRequest().permitAll();
 
@@ -87,6 +92,11 @@ public class SecurityConfig {
                 userService
         );
     }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        return authenticationConfiguration.getAuthenticationManager();
+//    }
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {

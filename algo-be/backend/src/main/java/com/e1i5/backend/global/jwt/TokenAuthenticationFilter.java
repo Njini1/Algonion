@@ -58,13 +58,14 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         Claims claims;
         try {
             claims = tokenProvider.getClaims(token);
-        }/* catch (ExpiredJwtException e) {
+        } /*catch (ExpiredJwtException e) {
             log.error("expired access token", e);
-            request.setAttribute("exception", GlobalErrorCode.TOKEN_EXPIRED);
+            response.sendError(401, "토큰 만료");
+//            request.setAttribute("exception", GlobalErrorCode.TOKEN_EXPIRED);
             filterChain.doFilter(request, response);
             return;
 
-        } */catch (Exception e) {
+        }*/ catch (Exception e) {
             System.out.println("필터에서 토큰 검사 오류");
             log.info("jwt exception message : {} token : {}", e.getMessage(), token);
             filterChain.doFilter(request, response);
