@@ -4,7 +4,7 @@ import Chart from "react-apexcharts";
 
 function BoardRoundGraph() {
 
-  const [state, setState] = useState({
+  const [state] = useState({
     options: {
       colors: ['#AD5600', '#435F7A', '#EC9A00', '#26E3A4', '#00B4FC', '#9F22FF'],
       labels: ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master'],

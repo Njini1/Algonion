@@ -1,6 +1,5 @@
 import BoardLinearGraph from "../Board/BoardLinearGraph";
 import BoardRoundGraph from "../Board/BoardRoundGraph";
-import BoardRadarGraph from "../Board/BoardRadarGraph";
 import classes from "./UserDashboard.module.scss"
 
 // - [방사형 그래프] 문제 유형

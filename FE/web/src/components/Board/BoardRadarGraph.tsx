@@ -4,7 +4,7 @@ import { useState } from "react";
 import Chart from "react-apexcharts";
 
 function BoardRadarGraph() {
-  const [state, setState] = useState({
+  const [state] = useState({
     options: {
       chart: {
         id: "basic-bar"
