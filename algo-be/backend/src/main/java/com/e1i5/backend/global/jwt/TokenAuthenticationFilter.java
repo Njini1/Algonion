@@ -66,7 +66,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             return;
 
         }*/ catch (Exception e) {
-            System.out.println("필터에서 토큰 검사 오류");
             log.info("jwt exception message : {} token : {}", e.getMessage(), token);
             filterChain.doFilter(request, response);
             return;

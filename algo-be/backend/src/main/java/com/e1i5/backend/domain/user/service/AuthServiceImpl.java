@@ -76,6 +76,16 @@ public class AuthServiceImpl implements AuthService{
 //        return tokenProvider.createAccessToken(user);
     }
 
+    /**
+     * 닉네임 중복 검사
+     * @param nickname 검사할 닉네임
+     * @return true 사용 가능한 닉네임, false 이미 존재하는 닉네임
+     */
+    @Override
+    public boolean duplicateCheckNickname(String nickname) {
+        return !authRepo.existsByNickname(nickname);
+    }
+
     private String getAccessToken(String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
             return authorizationHeader.substring(TOKEN_PREFIX.length());

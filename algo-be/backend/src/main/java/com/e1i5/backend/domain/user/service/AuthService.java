@@ -8,4 +8,5 @@ import java.util.UUID;
 public interface AuthService {
     User findByEmail(String email);
     String createNewAccessToken(String refreshToken);
+    boolean duplicateCheckNickname(String nickname);
 }

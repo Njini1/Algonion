@@ -48,11 +48,19 @@ public class AuthController {
                 .body(new CreateAccessTokenResponse(newAccessToken));
     }
 
+    @GetMapping("/check-nickname/{nickname}")
+    public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname) {
+        //TODO @Valid 유효성 검사 추가
+        boolean checkResult = authService.duplicateCheckNickname(nickname);
+        return new ResponseEntity<>(checkResult, HttpStatus.OK);
+    }
+
     @GetMapping("/login-test")
     public ResponseEntity<String> loginTest() {
         System.out.println("login test입니당");
         return new ResponseEntity<String>("test", HttpStatus.OK);
     };
+
 
     private ResponseEntity<String> exceptionHandling(Exception e) {
         e.printStackTrace();
