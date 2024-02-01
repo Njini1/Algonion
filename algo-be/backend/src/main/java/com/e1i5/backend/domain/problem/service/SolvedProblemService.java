@@ -19,4 +19,5 @@ public interface SolvedProblemService {
     List<SolvedProblemListResponse> getSolvedProblemListByUser();
     SolvedProblemDetailResponse getSolvedProblemDetail(int username, int solvedProblemId);
     List<StreakResponseInterface> makeStreak(int userId);
+    List<String> makeDateList(int totalDate);
 }

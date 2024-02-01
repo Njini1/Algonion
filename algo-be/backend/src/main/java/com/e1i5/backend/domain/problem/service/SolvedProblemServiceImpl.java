@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -199,8 +201,23 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Override
     public List<StreakResponseInterface> makeStreak(int userId) {
-        //TODO 사용자가 푼 문제를 어떤 식으로 카운트할지 -> 같은 문제라도 언어가 다르면 문제 카운트 + 1을 할지, 아니면 같은 문제 하나로 취급할지
+        //TODO 7일씩 나눠서 마지막 7일에는 0으로 값을 채워놔야함
         List<StreakResponseInterface> streak = solvedProblemRepo.findSubmissionTimeAndCountByUserId(2);
+
         return streak;
+    }
+
+    public List<String> makeDateList(int totalDate) {
+        List<String> dateList = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("####-##-##");
+
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(totalDate);
+
+        while (startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
+            dateList.add(startDate.format(formatter));
+            startDate = startDate.plusDays(1);
+        }
+        return dateList;
     }
 }
