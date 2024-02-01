@@ -23,13 +23,13 @@ function MainPage() {
         <p>main 컴포넌트</p>
       </div>
       <div className={classes.descriptions}>
-        <div className={classes.description1}>
+        <div>
           <Description items={items[0]} />
         </div>
-        <div className={classes.description2}>
+        <div className={classes.description_right}>
           <Description items={items[1]} />
         </div>
-        <div className={classes.description1}>
+        <div>
           <Description items={items[2]} />
         </div>
       </div>
