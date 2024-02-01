@@ -24,14 +24,19 @@ public class User{
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
+    @Column(name = "tier")
     private String tier;
 
+    @Column(name = "score")
     private int score;
 
+    @Column(name = "reg_date")
     private LocalDate regDate;
 
+    @Column(name = "status")
     private boolean status; // 탈퇴 여부
 
+    @Column(name = "del_date")
     private LocalDate delDate;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -49,9 +54,8 @@ public class User{
         this.regDate = regDate;
     }
 
-    public User update(String nickname) {
+    public void updateNickname(String nickname) {
         this.nickname = nickname;
-        return this;
     }
 
 }

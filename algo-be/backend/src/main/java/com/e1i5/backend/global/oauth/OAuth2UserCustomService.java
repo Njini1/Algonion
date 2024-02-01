@@ -2,6 +2,7 @@ package com.e1i5.backend.global.oauth;
 
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
+import com.e1i5.backend.domain.user.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
     private final AuthRepository authRepo;
+    private final AuthService authService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -39,12 +41,13 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 
         System.out.println("email: " + email);
         System.out.println(name);
+        String nickname = authService.generateRandomNickname();
 
         User user = authRepo.findByEmail(email) // email로 이미 회원가입 여부 확인
-                .map(entity -> entity.update(name))
+//                .map(entity -> entity.updateNickname(name))
                 .orElse(User.builder()
                         .email(email)
-                        .nickname(name)
+                        .nickname(nickname)
                         .regDate(LocalDate.now())
                         .build());
         authRepo.save(user);
@@ -53,7 +56,7 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
                 oAuth2User.getAttributes(),
                 oAuthAttributes.getNameAttributesKey(),
                 email,
-                name
+                nickname
 //                platform
         );
     }

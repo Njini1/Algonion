@@ -10,4 +10,5 @@ public interface AuthService {
     String createNewAccessToken(String refreshToken);
     boolean duplicateCheckNickname(String nickname);
     String generateRandomNickname();
+    String changeNickname(String nickname, int userId);
 }

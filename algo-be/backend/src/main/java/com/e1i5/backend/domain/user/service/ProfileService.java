@@ -4,4 +4,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ProfileService {
     void saveUserProfile(MultipartFile profileImg);
+
 }

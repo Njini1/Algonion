@@ -1,9 +1,6 @@
 package com.e1i5.backend.global.jwt;
 
-import com.e1i5.backend.domain.user.exception.AccessDeniedException;
-import com.e1i5.backend.global.error.GlobalErrorCode;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

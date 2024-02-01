@@ -1,6 +1,7 @@
 package com.e1i5.backend.domain.user.controller;
 
 import com.e1i5.backend.domain.user.dto.request.CreateAccessTokenRequest;
+import com.e1i5.backend.domain.user.dto.request.NicknameRequest;
 import com.e1i5.backend.domain.user.dto.response.CreateAccessTokenResponse;
 import com.e1i5.backend.domain.user.service.AuthService;
 import com.e1i5.backend.global.util.CookieUtil;
@@ -48,12 +49,20 @@ public class AuthController {
                 .body(new CreateAccessTokenResponse(newAccessToken));
     }
 
-    @GetMapping("/check-nickname/{nickname}")
-    public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname) {
+    @GetMapping("/nickname")
+    public ResponseEntity<Boolean> checkNickname(@RequestBody NicknameRequest nicknameReq) {
         //TODO @Valid 유효성 검사 추가
-        boolean checkResult = authService.duplicateCheckNickname(nickname);
+        boolean checkResult = authService.duplicateCheckNickname(nicknameReq.getNickname());
         return new ResponseEntity<>(checkResult, HttpStatus.OK);
     }
+
+    @PutMapping("/nickname")
+    public ResponseEntity<String> changeNickname(@RequestBody NicknameRequest nicknameReq) {
+        //TODO @Valid 유효성 검사 추가
+        String changeNickname = authService.changeNickname(nicknameReq.getNickname(), 2);
+        return new ResponseEntity<>(changeNickname, HttpStatus.OK);
+    }
+
 
     @GetMapping("/login-test")
     public ResponseEntity<String> loginTest() {

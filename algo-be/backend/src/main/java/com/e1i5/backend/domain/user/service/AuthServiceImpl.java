@@ -1,17 +1,19 @@
 package com.e1i5.backend.domain.user.service;
 
+import com.e1i5.backend.domain.problem.exception.SolvedProblemNotFoundException;
 import com.e1i5.backend.domain.user.dto.RandomNickname;
 import com.e1i5.backend.domain.user.entity.User;
-import com.e1i5.backend.domain.user.exception.AccessDeniedException;
+import com.e1i5.backend.domain.user.exception.DuplicateNickname;
+import com.e1i5.backend.domain.user.exception.UserNotFoundException;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.global.error.GlobalErrorCode;
 import com.e1i5.backend.global.jwt.TokenProvider;
 import io.jsonwebtoken.ExpiredJwtException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 
@@ -45,7 +47,7 @@ public class AuthServiceImpl implements AuthService{
             return tokenProvider.createNewAccessToken(refreshToken);
         } catch (ExpiredJwtException e) {
             System.out.println("refresh token 재발급 오류" + e.getMessage());
-            throw new AccessDeniedException(GlobalErrorCode.ACCESS_DENIED);
+            throw new UserNotFoundException(GlobalErrorCode.ACCESS_DENIED);
         }
     }
 
@@ -74,6 +76,18 @@ public class AuthServiceImpl implements AuthService{
 
             if (duplicateCheckNickname(newNickname)) return newNickname;
         }
+    }
+
+    @Transactional
+    @Override
+    public String changeNickname(String nickname, int userId) {
+        if (authRepo.existsByNickname(nickname)) { //이미 존재하는 닉네임이면
+            throw new DuplicateNickname(GlobalErrorCode.DUPLICATE_NICKNAME);
+        }
+        User user = authRepo.findById(userId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+        user.updateNickname(nickname);
+        User changeUser = authRepo.save(user);
+        return changeUser.getNickname(); //TODO 반환 값을 interface dto로?
     }
 
 //    private String getAccessToken(String authorizationHeader) {
