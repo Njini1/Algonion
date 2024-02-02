@@ -7,6 +7,7 @@ import com.e1i5.backend.domain.problem.repository.AlgoGroupRepository;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
+import com.e1i5.backend.global.util.AlgoScoreUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +70,7 @@ public class ProblemServiceImpl implements ProblemService {
             int problemId = (int) item.get("problemId");
             String titleKo = (String) item.get("titleKo");
             int level = (int) item.get("level");
+//            int level = 6;
             List<String> algoGroup = new ArrayList<>();
 
             List<Map<String, Object>> tags = (List<Map<String, Object>>) item.get("tags");
@@ -84,6 +86,7 @@ public class ProblemServiceImpl implements ProblemService {
 //            System.out.println("Level : " + level);
 //            System.out.println("AlgoGroup : " + algoGroup);
 //            System.out.println("url : https://www.acmicpc.net/problem/" + Integer.toString(problemId));
+//            System.out.println("algoscoreutil : " + AlgoScoreUtil.getBojScore(level));
 //            System.out.println("====================================================");
 
             // 1. 문제 저장 -> 이미 있는 값은 레벨만 변경, 없으면 새로 저장
@@ -91,6 +94,7 @@ public class ProblemServiceImpl implements ProblemService {
                     .problemNum(Integer.toString(problemId))
                     .problemTitle(titleKo)
                     .problemLevel(Integer.toString(level))
+                    .algoScore(AlgoScoreUtil.getBojScore(level))
                     .url(url).build();
             problem.updateSiteName(ProblemSite.BAEKJOON.getProblemSite());
             Problem newProblem = saveOrUpdateProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
@@ -103,6 +107,7 @@ public class ProblemServiceImpl implements ProblemService {
                         .problem(newProblem)
                         .classification(algo).build());
             }
+
             algoGroupRepo.saveAll(algoGroupList);
         }
 
@@ -114,12 +119,29 @@ public class ProblemServiceImpl implements ProblemService {
      * @param siteName 사이트 이름(혹시 나중에 프로그래머스나 swea도 쓸 수 있으니까)
      * @return 저장한 문제 반환
      */
+//    @Override
+//    public Problem saveOrUpdateProblem(Problem problem, String siteName) {
+//        problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName)
+//                .map(entity -> entity.updateLevel(problem.getProblemLevel(), problem.getAlgoScore()))
+//                .orElse(problem);
+//
+//        return problemRepo.save(problem);
+//    }
     @Override
     public Problem saveOrUpdateProblem(Problem problem, String siteName) {
-        problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName)
-                .map(entity -> entity.updateLevel(problem.getProblemLevel()))
-                .orElse(problem);
-
-        return problemRepo.save(problem);
+//        System.out.println("problem" + problem);
+//        System.out.println("problemNum : " + problem.getProblemNum());
+        Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName);
+        if (existingProblem.isPresent()) {
+            // 문제가 이미 존재하면, 난이도와 algoScore 업데이트
+            Problem updatedProblem = existingProblem.get();
+            updatedProblem.updateLevel(problem.getProblemLevel(), problem.getAlgoScore());
+//            System.out.println("문제 존재 : " + updatedProblem);
+            return problemRepo.save(updatedProblem);
+        } else {
+            // 문제가 존재하지 않으면, 새로운 문제 저장
+            return problemRepo.save(problem);
+        }
     }
+
 }

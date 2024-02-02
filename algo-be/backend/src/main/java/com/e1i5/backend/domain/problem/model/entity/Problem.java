@@ -53,8 +53,9 @@ public class Problem {
         this.siteName = siteName;
     }
 
-    public Problem updateLevel(String level) {
+    public Problem updateLevel(String level, int algoScore) {
         this.problemLevel = level;
+        this.algoScore = algoScore;
         return this;
     }
 
