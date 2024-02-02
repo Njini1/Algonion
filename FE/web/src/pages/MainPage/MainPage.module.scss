@@ -1,14 +1,17 @@
 .page {
-  .main {
-    height: 50rem;
-  }
-
-  .descriptions{
-    display: flex;
-    flex-direction: column;
-
-    .description_right{
-      text-align: right;
+  display: flex;
+  justify-content: center;
+  
+  .mainPage {
+    width: 62.4rem;
+    .main {
+      height: 50rem;
+    }
+  
+    .descriptions{
+      .description_right{
+        text-align: right;
+      }
     }
   }
 }

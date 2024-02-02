@@ -8,7 +8,6 @@ const App: React.FC = () => {
   return (
     <div>
       <Header/>
-      <div className={classes.page}>
         {/* if ( 로그인이 되었다면 ) {
           if ( 닉네임이 있다면 ) {
             
@@ -23,7 +22,6 @@ const App: React.FC = () => {
         <Mainpage/>
         {/* 2. 비정상 로그인 상태 (닉네임 설정 페이지) */}
         {/* <UsernameSetting/> */}
-      </div>
       <Footer/>
     </div>
   );
