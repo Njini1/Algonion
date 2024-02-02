@@ -1,4 +1,4 @@
-import UserRecommendationItem from "./UserRecommendationItem";
+import UserRecommendationItem from "./UserRecommendationItem.tsx";
 import classes from './UserRecommendation.module.scss'
 
 export default function UserRecommendation() {;
