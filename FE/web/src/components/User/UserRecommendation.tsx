@@ -1,7 +1,17 @@
-function UserRecommendation() {
+import UserRecommendationItem from "./UserRecommendationItem";
+import classes from './UserRecommendation.module.scss'
+
+export default function UserRecommendation() {;
   return (
-    <h2>UserRecommendation</h2>
-  )
+    <div className={classes.container}>
+      <div className={classes.items}>
+        <UserRecommendationItem />
+        <UserRecommendationItem/>
+      </div>
+      <div className={classes.items}>
+        <UserRecommendationItem />
+        <UserRecommendationItem/>
+      </div>
+    </div>
+  );
 }
-  
-export default UserRecommendation
