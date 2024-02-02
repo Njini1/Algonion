@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import UserInformation from './UserInformation.tsx'
-// import UserDashboard from './UserDashboard.tsx'
-// import UserRecommendation from './UserRecommendation.tsx'
-// import UserFriendList from './UserFriendList.tsx'
+import UserDashboard from './UserDashboard.tsx'
+import UserRecommendation from './UserRecommendation.tsx'
+import UserFriendList from './UserFriendList.tsx'
 import classes from "./UserBar.module.scss"
 
 function UserBar() {
@@ -47,21 +47,15 @@ function UserBar() {
           }
 
           {selectedTab === 'userDashboard' && 
-          // <userDashboard/>>
-          <div>userDashboard</div>
-          // 컴포넌트 올리면서 div는 삭제해야 동작합니다
+          <UserDashboard/>
           }
 
           {selectedTab === 'userRecommendation' &&
-          // <userRecommendation/>
-          <div>userRecommendation</div>
-          // 컴포넌트 올리면서 div는 삭제해야 동작합니다
+          <UserRecommendation/>
           }
 
           {selectedTab === 'friendList' && 
-          // <UserFriendList/>
-          <div>friendList</div>
-          // 컴포넌트 올리면서 div는 삭제해야 동작합니다
+          <UserFriendList/>
           }
         </div>
       </>
