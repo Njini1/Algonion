@@ -20,8 +20,8 @@ export function TierBox(props: { item: Variants | undefined; }) {
       <div className={classes.text}>
         <p className={classes.title}>티어</p>
         <div className={classes.content}>
-          <p className={classes.username}>Ssafy</p>
-          <p className={classes.tier}>MASTER</p>
+          <p className={classes.username}></p>
+          <p className={classes.tier}>UNRANKED</p>
         </div>
       </div>
     </motion.div>
