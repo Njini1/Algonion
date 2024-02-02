@@ -27,17 +27,29 @@ const item = {
   },
 };
 export const Popup = () => {
+  const [problemCnt, setProblemCnt] = useState(0);
+  const [streak, setStreak] = useState(Array.from({ length: 7 }, () => false));
+
+  useEffect(() => {
+    let res: { [key: string]: number } = { "2024-01-27": 5, "2024-01-28": 5, "2024-01-29": 5, "2024-01-30": 5, "2024-01-31": 0, "2024-02-01": 1, "2024-02-02": 3 };
+    let newStreak = Object.values(res).map(cnt => cnt > 0 ? true : false);
+    let dayList = Object.keys(res);
+    let lastValue = dayList[dayList.length - 1];
+    setProblemCnt(() => res[lastValue]);
+    setStreak(() => newStreak);
+  }, []);
+
   return (
     <motion.main className="container" variants={container} initial="hidden" animate="visible">
       <div className="first-line">
         <TierBox item={item} />
         <div>
           <LogoBox item={item} />
-          <TodayBox item={item} />
-          <motion.div className="box" variants={item}></motion.div>
+          <TodayBox item={item} problemCnt={problemCnt} />
+          <motion.div className="box" variants={item}><p>🚧</p></motion.div>
         </div>
       </div>
-      <StreakBox item={item} />
+      <StreakBox item={item} streak={streak} />
     </motion.main>
   );
 };
