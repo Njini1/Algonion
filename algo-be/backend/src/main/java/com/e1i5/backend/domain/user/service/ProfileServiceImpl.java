@@ -1,5 +1,8 @@
 package com.e1i5.backend.domain.user.service;
 
+import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
+import com.e1i5.backend.domain.user.dto.response.StreakResponse;
+import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.ProfileFileInfo;
 import com.e1i5.backend.domain.user.repository.UserProfileRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -22,8 +28,9 @@ public class ProfileServiceImpl implements ProfileService {
     @Value("${file.path.nodeValue}")
     private String UPLOAD_PATH;
 
-    @Autowired
     private final UserProfileRepository userProfileRepo;
+    private final SolvedProblemRepository solvedProblemRepo;
+
 
     @Override
     public void saveUserProfile(MultipartFile profileImg) {
@@ -56,6 +63,82 @@ public class ProfileServiceImpl implements ProfileService {
         userProfileRepo.save(ProfileFileInfo.builder()
                 .saveFile(saveFileName)
                 .originalFile(originalFileName).build());
+    }
+
+
+    /**
+     * 스트릭 만드는 메서드
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<StreakResponseInterface> getUserStreak(int userId) {
+        //TODO 7일씩 나눠서 마지막 7일에는 0으로 값을 채워놔야함
+        List<StreakResponseInterface> streak = solvedProblemRepo.findSubmissionTimeAndCountByUserId(2);
+        return streak;
+    }
+
+    /**
+     * 확장 프로그램 버전 7일 스트릭
+     * @param userId
+     * @return
+     */
+    @Override
+    public Map<String, Long> getUserSevenStreak(int userId) {
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(6);
+
+        List<StreakResponseInterface> streak = solvedProblemRepo.findSevenDaysStreak(2, endDate.toString(), startDate.toString());
+        LinkedHashMap <String, Long> result = new LinkedHashMap <>();
+        for (int i = 0; i < 7; i++) {
+            result.put(startDate.plusDays(i).toString(), 0L);
+        }
+        for (StreakResponseInterface streakDate : streak) {
+            result.put(streakDate.getSubmissionTime(), streakDate.getCount());
+        }
+        return result;
+    }
+
+    @Override
+    public StreakResponse makeStreak() {
+        List<String> dateList = makeDateList(364);
+//        for (String date: dateList) {
+//
+//        }
+        return null;
+    }
+
+    public List<String> makeDateList(int totalDate) {
+        List<String> dateList = new ArrayList<>();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("####-##-##");
+//
+//        LocalDate endDate = LocalDate.now();
+//        LocalDate startDate = endDate.minusDays(totalDate);
+//
+//        while (startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
+//            dateList.add(startDate.format(formatter));
+//            startDate = startDate.plusDays(1);
+//        }
+        HashMap<String, Integer> data = new HashMap<>();
+
+//        {
+//            name: "sat",
+//                    data: [{
+//            x: 'W1',
+//                    y: 10
+//        }, {
+//            x: 'W2',
+//                    y: 32
+//        }, {
+//            x: 'W3',
+//                    y: 50
+//        }, {
+//            x: 'W4',
+//                    y: 30
+//        }]
+//        },
+
+        return dateList;
     }
 
 }

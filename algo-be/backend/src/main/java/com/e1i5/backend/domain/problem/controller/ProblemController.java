@@ -110,16 +110,6 @@ public class ProblemController {
         problemService.saveBojProblemAndClassification(2);
     }
 
-    /**
-     * 스트릭 만드는 메서드
-     * @param username
-     * @return 날짜와 그 날짜에 푼 문제 개수 리스트 반환
-     */
-    @GetMapping("/streak")
-    public ResponseEntity<List<StreakResponseInterface>> getStreak(@RequestParam("username") String username) {
-        List<StreakResponseInterface> streakResponses = solvedProblemService.makeStreak(2);
-        return new ResponseEntity<>(streakResponses, HttpStatus.OK);
-    }
     
     @GetMapping("/test")
     public ResponseEntity<String> test() {
