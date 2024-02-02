@@ -1,6 +1,7 @@
 import Description from "../../components/Main/Description"
 import classes from "./MainPage.module.scss"
 import Main from "../../components/Main/Main"
+import MainDescription from "../../components/Main/MainDescription"
 
 const items = [
     {
@@ -22,6 +23,9 @@ export default function MainPage() {
     <div className={classes.page}>
       <div className={classes.main}>
         <Main></Main>
+      </div>
+      <div>
+        <MainDescription></MainDescription>
       </div>
       <div className={classes.descriptions}>
         <div>
