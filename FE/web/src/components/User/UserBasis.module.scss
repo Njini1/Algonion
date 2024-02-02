@@ -1,0 +1,34 @@
+// UserPage.module.scss
+
+.userPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // text-align: center;
+}
+
+.profileBackground {
+  width: 100%;
+  height: 200px;
+  background-color: #ccc;
+}
+
+.profilePicture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.nickname {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.expBar {
+  width: 80%;
+  height: 20px;
+  background-color: red;
+}
+

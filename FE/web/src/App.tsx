@@ -1,7 +1,7 @@
 // import classes from './App.module.scss';
 import Header from './containers/Header/Header.tsx';
 import Footer from './containers/Footer/Footer.tsx';
-import Mainpage from './pages/MainPage/MainPage.tsx'
+// import Mainpage from './pages/MainPage/MainPage.tsx'
 // import UserNicknameSetting from './components/User/UserNicknameSetting.tsx'
 
 const App: React.FC = () => {
@@ -17,9 +17,8 @@ const App: React.FC = () => {
           return 
         } */}
 
-
         {/* 1. 비로그인 상태 (로그인-회원가입 페이지) */}
-        <Mainpage/>
+        {/* <Mainpage/> */}
         {/* 2. 비정상 로그인 상태 (닉네임 설정 페이지) */}
         {/* <UsernameSetting/> */}
       <Footer/>

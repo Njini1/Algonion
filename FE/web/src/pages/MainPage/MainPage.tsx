@@ -1,5 +1,7 @@
 import Description from "../../components/Main/Description"
 import classes from "./MainPage.module.scss"
+import Main from "../../components/Main/Main"
+import MainDescription from "../../components/Main/MainDescription"
 
 const items = [
     {
@@ -21,7 +23,10 @@ export default function MainPage() {
     <div className={classes.page}>
       <div className={classes.mainPage}>
         <div className={classes.main}>
-          <p>main 컴포넌트</p>
+          <Main></Main>
+        </div>
+        <div>
+          <MainDescription></MainDescription>
         </div>
         <div className={classes.descriptions}>
           <div>
