@@ -1,6 +1,5 @@
 import classes from "./Header.module.scss"
 import React from "react";
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 
 import { Avatar } from "@nextui-org/react";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";

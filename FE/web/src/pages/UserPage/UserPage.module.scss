@@ -1,13 +1,11 @@
 .page{
   display: flex;
+  justify-content: center;
   flex-direction: column;
   justify-content: center;
-  // background-color: antiquewhite;
+  
+  .userPage {
+    padding: 1rem;
+    align-items: center;
+    }
 }
-
-.userPage {
-  width: 62.4rem;
-  display: flex;
-  justify-content: center;
-  // background-color: rgb(196, 127, 38);
-  }

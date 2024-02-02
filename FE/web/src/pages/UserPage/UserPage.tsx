@@ -14,7 +14,7 @@ function UserPage() {
         <UserBar/>
       </div>
       <Footer/>
-    </div>
+      </div>
   )
 }
   

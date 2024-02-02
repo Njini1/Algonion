@@ -1,12 +1,12 @@
 import UserInfo from './UserInfo.tsx'
 // import UserDashboard from './UserDashboard.tsx'
 // import UserRecommendation from './UserRecommendation.tsx'
-// import UserFriendList from './UserFriendList.tsx'
-// import classes from "./UserPage.module.scss"
+import UserFriendList from './UserFriendList.tsx'
+import classes from "./UserBar.module.scss"
 
 function UserBar() {
     return (
-      <div>
+      <div className={classes.page}>
         {/* 1. 메인 정보 */}
         <UserInfo/>
         {/* 2. 대시 보드 */}
