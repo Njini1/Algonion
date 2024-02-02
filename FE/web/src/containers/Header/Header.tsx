@@ -56,11 +56,7 @@ export default function Header() {
           </NavbarItem>
 
           <NavbarItem>
-<<<<<<< HEAD
-            <Link color="foreground" href="#">
-=======
             <Link href={`/code-log/${username}`} color="foreground">
->>>>>>> feat/web/router
               코드로그
             </Link>
           </NavbarItem>
