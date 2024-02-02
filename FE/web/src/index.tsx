@@ -5,8 +5,14 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
 import './index.css'
 import UserPage from './pages/UserPage/UserPage.tsx';
+import CodeLogPage from './pages/CodeLogPage/CodeLogPage.tsx';
+import CodeLogDetailPage from './pages/CodeLogDetailPage/CodeLogDetailPage.tsx';
+import SearchPage from './pages/SearchPage/SearchPage.tsx';
+import CommunityPage from './pages/CommunityPage/CommunityPage.tsx';
+import RoomDetailPage from './pages/RoomDetailPage/RoomDetailPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +22,27 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <UserPage />,
-  }
+  },
+  {
+    path: "/code-log/:username",
+    element: <CodeLogPage />,
+  },
+  {
+    path: "/code-log/:codeId",
+    element: <CodeLogDetailPage />,
+  },
+  {
+    path: "/search/:query",
+    element: <SearchPage />,
+  },
+  {
+    path: "/community",
+    element: <CommunityPage />,
+  },
+  {
+    path: "/room/:roomId",
+    element: <RoomDetailPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

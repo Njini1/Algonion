@@ -1,5 +1,7 @@
 import classes from "./Header.module.scss"
 import React from "react";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+
 import { Avatar } from "@nextui-org/react";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
@@ -28,6 +30,8 @@ export default function Header() {
   //   "master"
   // ]
 
+  const username = 'Alice';
+
   return (
     <NextUIProvider className={classes.header}>
       <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -37,28 +41,38 @@ export default function Header() {
             className="sm:hidden"
           />
           <NavbarBrand>
-            <Link href="#">
-            <img className={classes.img} src={getAsset('logo/icon_circle.svg')} alt="algo_logo_dark" />
-            <img src={getAsset('logo/logo_light.svg')} alt="algo_logo_light"/>
+            <Link href="/">
+            {/* <img className={classes.img} src={getAsset('logo/icon_square.svg')} alt="algo_logo_dark" /> */}
+            <img src={getAsset('logo/logo_light.svg')} alt="algo_logo_light" />
             </Link>
           </NavbarBrand>
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarItem>
+            <Link href={`/profile`} color="foreground">
+              나의정보
+            </Link>
+          </NavbarItem>
+
           <NavbarItem>
+<<<<<<< HEAD
             <Link color="foreground" href="#">
+=======
+            <Link href={`/code-log/${username}`} color="foreground">
+>>>>>>> feat/web/router
               코드로그
             </Link>
           </NavbarItem>
           
           <NavbarItem>
-            <Link color="foreground" href="#">
+            <Link href={`/community`} color="foreground">
               커뮤니티
             </Link>
           </NavbarItem>
           
           <NavbarItem isActive>
-            <Link href="#" aria-current="page">
+            <Link aria-current="page">
               <SearchModal/>
             </Link>
           </NavbarItem>

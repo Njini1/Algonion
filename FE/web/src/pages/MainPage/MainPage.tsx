@@ -19,18 +19,20 @@ const items = [
 export default function MainPage() {
 	return (
     <div className={classes.page}>
-      <div className={classes.main}>
-        <p>main 컴포넌트</p>
-      </div>
-      <div className={classes.descriptions}>
-        <div>
-          <Description items={items[0]} />
+      <div className={classes.mainPage}>
+        <div className={classes.main}>
+          <p>main 컴포넌트</p>
         </div>
-        <div className={classes.description_right}>
-          <Description items={items[1]} />
-        </div>
-        <div>
-          <Description items={items[2]} />
+        <div className={classes.descriptions}>
+          <div>
+            <Description items={items[0]} />
+          </div>
+          <div className={classes.description_right}>
+            <Description items={items[1]} />
+          </div>
+          <div>
+            <Description items={items[2]} />
+          </div>
         </div>
       </div>
     </div>

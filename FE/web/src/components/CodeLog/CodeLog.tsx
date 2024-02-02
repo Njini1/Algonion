@@ -1,8 +1,8 @@
-function RoomList() {
+function CodeLog() {
     return (
       <div>
       </div>
     )
 }
   
-export default RoomList
+export default CodeLog
