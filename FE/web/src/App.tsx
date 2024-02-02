@@ -1,4 +1,4 @@
-import './App.css';
+import classes from './App.module.scss';
 import Header from './containers/Header/Header.tsx';
 import Footer from './containers/Footer/Footer.tsx';
 import Mainpage from './pages/MainPage/MainPage.tsx'
@@ -8,8 +8,7 @@ const App: React.FC = () => {
   return (
     <div>
       <Header/>
-      <div className="page">
-        
+      <div className={classes.page}>
         {/* if ( 로그인이 되었다면 ) {
           if ( 닉네임이 있다면 ) {
             

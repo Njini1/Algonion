@@ -9,11 +9,10 @@ function UserPage() {
 	return (
     <div className={classes.page}>
       <Header/>
-    <div className={classes.userPage}>
-
-      <UserBasis/>
-      <UserBar/>
-    </div>
+      <div className={classes.userPage}>
+        <UserBasis/>
+        <UserBar/>
+      </div>
       <Footer/>
     </div>
   )
