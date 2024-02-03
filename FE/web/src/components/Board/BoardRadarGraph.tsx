@@ -7,7 +7,7 @@ function BoardRadarGraph() {
   const [state] = useState({
     series: [{
       name: 'Series 1',
-      data: [20, 100, 40, 30, 50, 80, 33, 22],
+      data: [20, 100, 40, 70, 50, 80, 33, 22],
     }],
 
     options: {
