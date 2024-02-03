@@ -1,21 +1,33 @@
 import { useEffect, useState } from "react";
-import { deleteCookie, getCookie } from "../utils/cookieUtil";
+import { axiosAuthApi } from "../utils/instance";
 function LoginSuccessPage() {
-    const [accessToken] = useState<string | null>(getCookie("accessTocken"));
-    useEffect(() => {
-        if (accessToken != null) {
-            localStorage.setItem("accessToken", accessToken);
-            console.log("로컬스토리지에 access token 저장됨");
-            console.log(localStorage.getItem)
-            deleteCookie(accessToken);
-            console.log("쿠키 삭제됨");
-        } else {
-            console.log("쿠키 못받아왔음");
-        }
-    });
+  const [accessToken] = useState<string | null>(
+    localStorage.getItem("accessToken")
+  );
+  useEffect(() => {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const accessToken = params.get("access-token");
+    accessToken && localStorage.setItem("accessToken", accessToken);
+  });
+  const handleClick = (): void => {
+    console.log("눌렀다");
+    axiosAuthApi()
+      .get("/login-test")
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+  };
 
-    return (
-        <div>토큰 : {accessToken}</div>
-    );
+  return (
+    <div>
+      토큰 : {accessToken}
+      <button
+        className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        onClick={handleClick}
+      >
+        테스트버튼
+      </button>
+    </div>
+  );
 }
 export default LoginSuccessPage;

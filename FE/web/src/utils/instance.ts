@@ -1,17 +1,23 @@
-import axios from "axios";
-const api = import.meta.env.VITE_BACKEND;
+import axios, { AxiosInstance } from "axios";
+const api = import.meta.env.VITE_BACK_END;
 
-let accessToken = localStorage.get('access-tocken');
+const accessToken = localStorage.getItem("accessTocken");
 
-const authenticatiedInstance = axios.create({
-  baseURL: api,
-  timeout: 1000,
-  headers: { 'Authorizetion': accessToken }
-});
+const axiosAuthApi = (): AxiosInstance => {
+  const instance = axios.create({
+    baseURL: api,
+    headers: { Authorizetion: "Bearer " + accessToken },
+    timeout: 1000,
+  });
+  return instance;
+};
 
-const unAuthenticatedInstance = axios.create({
-  baseURL: api,
-  timeout: 1000,
-})
+const axiosApi = (): AxiosInstance => {
+  const instance = axios.create({
+    baseURL: api,
+    timeout: 1000,
+  });
+  return instance;
+};
 
-export default { authenticatiedInstance, unAuthenticatedInstance };
+export { axiosAuthApi, axiosApi };
