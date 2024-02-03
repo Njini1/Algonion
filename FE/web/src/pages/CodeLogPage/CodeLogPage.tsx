@@ -11,7 +11,7 @@ function CodeLogPage() {
     <Header/>
     <div className={classes.page}>
       <div className={classes.title}>
-        <h3><strong>Alice</strong> 님의 코드 로그</h3>
+        <h3><strong>Alice</strong> 님의 코드로그</h3>
       </div>
       <div className={classes.codeLogPage}>
         <CodeLogList/>

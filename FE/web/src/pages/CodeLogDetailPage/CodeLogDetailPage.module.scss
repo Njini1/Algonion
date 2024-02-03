@@ -1,14 +1,10 @@
-.page{
+.codeLogDetailPage {
+  width: 62.4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // background-color: antiquewhite;
-}
-
-.codeLogDetailPage {
-  width: 62.4rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  // background-color: rgb(196, 127, 38);
+  margin: auto;
+  margin-top: 3rem;
+  padding: 2rem 1rem;
+  border: 1px solid rgb(228, 228, 228);
   }

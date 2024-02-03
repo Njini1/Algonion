@@ -4,7 +4,6 @@ function CodeLogList() {
     function goToDetailPage(username: string, codeId: number) {
       window.location.href=`/code-log/${username}/${codeId}`
     }
-    // onClick={goToDetailPage(1000)}
     return (
       <div className={classes.page}>
         <div>
@@ -23,7 +22,7 @@ function CodeLogList() {
             <tr className={classes.tdHover} onClick={() => goToDetailPage('alice', 1000)}>
               <td>Baekjoon</td>
               <td>1000</td>
-              <td><a href="https://www.acmicpc.net/problem/1000">A+B</a></td>
+              <td><a className={classes.nameHover} href="https://www.acmicpc.net/problem/1000">A+B</a></td>
               <td>수학</td>
               <td>Bronze 5</td>
               <td>23-07-08</td>
