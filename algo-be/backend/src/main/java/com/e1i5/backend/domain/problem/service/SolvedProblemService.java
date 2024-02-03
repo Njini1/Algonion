@@ -11,9 +11,9 @@ import com.e1i5.backend.domain.user.entity.User;
 import java.util.List;
 
 public interface SolvedProblemService {
-    void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName);
-    void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName);
-    void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, User user, Problem problem);
+    void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId);
+    void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId);
+    void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem);
     Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName);
     SolvedProblemDetailResponse updateSolvedProblem(int solvedProblemId, String memo);
     SolvedProblemDetailResponse updateVisibility(int solvedProblemId);

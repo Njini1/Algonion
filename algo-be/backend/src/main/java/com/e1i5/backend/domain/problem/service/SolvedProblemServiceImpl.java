@@ -9,20 +9,15 @@ import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
-import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,9 +29,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     SolvedProblemRepository solvedProblemRepo;
     @Autowired
     ProblemRepository problemRepo;
-
     @Autowired
-    AuthRepository userRepository;
+    AuthRepository authRepo;
 
     /**
      * 사용자가 푼 문제 저장하는 메서드
@@ -50,16 +44,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Transactional
     @Override
-    public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+    public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
-//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("22").email("email2").build();
-//        User testUser = userRepository.save(user); //임의로 사용자 저장
-//        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
-        Optional<User> user = userRepository.findById(1);
-
         Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
-//        saveSolvedProblem(solvedProblemReq, problem);
 
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
                 .ifPresentOrElse( //TODO orElseGet으로?
@@ -67,24 +55,19 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                             log.info("ProblemServiceImpl saveSolvedProblem already exist solvedProblem");
                             System.out.println("이미 푼 문제가 존재");
                         },
-                        () -> saveSolvedProblem(solvedProblemReq, user.get(), problem)
+                        () -> saveSolvedProblem(solvedProblemReq, userId, problem)
                 );
     }
 
     @Transactional
     @Override
-    public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+    public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
-//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email").build();
-//        User testUser = userRepository.save(user); //임의로 사용자 저장
-//        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
-        Optional<User> user = userRepository.findById(1);
-
         Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
 //        saveSolvedProblem(solvedProblemReq, problem);
 
-        saveSolvedProblem(solvedProblemReq, user.get(), problem);
+        saveSolvedProblem(solvedProblemReq, userId, problem);
     }
 
     /**
@@ -95,9 +78,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param problem          문제 정보
      */
     @Override
-    public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, User user, Problem problem) {
+    public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem) {
         //TODO 문제번호 비교해서 점수 더하는 거도 추가해줘
         //TODO solvedProblemReq말고 Entity로 바꾼 값으로 매개변수 받는 거로 변경? 고민
+        User user = authRepo.findById(userId).orElseThrow(()-> new IllegalArgumentException("Unexpected user"));
         SolvedProblem solvedProblemEntity = solvedProblemReq.toSolvedProblemEntity();
         solvedProblemEntity.updateUserAndProblem(user, problem);
         solvedProblemRepo.save(solvedProblemEntity);
@@ -129,8 +113,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Transactional
     @Override
     public SolvedProblemDetailResponse updateSolvedProblem(int solvedProblemId, String memo) {
+        //TODO 로그인 사용자 정보 추가
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
-
         solvedProblem.updateMemo(memo);
         SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);
         return SolvedProblemDetailResponse.builder()
@@ -144,6 +128,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Transactional
     @Override
     public SolvedProblemDetailResponse updateVisibility(int solvedProblemId) {
+        //TODB 로그인 사용자 정보 추가
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
         solvedProblem.updateVisible(!solvedProblem.isVisible());
         SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);

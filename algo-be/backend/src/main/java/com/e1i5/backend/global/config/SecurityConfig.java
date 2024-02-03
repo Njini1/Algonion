@@ -59,7 +59,7 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .requestMatchers("/user/token").permitAll()
                 .requestMatchers("/user/test").authenticated()
-//                .requestMatchers("/api/token").permitAll()
+                .requestMatchers("/ext").authenticated()
                 .anyRequest().permitAll();
 
         http.oauth2Login()

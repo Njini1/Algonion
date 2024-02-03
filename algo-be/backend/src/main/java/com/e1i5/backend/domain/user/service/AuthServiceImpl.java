@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Random;
 
 @RequiredArgsConstructor
@@ -33,8 +34,13 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public User findByEmail(String email) {
-        return authRepo.findByEmail(email)
+        return authRepo.findByEmail(email) //TODO UserNotFoundException 에러로 변경
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
+
+    @Override
+    public User findById(int userId) {
+            return authRepo.findById(userId).orElseThrow(()-> new IllegalArgumentException("Unexpected user"));
     }
 
     @Override

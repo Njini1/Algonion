@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -32,23 +33,26 @@ public class ProblemController {
     SolvedProblemService solvedProblemService;
 
     @PostMapping("/baekjoon")
-    public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
+    public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem, Principal principal) throws Exception {
+        int userId = Integer.parseInt(principal.getName());
         log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveBOJSolvedProblemAndProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
+        solvedProblemService.saveBOJSolvedProblemAndProblem(problem, ProblemSite.BAEKJOON.getProblemSite(), userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/programmers")
-    public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
+    public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem, Principal principal) throws Exception {
+        int userId = Integer.parseInt(principal.getName());
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite());
+        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite(), userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/swea")
-    public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem) throws Exception {
+    public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem, Principal principal) throws Exception {
+        int userId = Integer.parseInt(principal.getName());
         log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.SWEA.getProblemSite());
+        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.SWEA.getProblemSite(), userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

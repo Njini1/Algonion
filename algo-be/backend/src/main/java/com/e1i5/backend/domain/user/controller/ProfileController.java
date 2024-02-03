@@ -1,7 +1,10 @@
 package com.e1i5.backend.domain.user.controller;
 
 
+import com.e1i5.backend.domain.user.dto.response.ExtUserInfoResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
+import com.e1i5.backend.domain.user.entity.User;
+import com.e1i5.backend.domain.user.service.AuthService;
 import com.e1i5.backend.domain.user.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +24,9 @@ import java.util.Map;
 public class ProfileController {
 
     @Autowired
-    private ProfileService profileService;
+    private ProfileService profileService; //TODO 이 방식 또는 RequiredArguments 방식으로 통일
+    @Autowired
+    private AuthService authService;
 
     @PostMapping("/profile-img")
     public ResponseEntity<Void> saveUserProfile(MultipartFile profileImg) {
@@ -45,17 +51,11 @@ public class ProfileController {
      * @return
      */
     @GetMapping("/ext")
-    public ResponseEntity<?> getExtUserInfo() {
-       Map<String, Long> streakResponses = profileService.getUserSevenStreak(2);
-//        String streakResponses = "{\n" +
-//                "    \"2024-01-27\": 5,\n" +
-//                "    \"2024-01-28\": 5,\n" +
-//                "    \"2024-01-29\": 4,\n" +
-//                "    \"2024-01-30\": 3,\n" +
-//                "    \"2024-01-31\": 2,\n" +
-//                "    \"2024-02-01\": 1,\n" +
-//                "    \"2024-02-02\": 0\n" +
-//                "}";
-        return new ResponseEntity<>(streakResponses, HttpStatus.OK);
+    public ResponseEntity<ExtUserInfoResponse> getExtUserInfo(Principal principal) { //TODO access token 확인으로 변경
+        int userId = Integer.parseInt(principal.getName());
+       Map<String, Long> streakResponses = profileService.getUserSevenStreak(userId);
+        User user = authService.findById(userId);
+        ExtUserInfoResponse userInfo = ExtUserInfoResponse.builder().tier(user.getTier()).nickname(user.getNickname()).streak(streakResponses).build();
+        return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 }
