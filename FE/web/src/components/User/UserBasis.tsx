@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import {Progress} from "@nextui-org/react";
+import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-org/react";
 import classes from './UserBasis.module.scss';
 
 
 export default function UserBasis() {
+  // 기본 제공 이미지
   const defaultBackgroundImage = "https://i.ibb.co/W0fNK2m/1600w-rssv-Ab9-JL4-I.webp";
   const defaultProfileImage = "https://i.ibb.co/vZDFkkQ/1587535553105.jpg";
 
   const [backgroundImage, setBackgroundImage] = useState<string | null>(defaultBackgroundImage);
   const [profileImage, setProfileImage] = useState<string | null>(defaultProfileImage);
 
+  // background 이미지 기능
   const BackgroundImageClick = () => {
     document.getElementById('backgroundImageInput')?.click();
   };
@@ -22,6 +25,7 @@ export default function UserBasis() {
     }
   };
 
+  // profile 이미지 기능
   const ProfileImageClick = () => {
     document.getElementById('profileImageInput')?.click();
   };
@@ -34,6 +38,12 @@ export default function UserBasis() {
     }
   };
 
+  // 팔로우 기능
+  const [isFollowed, setIsFollowed] = React.useState(false);
+
+  // expBar 기능
+  const [value] = React.useState(50);
+  const [label] = React.useState('티어');
 
   return (
     <div>
@@ -45,19 +55,42 @@ export default function UserBasis() {
       </div>
 
       <div className={classes.userPageContainer}>
-        <div 
-        className={classes.profileImage} 
-        style={{ backgroundImage: `url(${profileImage})` }} 
-        onClick={ProfileImageClick}>
+        <div className={classes.profileContainer}>
+          <div 
+          className={classes.profileImage} 
+          style={{ backgroundImage: `url(${profileImage})` }} 
+          onClick={ProfileImageClick}>
+          </div>
+
+          {/* 팔로우 기능 */}
+          <Button
+            className={
+              `${isFollowed ? "bg-transparent text-foreground border-default-200" : ""}
+              ${classes.followButton}`
+            }
+            color="primary"
+            radius="full"
+            size="lg"
+            variant={isFollowed ? "bordered" : "solid"}
+            onPress={() => setIsFollowed(!isFollowed)}
+              >
+            {isFollowed ? "Unfollow" : "Follow"}
+          </Button>
         </div>
-
-
+  
         {/* 닉네임 */}
         <div className={classes.nickname}>
           <h2>Nickname</h2>
         </div>
+
         {/* 경험치 바 */}
-        <Progress aria-label="Loading..." value={60} className={classes.expBar}/>
+        <Progress isStriped
+          aria-label="Loading..."
+          color="secondary"
+          label={`${'경험치'} ${label}`}
+          value={value}
+          showValueLabel={true}
+          className={classes.expBar}/>
 
     </div>
         {/* 파일 업로드 */}
