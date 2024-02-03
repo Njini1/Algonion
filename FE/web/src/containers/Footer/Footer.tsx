@@ -7,6 +7,7 @@ export default function Footer() {
         <h2 className={styles.title}>
           footer
         </h2>
+        
       </div>
     </footer>
   )

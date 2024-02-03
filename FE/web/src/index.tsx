@@ -13,6 +13,7 @@ import CodeLogDetailPage from './pages/CodeLogDetailPage/CodeLogDetailPage.tsx';
 import SearchPage from './pages/SearchPage/SearchPage.tsx';
 import CommunityPage from './pages/CommunityPage/CommunityPage.tsx';
 import RoomDetailPage from './pages/RoomDetailPage/RoomDetailPage.tsx';
+import MainPage from './pages/MainPage/MainPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <UserPage />,
+  },
+  {
+    path: "/mainpage",
+    element: <MainPage />,
   },
   {
     path: "/code-log/:username",
