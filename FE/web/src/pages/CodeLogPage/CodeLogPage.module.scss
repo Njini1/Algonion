@@ -1,14 +1,23 @@
+
 .page{
   display: flex;
+  // align-items: center;
   flex-direction: column;
   justify-content: center;
-  // background-color: antiquewhite;
-}
-
-.codeLogPage {
-  width: 62.4rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  // background-color: rgb(196, 127, 38);
+  
+  .title {
+    width: 81%;
+    margin: 5rem auto 0.8rem;
+    font-size: 1.5rem;
   }
+
+  .codeLogPage {
+    margin: auto;
+
+    width: 81%;
+    padding: 1rem;
+    // align-items: center;
+      // justify-content: center;
+
+    }
+}

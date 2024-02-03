@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     element: <CodeLogPage />,
   },
   {
-    path: "/code-log/:codeId",
+    path: "/code-log/:username/:codeId",
     element: <CodeLogDetailPage />,
   },
   {
