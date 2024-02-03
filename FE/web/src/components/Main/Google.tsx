@@ -1,7 +1,7 @@
 // import {GoogleLogin} from "@react-oauth/google";
 // import {GoogleOAuthProvider} from "@react-oauth/google";
 import classes from "./Google.module.scss";
-const url = import.meta.env.VITE_BACK_END + "/api/oauth2/authorization/google";
+const url = import.meta.env.VITE_BACK_END + "/oauth2/authorization/google";
 
 const GoogleLoginButton = () => {
   return (

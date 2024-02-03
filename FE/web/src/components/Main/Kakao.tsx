@@ -6,7 +6,7 @@
 
 import Kakaoimg from "../../assets/logo/kakaoSymbol.png";
 import classes from "./Kakao.module.scss"; //
-const url = import.meta.env.VITE_BACK_END + "/api/oauth2/authorization/kakao";
+const url = import.meta.env.VITE_BACK_END + "/oauth2/authorization/kakao";
 const KakaoLoginButton = () => {
   // const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
   // const REDIRECT_URI = import.meta.env.VITE_KAKAO_URL;
