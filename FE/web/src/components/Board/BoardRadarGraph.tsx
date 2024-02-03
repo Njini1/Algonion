@@ -5,20 +5,62 @@ import Chart from "react-apexcharts";
 
 function BoardRadarGraph() {
   const [state] = useState({
+    series: [{
+      name: 'Series 1',
+      data: [20, 100, 40, 30, 50, 80, 33, 22],
+    }],
+
     options: {
-      chart: {
-        id: "basic-bar"
+
+      dataLabels: {
+        enabled: true
       },
+      
+      plotOptions: {
+        radar: {
+          size: 120,
+          polygons: {
+            strokeColors: '#e9e9e9',
+            fill: {
+              colors: ['#f8f8f8', '#fff']
+            }
+          }
+        }
+      },
+      
+      title: {
+        text: '태그 분포'
+      },
+
+      colors: ['#8F00FF'],
+        markers: {
+          colors: ['#8F00FF'],
+          strokeColor: '#8F00FF',
+          strokeWidth: 2,
+        },
+
+      tooltip: {
+        y: {
+          formatter: function(val: number) {
+            return val.toString();
+          }
+        }
+      },
+
       xaxis: {
-        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+        categories: ['수학', '구현', 'DP', '자료 구조', '그래프', '그리디', '문자열', '미분류']
       }
     },
-    series: [
-      {
-        name: "series-1",
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
+    
+    yaxis: {
+      max: 600,
+      tickAmount: 3,
+      labels: {
+        formatter: function(val: number) {
+          return val.toString();
+        }
       }
-    ]
+    },
   });
 
   return (
@@ -28,7 +70,7 @@ function BoardRadarGraph() {
           <Chart
             options={state.options}
             series={state.series}
-            type="bar"
+            type="radar"
             width="500"
           />
         </div>
