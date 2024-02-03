@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 const api = import.meta.env.VITE_BACK_END;
 
-const accessToken = localStorage.getItem("accessTocken");
+const accessToken = localStorage.getItem("access_token");
 
 const axiosAuthApi = (): AxiosInstance => {
   const instance = axios.create({

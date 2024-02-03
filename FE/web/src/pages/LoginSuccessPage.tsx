@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { axiosAuthApi } from "../utils/instance";
+import { deleteCookie, getCookie } from "../utils/cookieUtil";
 function LoginSuccessPage() {
-  const [accessToken] = useState<string | null>(
-    localStorage.getItem("accessToken")
-  );
+  const [accessToken] = useState<string | null>(getCookie("access_token"));
   useEffect(() => {
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-    const accessToken = params.get("access-token");
-    accessToken && localStorage.setItem("accessToken", accessToken);
-  });
+    accessToken && localStorage.setItem("access_token", accessToken);
+    deleteCookie("access_token");
+  }, [accessToken]);
   const handleClick = (): void => {
     console.log("눌렀다");
     axiosAuthApi()
