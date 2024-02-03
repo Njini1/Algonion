@@ -29,8 +29,9 @@ public class ProfileController {
     private AuthService authService;
 
     @PostMapping("/profile-img")
-    public ResponseEntity<Void> saveUserProfile(MultipartFile profileImg) {
-        profileService.saveUserProfile(profileImg);
+    public ResponseEntity<Void> saveUserProfile(MultipartFile profileImg, Principal principal) {
+        int userId = Integer.parseInt(principal.getName());
+        profileService.saveUserProfile(userId, profileImg);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

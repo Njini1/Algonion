@@ -18,9 +18,14 @@ public class ProfileFileInfo {
     private String originalFile;
     private String saveFile;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
-    public ProfileFileInfo(String originalFile, String saveFile) {
+    public ProfileFileInfo(String originalFile, String saveFile, User user) {
         this.originalFile = originalFile;
         this.saveFile = saveFile;
+        this.user = user;
     }
 }

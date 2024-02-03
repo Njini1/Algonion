@@ -15,7 +15,7 @@ public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
+    @Column(name = "user_id", updatable = false)
     private int userId;
 
     @Column(name = "nickname", unique = false)
@@ -39,11 +39,9 @@ public class User{
     @Column(name = "del_date")
     private LocalDate delDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id")
-    private ProfileFileInfo userProfile;
-
-    //TODO 배경이미지 추가
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "profile_id")
+//    private ProfileFileInfo userProfile;
 
     //    @Enumerated(value = EnumType.STRING)
 //    private Platform flatform;

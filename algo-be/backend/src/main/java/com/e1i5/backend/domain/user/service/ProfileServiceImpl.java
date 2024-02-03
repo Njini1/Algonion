@@ -4,6 +4,8 @@ import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
 import com.e1i5.backend.domain.user.dto.response.StreakResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.ProfileFileInfo;
+import com.e1i5.backend.domain.user.entity.User;
+import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.domain.user.repository.UserProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +32,11 @@ public class ProfileServiceImpl implements ProfileService {
 
     private final UserProfileRepository userProfileRepo;
     private final SolvedProblemRepository solvedProblemRepo;
+    private final AuthRepository authRepo;
 
 
     @Override
-    public void saveUserProfile(MultipartFile profileImg) {
+    public void saveUserProfile(int userId, MultipartFile profileImg) {
         //TODO File값이 null일 때 처리
         //TODO File 확장자도 검사
         //TODO 파일 저장 실패시 에러 처리?
@@ -60,9 +63,11 @@ public class ProfileServiceImpl implements ProfileService {
                 }
             }
         }
+        User user = authRepo.findById(userId).orElseThrow(()-> new IllegalArgumentException("Unexpected user"));
         userProfileRepo.save(ProfileFileInfo.builder()
                 .saveFile(saveFileName)
-                .originalFile(originalFileName).build());
+                .originalFile(originalFileName)
+                .user(user).build());
     }
 
 

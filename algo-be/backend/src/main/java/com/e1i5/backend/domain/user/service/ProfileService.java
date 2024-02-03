@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProfileService {
-    void saveUserProfile(MultipartFile profileImg);
+    void saveUserProfile(int userId, MultipartFile profileImg);
     List<StreakResponseInterface> getUserStreak(int userId);
     Map<String, Long> getUserSevenStreak(int userId);
 //    List<StreakResponseInterface> getUserSevenStreak(int userId);
