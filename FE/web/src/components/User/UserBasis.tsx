@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {Progress} from "@nextui-org/react";
-import {Card, CardHeader, CardBody, CardFooter, Avatar, Button} from "@nextui-org/react";
+import {Button} from "@nextui-org/react";
 import classes from './UserBasis.module.scss';
 
 
