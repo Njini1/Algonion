@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import {Progress} from "@nextui-org/react";
 import classes from './UserBasis.module.scss';
 
 
 export default function UserBasis() {
-  const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const defaultBackgroundImage = "https://i.ibb.co/W0fNK2m/1600w-rssv-Ab9-JL4-I.webp";
+  const defaultProfileImage = "https://i.ibb.co/vZDFkkQ/1587535553105.jpg";
+
+  const [backgroundImage, setBackgroundImage] = useState<string | null>(defaultBackgroundImage);
+  const [profileImage, setProfileImage] = useState<string | null>(defaultProfileImage);
 
   const BackgroundImageClick = () => {
     document.getElementById('backgroundImageInput')?.click();
@@ -32,31 +36,45 @@ export default function UserBasis() {
 
 
   return (
-    <div className={classes.userPageContainer}>
-    <div className={classes.profileBackground} style={{ backgroundImage: `url(${backgroundImage})` }} onClick={BackgroundImageClick}></div>
-    <div className={classes.profileImage} style={{ backgroundImage: `url(${profileImage})` }} onClick={ProfileImageClick}></div>
+    <div>
+      
+      <div 
+      className={classes.profileBackground} 
+      style={{ backgroundImage: `url(${backgroundImage})` }} 
+      onClick={BackgroundImageClick}>
+      </div>
 
-    <div className={classes.nickname}>
-      <h2>Your Nickname</h2>
+      <div className={classes.userPageContainer}>
+        <div 
+        className={classes.profileImage} 
+        style={{ backgroundImage: `url(${profileImage})` }} 
+        onClick={ProfileImageClick}>
+        </div>
+
+
+        {/* 닉네임 */}
+        <div className={classes.nickname}>
+          <h2>Nickname</h2>
+        </div>
+        {/* 경험치 바 */}
+        <Progress aria-label="Loading..." value={60} className={classes.expBar}/>
+
     </div>
-
-    <div className={classes.expBar}></div>
-
-    {/* 파일 업로드를 위한 input 요소 */}
-    <input
-      id="backgroundImageInput"
-      type="file"
-      accept="image/*"
-      onChange={BackgroundImageChange}
-      style={{ display: 'none' }}
-    />
-    <input
-      id="profileImageInput"
-      type="file"
-      accept="image/*"
-      onChange={ProfileImageChange}
-      style={{ display: 'none' }}
-    />
+        {/* 파일 업로드 */}
+        <input
+          id="backgroundImageInput"
+          type="file"
+          accept="image/*"
+          onChange={BackgroundImageChange}
+          style={{ display: 'none' }}
+        />
+        <input
+          id="profileImageInput"
+          type="file"
+          accept="image/*"
+          onChange={ProfileImageChange}
+          style={{ display: 'none' }}
+        />
   </div>
   )
 }
