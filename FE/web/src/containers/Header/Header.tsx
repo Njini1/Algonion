@@ -85,7 +85,7 @@ export default function Header() {
           <NavbarItem>    
             {/* 프로필 페이지 - 티어에 따라서 프로필 테두리 색 다르게 주기 (예정) */}
             <div className="flex gap-4 items-center">
-              <Link href="#">
+              <Link href="/profile">
               <Avatar isBordered color="default" src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
               {/* <Avatar isBordered color="bronze" src="https://i.pravatar.cc/150?u=a042581f4e29026024d" /> */}
               {/* <Avatar isBordered color="#C0C0C0" src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
