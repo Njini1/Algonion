@@ -129,17 +129,21 @@ public class ProblemServiceImpl implements ProblemService {
 //    }
     @Override
     public Problem saveOrUpdateProblem(Problem problem, String siteName) {
-//        System.out.println("problem" + problem);
+        System.out.println("problem" + problem);
+        System.out.println("problemservice에서의 siteName" + siteName);
 //        System.out.println("problemNum : " + problem.getProblemNum());
         Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName);
         if (existingProblem.isPresent()) {
             // 문제가 이미 존재하면, 난이도와 algoScore 업데이트
+            System.out.println("이미 존재하는 문제");
             Problem updatedProblem = existingProblem.get();
             updatedProblem.updateLevel(problem.getProblemLevel(), problem.getAlgoScore());
 //            System.out.println("문제 존재 : " + updatedProblem);
             return problemRepo.save(updatedProblem);
         } else {
             // 문제가 존재하지 않으면, 새로운 문제 저장
+            System.out.println("존재하지 않는 문제");
+            problem.updateSiteName(siteName);
             return problemRepo.save(problem);
         }
     }
