@@ -1,3 +1,4 @@
+import BoardRadarGraph from "../Board/BoardRadarGraph";
 import BoardLinearGraph from "../Board/BoardLinearGraph";
 import BoardRoundGraph from "../Board/BoardRoundGraph";
 import classes from "./UserDashboard.module.scss"
@@ -10,9 +11,13 @@ import classes from "./UserDashboard.module.scss"
 function UserDashboard() {
   return (
     <div className={classes.component}>
-      {/* <BoardRadarGraph/> */}
 
-
+      <div className={classes.graphTable}>
+      <p>기록의 여정, 육각형 개발자</p>
+        <div className={classes.graph}>
+          <BoardRadarGraph/>
+        </div>
+      </div>
 
       <div className={classes.graphTable}>
         <p>기록의 여정, 문제 난이도</p>

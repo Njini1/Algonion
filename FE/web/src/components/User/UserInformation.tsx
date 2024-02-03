@@ -1,6 +1,6 @@
 import UserSolvedProblem from './UserSolvedProblem.tsx'
 import UserStreak from './UserStreak.tsx'
-import classes from "./UserInfo.module.scss"
+import classes from "./UserInformation.module.scss"
 
 function UserInfo() {
   return (
