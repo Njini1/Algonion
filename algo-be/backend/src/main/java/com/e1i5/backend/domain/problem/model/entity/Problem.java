@@ -1,10 +1,7 @@
 package com.e1i5.backend.domain.problem.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,6 +9,7 @@ import java.util.List;
 @Table(name = "problem")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class Problem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,29 +56,4 @@ public class Problem {
         return this;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Problem{" +
-//                "problemId=" + problemId +
-//                ", siteName='" + siteName + '\'' +
-//                ", problemNum='" + problemNum + '\'' +
-//                ", problemTitle='" + problemTitle + '\'' +
-//                ", problemLevel='" + problemLevel + '\'' +
-//                ", url='" + url + '\'' +
-//                ", algoGroup=" + algoGroup +
-//                '}';
-//    }
-
-    @Override
-    public String toString() {
-        return "Problem{" +
-                "problemId=" + problemId +
-                ", siteName='" + siteName + '\'' +
-                ", problemNum='" + problemNum + '\'' +
-                ", problemTitle='" + problemTitle + '\'' +
-                ", problemLevel='" + problemLevel + '\'' +
-                ", algoScore='" + algoScore + '\'' +
-                ", url='" + url + '\'' +
-                '}';
-    }
 }

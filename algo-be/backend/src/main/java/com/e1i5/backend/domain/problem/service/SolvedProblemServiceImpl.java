@@ -98,11 +98,21 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
         Optional<Problem> problem = problemRepo.findByProblemNumAndSiteName(solvedProblemReq.getProblemNum(), siteName);
-        return problem.orElseGet(() -> {
-            Problem problemEntity = solvedProblemReq.toProblemEntity();
-            problemEntity.updateSiteName(siteName);
-            return problemRepo.save(problemEntity);
-        });
+        if (problem.isPresent()) {
+            // 기존 문제가 존재하는 경우 레벨 업데이트
+            Problem problemEntity = problem.get();
+            if (solvedProblemReq.getProblemLevel() != null) {
+                problemEntity = problemEntity.updateLevel(solvedProblemReq.getProblemLevel());
+                return problemRepo.save(problemEntity);
+            } else {
+                return problemEntity; // 레벨이 주어지지 않은 경우 그대로 반환
+            }
+        } else {
+            // 기존 문제가 없는 경우 새로운 문제 추가
+            Problem newProblemEntity = solvedProblemReq.toProblemEntity();
+            newProblemEntity.updateSiteName(siteName);
+            return problemRepo.save(newProblemEntity);
+        }
     }
 
     /**
