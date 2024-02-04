@@ -1,21 +1,22 @@
 import Header from '../../containers/Header/Header.tsx';
-import CodeLogProblem from '../../components/CodeLog/CodeLogProblem.tsx'
-import CodeLog from '../../components/CodeLog/CodeLog.tsx'
-import CodeLogMemo from '../../components/CodeLog/CodeLogMemo.tsx'
-
+import CodeLogList from '../../components/CodeLog/CodeLogList.tsx'
 import Footer from '../../containers/Footer/Footer.tsx';
 
 import classes from "./CodeLogPage.module.scss"
 
+
 function CodeLogPage() {
 	return (
+    <div>
+    <Header/>
     <div className={classes.page}>
-      <Header/>
-      <div className={classes.codeLogPage}>
-        <CodeLogProblem/>
-        <CodeLog/>
-        <CodeLogMemo/>
+      <div className={classes.title}>
+        <h3><strong>Alice</strong> 님의 코드로그</h3>
       </div>
+      <div className={classes.codeLogPage}>
+        <CodeLogList/>
+      </div>
+    </div>
       <Footer/>
     </div>
   )

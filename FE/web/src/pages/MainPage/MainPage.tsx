@@ -23,10 +23,10 @@ export default function MainPage() {
     <div className={classes.page}>
       <div className={classes.mainPage}>
         <div className={classes.main}>
-          <Main></Main>
+          <Main/>
         </div>
         <div>
-          <MainDescription></MainDescription>
+          <MainDescription/>
         </div>
         <div className={classes.descriptions}>
           <div>
