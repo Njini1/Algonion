@@ -4,14 +4,16 @@ import classes from "./UserInformation.module.scss"
 
 function UserInfo() {
   return (
-    <div className={classes.page}>
-      <div className={classes.userSolvedProblem}>
-        <UserSolvedProblem/>
+    <>
+        <div className={classes.userSolvedProblem}>
+          <UserSolvedProblem/>
+        </div>
+      <div className={classes.page}>
+        <div className={classes.userStreak}>
+          <UserStreak/>
+        </div>
       </div>
-      <div className={classes.userStreak}>
-        <UserStreak/>
-      </div>
-    </div>
+    </>
   )
 }
   
