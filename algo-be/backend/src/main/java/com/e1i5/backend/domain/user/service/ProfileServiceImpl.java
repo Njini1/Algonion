@@ -3,6 +3,8 @@ package com.e1i5.backend.domain.user.service;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
 import com.e1i5.backend.domain.user.dto.response.StreakResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
+import com.e1i5.backend.domain.user.dto.response.Test;
+import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
 import com.e1i5.backend.domain.user.entity.ProfileFileInfo;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
@@ -144,6 +146,12 @@ public class ProfileServiceImpl implements ProfileService {
 //        },
 
         return dateList;
+    }
+
+    @Override
+    public UserInfoResponse getUserInfo(String nickname) {
+        UserInfoResponse user = authRepo.getUserByNickname(nickname).orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+        return user;
     }
 
 }

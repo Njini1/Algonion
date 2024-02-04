@@ -5,6 +5,9 @@ import lombok.Getter;
 
 import java.util.Map;
 
+/**
+ * 사용자 프로필 불러오기 - 확장 프로그램
+ */
 @Getter
 public class ExtUserInfoResponse {
     String nickname;

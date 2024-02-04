@@ -27,7 +27,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private long ACCESS_TOKEN_EXPIRATION;
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     public static final String ACCESS_TOKEN_COOKIE_NAME = "access_token";
-    public static final String REDIRECT_PATH = "https://localhost:5173/success";
+    public static final String REDIRECT_PATH = "https://localhost:5173/login/success";
 //    public static final String REDIRECT_PATH = "https://localhost/login/oauth_google_check";
 
     private final TokenProvider tokenProvider;

@@ -14,7 +14,7 @@ public class ProfileFileInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "profile_id", updatable = false)
-    private int userFileInfoId;
+    private int userFileInfoId; //TODO profileFileInfoId로 변경
     private String originalFile;
     private String saveFile;
 

@@ -3,11 +3,13 @@ package com.e1i5.backend.domain.user.controller;
 
 import com.e1i5.backend.domain.user.dto.response.ExtUserInfoResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
+import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.service.AuthService;
 import com.e1i5.backend.domain.user.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,9 +56,16 @@ public class ProfileController {
     @GetMapping("/ext")
     public ResponseEntity<ExtUserInfoResponse> getExtUserInfo(Principal principal) { //TODO access token 확인으로 변경
         int userId = Integer.parseInt(principal.getName());
-       Map<String, Long> streakResponses = profileService.getUserSevenStreak(userId);
+       Map<String, Long> streakResponses = profileService.getUserSevenStreak(userId); //TODO 서비스 단 변경
         User user = authService.findById(userId);
         ExtUserInfoResponse userInfo = ExtUserInfoResponse.builder().tier(user.getTier()).nickname(user.getNickname()).streak(streakResponses).build();
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
+    }
+
+    @GetMapping()
+    public ResponseEntity<UserInfoResponse> getUserInfo(@Param("nickname") String nickname) {
+        UserInfoResponse user = profileService.getUserInfo(nickname);
+        System.out.println("controller user: " + user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

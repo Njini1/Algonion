@@ -1,5 +1,6 @@
 package com.e1i5.backend.domain.user.entity;
 
+import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -39,9 +41,11 @@ public class User{
     @Column(name = "del_date")
     private LocalDate delDate;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "profile_id")
-//    private ProfileFileInfo userProfile;
+    @OneToMany(mappedBy = "user")
+    private List<SolvedProblem> solvedProblems;
+
+    @OneToOne(mappedBy = "user")
+    private ProfileFileInfo userProfile;
 
     //    @Enumerated(value = EnumType.STRING)
 //    private Platform flatform;
