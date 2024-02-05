@@ -130,6 +130,7 @@ public class ProblemServiceImpl implements ProblemService {
     @Override
     public Problem saveOrUpdateProblem(Problem problem, String siteName) {
         Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName);
+//        System.out.println(existingProblem);
         if (existingProblem.isPresent()) {
             // 문제가 이미 존재하면, 난이도와 algoScore 업데이트
             Problem updatedProblem = existingProblem.get();
