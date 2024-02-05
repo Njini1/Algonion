@@ -34,6 +34,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     SolvedProblemRepository solvedProblemRepo;
     @Autowired
     ProblemRepository problemRepo;
+    @Autowired
+    ProblemService problemService;
 
     @Autowired
     AuthRepository userRepository;
@@ -53,12 +55,13 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
-//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("22").email("email2").build();
+//        User user = User.builder().nickname("44").email("email4").build();
 //        User testUser = userRepository.save(user); //임의로 사용자 저장
 //        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
         Optional<User> user = userRepository.findById(1);
 
-        Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
+//        Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
 //        saveSolvedProblem(solvedProblemReq, problem);
 
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
@@ -75,14 +78,11 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
         //TODO 사용자 정보 추가
-        //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
 //        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email").build();
 //        User testUser = userRepository.save(user); //임의로 사용자 저장
 //        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
         Optional<User> user = userRepository.findById(1);
-
-        Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
-//        saveSolvedProblem(solvedProblemReq, problem);
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
         saveSolvedProblem(solvedProblemReq, user.get(), problem);
     }
