@@ -2,10 +2,7 @@ package com.e1i5.backend.domain.user.entity;
 
 import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -42,7 +39,7 @@ public class User{
     private LocalDate delDate;
 
     @OneToMany(mappedBy = "user")
-    private List<SolvedProblem> solvedProblems;
+    private List<SolvedProblem> solvedProblems; // 사용자별 푼 문제수를 위함
 
     @OneToOne(mappedBy = "user")
     private ProfileFileInfo userProfile;

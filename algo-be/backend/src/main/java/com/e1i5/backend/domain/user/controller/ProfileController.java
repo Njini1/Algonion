@@ -3,6 +3,7 @@ package com.e1i5.backend.domain.user.controller;
 
 import com.e1i5.backend.domain.problem.response.ProblemResponse;
 import com.e1i5.backend.domain.user.dto.response.ExtUserInfoResponse;
+import com.e1i5.backend.domain.user.dto.response.UserInfoInterface;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.service.AuthService;
@@ -58,11 +59,11 @@ public class ProfileController {
      * @return
      */
     @GetMapping("/ext")
-    public ResponseEntity<ExtUserInfoResponse> getExtUserInfo(Principal principal) { //TODO access token 확인으로 변경
+    public ResponseEntity<ExtUserInfoResponse> getExtUserInfo(Principal principal) {
 
         int userId = Integer.parseInt(principal.getName());
 
-        Map<String, Long> streakResponses = profileService.getUserSevenStreak(userId); //TODO 서비스 단 변경
+        Map<String, Long> streakResponses = profileService.getUserSevenStreak(userId); //TODO 서비스 단으로 변경
 
         User user = authService.findById(userId);
         ExtUserInfoResponse userInfo = ExtUserInfoResponse.builder()
