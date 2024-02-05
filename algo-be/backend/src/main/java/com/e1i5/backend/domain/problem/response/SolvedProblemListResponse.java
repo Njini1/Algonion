@@ -1,10 +1,8 @@
 package com.e1i5.backend.domain.problem.response;
 
-import com.e1i5.backend.domain.problem.model.entity.AlgoGroup;
 import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,9 +15,7 @@ public class SolvedProblemListResponse {
     private String problemLevel;
     private String language;
     private String submissionTime; //제출한 시간
-//    private LocalDateTime submissionTime; //제출한 시간
     private String url;
-//    private Problem problem;
     private List<String> classification;
 
 

@@ -85,7 +85,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public Map<String, Long> makeStreak(String userName, String startDate, String endDate) {
         //TODO 7일씩 나눠서 마지막 7일에는 0으로 값을 채워놔야함
-        List<StreakResponseInterface> streak = solvedProblemRepo.findSubmissionTimeAndCountByUserId(1, startDate, endDate);
+        List<StreakResponseInterface> streak = solvedProblemRepo.findSubmissionTimeAndCountByUserId(userName, startDate, endDate);
         LinkedHashMap <String, Long> result = new LinkedHashMap <>();
         for (StreakResponseInterface streakDate : streak) {
             result.put(streakDate.getSubmissionTime(), streakDate.getCount());
@@ -104,7 +104,7 @@ public class ProfileServiceImpl implements ProfileService {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(6);
 
-        List<StreakResponseInterface> streak = solvedProblemRepo.findSevenDaysStreak(2, endDate.toString(), startDate.toString());
+        List<StreakResponseInterface> streak = solvedProblemRepo.findSevenDaysStreak(userId, endDate.toString(), startDate.toString());
         LinkedHashMap <String, Long> result = new LinkedHashMap <>();
         for (int i = 0; i < 7; i++) {
             result.put(startDate.plusDays(i).toString(), 0L);

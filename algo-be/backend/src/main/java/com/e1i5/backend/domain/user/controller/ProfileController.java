@@ -45,7 +45,7 @@ public class ProfileController {
      */
     @GetMapping("/streak")
     public ResponseEntity<Map<String, Long>> getAllStreak(@RequestParam("username") String username, @RequestParam("from") String startDate, @RequestParam("to") String endDate) {
-        Map<String, Long> streakResponses = profileService.makeStreak("test", startDate, endDate);
+        Map<String, Long> streakResponses = profileService.makeStreak(username, startDate, endDate);
         return new ResponseEntity<>(streakResponses, HttpStatus.OK);
 //        return null;
     }

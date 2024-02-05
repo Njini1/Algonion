@@ -1,6 +1,5 @@
 package com.e1i5.backend.domain.user.dto.response;
 
-import com.e1i5.backend.domain.user.entity.ProfileFileInfo;
 import lombok.*;
 
 /**
@@ -16,19 +15,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class UserInfoResponse {
-//    Integer userId; //TODO int할건지, string으로 할건지
-//    String tier;
-//    Integer score;
-//    Long solvedProblemCnt;
-//    ProfileFileInfo profileFileInfo;
-//
-//    public UserInfoResponse(Integer userId, String tier, Integer score, Long solvedProblemCnt, ProfileFileInfo profileFileInfo) {
-//        this.userId = userId;
-//        this.tier = tier;
-//        this.score = score;
-//        this.solvedProblemCnt = solvedProblemCnt;
-//        this.profileFileInfo = profileFileInfo;
-//    }
 
     private String tier;
     private Integer userId;
