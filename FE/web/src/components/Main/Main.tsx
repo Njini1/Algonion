@@ -1,9 +1,6 @@
-// import React from "react";
-// import getAsset from "../../utils/getAsset";
-import { motion } from 'framer-motion'
-import GoogleLoginButton from "./Google";
-import KakaoLoginButton from "./Kakao";
-import classes from "./Main.module.scss"; // .module.scss 파일을 import
+import { motion } from 'framer-motion';
+import classes from "./Main.module.scss";
+import getAsset from '../../utils/getAsset';
 
 const sloganVariants = {
   hidden: { y: 20, opacity: 0 },
@@ -15,25 +12,26 @@ const sloganVariants = {
     }
   }
 };
-export default function Main() {
-  // const KAKAO_AUTH_URL = ""
 
+export default function Main() {
   return (
-    <div className={classes.main_container}>
+    <div className={classes.mainContainer}>
       <motion.div
-        className={classes.slogan_container}
+        className={classes.slogunContainer}
         variants={sloganVariants}
         initial="hidden"
         animate="visible">       
-          <h1>모든 코드, 모두 모아</h1>
+        모든 코드, 모두 모아
       </motion.div>
-      <div className={classes["login-buttons-container"]}>
-        <div>
-        <GoogleLoginButton></GoogleLoginButton>
-        </div>
-        <div>
-        <KakaoLoginButton></KakaoLoginButton>
-        </div>
+      <div className={classes.buttonContainer}>
+        <button className={classes.googleButton}>
+          <img src={getAsset('social_login/googleSymbol.png')} alt="google-login" />
+          <p>Google로 시작하기</p>
+        </button>
+        <button className={classes.kakaoButton}>
+          <img src={getAsset('social_login/kakaoSymbol.png')} alt="google-login" />
+          <p>Kakao로 시작하기</p>
+        </button>
       </div>
     </div>
   )
