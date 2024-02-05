@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, Integer> {
-//    List<SolvedProblem> findAllByUserNoAndVisible(long userNo, boolean visible);
-//    SolvedProblem findAllBySolvedProblemIdxAndUserNo(long solvedProblemIdx, long userNo);
 
     Optional<SolvedProblem> findBySubmissionId(String submissionId);
     List<SolvedProblem> findAllByUser_UserIdAndVisible(int userId, boolean visible);
@@ -21,11 +19,34 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
 //            "GROUP BY s.submissionTime " +
 //            "ORDER BY s.submissionTime DESC")
     @Query("SELECT minTime AS submissionTime, COUNT(*) AS count " +
-            "FROM (SELECT sp.user.userId as userId, MIN(sp.submissionTime) AS minTime " +
+            "FROM (SELECT sp.user.userId AS userId, MIN(sp.submissionTime) AS minTime " +
+            "      FROM SolvedProblem sp " +
+            "      WHERE sp.user.nickname = :nickname " +
+//            "      GROUP BY sp.problem.problemId)" +
+            "      GROUP BY sp.user.userId, sp.problem.problemId)" +
+            "WHERE minTime <= :startDate " +
+            "AND minTime > :endDate " +
+            "GROUP BY minTime " +
+            "ORDER BY minTime")
+    List<StreakResponseInterface> findSubmissionTimeAndCountByUserId(/*@Param("userId") int userId,*/
+                                                                     @Param("nickname") String nickname,
+                                                                     @Param("endDate") String endDate,
+                                                                     @Param("startDate") String startDate);
+
+    @Query("SELECT minTime AS submissionTime, COUNT(*) AS count " +
+            "FROM (SELECT sp.user.userId AS userId, MIN(sp.submissionTime) AS minTime " +
             "      FROM SolvedProblem sp " +
             "      WHERE sp.user.userId = :userId " +
-            "      GROUP BY sp.user.userId, sp.problem.problemId)" +
-            "GROUP BY userId, minTime " +
+            "      GROUP BY sp.problem.problemId)" +
+            "WHERE minTime <= :endDate " +
+            "AND minTime > :startDate " +
+            "GROUP BY minTime " +
             "ORDER BY minTime")
-    List<StreakResponseInterface> findSubmissionTimeAndCountByUserId(@Param("userId") int userId);
+    List<StreakResponseInterface> findSevenDaysStreak(@Param("userId") int userId,
+                                                      @Param("endDate") String endDate,
+                                                      @Param("startDate") String startDate);
+
+//    List<Problem> findByTierAndNotInSolvedProblems(String tier, List<SolvedProblem> solvedProblems);
+//@Query("SELECT p FROM Problem p WHERE p.problemId NOT IN (SELECT sp.problem.problemId FROM SolvedProblem sp WHERE sp.user.userId = :userId)")
+//List<Problem> findUnsolvedProblemsByUserId(@Param("userId") int userId);
 }

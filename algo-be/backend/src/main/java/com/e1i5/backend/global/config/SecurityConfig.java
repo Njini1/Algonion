@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,20 +27,21 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
 @Configuration
+@EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig {
+public class SecurityConfig{
     private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
     private final AuthRepository userRepository;
     private final AuthServiceImpl userService;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-//    @Bean
-//    public WebSecurityCustomizer configure() {
-//        return (web) -> web.ignoring()
-////                .requestMatchers(toH2Console())
-//                .requestMatchers("/img/**", "/css/**", "/js/**");
-//    }
+    @Bean
+    public WebSecurityCustomizer configure() {
+        return (web) -> web.ignoring()
+//                .requestMatchers(toH2Console())
+                .requestMatchers("/img/**", "/css/**", "/js/**");
+    }
 
 
     @Bean
@@ -57,10 +60,14 @@ public class SecurityConfig {
 //        http.addFilterBefore(new TokenAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), tokenProvider), BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
+                .requestMatchers("/login-test").authenticated()
+                .requestMatchers("/v1/user/login-test").authenticated()
+                .requestMatchers("/v1/solved-problems/programmers").authenticated()
+                .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
+                .requestMatchers("/v1/profile/ext").authenticated()
                 .requestMatchers("/user/token").permitAll()
-                .requestMatchers("/user/test").authenticated()
-//                .requestMatchers("/api/token").permitAll()
-                .anyRequest().permitAll();
+                .requestMatchers("/ext").authenticated();
+//                .anyRequest().permitAll();
 
         http.oauth2Login()
 //                .loginPage("/login")

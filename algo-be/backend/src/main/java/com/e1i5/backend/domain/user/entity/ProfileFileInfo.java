@@ -14,13 +14,18 @@ public class ProfileFileInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "profile_id", updatable = false)
-    private int userFileInfoId;
+    private int userFileInfoId; //TODO profileFileInfoId로 변경
     private String originalFile;
     private String saveFile;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
-    public ProfileFileInfo(String originalFile, String saveFile) {
+    public ProfileFileInfo(String originalFile, String saveFile, User user) {
         this.originalFile = originalFile;
         this.saveFile = saveFile;
+        this.user = user;
     }
 }

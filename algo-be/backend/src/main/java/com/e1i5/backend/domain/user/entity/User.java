@@ -1,13 +1,14 @@
 package com.e1i5.backend.domain.user.entity;
 
+import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -16,55 +17,47 @@ public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
+    @Column(name = "user_id", updatable = false)
     private int userId;
 
-    @Column(name = "nickname", unique = false)
+    @Column(name = "nickname", unique = true)
     private String nickname;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-//    @Column(name = "user_score")
-//    private int userScore;
+    @Column(name = "tier")
+    private String tier;
 
-//    @GeneratedValue(generator = "uuid2")
-//    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-//    @Column(name = "user_uuid"/*, nullable = false*/, columnDefinition = "BINARY(16)")
-//    private UUID userUuid;
+    //TODO: userScore로 변경 필요
+    @Column(name = "user_score")
+    private int score;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id")
+    @Column(name = "reg_date")
+    private LocalDate regDate;
+
+    @Column(name = "status")
+    private boolean status; // 탈퇴 여부
+
+    @Column(name = "del_date")
+    private LocalDate delDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<SolvedProblem> solvedProblems;
+
+    @OneToOne(mappedBy = "user")
     private ProfileFileInfo userProfile;
 
-//    @Enumerated(value = EnumType.STRING)
-//    private Platform flatform;
-
-//    @Column(length = 500)
-//    private String refreshToken;
-
-//    @Builder
-//    public User(int userId, String nickname, String email, String refreshToken) {
-//        this.userId = userId;
-//        this.nickname = nickname;
-//        this.email = email;
-//        this.refreshToken = refreshToken;
-//    }
 
     @Builder
-    public User(String nickname, String email) {
+    public User(String nickname, String email, LocalDate regDate) {
         this.nickname = nickname;
         this.email = email;
-//        this.userScore = userScore;
+        this.regDate = regDate;
     }
 
-    public User update(String nickname) {
+    public void updateNickname(String nickname) {
         this.nickname = nickname;
-        return this;
     }
-//
-//    public User updateUuid(UUID uuid) {
-//        this.userUuid = uuid;
-//        return this;
-//    }
+
 }

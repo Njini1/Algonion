@@ -1,5 +1,6 @@
 package com.e1i5.backend.domain.problem.service;
 
+import com.e1i5.backend.domain.problem.exception.SolvedProblemNotFoundException;
 import com.e1i5.backend.domain.problem.model.entity.AlgoGroup;
 import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
@@ -38,7 +39,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     ProblemService problemService;
 
     @Autowired
-    AuthRepository userRepository;
+    AuthRepository authRepo;
 
     /**
      * 사용자가 푼 문제 저장하는 메서드
@@ -52,17 +53,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Transactional
     @Override
-    public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+    public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
-//        User user = User.builder().nickname("44").email("email4").build();
-//        User testUser = userRepository.save(user); //임의로 사용자 저장
-//        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
-        Optional<User> user = userRepository.findById(1);
-
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
-//        Problem problem = saveOrGetProblem(solvedProblemReq, siteName);
-//        saveSolvedProblem(solvedProblemReq, problem);
 
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
                 .ifPresentOrElse( //TODO orElseGet으로?
@@ -70,34 +64,33 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                             log.info("ProblemServiceImpl saveSolvedProblem already exist solvedProblem");
                             System.out.println("이미 푼 문제가 존재");
                         },
-                        () -> saveSolvedProblem(solvedProblemReq, user.get(), problem)
+                        () -> saveSolvedProblem(solvedProblemReq, userId, problem)
                 );
     }
 
     @Transactional
     @Override
-    public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+    public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         //TODO 사용자 정보 추가
-//        User user = User.builder().userUuid(UUID.randomUUID()).nickname("hi").email("email").build();
-//        User testUser = userRepository.save(user); //임의로 사용자 저장
-//        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
-        Optional<User> user = userRepository.findById(1);
+        //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
+//        saveSolvedProblem(solvedProblemReq, problem);
 
-        saveSolvedProblem(solvedProblemReq, user.get(), problem);
+        saveSolvedProblem(solvedProblemReq, userId, problem);
     }
 
     /**
      * 사용자가 푼 문제 데이터를 solved_problem table에 저장하는 메서드
      *
      * @param solvedProblemReq 사용자가 문제 푼 데이터
-     * @param user             사용자 정보
+     * @param userId             사용자 정보
      * @param problem          문제 정보
      */
     @Override
-    public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, User user, Problem problem) {
+    public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem) {
         //TODO 문제번호 비교해서 점수 더하는 거도 추가해줘
         //TODO solvedProblemReq말고 Entity로 바꾼 값으로 매개변수 받는 거로 변경? 고민
+        User user = authRepo.findById(userId).orElseThrow(()-> new IllegalArgumentException("Unexpected user"));
         SolvedProblem solvedProblemEntity = solvedProblemReq.toSolvedProblemEntity();
         solvedProblemEntity.updateUserAndProblem(user, problem);
         solvedProblemRepo.save(solvedProblemEntity);
@@ -111,15 +104,25 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param siteName         문제 푼 사이트
      * @return 문제 테이블의 값 반환
      */
-    @Override
-    public Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
-        Optional<Problem> problem = problemRepo.findByProblemNumAndSiteName(solvedProblemReq.getProblemNum(), siteName);
-        return problem.orElseGet(() -> {
-            Problem problemEntity = solvedProblemReq.toProblemEntity();
-            problemEntity.updateSiteName(siteName);
-            return problemRepo.save(problemEntity);
-        });
-    }
+//    @Override
+//    public Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+//        Optional<Problem> problem = problemRepo.findByProblemNumAndSiteName(solvedProblemReq.getProblemNum(), siteName);
+//        if (problem.isPresent()) {
+//            // 기존 문제가 존재하는 경우 레벨 업데이트
+//            Problem problemEntity = problem.get();
+//            if (solvedProblemReq.getProblemLevel() != null) {
+//                problemEntity = problemEntity.updateLevel(solvedProblemReq.getProblemLevel());
+//                return problemRepo.save(problemEntity);
+//            } else {
+//                return problemEntity; // 레벨이 주어지지 않은 경우 그대로 반환
+//            }
+//        } else {
+//            // 기존 문제가 없는 경우 새로운 문제 추가
+//            Problem newProblemEntity = solvedProblemReq.toProblemEntity();
+//            newProblemEntity.updateSiteName(siteName);
+//            return problemRepo.save(newProblemEntity);
+//        }
+//    }
 
     /**
      * 사용자가 문제 푼 데이터에서 메모 수정
@@ -129,8 +132,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Transactional
     @Override
     public SolvedProblemDetailResponse updateSolvedProblem(int solvedProblemId, String memo) {
+        //TODO 로그인 사용자 정보 추가
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
-
         solvedProblem.updateMemo(memo);
         SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);
         return SolvedProblemDetailResponse.builder()
@@ -144,6 +147,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Transactional
     @Override
     public SolvedProblemDetailResponse updateVisibility(int solvedProblemId) {
+        //TODO 로그인 사용자 정보 추가
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
         solvedProblem.updateVisible(!solvedProblem.isVisible());
         SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);

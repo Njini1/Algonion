@@ -1,9 +1,6 @@
 package com.e1i5.backend.global.jwt;
 
-import com.e1i5.backend.domain.user.exception.AccessDeniedException;
-import com.e1i5.backend.global.error.GlobalErrorCode;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -66,7 +63,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             return;
 
         }*/ catch (Exception e) {
-            System.out.println("필터에서 토큰 검사 오류");
             log.info("jwt exception message : {} token : {}", e.getMessage(), token);
             filterChain.doFilter(request, response);
             return;
