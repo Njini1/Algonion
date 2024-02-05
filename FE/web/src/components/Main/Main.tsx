@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import classes from "./Main.module.scss";
 import getAsset from '../../utils/getAsset';
+const getLoginUrl = (platform: string): string => `${import.meta.env.VITE_BACK_END}/oauth2/authorization/${platform}`;
 
 const sloganVariants = {
   hidden: { y: 20, opacity: 0 },
@@ -20,18 +21,18 @@ export default function Main() {
         className={classes.slogunContainer}
         variants={sloganVariants}
         initial="hidden"
-        animate="visible">       
+        animate="visible">
         모든 코드, 모두 모아
       </motion.div>
       <div className={classes.buttonContainer}>
-        <button className={classes.googleButton}>
+        <a href={getLoginUrl("google")} className={classes.googleButton}>
           <img src={getAsset('social_login/googleSymbol.png')} alt="google-login" />
           <p>Google로 시작하기</p>
-        </button>
-        <button className={classes.kakaoButton}>
-          <img src={getAsset('social_login/kakaoSymbol.png')} alt="google-login" />
+        </a>
+        <a href={getLoginUrl("kakao")} className={classes.kakaoButton}>
+          <img src={getAsset('social_login/kakaoSymbol.png')} alt="kakao-login" />
           <p>Kakao로 시작하기</p>
-        </button>
+        </a>
       </div>
     </div>
   )
