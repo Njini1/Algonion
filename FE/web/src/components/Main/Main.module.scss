@@ -29,7 +29,7 @@
   font-size: 4rem;
     font-weight: bold;
   margin-bottom: 4rem;
-
+  
 }
 
 .buttonContainer {
@@ -48,7 +48,7 @@
   box-shadow: 1px 1px 1px 1px rgb(215, 215, 215);
 
   display: flex;
-  width: 15rem;
+  width: 14rem;
 
   margin: 0 1rem 0;
   cursor: pointer;
@@ -59,15 +59,15 @@
   }
 
   img {
-    height: 1.8rem;
-    width: 1.8rem;
-    margin: 1.1rem 0;
+    height: 1.7rem;
+    width: 1.7rem;
+    margin: 1rem 0;
     margin-left: 0.8rem;
   }
 
   p {
     font-family: 'Roboto-Medium';
-    size: 1.4rem;
+    size: 1rem;
     margin: auto;
   }
 }
@@ -81,7 +81,7 @@
   cursor: pointer;
 
   display: flex;
-  width: 15rem;
+  width: 14rem;
 
   &:hover {
     background-color: #d0bb02c3;
@@ -89,16 +89,16 @@
   }
 
   img {
-    height: 1.8rem;
-    width: 1.8rem;
-    margin: 1.1rem 0;
+    height: 1.7rem;
+    width: 1.7rem;
+    margin: 1rem 0;
     margin-left: 0.8rem;
     // background-color: white;
   }
 
   p {
     font-family: 'Roboto-Medium';
-    size: 1.4rem;
+    size: 1rem;
     margin: auto;
   }
 }
