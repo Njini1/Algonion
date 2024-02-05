@@ -19,12 +19,12 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/profile",
-    element: <UserPage />,
-  },
-  {
     path: "/mainpage",
     element: <MainPage />,
+  },
+  {
+    path: "/profile/:username",
+    element: <UserPage />,
   },
   {
     path: "/code-log/:username",
