@@ -68,7 +68,7 @@ export default function UserBasis() {
               `${isFollowed ? "bg-transparent text-foreground border-default-200" : ""}
               ${classes.followButton}`
             }
-            color="primary"
+            color="secondary"
             radius="full"
             size="lg"
             variant={isFollowed ? "bordered" : "solid"}
@@ -86,6 +86,7 @@ export default function UserBasis() {
         {/* 경험치 바 */}
         <Progress isStriped
           aria-label="Loading..."
+          size='lg'
           color="secondary"
           label={`${'경험치'} ${label}`}
           value={value}

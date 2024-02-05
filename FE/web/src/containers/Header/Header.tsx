@@ -66,14 +66,11 @@ export default function Header() {
             </Link>
           </NavbarItem>
           
-          <NavbarItem isActive>
+          <NavbarItem >
             <Link aria-current="page">
               <SearchModal/>
             </Link>
-          </NavbarItem>
-          
-          {/* design B */}
-            
+          </NavbarItem>            
 
         </NavbarContent>
         

@@ -15,10 +15,9 @@ import classes from "./searchModal.module.scss";
 
 export default function SearchModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [keyword, setKeyword] = useState(""); // State to store the search query
+  const [keyword, setKeyword] = useState("");
   const onChange = (event: { target: { value: string } }) => {
     setKeyword(event.target.value);
-    // console.log(keyword);
   };
 
   return (
