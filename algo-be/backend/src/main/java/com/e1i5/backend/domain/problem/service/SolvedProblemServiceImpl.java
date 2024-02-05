@@ -82,7 +82,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
 //        User testUser = userRepository.save(user); //임의로 사용자 저장
 //        유효 ID 생성으로 인해 같은 USER 사용하지 못함 -> 지금은 optional로 사용하지만, 나중에 로그인 한 유저로 변경 예정
         Optional<User> user = userRepository.findById(1);
-//        System.out.println("service에서의 siteName" + siteName);
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
         saveSolvedProblem(solvedProblemReq, user.get(), problem);
