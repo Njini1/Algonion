@@ -6,7 +6,7 @@ const accessToken = localStorage.getItem("access_token");
 const axiosAuthApi = (): AxiosInstance => {
   const instance = axios.create({
     baseURL: api,
-    headers: { Authorizetion: "Bearer " + accessToken },
+    headers: { Authorization: "Bearer " + accessToken },
     timeout: 1000,
   });
   return instance;
