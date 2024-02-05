@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import classes from "./UserStreak.module.scss";
 function UserStreak() {
 
-  const table = (from: dayjs.Dayjs | undefined, to: dayjs.Dayjs = dayjs()) => {
+  const table = (from?: dayjs.Dayjs | undefined, to: dayjs.Dayjs = dayjs()) => {
     if (!from) {
       from = to.subtract(12, "month").subtract(to.subtract(12, "month").day(), "day");
     }
