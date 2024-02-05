@@ -22,12 +22,14 @@ export default function MainPage() {
 	return (
     <div className={classes.page}>
       <div className={classes.mainPage}>
+        
         <div className={classes.main}>
           <Main/>
         </div>
-        <div>
+        <div  className={classes.mainDescription}>
           <MainDescription/>
         </div>
+
         <div className={classes.descriptions}>
           <div>
             <Description items={items[0]} />
@@ -39,6 +41,7 @@ export default function MainPage() {
             <Description items={items[2]} />
           </div>
         </div>
+
       </div>
     </div>
   )
