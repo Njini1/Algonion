@@ -19,4 +19,6 @@ public interface SolvedProblemService {
     SolvedProblemDetailResponse updateVisibility(int solvedProblemId);
     List<SolvedProblemListResponse> getSolvedProblemListByUser();
     SolvedProblemDetailResponse getSolvedProblemDetail(int username, int solvedProblemId);
+
+    List<StreakResponseInterface> makeStreak(int userId);
 }
