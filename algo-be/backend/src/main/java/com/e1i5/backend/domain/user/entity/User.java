@@ -25,8 +25,8 @@ public class User{
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "user_score")
-    private int userScore;
+//    @Column(name = "user_score")
+//    private int userScore;
 
 //    @GeneratedValue(generator = "uuid2")
 //    @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -52,10 +52,10 @@ public class User{
 //    }
 
     @Builder
-    public User(String nickname, String email, int userScore) {
+    public User(String nickname, String email) {
         this.nickname = nickname;
         this.email = email;
-        this.userScore = userScore;
+//        this.userScore = userScore;
     }
 
     public User update(String nickname) {
