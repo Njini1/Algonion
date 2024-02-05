@@ -19,12 +19,12 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/profile",
-    element: <UserPage />,
-  },
-  {
     path: "/mainpage",
     element: <MainPage />,
+  },
+  {
+    path: "/profile/:username",
+    element: <UserPage />,
   },
   {
     path: "/code-log/:username",
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     element: <CodeLogDetailPage />,
   },
   {
-    path: "/search/:query",
+    path: "/search",
     element: <SearchPage />,
   },
   {
@@ -51,6 +51,9 @@ const router = createBrowserRouter([
     element: <LoginSuccessPage />,
   },
 ]);
+
+
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

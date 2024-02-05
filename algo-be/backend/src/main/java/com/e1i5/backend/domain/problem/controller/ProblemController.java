@@ -13,13 +13,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/v1/solved-problems")
+@RequestMapping("/v1/solved-problems")
 @Slf4j
 public class ProblemController {
 
@@ -32,23 +34,27 @@ public class ProblemController {
     SolvedProblemService solvedProblemService;
 
     @PostMapping("/baekjoon")
-    public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
+    public ResponseEntity<Void> saveBojProblem(@RequestBody SolvedProblemRequest problem, Principal principal) throws Exception {
+        int userId = Integer.parseInt(principal.getName());
         log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveBOJSolvedProblemAndProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
+        solvedProblemService.saveBOJSolvedProblemAndProblem(problem, ProblemSite.BAEKJOON.getProblemSite(), userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/programmers")
-    public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem) throws Exception {
+//    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Void> saveProgrammersProblem(@RequestBody SolvedProblemRequest problem, Principal principal) throws Exception {
+        int userId = Integer.parseInt(principal.getName());
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite());
+        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.PROGRAMMERS.getProblemSite(), userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/swea")
-    public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem) throws Exception {
+    public ResponseEntity<Void> saveSWEA(@RequestBody SolvedProblemRequest problem, Principal principal) throws Exception {
+        int userId = Integer.parseInt(principal.getName());
         log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
-        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.SWEA.getProblemSite());
+        solvedProblemService.saveNotBOJSolvedProblemAndProblem(problem, ProblemSite.SWEA.getProblemSite(), userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -107,19 +113,9 @@ public class ProblemController {
     // TODO solved.ac test
     @GetMapping("/solved-ac")
     public void saveSolvedAcApiProblem() {
-        problemService.saveBojProblemAndClassification(2);
+        problemService.saveBojProblemAndClassification(3);
     }
 
-    /**
-     * 스트릭 만드는 메서드
-     * @param username
-     * @return 날짜와 그 날짜에 푼 문제 개수 리스트 반환
-     */
-    @GetMapping("/streak")
-    public ResponseEntity<List<StreakResponseInterface>> getStreak(@RequestParam("username") String username) {
-        List<StreakResponseInterface> streakResponses = solvedProblemService.makeStreak(2);
-        return new ResponseEntity<>(streakResponses, HttpStatus.OK);
-    }
     
     @GetMapping("/test")
     public ResponseEntity<String> test() {

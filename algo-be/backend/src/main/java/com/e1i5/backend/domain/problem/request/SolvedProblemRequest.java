@@ -2,12 +2,10 @@ package com.e1i5.backend.domain.problem.request;
 
 import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
+import com.e1i5.backend.global.util.AlgoScoreUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.sql.Clob;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,14 +34,17 @@ public class SolvedProblemRequest {
                 .codeLength(codeLength)
                 .memory(memory)
                 .submissionTime(submissionTime)
-                .visible(true).build();
+                .visible(true)
+                .build();
     }
 
     public Problem toProblemEntity() {
+        int algoScore = AlgoScoreUtil.getBojScore(Integer.parseInt(problemLevel));
         return Problem.builder()
                 .problemNum(problemNum)
                 .problemTitle(problemTitle)
                 .problemLevel(problemLevel)
+                .algoScore(algoScore)
                 .url(url)
                 .build();
     }

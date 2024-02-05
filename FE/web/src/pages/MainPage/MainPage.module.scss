@@ -3,13 +3,18 @@
   justify-content: center;
   
   .mainPage {
-    width: 62.4rem;
+    width: 100%;
     .main {
-      height: 50rem;
+      height: 35rem;
     }
-  
+    .mainDescription {
+      margin-top: 10rem;
+      
+    }
     .descriptions{
-      margin-top: 20rem;
+      width: 80%;
+      margin: auto;
+      margin-top: 15rem;
       .description_right{
         text-align: right;
       }

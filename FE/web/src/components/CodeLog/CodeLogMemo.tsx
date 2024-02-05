@@ -17,7 +17,7 @@ function CodeLogMemo() {
   };
 
   return (    
-    <div>
+    <div className={classes.container}>
       <textarea
         className={classes.memo}
         value={content}

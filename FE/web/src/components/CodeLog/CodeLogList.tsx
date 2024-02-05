@@ -28,10 +28,10 @@ function CodeLogList() {
               <td>23-07-08</td>
             </tr>
             <tr>
-              <td>Baekjoon</td><td>1000</td><td>A+B</td><td>Bronze 5</td><td>수학</td><td>23-07-08</td>
+              <td>Baekjoon</td><td>1000</td><td>A+B</td><td>수학</td><td>Bronze 5</td><td>23-07-08</td>
             </tr>
             <tr>
-              <td>Baekjoon</td><td>1000</td><td>A+B</td><td>Bronze 5</td><td>수학</td><td>23-07-08</td>
+              <td>Baekjoon</td><td>1000</td><td>A+B</td><td>수학</td><td>Bronze 5</td><td>23-07-08</td>
             </tr>
           </tbody>
           </table>

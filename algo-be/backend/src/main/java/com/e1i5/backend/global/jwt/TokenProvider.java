@@ -43,7 +43,6 @@ public class TokenProvider {
 
         return Jwts.builder()
                 .setSubject(String.valueOf(user.getUserId())) // // 내용 sub : 유저의 이메일
-//                .claim("nickname", user.getNickname().toString()) // 클레임 id : 유저의 닉네임 -> 권한으로 변경
 //                .claim(AUTHORITIES_KEY, role) // role
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
@@ -145,16 +144,6 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(new org.springframework.security.core.userdetails.User(claims.getSubject
                 (), "", authorities), token, authorities);
     }
-
-    /**
-     * 토큰 기반으로 유저 nickname를 가져오는 메서드
-     * @param token
-     * @return
-     */
-//    public String getUserNickname(String token) {
-//        Claims claims = getClaims(token);
-//        return claims.get("nickname", String.class);
-//    }
 
     /**
      * refreshToken으로 쿠키 설정

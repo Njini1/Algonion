@@ -15,4 +15,11 @@ public interface DashboardRepository extends JpaRepository<Problem, Integer> {
             "ORDER BY p.problemLevel DESC " +
             "LIMIT 2")
     List<Problem> findProblemsByNicknameOrderedByLevel(@Param("userId") int userId);
+
+    @Query("SELECT sp.problem.algoScore, COUNT(DISTINCT sp.problem.problemId) " +
+            "FROM SolvedProblem sp " +
+            "WHERE sp.user.userId = :userId " +
+            "GROUP BY sp.problem.algoScore " +
+            "ORDER BY sp.problem.algoScore ASC")
+    List<Object[]> findAlgoScoreCountsByUserId(@Param("userId") int userId);
 }

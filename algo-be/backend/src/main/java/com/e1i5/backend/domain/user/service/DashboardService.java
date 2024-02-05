@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface DashboardService {
     List<DashBoardProblemListResponse> getProblemsByNickname(String nickname);
+
+    int[] getAlgoScoreCountsByNickname(String nickname);
 }
