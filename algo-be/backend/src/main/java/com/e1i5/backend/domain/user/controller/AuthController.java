@@ -21,7 +21,7 @@ import java.util.UUID;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("/v1/user")
 @Slf4j
 public class AuthController {
 
@@ -68,7 +68,7 @@ public class AuthController {
     public ResponseEntity<String> loginTest() {
         System.out.println("login test입니당");
         return new ResponseEntity<String>("test", HttpStatus.OK);
-    };
+    }
 
 
     private ResponseEntity<String> exceptionHandling(Exception e) {

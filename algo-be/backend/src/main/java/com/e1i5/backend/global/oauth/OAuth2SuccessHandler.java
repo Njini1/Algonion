@@ -27,7 +27,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private long ACCESS_TOKEN_EXPIRATION;
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
     public static final String ACCESS_TOKEN_COOKIE_NAME = "access_token";
-    public static final String REDIRECT_PATH = "https://localhost:5173/login/success";
+    public static final String REDIRECT_PATH = "https://algonion.store/login/success";
 //    public static final String REDIRECT_PATH = "https://localhost/login/oauth_google_check";
 
     private final TokenProvider tokenProvider;
@@ -57,7 +57,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         clearAuthenticationAttributes(request, response);
         // 리다이렉트
 
-//        ResponseCookie cookie= ResponseCookie.from("refresh_token", refreshToken).maxAge(30 * 60 * 60).path("/").domain("localhost").httpOnly(true).secure(true).sameSite("None").build();
+//        ResponseCookie cookie= ResponseCookie.from("refresh_token", refreshToken).maxAge(30 * 60 * 60).path("/").domain("localhost").httpOnly(false).secure(true).sameSite("None").build();
 ////        ResponseCookie cookie= ResponseCookie.from("refresh_token", refreshToken).httpOnly(true).secure(true).maxAge(30 * 60 * 60).path("/").domain("192.168.31.177").sameSite("None").build();
 //        response.addHeader("Set-Cookie", cookie.toString());
 

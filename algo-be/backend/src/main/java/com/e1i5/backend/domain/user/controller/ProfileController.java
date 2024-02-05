@@ -1,6 +1,7 @@
 package com.e1i5.backend.domain.user.controller;
 
 
+import com.e1i5.backend.domain.problem.response.ProblemResponse;
 import com.e1i5.backend.domain.user.dto.response.ExtUserInfoResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/v1/profile")
+@RequestMapping("/v1/profile")
 @Slf4j
 public class ProfileController {
 
@@ -43,10 +44,10 @@ public class ProfileController {
      * @return 날짜와 그 날짜에 푼 문제 개수 리스트 반환
      */
     @GetMapping("/streak")
-    public ResponseEntity<List<StreakResponseInterface>> getAllStreak(@RequestParam("username") String username) {
-//        List<StreakResponseInterface> streakResponses = profileService.getUserSevenStreak(2);
-//        return new ResponseEntity<>(streakResponses, HttpStatus.OK);
-        return null;
+    public ResponseEntity<Map<String, Long>> getAllStreak(@RequestParam("username") String username, @RequestParam("from") String startDate, @RequestParam("to") String endDate) {
+        Map<String, Long> streakResponses = profileService.makeStreak("test", startDate, endDate);
+        return new ResponseEntity<>(streakResponses, HttpStatus.OK);
+//        return null;
     }
 
     /**
@@ -62,10 +63,22 @@ public class ProfileController {
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
+    /**
+     * 사용자 정보 불러오기 
+     * @param nickname 사용자 닉네임
+     * @return 사용자 아이디, 티어, 점수, 프로필 이미지
+     */
     @GetMapping()
     public ResponseEntity<UserInfoResponse> getUserInfo(@Param("nickname") String nickname) {
+        //TODO 배경 이미지 추가
         UserInfoResponse user = profileService.getUserInfo(nickname);
         System.out.println("controller user: " + user);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/recommand")
+    public ResponseEntity<?> recommandLevelProblem() {
+        profileService.recommandProblem(1);
+        return null;
     }
 }

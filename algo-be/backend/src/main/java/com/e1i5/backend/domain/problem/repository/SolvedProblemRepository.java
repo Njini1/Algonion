@@ -1,7 +1,9 @@
 package com.e1i5.backend.domain.problem.repository;
 
+import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,9 +28,13 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
             "      FROM SolvedProblem sp " +
             "      WHERE sp.user.userId = :userId " +
             "      GROUP BY sp.problem.problemId)" +
+            "WHERE minTime <= :startDate " +
+            "AND minTime > :endDate " +
             "GROUP BY minTime " +
             "ORDER BY minTime")
-    List<StreakResponseInterface> findSubmissionTimeAndCountByUserId(@Param("userId") int userId);
+    List<StreakResponseInterface> findSubmissionTimeAndCountByUserId(@Param("userId") int userId,
+                                                                     @Param("endDate") String endDate,
+                                                                     @Param("startDate") String startDate);
 
     @Query("SELECT minTime AS submissionTime, COUNT(*) AS count " +
             "FROM (SELECT sp.user.userId AS userId, MIN(sp.submissionTime) AS minTime " +
@@ -40,6 +46,10 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
             "GROUP BY minTime " +
             "ORDER BY minTime")
     List<StreakResponseInterface> findSevenDaysStreak(@Param("userId") int userId,
-                                      @Param("endDate") String endDate,
-                                      @Param("startDate") String startDate);
+                                                      @Param("endDate") String endDate,
+                                                      @Param("startDate") String startDate);
+
+//    List<Problem> findByTierAndNotInSolvedProblems(String tier, List<SolvedProblem> solvedProblems);
+//@Query("SELECT p FROM Problem p WHERE p.problemId NOT IN (SELECT sp.problem.problemId FROM SolvedProblem sp WHERE sp.user.userId = :userId)")
+//List<Problem> findUnsolvedProblemsByUserId(@Param("userId") int userId);
 }

@@ -35,6 +35,9 @@ public class Problem {
     private String url;
 
     @OneToMany(mappedBy = "problem")
+    private List<SolvedProblem> solvedProblems;
+
+    @OneToMany(mappedBy = "problem")
     private List<AlgoGroup> algoGroup;
 
     @Builder

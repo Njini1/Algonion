@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SolvedProblemListResponse {
     private String siteName;
-    private String problemNum;; //문제번호
+    private String problemNum; //문제번호
     private String problemTitle; //문제 제목
     private String problemLevel;
     private String language;
