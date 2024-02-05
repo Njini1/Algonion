@@ -1,5 +1,6 @@
 package com.e1i5.backend.domain.user.controller;
 
+import com.e1i5.backend.domain.user.dto.response.AlgoScoreCountResponse;
 import com.e1i5.backend.domain.user.dto.response.DashBoardProblemListResponse;
 import com.e1i5.backend.domain.user.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,22 @@ public class DashboardController {
      * @param nickname
      * @return 난이도 상위 100문제 리스트 반환
      */
-    @GetMapping("/rating/top100")
+    @GetMapping("/top100")
     public ResponseEntity<List<DashBoardProblemListResponse>> getProblemsByNickname(@RequestParam("nickname") String nickname) {
         List<DashBoardProblemListResponse> problemsList = dashboardService.getProblemsByNickname(nickname);
         return new ResponseEntity<>(problemsList, HttpStatus.OK);
     }
+
+    /**
+     * 난이도별 갯수 가져오기
+     * @param nickname
+     * @return 난이도 별 갯수 리스트 반환
+     */
+    @GetMapping("/level-graph")
+    public ResponseEntity<int[]> getAlgoScoreCountsByNickname(@RequestParam("nickname") String nickname) {
+        int[] algoScoreCounts = dashboardService.getAlgoScoreCountsByNickname(nickname);
+        return new ResponseEntity<>(algoScoreCounts, HttpStatus.OK);
+    }
+
 }
 
