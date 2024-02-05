@@ -29,9 +29,8 @@ public class User{
     @Column(name = "tier")
     private String tier;
 
-    //TODO: userScore로 변경 필요
     @Column(name = "user_score")
-    private int score;
+    private int userScore;
 
     @Column(name = "reg_date")
     private LocalDate regDate;

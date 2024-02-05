@@ -1,11 +1,9 @@
 package com.e1i5.backend.domain.problem.response;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProblemResponse {
     private String siteName;
@@ -13,9 +11,7 @@ public class ProblemResponse {
     private String problemTitle;
     private String problemLevel;
     private String url;
-//    private int algoScore;
 
-    @Builder
     public ProblemResponse(String siteName, String problemNum, String problemTitle, String problemLevel, String url) {
         this.siteName = siteName;
         this.problemNum = problemNum;

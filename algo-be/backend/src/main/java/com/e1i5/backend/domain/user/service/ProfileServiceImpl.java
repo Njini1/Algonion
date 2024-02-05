@@ -124,23 +124,16 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public List<ProblemResponse> recommandProblem(int userId) {
-        //TODO N+1 오류남 -> interface로 변경 또는 쿼리로 변경,or problme 쪽 mappedBy 없애기
-//        User user = authRepo.findByUserId(userId).orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
-//        List<Problem> recommendedProblems = solvedProblemRepo.findByTierAndNotInSolvedProblems(user.getTier(), user.getSolvedProblems())
-//                .stream()
-//                .limit(2)
-//                .collect(Collectors.toList());
-//
-//        Collections.shuffle(recommendedProblems);
-//
-//        System.out.println(recommendedProblems.get(0).toString());
-//        System.out.println(recommendedProblems.get(1).toString());
-//        return recommendedProblems;
-        List<Problem> unsolvedProblemsByUserId = problemRepo.findUnsolvedProblemsByUserId(userId);
-        for (Problem p : unsolvedProblemsByUserId) {
-            System.out.println(p.toString());
+        //TODO 랜덤으로 문제 추천으로 변경
+        List<ProblemResponse> unsolvedProblemsByUserId = new ArrayList<>(problemRepo.findUnsolvedProblemsByUserId(userId)
+                .stream()
+                .limit(2)
+                .toList());
+//        Collections.shuffle(unsolvedProblemsByUserId);
+        for (ProblemResponse p : unsolvedProblemsByUserId) {
+            System.out.println(p.getProblemTitle());
         }
-        return null;
+        return unsolvedProblemsByUserId;
     }
 
 }

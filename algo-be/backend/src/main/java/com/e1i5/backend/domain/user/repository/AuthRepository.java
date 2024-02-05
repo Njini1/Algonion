@@ -12,7 +12,6 @@ import java.util.UUID;
 
 public interface AuthRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(String email);
-    Optional<User> findByUserId(int id);
     boolean existsByNickname(String nickname);
 //    Optional<User> findByNickname(String nickname);
 
@@ -31,12 +30,12 @@ public interface AuthRepository extends JpaRepository<User, Integer> {
 //            "LEFT JOIN u.solvedProblems sp " +
 //            "WHERE u.nickname = :nickname " +
 //            "GROUP BY u.tier, u.userId, u.score, up")
-    @Query("SELECT new com.e1i5.backend.domain.user.dto.response.UserInfoResponse(u.tier, u.userId, u.score,up.originalFile, up.saveFile, COUNT(sp)) " +
+    @Query("SELECT new com.e1i5.backend.domain.user.dto.response.UserInfoResponse(u.tier, u.userId, u.userScore, up.originalFile, up.saveFile, COUNT(sp)) " +
             "FROM User u " +
             "LEFT JOIN u.userProfile up " +
             "LEFT JOIN u.solvedProblems sp " +
             "WHERE u.nickname = :nickname " +
-            "GROUP BY u.tier, u.userId, u.score, up")
+            "GROUP BY u.tier, u.userId, u.userScore, up")
     Optional<UserInfoResponse> getUserByNickname(@Param("nickname") String nickname);
 //    @Query("SELECT u.tier AS tier, u.userId AS userId, u.score AS score, up AS userProfile, COUNT(sp) AS problemCount " +
 //            "FROM User u LEFT JOIN u.userProfile up LEFT JOIN u.solvedProblems sp " +
