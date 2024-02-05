@@ -1,7 +1,7 @@
 // import React from "react";
-import {Card, CardHeader, CardBody, CardFooter, Button} from "@nextui-org/react";
+import {CardHeader, CardBody, CardFooter, Button, Card} from "@nextui-org/react";
 // import classes from "./UserSolvedProblem.module.scss"
-
+import UserProblem from './UserProblem'
 function UserSolvedProblem() {
   return (
     <Card className="max">
@@ -29,12 +29,7 @@ function UserSolvedProblem() {
         </p>
         <span className="pt-2">
           여기에 문제 풀 때마다 표시<br />
-          1. 10개씩 div로 묶고<br />
-          2. 높은 티어 순으로 정렬해야하고<br />
-          3. 푼 문제가 새로 생길 때 마다 10개의 그룹으로 넣어야하고<br />
-          4. 문제별로 problemNum에 따라서 링크 넣어줘야하고<br />
-          5. 문제 아이콘에 마우스를 올리면 마커 띄워줘야하고<br />
-          6. 문제 정보 가져와서 마커에 티어 이미지, 문제 num, 문제 title 표시<br />  
+          <UserProblem/>
         </span>
       </CardBody>
       <CardFooter className="gap-3">
