@@ -18,7 +18,7 @@ export default function SearchModal() {
   const [keyword, setKeyword] = useState(""); // State to store the search query
   const onChange = (event: { target: { value: string } }) => {
     setKeyword(event.target.value);
-    console.log(keyword);
+    // console.log(keyword);
   };
 
   return (
@@ -31,6 +31,7 @@ export default function SearchModal() {
       <Modal
         size="2xl"
         isOpen={isOpen}
+        // z-index=200
         placement={"top"}
         onOpenChange={onOpenChange}
       >
@@ -38,14 +39,14 @@ export default function SearchModal() {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                유저 이름을 검색해주세요!
+              유저의 닉네임을 검색해주세요!
               </ModalHeader>
               <ModalBody>
                 <MyInput
                   onChange={onChange}
                   value={keyword}
                   isClearable
-                  placeholder="Search..."
+                  placeholder="search..."
                   radius="md"
                   size="md"
                   startContent={
