@@ -1,6 +1,6 @@
 
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
-import classes from './UserFriendList.module.scss'
+// import classes from './UserFriendList.module.scss'
 
 const rows = [
   {

@@ -1,9 +1,9 @@
-import { useState } from "react";
+// import { useState } from "react";
 import UserRecommendationItem from "./UserRecommendationItem.tsx";
 import classes from './UserRecommendation.module.scss'
 
 export default function UserRecommendation() {;
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   
   // const handleRefresh = async () => {
   //   setIsLoading(true);
@@ -15,7 +15,7 @@ export default function UserRecommendation() {;
     <button
       className={classes.refreshButton}
       // onClick={handleRefresh}
-      disabled={isLoading} // Disable button while loading
+      // disabled={isLoading} // Disable button while loading
     >
       {/* {isLoading ? 'Refreshing...' : 'Refresh Recommendations'} */}
       다른 문제 추천!
