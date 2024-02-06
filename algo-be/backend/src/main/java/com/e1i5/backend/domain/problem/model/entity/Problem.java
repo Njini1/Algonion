@@ -34,8 +34,8 @@ public class Problem {
     @Column(name = "url")
     private String url;
 
-    @OneToMany(mappedBy = "problem")
-    private List<SolvedProblem> solvedProblems;
+//    @OneToMany(mappedBy = "problem")
+//    private List<SolvedProblem> solvedProblems;
 
     @OneToMany(mappedBy = "problem")
     private List<AlgoGroup> algoGroup;

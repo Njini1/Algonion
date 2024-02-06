@@ -1,5 +1,6 @@
 package com.e1i5.backend.domain.user.dto.response;
 
+import com.e1i5.backend.domain.user.entity.ProfileFileInfo;
 import lombok.*;
 
 /**
@@ -21,12 +22,13 @@ public class UserInfoResponse {
     private Integer score;
     private String originalFile;
     private String saveFile;
-//    private FileInfoResponse fileInfo;
 //    private ProfileFileInfo userProfile;
     private Long problemCount;
 
-        @Builder
-    public UserInfoResponse(String tier, Integer userId, Integer score, String originalFile, String saveFile, Long problemCount) {
+    @Builder
+
+    public UserInfoResponse(String tier, Integer userId, Integer score,
+                            String originalFile, String saveFile, Long problemCount) {
         this.tier = tier;
         this.userId = userId;
         this.score = score;
@@ -34,13 +36,4 @@ public class UserInfoResponse {
         this.saveFile = saveFile;
         this.problemCount = problemCount;
     }
-
-    //    @Builder
-//    public UserInfoResponse(String userId, String tier, int score, long solvedProblemCnt, ProfileFileInfo profileFileInfo) {
-//        this.userId = userId;
-//        this.tier = tier;
-//        this.score = score;
-//        this.solvedProblemCnt = solvedProblemCnt;
-//        this.profileFileInfo = profileFileInfo;
-//    }
 }
