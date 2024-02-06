@@ -12,14 +12,12 @@ import java.util.Optional;
 
 public interface ProblemRepository extends JpaRepository<Problem, Integer> {
     Optional<Problem> findByProblemNumAndSiteName(String problemNum, String siteName);
-//    @Query("SELECT new com.e1i5.backend.domain.problem.dto.response.ProblemResponse(p.siteName AS siteName, p.problemNum AS problemNum, p.problemTitle AS problemTitle, p.problemLevel AS problemLevel, p.url AS url) FROM Problem p WHERE p.problemId NOT IN (SELECT sp.problem.problemId FROM SolvedProblem sp WHERE sp.user.userId = :userId)")
-//    @Query("SELECT new com.e1i5.backend.domain.problem.dto.response.ProblemResponse(p.siteName, p.problemNum, p.problemTitle, p.problemLevel, p.url) FROM Problem p WHERE p.problemId NOT IN (SELECT sp.problem.problemId FROM SolvedProblem sp WHERE sp.user.userId = :userId)")
-    @Query("SELECT p " +
+    @Query("SELECT new com.e1i5.backend.domain.problem.response.ProblemResponse(" +
+            "p.siteName, p.problemNum, p.problemTitle, p.problemLevel, p.url) " +
             "FROM Problem p " +
-            "WHERE p.problemId " +
-            "NOT IN " +
+            "WHERE p.problemId NOT IN " +
             "(SELECT sp.problem.problemId " +
             "FROM SolvedProblem sp " +
             "WHERE sp.user.userId = :userId)")
-    List<Problem> findUnsolvedProblemsByUserId(@Param("userId") int userId);
+    List<ProblemResponse> findUnsolvedProblemsByUserId(@Param("userId") int userId);
 }

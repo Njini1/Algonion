@@ -3,10 +3,11 @@ package com.e1i5.backend.domain.user.controller;
 
 import com.e1i5.backend.domain.problem.response.ProblemResponse;
 import com.e1i5.backend.domain.user.dto.response.ExtUserInfoResponse;
-import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
+import com.e1i5.backend.domain.user.dto.response.UserInfoInterface;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.service.AuthService;
+import com.e1i5.backend.domain.user.service.DashboardService;
 import com.e1i5.backend.domain.user.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService; //TODO 이 방식 또는 RequiredArguments 방식으로 통일
     @Autowired
+    private DashboardService dashboardService;
+    @Autowired
     private AuthService authService;
 
     @PostMapping("/profile-img")
@@ -44,10 +47,14 @@ public class ProfileController {
      * @return 날짜와 그 날짜에 푼 문제 개수 리스트 반환
      */
     @GetMapping("/streak")
-    public ResponseEntity<Map<String, Long>> getAllStreak(@RequestParam("username") String username, @RequestParam("from") String startDate, @RequestParam("to") String endDate) {
-        Map<String, Long> streakResponses = profileService.makeStreak(username, startDate, endDate);
+    public ResponseEntity<Map<String, Long>> getAllStreak(
+            @RequestParam("username") String username,
+            @RequestParam("from") String startDate,
+            @RequestParam("to") String endDate) {
+
+        Map<String, Long> streakResponses = dashboardService.makeStreak(username, startDate, endDate);
+
         return new ResponseEntity<>(streakResponses, HttpStatus.OK);
-//        return null;
     }
 
     /**
@@ -55,11 +62,18 @@ public class ProfileController {
      * @return
      */
     @GetMapping("/ext")
-    public ResponseEntity<ExtUserInfoResponse> getExtUserInfo(Principal principal) { //TODO access token 확인으로 변경
+    public ResponseEntity<ExtUserInfoResponse> getExtUserInfo(Principal principal) {
+
         int userId = Integer.parseInt(principal.getName());
-       Map<String, Long> streakResponses = profileService.getUserSevenStreak(userId); //TODO 서비스 단 변경
+
+        Map<String, Long> streakResponses = profileService.getUserSevenStreak(userId); //TODO 서비스 단으로 변경
+
         User user = authService.findById(userId);
-        ExtUserInfoResponse userInfo = ExtUserInfoResponse.builder().tier(user.getTier()).nickname(user.getNickname()).streak(streakResponses).build();
+        ExtUserInfoResponse userInfo = ExtUserInfoResponse.builder()
+                .tier(user.getTier())
+                .nickname(user.getNickname())
+                .streak(streakResponses).build();
+
         return new ResponseEntity<>(userInfo, HttpStatus.OK);
     }
 
@@ -72,13 +86,15 @@ public class ProfileController {
     public ResponseEntity<UserInfoResponse> getUserInfo(@Param("nickname") String nickname) {
         //TODO 배경 이미지 추가
         UserInfoResponse user = profileService.getUserInfo(nickname);
-        System.out.println("controller user: " + user);
+
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/recommand")
     public ResponseEntity<?> recommandLevelProblem() {
-        profileService.recommandProblem(1);
-        return null;
+
+        List<ProblemResponse> problemResponses = profileService.recommandProblem(1);
+
+        return new ResponseEntity<>(problemResponses, HttpStatus.OK);
     }
 }

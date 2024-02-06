@@ -5,6 +5,7 @@ import com.e1i5.backend.domain.user.entity.User;
 import lombok.Getter;
 
 /**
+ * @AuthenticationPrincipal 위한 파일
  * 사용 안함
  */
 
