@@ -67,7 +67,12 @@ export default defineManifest({
         "src/contentScript/swea/swexpertacademy.js",
       ],
       run_at: "document_idle"
-    }
+    },
+    {
+      matches: ['https://algonion.store/profile/*'],
+      js: ['src/contentScript/algonion/getToken.ts'],
+      run_at: 'document_idle',
+    },
   ],
   side_panel: {
     default_path: 'sidepanel.html',
@@ -93,6 +98,7 @@ export default defineManifest({
     'https://github.com/',
     'https://swexpertacademy.com/',
     'https://solved.ac/api/v3/*',
+    'https://algonion.store/*',
   ],
   // chrome_url_overrides: {
   //   newtab: 'newtab.html',
