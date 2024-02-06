@@ -39,12 +39,12 @@ public class SolvedProblemRequest {
     }
 
     public Problem toProblemEntity() {
-        int algoScore = AlgoScoreUtil.getBojScore(Integer.parseInt(problemLevel));
+//        int algoScore = AlgoScoreUtil.getBojScore(Integer.parseInt(problemLevel));
         return Problem.builder()
                 .problemNum(problemNum)
                 .problemTitle(problemTitle)
                 .problemLevel(problemLevel)
-                .algoScore(algoScore)
+//                .algoScore(algoScore)
                 .url(url)
                 .build();
     }
