@@ -7,6 +7,7 @@ import com.e1i5.backend.domain.user.dto.response.UserInfoInterface;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.service.AuthService;
+import com.e1i5.backend.domain.user.service.DashboardService;
 import com.e1i5.backend.domain.user.service.ProfileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService; //TODO 이 방식 또는 RequiredArguments 방식으로 통일
     @Autowired
+    private DashboardService dashboardService;
+    @Autowired
     private AuthService authService;
 
     @PostMapping("/profile-img")
@@ -49,7 +52,7 @@ public class ProfileController {
             @RequestParam("from") String startDate,
             @RequestParam("to") String endDate) {
 
-        Map<String, Long> streakResponses = profileService.makeStreak(username, startDate, endDate);
+        Map<String, Long> streakResponses = dashboardService.makeStreak(username, startDate, endDate);
 
         return new ResponseEntity<>(streakResponses, HttpStatus.OK);
     }

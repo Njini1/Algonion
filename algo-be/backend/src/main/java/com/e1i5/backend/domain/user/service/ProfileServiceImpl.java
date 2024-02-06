@@ -70,25 +70,6 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     /**
-     * 스트릭 만드는 메서드
-     * @param userName
-     * @return
-     */
-    @Override
-    public Map<String, Long> makeStreak(String userName, String startDate, String endDate) {
-        //TODO 7일씩 나눠서 마지막 7일에는 0으로 값을 채워놔야함
-        List<StreakResponseInterface> streak =
-                solvedProblemRepo.findSubmissionTimeAndCountByUserId(userName, startDate, endDate);
-
-        LinkedHashMap <String, Long> result = new LinkedHashMap <>();
-        for (StreakResponseInterface streakDate : streak) {
-            result.put(streakDate.getSubmissionTime(), streakDate.getCount());
-        }
-
-        return result;
-    }
-
-    /**
      * 확장 프로그램 버전 7일 스트릭
      * @param userId
      * @return
@@ -134,10 +115,8 @@ public class ProfileServiceImpl implements ProfileService {
                 .stream()
                 .limit(2)
                 .toList());
+
 //        Collections.shuffle(unsolvedProblemsByUserId);
-        for (ProblemResponse p : unsolvedProblemsByUserId) {
-            System.out.println(p.getProblemTitle());
-        }
         return unsolvedProblemsByUserId;
     }
 

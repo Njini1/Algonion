@@ -10,8 +10,6 @@ import java.util.Map;
 public interface ProfileService {
     void saveUserProfile(int userId, MultipartFile profileImg);
     Map<String, Long> getUserSevenStreak(int userId);
-//    List<StreakResponseInterface> getUserSevenStreak(int userId);
-    Map<String, Long> makeStreak(String userName, String startDate, String endDate);
     UserInfoResponse getUserInfo(String nickname);
 //    UserInfoResponse getUserInfo(String nickname);
     List<ProblemResponse> recommandProblem(int userId);
