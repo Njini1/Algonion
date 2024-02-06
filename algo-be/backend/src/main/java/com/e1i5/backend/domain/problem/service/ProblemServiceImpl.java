@@ -5,8 +5,8 @@ import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
 import com.e1i5.backend.domain.problem.repository.AlgoGroupRepository;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
-import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
-import com.e1i5.backend.domain.user.repository.AuthRepository;
+//import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
+//import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.global.util.AlgoScoreUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,12 @@ import java.util.*;
 public class ProblemServiceImpl implements ProblemService {
 
 
-    @Autowired
-    SolvedProblemRepository solvedProblemRepo;
+//    @Autowired
+//    SolvedProblemRepository solvedProblemRepo;
     @Autowired
     ProblemRepository problemRepo;
-    @Autowired
-    AuthRepository userRepo;
+//    @Autowired
+//    AuthRepository userRepo;
     @Autowired
     AlgoGroupRepository algoGroupRepo;
 
