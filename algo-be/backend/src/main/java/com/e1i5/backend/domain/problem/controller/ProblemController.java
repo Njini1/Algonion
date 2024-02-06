@@ -107,7 +107,9 @@ public class ProblemController {
     public ResponseEntity<SolvedProblemDetailResponse> updateSolvedProblemMemo(
             @RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId, String memo){
 
-        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateSolvedProblem(solvedProblemId, memo);
+        //TODO 로그인 사용자 정보 추가
+        SolvedProblemDetailResponse solvedProblemDetail =
+                solvedProblemService.updateSolvedProblem(solvedProblemId, memo);
 
         return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
     }
@@ -122,6 +124,7 @@ public class ProblemController {
     public ResponseEntity<SolvedProblemDetailResponse> updateVisibility(
             @RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId) {
 
+        //TODO 로그인 사용자 정보 추가
         SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateVisibility(solvedProblemId);
 
         return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);

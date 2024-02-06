@@ -71,7 +71,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
-//        saveSolvedProblem(solvedProblemReq, problem);
 
         saveSolvedProblem(solvedProblemReq, userId, problem);
     }
@@ -87,7 +86,9 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem) {
         //TODO 문제번호 비교해서 점수 더하는 거도 추가해줘
         //TODO solvedProblemReq말고 Entity로 바꾼 값으로 매개변수 받는 거로 변경? 고민
-        User user = authRepo.findById(userId).orElseThrow(()-> new IllegalArgumentException("Unexpected user"));
+        User user = authRepo.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+
         SolvedProblem solvedProblemEntity = solvedProblemReq.toSolvedProblemEntity();
         solvedProblemEntity.updateUserAndProblem(user, problem);
         solvedProblemRepo.save(solvedProblemEntity);
@@ -134,10 +135,13 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Transactional
     @Override
     public SolvedProblemDetailResponse updateSolvedProblem(int solvedProblemId, String memo) {
-        //TODO 로그인 사용자 정보 추가
-        SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
+
+        SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
+                .orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
+
         solvedProblem.updateMemo(memo);
         SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);
+
         return SolvedProblemDetailResponse.builder()
                 .solvedProblem(saveProblem).build();
     }
@@ -149,8 +153,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Transactional
     @Override
     public SolvedProblemDetailResponse updateVisibility(int solvedProblemId) {
-        //TODO 로그인 사용자 정보 추가
-        SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId).orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
+        //TODO 추후 상태코드로 변경
+        SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
+                .orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함"));
+
         solvedProblem.updateVisible(!solvedProblem.isVisible());
         SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);
         return SolvedProblemDetailResponse.builder()
@@ -195,8 +201,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Override
     public SolvedProblemDetailResponse getSolvedProblemDetail(int username, int solvedProblemId) {
+
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected solvedProblem"));
+
         return SolvedProblemDetailResponse.builder()
                 .solvedProblem(solvedProblem).build();
     }

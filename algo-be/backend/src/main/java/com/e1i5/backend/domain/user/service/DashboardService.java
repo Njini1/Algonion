@@ -10,5 +10,5 @@ public interface DashboardService {
     Map<String, Long> makeStreak(String userName, String startDate, String endDate);
     int[] getAlgoScoreCountsByNickname(String nickname);
 
-    String makeAccumulatedNumGraph();
+    String makeAccumulatedNumGraph(String nickname);
 }

@@ -65,7 +65,7 @@ public class SecurityConfig{
                 .requestMatchers("/v1/solved-problems/programmers").authenticated()
                 .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
                 .requestMatchers("/v1/profile/ext").authenticated()
-                .requestMatchers("/user/token").permitAll()
+                .requestMatchers("/v1/user/token").permitAll()
                 .requestMatchers("/ext").authenticated();
 //                .anyRequest().permitAll();
 

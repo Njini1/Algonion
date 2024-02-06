@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -104,9 +101,29 @@ public class DashboardServiceImpl implements DashboardService {
         return result;
     }
 
-    public String makeAccumulatedNumGraph() {
+    public String makeAccumulatedNumGraph(String nickname) {
+
         // categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
         // data: [30, 40, 45, 50, 49, 60, 70, 91]
+
+        int totalDays = 365;
+
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(totalDays - 1);
+
+        List<StreakResponseInterface> streak =
+                solvedProblemRepo.findSubmissionTimeAndCountByUserId(nickname, startDate.toString(), endDate.toString());
+
+        ArrayList<String> categories = new ArrayList<>();
+        for (int i = 0; i < totalDays; i++) {
+            categories.add(startDate.plusDays(i).toString());
+        }
+
+        ArrayList<String> data = new ArrayList<>();
+        for (StreakResponseInterface s : streak) {
+//            data.add()d
+        }
+
         return null;
     }
 
