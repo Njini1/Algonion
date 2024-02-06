@@ -65,7 +65,7 @@ public class SecurityConfig{
                 .requestMatchers("/v1/solved-problems/programmers").authenticated()
                 .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
                 .requestMatchers("/v1/profile/ext").authenticated()
-                .requestMatchers("/user/token").permitAll()
+                .requestMatchers("/v1/user/token").permitAll()
                 .requestMatchers("/ext").authenticated();
 //                .anyRequest().permitAll();
 
@@ -78,8 +78,8 @@ public class SecurityConfig{
                 .userInfoEndpoint()
                 .userService(oAuth2UserCustomService);
 
-        http.logout()
-                .logoutSuccessUrl("/login");
+//        http.logout()
+//                .logoutSuccessUrl("/login");
 
         http.exceptionHandling()
                 .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),

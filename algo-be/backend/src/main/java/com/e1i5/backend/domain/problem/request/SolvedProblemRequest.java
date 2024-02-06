@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SolvedProblemRequest {
@@ -33,7 +35,7 @@ public class SolvedProblemRequest {
                 .runtime(runtime)
                 .codeLength(codeLength)
                 .memory(memory)
-                .submissionTime(submissionTime)
+                .submissionTime(LocalDate.now().toString())
                 .visible(true)
                 .build();
     }

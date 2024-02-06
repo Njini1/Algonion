@@ -2,6 +2,7 @@ package com.e1i5.backend.domain.user.service;
 
 import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
+import com.e1i5.backend.domain.user.dto.response.AccCountGraphResponse;
 import com.e1i5.backend.domain.user.dto.response.AlgoScoreCountResponse;
 import com.e1i5.backend.domain.user.dto.response.DashBoardProblemListResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -104,10 +102,51 @@ public class DashboardServiceImpl implements DashboardService {
         return result;
     }
 
-    public String makeAccumulatedNumGraph() {
+    /**
+     * 누적 문제 푼 개수 합 그래프
+     * @param nickname 원하는 사용자의 그래프
+     * @return 날짜 배열과 누적 합 배열을 담은 스트링 반환
+     */
+    public String makeAccumulatedNumGraph(String nickname) {
+        
+        int totalDays = 365;
+
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(totalDays - 1);
+
+        List<StreakResponseInterface> streak =
+                solvedProblemRepo.findSubmissionTimeAndCountByUserId(nickname, startDate.toString(), endDate.toString());
+
         // categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+        String[] categories = new String[totalDays];
+        for (int i = 0; i < totalDays; i++) {
+            categories[i] = startDate.plusDays(i).toString();
+        }
+
+        LinkedHashMap<String, Long> dateList = makeDateList(totalDays);
+
+        for (StreakResponseInterface s : streak) {
+            dateList.put(s.getSubmissionTime(), s.getCount());
+        }
+
         // data: [30, 40, 45, 50, 49, 60, 70, 91]
-        return null;
+        long[] data = new long[totalDays];
+        long countSum = 0;
+
+        for (int i = 0; i < totalDays; i++) {
+            countSum += dateList.get(startDate.plusDays(i).toString());
+            data[i] = countSum;
+        }
+
+        AccCountGraphResponse graphData = AccCountGraphResponse.builder()
+                .width(2)
+                .curve("stepline")
+                .chartId("basic-bar")
+                .colors("#9f22ff")
+                .data(Arrays.toString(data))
+                .categories(Arrays.toString(categories)).build();
+
+        return graphData.toString();
     }
 
     /**
@@ -115,7 +154,7 @@ public class DashboardServiceImpl implements DashboardService {
      * @param totalDays 원하는 날짜 총일수
      * @return key는 날짜, value는 문제 푼 개수
      */
-    public Map<String, Long> makeDateList(int totalDays) {
+    public LinkedHashMap<String, Long> makeDateList(int totalDays) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(totalDays - 1); // 365일이면 364를 입력
 
