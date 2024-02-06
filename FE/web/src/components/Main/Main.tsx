@@ -18,7 +18,14 @@ export default function Main() {
   return (
     <div className={classes.mainContainer}>
       <motion.div
-        className={classes.slogunContainer}
+        className={classes.slogunContainer1}
+        variants={sloganVariants}
+        initial="hidden"
+        animate="visible">
+        Algonion
+      </motion.div>
+      <motion.div
+        className={classes.slogunContainer2}
         variants={sloganVariants}
         initial="hidden"
         animate="visible">

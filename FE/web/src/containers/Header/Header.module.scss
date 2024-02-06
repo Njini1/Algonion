@@ -5,6 +5,13 @@
   z-index: 100;
 }
 
+.hover {
+  &:hover {
+    color: rgb(143, 0, 255);
+    transition: all 0.2s ease-in-out;
+  }
+}
+
 .avatar {
   border-color: linear-gradient(to right, #FF0000, #00FF00, #0000FF);
   border-radius: 50%;

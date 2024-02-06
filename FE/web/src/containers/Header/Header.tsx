@@ -4,6 +4,7 @@ import React from "react";
 import { Avatar } from "@nextui-org/react";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 import getAsset from "../../utils/getAsset";
 import SearchModal from "./searchModal";
 
@@ -49,19 +50,19 @@ export default function Header() {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-            <Link href={`/profile/${username}`} color="foreground">
+            <Link href={`/profile/${username}`} color="foreground" className={classes.hover}>
               나의정보
             </Link>
           </NavbarItem>
 
           <NavbarItem>
-            <Link href={`/code-log/${username}`} color="foreground">
+            <Link href={`/code-log/${username}`} color="foreground" className={classes.hover}>
               코드로그
             </Link>
           </NavbarItem>
           
           <NavbarItem>
-            <Link href={`/community`} color="foreground">
+            <Link href={`/community`} color="foreground" className={classes.hover}>
               커뮤니티
             </Link>
           </NavbarItem>
@@ -88,9 +89,30 @@ export default function Header() {
               {/* <Avatar isBordered color="#C0C0C0" src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
               <Avatar isBordered color="#FFBF00 " src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
               <Avatar isBordered color="#02B7AE " src="https://i.pravatar.cc/150?u=a04258114e29026302d" />
-              <Avatar isBordered color="#00FFFF " src="https://i.pravatar.cc/150?u=a04258114e29026702d" /> */}
-              </Link>
-            </div>
+            <Avatar isBordered color="#00FFFF " src="https://i.pravatar.cc/150?u=a04258114e29026702d" /> */}
+            </Link>
+          </div>
+
+          
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button 
+                    variant="bordered" 
+                  >
+                    Open Menu
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu variant="flat" aria-label="Dropdown menu with shortcut">
+                  <DropdownItem key="new" shortcut="⌘N">New file</DropdownItem>
+                  <DropdownItem key="copy" shortcut="⌘C">Copy link</DropdownItem>
+                  <DropdownItem key="edit" shortcut="⌘⇧E">Edit file</DropdownItem>
+                  <DropdownItem key="delete" shortcut="⌘⇧D" className="text-danger" color="danger">
+                    Delete file
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+
+
           </NavbarItem>
         </NavbarContent>
         

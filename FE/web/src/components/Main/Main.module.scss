@@ -25,11 +25,22 @@
   }
 }
 
-.slogunContainer {
-  font-size: 4rem;
+.slogunContainer1 {
+  font-size: 4.4rem;
+  color: rgb(57, 57, 57);
     font-weight: bold;
-  margin-bottom: 4rem;
-  
+    letter-spacing : 0.5rem;
+  // margin-bottom: 4rem;
+  text-shadow: -1px 0px #bc8fff, 0px 1px #bc8fff, 2px 0px #bc8fff, 0px -2px #bc8fff;
+}
+
+.slogunContainer2 {
+  font-size: 2.3rem;
+    // font-weight: bold;
+  // margin-top: 0.rem;
+  color: #6f6f6f;
+  margin-bottom: 2rem;
+  text-shadow: -1px 0px #454545, 0px 1px #454545, 1px 0px #454545, 0px -1px #454545;  
 }
 
 .buttonContainer {
@@ -42,15 +53,15 @@
 }
 
 .googleButton {
-  border: 1px solid rgb(163, 163, 163);
+  border: 1px solid #a3a3a3;
   border-radius: 12px;
   background-color: #ffffff;
   box-shadow: 1px 1px 1px 1px rgb(215, 215, 215);
 
   display: flex;
-  width: 14rem;
-
-  margin: 0 1rem 0;
+  width: 11.5rem;
+  
+  margin: 0 0.8rem 0;
   cursor: pointer;
 
   &:hover {
@@ -59,15 +70,15 @@
   }
 
   img {
-    height: 1.7rem;
-    width: 1.7rem;
+    height: 1.5rem;
+    width: 1.5rem;
     margin: 1rem 0;
-    margin-left: 0.8rem;
+    margin-left: 0.9rem;
   }
 
   p {
     font-family: 'Roboto-Medium';
-    size: 1rem;
+    font-size: 0.79rem;
     margin: auto;
   }
 }
@@ -77,11 +88,11 @@
   border-radius: 12px;
   background-color: #FEE500;
   box-shadow: 1px 1px 1px 1px rgb(215, 215, 215);
-  margin: 0 1rem 0;
+  margin: 0 0.8rem 0;
   cursor: pointer;
 
   display: flex;
-  width: 14rem;
+  width: 11.5rem;
 
   &:hover {
     background-color: #d0bb02c3;
@@ -89,16 +100,17 @@
   }
 
   img {
-    height: 1.7rem;
-    width: 1.7rem;
+    height: 1.3rem;
+    width: 1.3rem;
     margin: 1rem 0;
-    margin-left: 0.8rem;
+    margin-left: 0.9rem;
     // background-color: white;
   }
 
   p {
     font-family: 'Roboto-Medium';
-    size: 1rem;
+    font-size: 0.79rem;
+
     margin: auto;
   }
 }
