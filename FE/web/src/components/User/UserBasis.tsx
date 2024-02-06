@@ -65,8 +65,7 @@ export default function UserBasis() {
           {/* 팔로우 기능 */}
           <Button
             className={
-              `${isFollowed ? "bg-transparent text-foreground border-default-200" : ""}
-              ${classes.followButton}`
+              `${isFollowed ? "bg-transparent text-foreground border-default-200" : ""} ${classes.followButton}`
             }
             color="secondary"
             radius="full"
@@ -84,13 +83,19 @@ export default function UserBasis() {
         </div>
 
         {/* 경험치 바 */}
-        <Progress isStriped
+        <Progress
           aria-label="Loading..."
           size='lg'
           color="secondary"
           label={`${'경험치'} ${label}`}
           value={value}
           showValueLabel={true}
+          classNames={{
+            track: "drop-shadow-md border border-default",
+            indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
+            label: "tracking-wider font-medium text-default-600",
+            value: "text-foreground/60",
+          }}
           className={classes.expBar}/>
 
     </div>
