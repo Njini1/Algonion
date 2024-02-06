@@ -2,9 +2,11 @@
 import {CardHeader, CardBody, CardFooter, Button, Card} from "@nextui-org/react";
 // import classes from "./UserSolvedProblem.module.scss"
 import UserProblem from './UserProblem'
+import classes from './UserSolvedProblem.module.scss'
+
 function UserSolvedProblem() {
   return (
-    <Card className="max">
+    <Card className={`'max' ${classes['solved100-container']}`}>
       <CardHeader className="justify-between">
         <div className="flex gap-5">
           <div className="flex flex-col gap-1 items-start justify-center">
@@ -13,8 +15,8 @@ function UserSolvedProblem() {
           </div>
         </div>
         <Button
-          color="default"
-          radius="full"
+          color="secondary"
+          radius="lg"
           size="lg"
           className="flex flex-col gap-0"
           // onClick={link}
