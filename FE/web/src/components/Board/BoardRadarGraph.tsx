@@ -29,7 +29,7 @@ function BoardRadarGraph() {
       },
       
       title: {
-        text: '태그 분포'
+        text: ''
       },
 
       colors: ['#8F00FF'],

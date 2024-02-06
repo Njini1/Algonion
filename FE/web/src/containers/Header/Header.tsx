@@ -1,24 +1,21 @@
 import classes from "./Header.module.scss"
-import React from "react";
+import React from 'react';
 
 import { Avatar } from "@nextui-org/react";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
-import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/react";
 import getAsset from "../../utils/getAsset";
 import SearchModal from "./searchModal";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Analytics",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
+    "나의정보",
+    "코드로그",
+    "커뮤니티",
+    "로그아웃",
+    "회원탈퇴",
   ];
   // const profileColor = [
   //   "default",
@@ -83,48 +80,42 @@ export default function Header() {
           <NavbarItem>    
             {/* 프로필 페이지 - 티어에 따라서 프로필 테두리 색 다르게 주기 (예정) */}
             <div className="flex gap-4 items-center">
-              <Link href={`/profile/${username}`}>
-              <Avatar isBordered color="default" src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
               {/* <Avatar isBordered color="bronze" src="https://i.pravatar.cc/150?u=a042581f4e29026024d" /> */}
               {/* <Avatar isBordered color="#C0C0C0" src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
               <Avatar isBordered color="#FFBF00 " src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
               <Avatar isBordered color="#02B7AE " src="https://i.pravatar.cc/150?u=a04258114e29026302d" />
             <Avatar isBordered color="#00FFFF " src="https://i.pravatar.cc/150?u=a04258114e29026702d" /> */}
-            </Link>
-          </div>
-
-          
               <Dropdown>
-                <DropdownTrigger>
-                  <Button 
-                    variant="bordered" 
-                  >
-                    Open Menu
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu variant="flat" aria-label="Dropdown menu with shortcut">
-                  <DropdownItem key="new" shortcut="⌘N">New file</DropdownItem>
-                  <DropdownItem key="copy" shortcut="⌘C">Copy link</DropdownItem>
-                  <DropdownItem key="edit" shortcut="⌘⇧E">Edit file</DropdownItem>
-                  <DropdownItem key="delete" shortcut="⌘⇧D" className="text-danger" color="danger">
-                    Delete file
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
+              <DropdownTrigger>
+                <Avatar isBordered color="default" src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
 
-
+              </DropdownTrigger>
+              <DropdownMenu variant="flat" aria-label="Dropdown menu with shortcut">
+                <DropdownItem key="log-out">
+                  로그아웃
+                </DropdownItem>
+                <DropdownItem key="sign-out" className="text-danger" color="danger">
+                  회원탈퇴
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+            </div>
           </NavbarItem>
         </NavbarContent>
-        
         <NavbarMenu>
+
           {menuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color={
-                  index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
+                  index === menuItems.length - 1 ? "danger" : "foreground"
                 }
-                className="w-full"
-                href="#"
+                className={`"w-full" ${classes.hover}`}
+                href={
+                  index === 0? `/profile/${username}`  :
+                  index === 1? `/code-log/${username}` :
+                  index === 2? `/community` : `/`
+                }
                 size="lg"
               >
                 {item}
