@@ -78,8 +78,8 @@ public class SecurityConfig{
                 .userInfoEndpoint()
                 .userService(oAuth2UserCustomService);
 
-        http.logout()
-                .logoutSuccessUrl("/login");
+//        http.logout()
+//                .logoutSuccessUrl("/login");
 
         http.exceptionHandling()
                 .defaultAuthenticationEntryPointFor(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED),
