@@ -1,31 +1,19 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <!-- <link rel="icon" type="/src/assets/logo/icon_square.svg" href="/vite.svg" /> -->
 
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Algonion</title>
-    <!-- 카카오 SDK -->
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js" 
-    integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8" crossorigin="anonymous"></script>
-    <!-- 구글 SDK -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-    <script src="https://apis.google.com/js/api:client.js"></script>
-    <script>
-       Kakao.init('JAVASCRIPT_KEY');
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="icon" type="image/svg+xml" href="logo.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algonion</title>
+</head>
 
-      // SDK 초기화 여부를 판단합니다.
-      console.log(Kakao.isInitialized());
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/index.tsx"></script>
-  </body>
-  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
 
 </html>
