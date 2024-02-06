@@ -32,6 +32,7 @@ function UserPage(props: { data: any }) {
 
 
     useEffect(() => {
+        console.log(props.data);
         let res: { [key: string]: number } = { "2024-01-27": 5, "2024-01-28": 5, "2024-01-29": 5, "2024-01-30": 5, "2024-01-31": 0, "2024-02-01": 1, "2024-02-02": 3 };
         let newStreak = Object.values(res).map(cnt => cnt > 0 ? true : false);
         let dayList = Object.keys(res);
@@ -41,6 +42,7 @@ function UserPage(props: { data: any }) {
     }, []);
     return (<motion.main className="container" variants={container} initial="hidden" animate="visible">
         <div className="first-line">
+            {props.data}
             <TierBox item={item} />
             <div>
                 <LogoBox item={item} />
