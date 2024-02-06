@@ -40,8 +40,8 @@ function UserBar() {
             친구정보
           </button>
             </div>
-
-          <div>
+          <hr />
+          <div className={classes.tab}>
           {selectedTab === 'userinfo' && 
             <UserInformation/>
           }

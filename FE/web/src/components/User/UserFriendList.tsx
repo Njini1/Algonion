@@ -46,7 +46,7 @@ const columns = [
 
 function UserFriendList() {
 	return (
-    <div className={classes.page}>
+    <div>
       <Table aria-label="Example table with dynamic content">
       <TableHeader columns={columns}>
         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}

@@ -14,7 +14,9 @@ export default function UserBasis() {
 
   // background 이미지 기능
   const BackgroundImageClick = () => {
-    document.getElementById('backgroundImageInput')?.click();
+    if (isEdited) {
+      document.getElementById('backgroundImageInput')?.click();
+    }
   };
 
   const BackgroundImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +29,9 @@ export default function UserBasis() {
 
   // profile 이미지 기능
   const ProfileImageClick = () => {
-    document.getElementById('profileImageInput')?.click();
+    if (isEdited) {
+      document.getElementById('profileImageInput')?.click();
+    }
   };
   
   const ProfileImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +44,9 @@ export default function UserBasis() {
 
   // 팔로우 기능
   const [isFollowed, setIsFollowed] = React.useState(false);
+  const [isEdited, setIsEdited] = React.useState(false);
 
+  
   // expBar 기능
   const [value] = React.useState(50);
   const [label] = React.useState('티어');
@@ -49,24 +55,36 @@ export default function UserBasis() {
     <div>
       
       <div 
-      className={classes.profileBackground} 
-      style={{ backgroundImage: `url(${backgroundImage})` }} 
+      className={`${classes.profileBackground} ${isEdited ? classes.hover : ''}`} 
+      style={{backgroundImage: `url(${backgroundImage})`}} 
       onClick={BackgroundImageClick}>
       </div>
 
       <div className={classes.userPageContainer}>
-        <div className={classes.profileContainer}>
+      
+        <div className={`${classes.profileContainer} ${isEdited ? classes.hover : ''}`} >
           <div 
           className={classes.profileImage} 
-          style={{ backgroundImage: `url(${profileImage})` }} 
+          style={{backgroundImage: `url(${profileImage})` }} 
           onClick={ProfileImageClick}>
           </div>
-
+          <div className={classes.Buttons}>
           {/* 팔로우 기능 */}
           <Button
             className={
-              `${isFollowed ? "bg-transparent text-foreground border-default-200" : ""}
-              ${classes.followButton}`
+              `${isEdited ? "bg-transparent text-foreground border-default-200" : ""} ${classes.followButton}`
+            }
+            color="secondary"
+            radius="full"
+            size="lg"
+            variant={isEdited ? "bordered" : "solid"}
+            onPress={() => setIsEdited(!isEdited)}
+              >
+            {isEdited ? "수정 완료" : "정보 수정"}
+          </Button>
+          <Button
+            className={
+              `${isFollowed ? "bg-transparent text-foreground border-default-200" : ""} ${classes.followButton}`
             }
             color="secondary"
             radius="full"
@@ -74,8 +92,9 @@ export default function UserBasis() {
             variant={isFollowed ? "bordered" : "solid"}
             onPress={() => setIsFollowed(!isFollowed)}
               >
-            {isFollowed ? "Unfollow" : "Follow"}
+            {isFollowed ? "친구 해제" : "친구 추가"}
           </Button>
+          </div>
         </div>
   
         {/* 닉네임 */}
