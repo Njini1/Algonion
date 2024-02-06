@@ -137,18 +137,15 @@ public class DashboardServiceImpl implements DashboardService {
             countSum += dateList.get(startDate.plusDays(i).toString());
             data[i] = countSum;
         }
-        System.out.println("categories: " + categories.toString());
-        System.out.println("data: " + data.toString());
 
         AccCountGraphResponse graphData = AccCountGraphResponse.builder()
                 .width(2)
                 .curve("stepline")
                 .chartId("basic-bar")
                 .colors("#9f22ff")
-                .data(data.toString())
-                .categories(categories.toString()).build();
+                .data(Arrays.toString(data))
+                .categories(Arrays.toString(categories)).build();
 
-        System.out.println("그래프 : " + graphData.toString());
         return graphData.toString();
     }
 
