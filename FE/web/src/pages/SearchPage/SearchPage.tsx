@@ -1,6 +1,6 @@
-import Header from '../../containers/Header/Header.tsx';
-import SearchBar from '../../components/Search/SearchBar.tsx';
-import SearchResults from '../../components/Search/SearchResults.tsx';
+  import Header from '../../containers/Header/Header.tsx';
+  import SearchBar from '../../components/Search/SearchBar.tsx';
+  import SearchResults from '../../components/Search/SearchResults.tsx';
 import Footer from '../../containers/Footer/Footer.tsx';
 
 import classes from "./SearchPage.module.scss"

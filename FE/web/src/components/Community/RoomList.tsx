@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, CardBody, CardFooter, Image, RadioGroup, Radio} from "@nextui-org/react";
 import classes from "./RoomList.module.scss"
+import { MdAdd } from 'react-icons/md';
 // import getAsset from "../../utils/getAsset";
 
 export default function RoomList() {
@@ -58,6 +59,9 @@ export default function RoomList() {
                 커뮤니티 페이지
                 <div>
                     {/* 방 생성 버튼 */}
+                    <button className={classes.createRoom}>
+                        <MdAdd/>
+                    </button>
 
                 </div>
             </div>
