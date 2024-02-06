@@ -6,7 +6,8 @@ import getAsset from './utils/getAsset';
 import { TierBox } from './components/TierBox';
 import LogoBox from './components/LogoBox';
 import { motion } from 'framer-motion';
-
+import useSWR from 'swr';
+import axios from 'axios';
 const container = {
   hidden: { opacity: 1, scale: 0 },
   visible: {
@@ -30,6 +31,10 @@ export const Popup = () => {
   const [problemCnt, setProblemCnt] = useState(0);
   const [streak, setStreak] = useState(Array.from({ length: 7 }, () => false));
 
+  const fetcher = (url: string) => axios.get(url).then(res => res.data)
+  const { data, error, isLoading } = useSWR('https://algonion.store/api/v1/profile/ext', fetcher);
+
+  
   useEffect(() => {
     let res: { [key: string]: number } = { "2024-01-27": 5, "2024-01-28": 5, "2024-01-29": 5, "2024-01-30": 5, "2024-01-31": 0, "2024-02-01": 1, "2024-02-02": 3 };
     let newStreak = Object.values(res).map(cnt => cnt > 0 ? true : false);
