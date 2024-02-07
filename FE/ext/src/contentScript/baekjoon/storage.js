@@ -1,5 +1,5 @@
 import { getProblem, getSubmissionCode } from "./submission.js";
-import { bj_level } from "./variable.js"
+// import { bj_level } from "./variable.js"
 
 import { default as axios } from "axios";
 
@@ -38,7 +38,7 @@ export function saveData(table) {
     getProblem(baekjoonInfo.problemNum).then(res => {
         baekjoonInfo.problemTitle = res[0];
         baekjoonInfo.problemCategory = res[1];
-        baekjoonInfo.problemLevel = [res[2], bj_level[res[2]]];
+        baekjoonInfo.problemLevel = [res[2], res[2]];
     });
 }
 
