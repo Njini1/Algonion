@@ -24,7 +24,7 @@ public class User{
     private String email;
 
     @Column(name = "tier")
-    private String tier;
+    private int tier;
 
     @Column(name = "user_score")
     private int userScore;
@@ -46,10 +46,11 @@ public class User{
 
 
     @Builder
-    public User(String nickname, String email, LocalDate regDate) {
+    public User(String nickname, String email, LocalDate regDate, int tier) {
         this.nickname = nickname;
         this.email = email;
         this.regDate = regDate;
+        this.tier = 0;
     }
 
     public void updateNickname(String nickname) {

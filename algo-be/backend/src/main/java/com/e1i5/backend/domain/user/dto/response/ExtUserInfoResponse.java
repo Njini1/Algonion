@@ -11,11 +11,11 @@ import java.util.Map;
 @Getter
 public class ExtUserInfoResponse {
     String nickname;
-    String tier;
+    int tier;
     Map<String, Long> streak;
 
     @Builder
-    public ExtUserInfoResponse(String nickname, String tier, Map<String, Long> streak) {
+    public ExtUserInfoResponse(String nickname, int tier, Map<String, Long> streak) {
         this.nickname = nickname;
         this.tier = tier;
         this.streak = streak;
