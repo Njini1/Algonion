@@ -69,7 +69,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         //TODO 사용자 정보 추가
-        //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
         saveSolvedProblem(solvedProblemReq, userId, problem);
@@ -94,12 +93,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         solvedProblemRepo.save(solvedProblemEntity);
     }
 
-    @Override
-    public Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
-        return null;
-    }
-
-
     /**
      * 문제가 존재하면 그 문제를 반환하고 없으면 저장해서 반환
      *
@@ -107,25 +100,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param siteName         문제 푼 사이트
      * @return 문제 테이블의 값 반환
      */
-//    @Override
-//    public Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
-//        Optional<Problem> problem = problemRepo.findByProblemNumAndSiteName(solvedProblemReq.getProblemNum(), siteName);
-//        if (problem.isPresent()) {
-//            // 기존 문제가 존재하는 경우 레벨 업데이트
-//            Problem problemEntity = problem.get();
-//            if (solvedProblemReq.getProblemLevel() != null) {
-//                problemEntity = problemEntity.updateLevel(solvedProblemReq.getProblemLevel());
-//                return problemRepo.save(problemEntity);
-//            } else {
-//                return problemEntity; // 레벨이 주어지지 않은 경우 그대로 반환
-//            }
-//        } else {
-//            // 기존 문제가 없는 경우 새로운 문제 추가
-//            Problem newProblemEntity = solvedProblemReq.toProblemEntity();
-//            newProblemEntity.updateSiteName(siteName);
-//            return problemRepo.save(newProblemEntity);
-//        }
-//    }
+    @Override
+    public Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
+        return null;
+    }
 
     /**
      * 사용자가 문제 푼 데이터에서 메모 수정
