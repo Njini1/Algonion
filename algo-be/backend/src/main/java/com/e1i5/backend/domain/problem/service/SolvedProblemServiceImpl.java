@@ -61,8 +61,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
             solvedProblemReq.isNullUpateLevel("0");
         }
 
-        System.out.println("문제 정보 : " + solvedProblemReq.toString());
-
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
                 .ifPresentOrElse( //TODO orElseGet으로?

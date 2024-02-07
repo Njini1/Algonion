@@ -25,7 +25,7 @@ public class SolvedProblemListResponse {
         this.problemNum = solvedProblem.getProblem().getProblemNum();
         this.problemTitle = solvedProblem.getProblem().getProblemTitle();
         this.problemLevel = solvedProblem.getProblem().getProblemLevel();
-        this.language = solvedProblem.getLanguage();
+        this.language = solvedProblem.getProblem().getProblemLevel();
         this.submissionTime = solvedProblem.getSubmissionTime();
         this.url = solvedProblem.getProblem().getUrl();
         this.classification = classification;
