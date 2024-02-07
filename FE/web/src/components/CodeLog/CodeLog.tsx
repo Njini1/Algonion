@@ -1,6 +1,7 @@
 import classes from './CodeLog.module.scss'
 import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-dark.css';
+// import 'highlight.js/styles/atom-one-dark.css';
+import './catppuccin-mocha.css';
 function CodeLog() {
   const code = `
   import java.util.*;
@@ -19,8 +20,8 @@ function CodeLog() {
   console.log(html);
 
   return (
-    <pre>
-      <code className={`${classes.code} hljs`} dangerouslySetInnerHTML={{ __html: html }} />
+    <pre className={`${classes.code} hljs`}>
+      <code className="hljs" dangerouslySetInnerHTML={{ __html: html }} />
     </pre>
 
   );
