@@ -32,7 +32,7 @@ function UserPage(props: { data: any }) {
 
 
     useEffect(() => {
-        let res: { [key: string]: number } = { "2024-01-27": 5, "2024-01-28": 5, "2024-01-29": 5, "2024-01-30": 5, "2024-01-31": 0, "2024-02-01": 1, "2024-02-02": 3 };
+        let res: { [key: string]: number } = props.data.streak;
         let newStreak = Object.values(res).map(cnt => cnt > 0 ? true : false);
         let dayList = Object.keys(res);
         let lastValue = dayList[dayList.length - 1];
@@ -41,7 +41,7 @@ function UserPage(props: { data: any }) {
     }, []);
     return (<motion.main className="container" variants={container} initial="hidden" animate="visible">
         <div className="first-line">
-            <TierBox item={item} />
+            <TierBox item={item} nickname={props.data?.nickname} />
             <div>
                 <LogoBox item={item} />
                 <TodayBox item={item} problemCnt={problemCnt} />

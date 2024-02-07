@@ -13,6 +13,7 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
 
     Optional<SolvedProblem> findBySubmissionId(String submissionId);
     List<SolvedProblem> findAllByUser_UserIdAndVisible(int userId, boolean visible);
+//    boolean existsByUserIdAndProblemId(int userId, int problemId);
 
     @Query("SELECT minTime AS submissionTime, COUNT(*) AS count " +
             "FROM (SELECT sp.user.userId AS userId, MIN(sp.submissionTime) AS minTime " +

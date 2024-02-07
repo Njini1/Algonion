@@ -7,6 +7,10 @@
   margin: 0 0 0.5rem 0.5rem;
   display: flex;
 
+  &:hover{
+    cursor: pointer;
+  }
+
   img {
     padding-top: 0.2rem;
     padding-left: 0.2rem;

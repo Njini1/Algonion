@@ -54,7 +54,7 @@ public class Problem {
         this.siteName = siteName;
     }
 
-    public Problem updateLevel(String level, int algoScore) {
+    public Problem updateLevel(String level, int algoScore) { //TODO 레벨과 점수를 동시에 세팅하므로 메서드 이름을 updateLevelAndScore로 변경
         this.problemLevel = level;
         this.algoScore = algoScore;
         return this;

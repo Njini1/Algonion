@@ -47,6 +47,7 @@ public class AlgoScoreUtil {
     }
 
     private static Map<Integer, Integer> initProgrammersScoreMap() {
+        System.out.println("//////////////////////programmers////////////////////////////////");
         Map<Integer, Integer> programmersScoreMap = new HashMap<>();
         programmersScoreMap.put(0, 1);
         programmersScoreMap.put(1, 8);
@@ -58,6 +59,7 @@ public class AlgoScoreUtil {
     }
 
     private static Map<String, Integer> initSweaScoreMap() {
+        System.out.println("/////////////////////////////////SWEA////////////////////////");
         Map<String, Integer> sweaScoreMap = new HashMap<>();
         sweaScoreMap.put("D1", 1);
         sweaScoreMap.put("D2", 8);

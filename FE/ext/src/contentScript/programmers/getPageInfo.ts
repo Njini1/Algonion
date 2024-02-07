@@ -42,12 +42,15 @@ const modalMutationObserver = new MutationObserver((mutations) => {
   if (!isSuccess) return;
   console.log("보낼준비");
   console.log(JSON.stringify(data));
-  axios
-    .post(`${api}/api/v1/solved-problems/programmers`, data)
-    .then((res) => {
-      console.log('[ALGO] 업로드 성공');
-    })
-    .catch((e) => console.log(e));
+  chrome.storage.sync.get(["access_token"], (res) => {
+    axios
+      .post(`${api}/v1/solved-problems/programmers`, data, { headers: { "Authorization": `Bearer ${res.access_token}` } })
+      .then((res) => {
+        console.log('[ALGO] 업로드 성공');
+      })
+      .catch((e) => console.log(e));
+  })
+
 
   modalMutationObserver.disconnect();
 });

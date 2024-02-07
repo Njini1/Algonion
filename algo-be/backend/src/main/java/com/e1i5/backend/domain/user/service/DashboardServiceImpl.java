@@ -1,13 +1,17 @@
 package com.e1i5.backend.domain.user.service;
 
 import com.e1i5.backend.domain.problem.model.entity.Problem;
+import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
 import com.e1i5.backend.domain.user.dto.response.AccCountGraphResponse;
+import com.e1i5.backend.domain.problem.service.SolvedProblemService;
 import com.e1i5.backend.domain.user.dto.response.AlgoScoreCountResponse;
 import com.e1i5.backend.domain.user.dto.response.DashBoardProblemListResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
+import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.repository.DashboardRepository;
 import com.e1i5.backend.domain.user.repository.UserInfoRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,19 +25,23 @@ import java.util.stream.Collectors;
 public class DashboardServiceImpl implements DashboardService {
 
     @Autowired
-    private UserInfoRepository userInfoRepository;
+    private UserInfoRepository userInfoRepo;
 
     @Autowired
-    private DashboardRepository dashboardRepository;
+    private DashboardRepository dashboardRepo;
 
     @Autowired
     private SolvedProblemRepository solvedProblemRepo;
+
+    @Autowired
+    private ProblemRepository problemRepo;
+
 
     @Override
     public List<DashBoardProblemListResponse> getProblemsByNickname(String nickname) {
         int userId = getUserIdByNickname(nickname);
 
-        List<Problem> solvedProblemsList = dashboardRepository.findProblemsByNicknameOrderedByLevel(userId);
+        List<Problem> solvedProblemsList = dashboardRepo.findProblemsByNicknameOrderedByLevel(userId);
 
         // Entity를 Response로 변환
         List<DashBoardProblemListResponse> responseList = solvedProblemsList.stream()
@@ -47,7 +55,7 @@ public class DashboardServiceImpl implements DashboardService {
     public int[] getAlgoScoreCountsByNickname(String nickname) {
         int userId = getUserIdByNickname(nickname);
 
-        List<Object[]> algoScoreCounts = dashboardRepository.findAlgoScoreCountsByUserId(userId);
+        List<Object[]> algoScoreCounts = dashboardRepo.findAlgoScoreCountsByUserId(userId);
 
         // 알고리즘 점수에 대한 카운트를 Map으로 매핑
         Map<Integer, Integer> algoScoreMap = algoScoreCounts.stream()
@@ -78,10 +86,28 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     private int getUserIdByNickname(String nickname) {
-        return userInfoRepository.findByNickname(nickname)
+        return userInfoRepo.findByNickname(nickname)
                 .orElseThrow(() -> new RuntimeException("User not found for nickname: " + nickname))
                 .getUserId();
     }
+
+//    @Transactional
+//    public void updateUserScore(int userId, int problemId, int algoScore) {
+//        boolean isProblemSolvedByUser = solvedProblemRepo.existsByUserIdAndProblemId(userId, problemId);
+//        int userScore = userInfoRepo.findUserScoreByUserId(userId);
+//        if (!isProblemSolvedByUser) {
+//            // 사용자가 해당 문제를 푼 적이 없는 경우
+//            userInfoRepo.updateUserScore(userId, userScore + algoScore);
+//        } else {
+//            // 사용자가 해당 문제를 이미 푼 경우
+//            int oldAlgoScore = problemRepo.findAlgoScoreByProblemId(problemId);
+//            if (oldAlgoScore != algoScore) {
+//                // 알고리즘 점수가 변경된 경우
+//                userInfoRepo.updateUserScore(userId, userScore + (algoScore - oldAlgoScore));
+//            }
+//        }
+//    }
+
 
 
     /**
@@ -110,7 +136,7 @@ public class DashboardServiceImpl implements DashboardService {
      * @return 날짜 배열과 누적 합 배열을 담은 스트링 반환
      */
     public String makeAccumulatedNumGraph(String nickname) {
-        
+
         int totalDays = 365;
 
         LocalDate endDate = LocalDate.now();

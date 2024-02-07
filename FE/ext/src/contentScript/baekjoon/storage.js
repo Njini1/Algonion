@@ -1,5 +1,5 @@
 import { getProblem, getSubmissionCode } from "./submission.js";
-import { bj_level } from "./variable.js"
+// import { bj_level } from "./variable.js"
 
 import { default as axios } from "axios";
 
@@ -30,7 +30,7 @@ export function saveData(table) {
     baekjoonInfo.codeLength = table.codeLength;
     baekjoonInfo.submissionTime = table.submissionTime;
     baekjoonInfo.url = `https://www.acmicpc.net/problem/${table.problemId}`;
-            
+
     getSubmissionCode(baekjoonInfo.submissionId).then(res => {
         baekjoonInfo.submissionCode = res;
     });
@@ -38,21 +38,15 @@ export function saveData(table) {
     getProblem(baekjoonInfo.problemNum).then(res => {
         baekjoonInfo.problemTitle = res[0];
         baekjoonInfo.problemCategory = res[1];
-        baekjoonInfo.problemLevel = [res[2], bj_level[res[2]]];
+        baekjoonInfo.problemLevel = [res[2], res[2]];
     });
 }
 
 export function uploadData(data) {
-    // fetch(`${api}/api/v1/solved-problems/baekjoon`, {
-    //     method: 'POST',
-    // })
-    // .then(res => {
-    //     console.log("[ALGO] 업로드 성공");
-    // });
-
-
-    axios.post(`${api}/api/v1/solved-problems/baekjoon`, data)
-    .then(res => {
-        console.log("[ALGONION] 업로드 성공");
-    });
+    chrome.storage.sync.get(["access_token"], (res) => {
+        axios.post(`${api}/v1/solved-problems/baekjoon`, data, { headers: { "Authorization": `Bearer ${res.access_token}` } })
+            .then(res => {
+                console.log("[ALGONION] 업로드 성공");
+            });
+    })
 }

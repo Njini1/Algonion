@@ -5,8 +5,8 @@ import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
 import com.e1i5.backend.domain.problem.repository.AlgoGroupRepository;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
-import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
-import com.e1i5.backend.domain.user.repository.AuthRepository;
+//import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
+//import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.global.util.AlgoScoreUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,12 @@ import java.util.*;
 public class ProblemServiceImpl implements ProblemService {
 
 
-    @Autowired
-    SolvedProblemRepository solvedProblemRepo;
+//    @Autowired
+//    SolvedProblemRepository solvedProblemRepo;
     @Autowired
     ProblemRepository problemRepo;
-    @Autowired
-    AuthRepository userRepo;
+//    @Autowired
+//    AuthRepository userRepo;
     @Autowired
     AlgoGroupRepository algoGroupRepo;
 
@@ -134,13 +134,27 @@ public class ProblemServiceImpl implements ProblemService {
         if (existingProblem.isPresent()) {
             // 문제가 이미 존재하면, 난이도와 algoScore 업데이트
             Problem updatedProblem = existingProblem.get();
-            updatedProblem.updateLevel(problem.getProblemLevel(), problem.getAlgoScore());
+            updatedProblem.updateLevel(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));
             return problemRepo.save(updatedProblem);
         } else {
             // 문제가 존재하지 않으면, 새로운 문제 저장
             problem.updateSiteName(siteName);
+            problem.updateLevel(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));
             return problemRepo.save(problem);
         }
     }
 
+    private int getAlgoScoreForSite(String problemLevel, String siteName) {
+        switch (siteName) {
+            case "baekjoon":
+                System.out.println("백준 레벨 : " + problemLevel);
+                return AlgoScoreUtil.getBojScore(Integer.parseInt(problemLevel));
+            case "programmers":
+                return AlgoScoreUtil.getProgrammersScore(Integer.parseInt(problemLevel));
+            case "swea":
+                return AlgoScoreUtil.getSweaScore(problemLevel);
+            default:
+                return 0; // 기본값 설정 또는 예외 처리
+        }
+    }
 }
