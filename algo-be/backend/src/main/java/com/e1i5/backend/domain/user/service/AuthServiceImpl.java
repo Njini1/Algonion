@@ -1,6 +1,5 @@
 package com.e1i5.backend.domain.user.service;
 
-import com.e1i5.backend.domain.problem.exception.SolvedProblemNotFoundException;
 import com.e1i5.backend.domain.user.dto.RandomNickname;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.exception.DuplicateNickname;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.Random;
 
 @RequiredArgsConstructor
@@ -31,16 +29,15 @@ public class AuthServiceImpl implements AuthService{
     private final static String HEADER_AUTHORIZATION = "Authorization";
     private final static String TOKEN_PREFIX = "Bearer ";
 
-
     @Override
     public User findByEmail(String email) {
-        return authRepo.findByEmail(email) //TODO UserNotFoundException 에러로 변경
-                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+        return authRepo.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
     }
 
     @Override
     public User findById(int userId) {
-            return authRepo.findById(userId).orElseThrow(()-> new IllegalArgumentException("Unexpected user"));
+            return authRepo.findById(userId).orElseThrow(()-> new IllegalArgumentException("Unexpected user")); //통일 예정
     }
 
     @Override
@@ -95,12 +92,5 @@ public class AuthServiceImpl implements AuthService{
         User changeUser = authRepo.save(user);
         return changeUser.getNickname(); //TODO 반환 값을 interface dto로?
     }
-
-//    private String getAccessToken(String authorizationHeader) {
-//        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
-//            return authorizationHeader.substring(TOKEN_PREFIX.length());
-//        }
-//        return null;
-//    }
 
 }

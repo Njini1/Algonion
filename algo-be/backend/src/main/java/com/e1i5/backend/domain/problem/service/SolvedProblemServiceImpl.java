@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class SolvedProblemServiceImpl implements SolvedProblemService {
-    
 
     @Autowired
     SolvedProblemRepository solvedProblemRepo;
@@ -98,18 +97,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         SolvedProblem solvedProblemEntity = solvedProblemReq.toSolvedProblemEntity();
         solvedProblemEntity.updateUserAndProblem(user, problem);
         solvedProblemRepo.save(solvedProblemEntity);
-    }
-
-    /**
-     * 문제가 존재하면 그 문제를 반환하고 없으면 저장해서 반환
-     *
-     * @param solvedProblemReq 사용자가 문제 푼 데이터와 문제 데이터
-     * @param siteName         문제 푼 사이트
-     * @return 문제 테이블의 값 반환
-     */
-    @Override
-    public Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName) {
-        return null;
     }
 
     /**

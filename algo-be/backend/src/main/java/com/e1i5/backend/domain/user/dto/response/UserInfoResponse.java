@@ -25,7 +25,6 @@ public class UserInfoResponse {
     private Long problemCount;
 
     @Builder
-
     public UserInfoResponse(String tier, Integer userId, Integer score,
                             String originalFile, String saveFile, Long problemCount) {
         this.tier = tier;
