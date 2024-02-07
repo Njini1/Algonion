@@ -20,7 +20,7 @@ export default function ParticipantsList() {
         orientation="horizontal"
       >
         {arrayValues.map((value) => (
-          <Chip key={value}>{users.find((user) => `${user.id}` === `${value}`).name}</Chip>
+          <Chip key={value}>{users.find((user) => `${user.id}` === `${value}`)?.name}</Chip>
         ))}
       </ScrollShadow>
     );
