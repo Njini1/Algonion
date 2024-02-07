@@ -6,10 +6,12 @@ import com.e1i5.backend.global.util.AlgoScoreUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SolvedProblemRequest {
     private String submissionId; //제출번호
