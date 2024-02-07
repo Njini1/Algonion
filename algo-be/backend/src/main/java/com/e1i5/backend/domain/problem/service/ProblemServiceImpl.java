@@ -147,6 +147,7 @@ public class ProblemServiceImpl implements ProblemService {
     private int getAlgoScoreForSite(String problemLevel, String siteName) {
         switch (siteName) {
             case "baekjoon":
+                System.out.println("백준 레벨 : " + problemLevel);
                 return AlgoScoreUtil.getBojScore(Integer.parseInt(problemLevel));
             case "programmers":
                 return AlgoScoreUtil.getProgrammersScore(Integer.parseInt(problemLevel));

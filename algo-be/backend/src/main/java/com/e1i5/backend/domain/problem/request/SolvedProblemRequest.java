@@ -51,52 +51,8 @@ public class SolvedProblemRequest {
                 .build();
     }
 
-//    public SolvedProblem toBojEntity(long userNo, String siteName) {
-//        return SolvedProblem.builder()
-//                .submissionId(submissionId)
-//                .problemId(problemId)
-//                .siteName(siteName)
-//                .userNo(userNo)
-//                .memory(memory)
-//                .runtime(runtime)
-//                .language(language)
-//                .submissionCode(submissionCode)
-//                .codeLength(codeLength)
-//                .submissionTime(LocalDateTime.now())
-//                .url(url)
-//                .visible(true)
-//                .build();
-//    }
-//
-//    public SolvedProblem toSweaEntity(long userNo, String siteName) {
-//        return SolvedProblem.builder()
-//                .submissionId(submissionId)
-//                .problemId(problemId)
-//                .problemTitle(problemTitle)
-//                .siteName(siteName)
-//                .userNo(userNo)
-//                .memory(memory)
-//                .runtime(runtime)
-//                .language(language)
-//                .submissionCode(submissionCode)
-//                .codeLength(codeLength)
-//                .submissionTime(LocalDateTime.now())
-//                .url(url)
-//                .visible(true)
-//                .build();
-//    }
-//
-//    public SolvedProblem toProgrammersEntity(long userNo, String siteName) {
-//        return SolvedProblem.builder()
-//                .submissionId(submissionId)
-//                .problemLevel(problemLevel)
-//                .problemTitle(problemTitle)
-//                .language(language)
-//                .submissionCode(submissionCode)
-//                .userNo(userNo)
-//                .siteName(siteName)
-//                .submissionTime(LocalDateTime.now())
-//                .visible(true)
-//                .build();
-//    }
+    public SolvedProblemRequest isNullUpateLevel(String problemLevel) {
+        this.problemLevel = problemLevel;
+        return this;
+    }
 }

@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,8 +54,14 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
+        System.out.println("백준 레벨 2222: " + solvedProblemReq.getProblemLevel());
+        // 임시방편 코드
+        if (solvedProblemReq.getProblemLevel() == null) {
+            solvedProblemReq.isNullUpateLevel("0");
+        }
+
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
                 .ifPresentOrElse( //TODO orElseGet으로?
                         solvedProblem -> {
