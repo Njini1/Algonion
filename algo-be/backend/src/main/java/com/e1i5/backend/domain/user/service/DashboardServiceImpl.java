@@ -86,13 +86,15 @@ public class DashboardServiceImpl implements DashboardService {
 
     /**
      * 스트릭 만드는 메서드
-     * @param userName
+     * @param nickname
      * @return
      */
     @Override
-    public Map<String, Long> makeStreak(String userName, String startDate, String endDate) {
+    public Map<String, Long> makeStreak(String nickname, String startDate, String endDate) {
+
+        int userId = getUserIdByNickname(nickname);
         List<StreakResponseInterface> streak =
-                solvedProblemRepo.findSubmissionTimeAndCountByUserId(userName, startDate, endDate);
+                solvedProblemRepo.findSubmissionTimeAndCountByUserId(userId, endDate, startDate);
 
         LinkedHashMap<String, Long> result = new LinkedHashMap <>();
         for (StreakResponseInterface streakDate : streak) {
@@ -114,8 +116,9 @@ public class DashboardServiceImpl implements DashboardService {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(totalDays - 1);
 
+        int userId = getUserIdByNickname(nickname);
         List<StreakResponseInterface> streak =
-                solvedProblemRepo.findSubmissionTimeAndCountByUserId(nickname, startDate.toString(), endDate.toString());
+                solvedProblemRepo.findSubmissionTimeAndCountByUserId(userId, endDate.toString(), startDate.toString());
 
         // categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
         String[] categories = new String[totalDays];

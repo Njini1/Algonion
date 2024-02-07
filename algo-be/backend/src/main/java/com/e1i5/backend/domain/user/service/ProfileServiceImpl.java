@@ -7,8 +7,10 @@ import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
 import com.e1i5.backend.domain.user.entity.ProfileFileInfo;
 import com.e1i5.backend.domain.user.entity.User;
+import com.e1i5.backend.domain.user.exception.UserNotFoundException;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.domain.user.repository.UserProfileRepository;
+import com.e1i5.backend.global.error.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -80,7 +82,7 @@ public class ProfileServiceImpl implements ProfileService {
         LocalDate startDate = endDate.minusDays(6);
 
         List<StreakResponseInterface> streak =
-                solvedProblemRepo.findSevenDaysStreak(userId, endDate.toString(), startDate.toString());
+                solvedProblemRepo.findSubmissionTimeAndCountByUserId(userId, endDate.toString(), startDate.toString());
 
         LinkedHashMap <String, Long> result = new LinkedHashMap <>();
         for (int i = 0; i < 7; i++) {
@@ -101,14 +103,17 @@ public class ProfileServiceImpl implements ProfileService {
      */
     @Override
     public UserInfoResponse getUserInfo(String nickname) {
-        UserInfoResponse user = authRepo.getUserByNickname(nickname)
-                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+
+//        int userId = getUserIdByNickname(nickname);
+        UserInfoResponse user = authRepo.getUserInfoByUserId(nickname)
+                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
         return user;
     }
 
     @Override
     public List<ProblemResponse> recommandProblem(int userId) {
+
         //TODO 랜덤으로 문제 추천으로 변경
         List<ProblemResponse> unsolvedProblemsByUserId = new ArrayList<>
                 (problemRepo.findUnsolvedProblemsByUserId(userId)
@@ -118,6 +123,13 @@ public class ProfileServiceImpl implements ProfileService {
 
 //        Collections.shuffle(unsolvedProblemsByUserId);
         return unsolvedProblemsByUserId;
+    }
+
+    private int getUserIdByNickname(String nickname) {
+
+        return authRepo.findByNickname(nickname)
+                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND))
+                .getUserId();
     }
 
 }
