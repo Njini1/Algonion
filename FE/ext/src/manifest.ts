@@ -59,7 +59,7 @@ export default defineManifest({
       run_at: "document_idle"
     },
     {
-      matches: ['https://algonion.store/profile/*'],
+      matches: ['https://algonion.store/*'],
       js: ['src/contentScript/algonion/getToken.ts'],
       run_at: 'document_idle',
     },
