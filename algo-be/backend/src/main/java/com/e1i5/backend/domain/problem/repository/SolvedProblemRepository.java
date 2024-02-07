@@ -13,18 +13,6 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
 
     Optional<SolvedProblem> findBySubmissionId(String submissionId);
     List<SolvedProblem> findAllByUser_UserIdAndVisible(int userId, boolean visible);
-    @Query("SELECT minTime AS submissionTime, COUNT(*) AS count " +
-            "FROM (SELECT sp.user.userId AS userId, MIN(sp.submissionTime) AS minTime " +
-            "      FROM SolvedProblem sp " +
-            "      WHERE sp.user.nickname = :nickname " +
-            "      GROUP BY sp.user.userId, sp.problem.problemId)" +
-            "WHERE minTime <= :startDate " +
-            "AND minTime > :endDate " +
-            "GROUP BY minTime " +
-            "ORDER BY minTime")
-    List<StreakResponseInterface> findSubmissionTimeAndCountByUserId(@Param("nickname") String nickname,
-                                                                     @Param("endDate") String endDate,
-                                                                     @Param("startDate") String startDate);
 
     @Query("SELECT minTime AS submissionTime, COUNT(*) AS count " +
             "FROM (SELECT sp.user.userId AS userId, MIN(sp.submissionTime) AS minTime " +
@@ -35,7 +23,7 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
             "AND minTime > :startDate " +
             "GROUP BY minTime " +
             "ORDER BY minTime")
-    List<StreakResponseInterface> findSevenDaysStreak(@Param("userId") int userId,
+    List<StreakResponseInterface> findSubmissionTimeAndCountByUserId(@Param("userId") int userId,
                                                       @Param("endDate") String endDate,
                                                       @Param("startDate") String startDate);
 }
