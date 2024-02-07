@@ -1,13 +1,4 @@
 import { isNull } from "./util";
-/*
-    로컬스토리지에 swea 객체가 없는 경우 생성
-*/
-// getObjectFromLocalStorage('swea').then((data) => {
-//     console.log('getting obj from local storage')
-//     if (isNull(data)) {
-//         saveObjectInLocalStorage({ swea: {} });
-//     }
-// });
 
 export async function saveObjectInLocalStorage(obj) {
     return new Promise((resolve, reject) => {
@@ -29,7 +20,6 @@ export async function getObjectFromLocalStorage(key) {
         ''
         try {
             chrome.storage.local.get(key, function (value) {
-                // console.log(value.swea)
                 resolve(value);
             });
         } catch (ex) {
@@ -57,8 +47,6 @@ export async function getProblemData(problemNum) {
     // console.log('problemNum:', problemNum)
     return getObjectFromLocalStorage('swea')
     .then((data) => {        
-        // const check = data.swea[problemNum]
-        // console.log(check)
         return data.swea[problemNum]
     });
 }

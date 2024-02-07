@@ -50,7 +50,7 @@ export async function parseData() {
   const problemLevel = document.querySelector('div.problem_box > p.problem_title > span.badge')?.textContent || 'Unrated';
   const problemNum = document.querySelector('body > div.container > div.container.sub > div > div.problem_box > p').innerText.split('.')[0].trim();
   const contestProbId = [...document.querySelectorAll('#contestProbId')].slice(-1)[0].value;
-  const link = `${window.location.origin}/main/code/problem/problemDetail.do?contestProbId=${contestProbId}`;
+  const url = `${window.location.origin}/main/code/problem/problemDetail.do?contestProbId=${contestProbId}`;
 
   // 문제 언어, 메모리, 시간소요, 코드 길이
   const language = document.querySelector('#problemForm div.info > ul > li:nth-child(1) > span:nth-child(1)').textContent.trim();
@@ -74,5 +74,5 @@ export async function parseData() {
   const submissionCode = data.code;
   // console.log('파싱 완료', code);
 
-  return { link, language, problemNum, problemLevel, problemTitle, runtime, submissionCode, memory, codeLength, correctRate ,submissionTime };
+  return { url, language, problemNum, problemLevel, problemTitle, runtime, submissionCode, memory, codeLength, correctRate ,submissionTime };
 } 
