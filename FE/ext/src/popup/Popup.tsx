@@ -4,8 +4,6 @@ import './Popup.scss';
 import UserPage from './pages/UserPage'
 import LoginPage from './pages/LoginPage';
 import axios from 'axios';
-import useSWR from 'swr';
-import { axiosInstance } from '../util/http-commons';
 
 export const Popup = () => {
   const [isStorageLoading, setIsStorageLoading] = useState(true);
@@ -30,6 +28,9 @@ export const Popup = () => {
     getUserData();
   }, [accessToken])
 
+  if (accessToken === undefined) {
+    return <LoginPage />
+  }
   if (response) {
     return <UserPage data={response} />
   }
