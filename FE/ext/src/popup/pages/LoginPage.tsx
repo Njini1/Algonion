@@ -5,7 +5,7 @@ function LoginPage() {
     return (
         <div className={classes.wrapper}>
             <img src={getAsset("logo/logo_dark.svg")} />
-            <a href="http://algonion.store/profile" target="_blank">로그인</a>
+            <a href="http://algonion.store" target="_blank">로그인</a>
         </div>
     )
 }
