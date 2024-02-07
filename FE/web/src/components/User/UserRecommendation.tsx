@@ -15,28 +15,18 @@ export default function UserRecommendation() {
 
   return (
     <div className={classes.container}>
-      <p></p>
-    <button
-      className={classes.refreshButton}
-      // onClick={handleRefresh}
-      // disabled={isLoading} // Disable button while loading
-    >
-      {/* {isLoading ? 'Refreshing...' : 'Refresh Recommendations'} */}
-      다른 문제 추천!
+      <div className="flex gap-4 items-center">
+        <Button isIconOnly color="secondary" variant="faded" aria-label="refresh">
+          <img src={getAsset('img/refresh.png')} alt="refresh-icon" />
 
+        </Button>    
 
-    <div className="flex gap-4 items-center">
-     <Button isIconOnly color="secondary" variant="faded" aria-label="refresh">
-     <img src={getAsset('img/refresh.png')} alt="refresh-icon" />
-
-      </Button>    
-    </div>
-
-      <div className={classes.items}>
-        <UserRecommendationItem />
-      </div>
-      <div className={classes.items}>
-        <UserRecommendationItem />
+        <div className={classes.items}>
+          <UserRecommendationItem />
+        </div>
+        <div className={classes.items}>
+          <UserRecommendationItem />
+        </div>
       </div>
     </div>
   );
