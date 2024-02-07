@@ -1,7 +1,7 @@
 {
-  "name": "ext",
-  "displayName": "ext",
-  "version": "0.0.0",
+  "name": "algonion",
+  "displayName": "Algonion",
+  "version": "0.0.1",
   "author": "E1I5",
   "description": "",
   "type": "module",
