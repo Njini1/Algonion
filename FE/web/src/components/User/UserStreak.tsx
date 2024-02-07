@@ -14,7 +14,7 @@ function UserStreak() {
       arr[date.day()].push(<td key={date.format("YYYY-MM-DD")} className={classes.streak} title={date.format("YYYY-MM-DD")}></td>);
       date = date.add(1, 'day');
     }
-    console.log(from);
+    // console.log(from);
     return arr.map(e => <tr>{e}</tr>);
   }
   return (
