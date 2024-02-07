@@ -4,23 +4,38 @@ import './Popup.scss';
 import UserPage from './pages/UserPage'
 import LoginPage from './pages/LoginPage';
 import axios from 'axios';
-import useSWR from 'swr';
 
 export const Popup = () => {
+  const [isStorageLoading, setIsStorageLoading] = useState(true);
   const [accessToken, setAccessToken] = useState(null);
+  const [response, setResponse] = useState();
   useEffect(() => {
     async function getToken() {
       const res = await chrome.storage.sync.get("access_token");
       const accessToken = res.access_token;
       setAccessToken(accessToken);
+      setIsStorageLoading(false);
     }
     getToken();
   }, [])
-  const fetcher = (url: string) => axios.get(url).then(res => res.data)
-  const { data, error, isLoading } = useSWR('https://algonion.store/api/v1/profile/ext', fetcher);
-  if (isLoading) return <div></div>
-  if (error) return <LoginPage />
-  return <UserPage data={data} />
+  useEffect(() => {
+    async function getUserData() {
+      if (!accessToken) return;
+      const { data } = await axios.get('https://algonion.store/api/v1/profile/ext', { headers: { "Authorization": `Bearer ${accessToken}` } });
+      setResponse(data);
+      console.log(data);
+    }
+    getUserData();
+  }, [accessToken])
+
+  if (accessToken === undefined) {
+    return <LoginPage />
+  }
+  if (response) {
+    return <UserPage data={response} />
+  }
+  return <></>
+
 };
 
 export default Popup;

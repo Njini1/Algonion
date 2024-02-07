@@ -46,10 +46,11 @@ export function uploadData(data) {
   //     console.log("[ALGO] 업로드 성공");
   // });
 
-
-  axios.post(`${api}/api/v1/solved-problems/swea`, data)
-  .then(res => {
-      console.log("[ALGO] 업로드 성공");
+  chrome.storage.sync.get(["access_token"], (res) => {
+    axios.post(`${api}/v1/solved-problems/swea`, data, { headers: { "Authorization": `Bearer ${res.access_token}` } })
+      .then(res => {
+        console.log("[ALGO] 업로드 성공");
+      });
   });
 }
 

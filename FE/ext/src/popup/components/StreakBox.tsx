@@ -17,9 +17,9 @@ export function StreakBox(props: { item: Variants | undefined, streak: boolean[]
         <ul className={classes.container}>
           {props.streak.map((v, i) => <li key={i} className={`${classes.streak} ${v ? classes.active : ''}`}></li>)}
         </ul>
-        <a className={classes.more} href="#">
+        {/* <a className={classes.more} href={import.meta.env.VITE_ALGONION}>
           더보기
-        </a>
+        </a> */}
       </div>
     </motion.div>
   );
