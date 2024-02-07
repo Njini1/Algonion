@@ -35,6 +35,17 @@ export default function problem100 () {
           </a>
         </span>
       </div> */}
+      {/* {SolvedList.map((item, index) => (
+            <Image
+                shadow="sm"
+                radius="lg"
+                width="100%"
+                alt={item.title}
+                className="w-full object-cover h-[300px]"
+                src={`https://source.unsplash.com/random?${index}`}
+            />
+            
+        ))} */}
       <div className={classes['grid-list']}>
         <div>1</div>
         <div>2</div>

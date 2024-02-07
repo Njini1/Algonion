@@ -1,9 +1,12 @@
+import { Key } from 'react'
 import classes from './CodeLogList.module.scss'
 
-function CodeLogList() {
-    function goToDetailPage(username: string, codeId: number) {
-      window.location.href=`/code-log/${username}/${codeId}`
-    }
+const CodeLogList = ({ data }) => {
+  
+  function goToDetailPage(username: string, problemNum: string) {
+    window.location.href=`/code-log/${username}/${problemNum}`
+  }
+    
     return (
       <div className={classes.page}>
         <div>
@@ -19,25 +22,21 @@ function CodeLogList() {
             </tr>
           </thead>
           <tbody>
-            <tr className={classes.tdHover} onClick={() => goToDetailPage('alice', 1000)}>
-              <td>Baekjoon</td>
-              <td>1000</td>
-              <td><a className={classes.nameHover} href="https://www.acmicpc.net/problem/1000">A+B</a></td>
-              <td>수학</td>
-              <td>Bronze 5</td>
-              <td>23-07-08</td>
+          {data.map((item: { id: Key; username: string; problemNum: string ; siteName: string ; problemUrl: string ; problemTitle: string; classification: string[]; problemLevel: string; submissionTime: string }) => (
+            <tr key={item.id} className={classes.tdHover} onClick={() => goToDetailPage(item.username, item.problemNum)}>
+              <td>{item.siteName}</td>
+              <td>{item.problemNum}</td>
+              <td><a className={classes.nameHover} href={item.problemUrl}>{item.problemTitle}</a></td>
+              <td>{item.classification.join(', ')}</td>
+              <td>{item.problemLevel}</td>
+              <td>{item.submissionTime.split('T')[0]}</td>
             </tr>
-            <tr>
-              <td>Baekjoon</td><td>1000</td><td>A+B</td><td>수학</td><td>Bronze 5</td><td>23-07-08</td>
-            </tr>
-            <tr>
-              <td>Baekjoon</td><td>1000</td><td>A+B</td><td>수학</td><td>Bronze 5</td><td>23-07-08</td>
-            </tr>
+              ))}
           </tbody>
           </table>
         </div>
       </div>
     )
 }
-  
+
 export default CodeLogList
