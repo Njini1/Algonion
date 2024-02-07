@@ -1,4 +1,6 @@
 import classes from './CodeLog.module.scss'
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css';
 function CodeLog() {
   const code = `
   import java.util.*;
@@ -12,14 +14,16 @@ function CodeLog() {
     }
   }
   `;
-  
+
+  const html = hljs.highlightAuto(code).value;
+  console.log(html);
+
   return (
-      <div>
-        <pre className={classes.code}>
-        {code}
-        </pre>
-      </div>
-    )
+    <pre>
+      <code className={`${classes.code} hljs`} dangerouslySetInnerHTML={{ __html: html }} />
+    </pre>
+
+  );
 }
-  
-export default CodeLog
+
+export default CodeLog;
