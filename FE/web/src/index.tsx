@@ -11,7 +11,7 @@ import SearchPage from "./pages/SearchPage/SearchPage.tsx";
 import CommunityPage from "./pages/CommunityPage/CommunityPage.tsx";
 import RoomDetailPage from "./pages/RoomDetailPage/RoomDetailPage.tsx";
 import MainPage from "./pages/MainPage/MainPage.tsx";
-import LoginSuccessPage from "./pages/LoginSuccessPage.tsx";
+import LoginSuccessPage from "./pages/LoginSuccessPage/LoginSuccessPage.tsx";
 
 const router = createBrowserRouter([
   {
