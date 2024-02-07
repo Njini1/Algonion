@@ -1,11 +1,7 @@
-import { Key } from 'react'
 import classes from './CodeLogList.module.scss'
+import { CodeLog } from '../../pages/CodeLogPage/CodeLogPage'
 
-interface CodeLogListProps {
-  data: [];
-}
-
-const CodeLogList = ({ data }: CodeLogListProps) => {
+const CodeLogList = ({ data }: {data: CodeLog[]}) => {
   
   function goToDetailPage(username: string, problemNum: string) {
     window.location.href=`/code-log/${username}/${problemNum}`
@@ -26,12 +22,12 @@ const CodeLogList = ({ data }: CodeLogListProps) => {
             </tr>
           </thead>
           <tbody>
-          {data.map((item: { id: Key; username: string; problemNum: string ; siteName: string ; problemUrl: string ; problemTitle: string; classification: string[]; problemLevel: string; submissionTime: string }) => (
+          {data.map((item: CodeLog) => (
             <tr key={item.id} className={classes.tdHover} onClick={() => goToDetailPage(item.username, item.problemNum)}>
               <td>{item.siteName}</td>
               <td>{item.problemNum}</td>
-              <td><a className={classes.nameHover} href={item.problemUrl}>{item.problemTitle}</a></td>
-              <td>{item.classification.join(', ')}</td>
+              <td><a className={classes.nameHover} href={item.url}>{item.problemTitle}</a></td>
+              <td>{item.classification}</td>
               <td>{item.problemLevel}</td>
               <td>{item.submissionTime.split('T')[0]}</td>
             </tr>

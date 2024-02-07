@@ -1,4 +1,4 @@
-import { useState, useEffect, Key } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../../containers/Header/Header.tsx';
 import CodeLogList from '../../components/CodeLog/CodeLogList.tsx'
 // import CodeLogSearchBar from '../../components/CodeLog/CodeLogSearchBar.tsx'
@@ -6,10 +6,10 @@ import CodeLogList from '../../components/CodeLog/CodeLogList.tsx'
 import Footer from '../../containers/Footer/Footer.tsx';
 
 import classes from "./CodeLogPage.module.scss"
-import {CodeLogTest} from "../../api/CodeLogAPI.ts"
+import {CodeLog} from "../../api/CodeLogAPI.ts"
 
-interface CodeLog {
-  id: Key;
+export interface CodeLog {
+  id: number;
   siteName: string;
   language: string;
   problemNum: string;
@@ -27,14 +27,12 @@ export default function CodeLogPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await CodeLogTest();
+      const result = await CodeLog();
       setData(result);
     };
 
     fetchData();
   }, []);
-
-  CodeLogTest()
 	
   return (
     <div>
