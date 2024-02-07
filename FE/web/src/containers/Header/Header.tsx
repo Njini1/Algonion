@@ -80,14 +80,17 @@ export default function Header() {
           <NavbarItem>    
             {/* 프로필 페이지 - 티어에 따라서 프로필 테두리 색 다르게 주기 (예정) */}
             <div className="flex gap-4 items-center">
-              {/* <Avatar isBordered color="bronze" src="https://i.pravatar.cc/150?u=a042581f4e29026024d" /> */}
-              {/* <Avatar isBordered color="#C0C0C0" src="https://i.pravatar.cc/150?u=a04258a2462d826712d" />
-              <Avatar isBordered color="#FFBF00 " src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
-              <Avatar isBordered color="#02B7AE " src="https://i.pravatar.cc/150?u=a04258114e29026302d" />
-            <Avatar isBordered color="#00FFFF " src="https://i.pravatar.cc/150?u=a04258114e29026702d" /> */}
+              {/* <Avatar isBordered color="bronze" src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" /> */}
+              {/* <Avatar isBordered color="#C0C0C0" src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" />
+              <Avatar isBordered color="#FFBF00 " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" />
+              <Avatar isBordered color="#02B7AE " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" />
+            <Avatar isBordered color="#00FFFF " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" /> */}
               <Dropdown>
               <DropdownTrigger>
-                <Avatar isBordered color="default" src="https://i.pravatar.cc/150?u=a04258114e29026708c" />
+                <Avatar isBordered
+                color="secondary" 
+                src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" 
+                />
 
               </DropdownTrigger>
               <DropdownMenu variant="flat" aria-label="Dropdown menu with shortcut">
