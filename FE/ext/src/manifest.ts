@@ -16,12 +16,6 @@ export default defineManifest({
     default_popup: 'popup.html',
     default_icon: 'img/logo-48.png',
   },
-  options_page: 'options.html',
-  devtools_page: 'devtools.html',
-  background: {
-    service_worker: 'src/background/index.ts',
-    type: 'module',
-  },
 
   declarative_net_request: {
     rule_resources: [
@@ -33,10 +27,6 @@ export default defineManifest({
     ],
   },
   content_scripts: [
-    {
-      matches: ['http://*/*', 'https://*/*'],
-      js: ['src/contentScript/index.ts'],
-    },
     {
       matches: ['https://www.acmicpc.net/*'],
       js: [
@@ -69,14 +59,11 @@ export default defineManifest({
       run_at: "document_idle"
     },
     {
-      matches: ['https://algonion.store/profile/*'],
+      matches: ['https://algonion.store/*'],
       js: ['src/contentScript/algonion/getToken.ts'],
       run_at: 'document_idle',
     },
   ],
-  side_panel: {
-    default_path: 'sidepanel.html',
-  },
   web_accessible_resources: [
     {
       resources: ['img/logo-16.png', 'img/logo-34.png', 'img/logo-48.png', 'img/logo-128.png'],
@@ -86,8 +73,6 @@ export default defineManifest({
     },
   ],
   permissions: [
-    'sidePanel',
-    "unlimitedStorage",
     'storage',
     'declarativeNetRequest',
     'declarativeNetRequestWithHostAccess',
@@ -100,7 +85,4 @@ export default defineManifest({
     'https://solved.ac/api/v3/*',
     'https://algonion.store/*',
   ],
-  // chrome_url_overrides: {
-  //   newtab: 'newtab.html',
-  // },
 })
