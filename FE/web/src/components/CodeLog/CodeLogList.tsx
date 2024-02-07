@@ -1,7 +1,11 @@
 import { Key } from 'react'
 import classes from './CodeLogList.module.scss'
 
-const CodeLogList = ({ data }) => {
+interface CodeLogListProps {
+  data: [];
+}
+
+const CodeLogList = ({ data }: CodeLogListProps) => {
   
   function goToDetailPage(username: string, problemNum: string) {
     window.location.href=`/code-log/${username}/${problemNum}`
