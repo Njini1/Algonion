@@ -3,6 +3,7 @@ package com.e1i5.backend.domain.user.controller;
 import com.e1i5.backend.domain.user.dto.request.CreateAccessTokenRequest;
 import com.e1i5.backend.domain.user.dto.request.NicknameRequest;
 import com.e1i5.backend.domain.user.dto.response.CreateAccessTokenResponse;
+import com.e1i5.backend.domain.user.exception.UserNotFoundException;
 import com.e1i5.backend.domain.user.service.AuthService;
 import com.e1i5.backend.global.util.CookieUtil;
 import jakarta.servlet.http.Cookie;
@@ -74,6 +75,19 @@ public class AuthController {
     private ResponseEntity<String> exceptionHandling(Exception e) {
         e.printStackTrace();
         return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping("/withdraw")
+    public ResponseEntity<String> withdrawUser() {
+        try {
+            int userId = 1;
+            authService.withdrawUser(userId);
+            return ResponseEntity.ok().build();
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

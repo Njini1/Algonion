@@ -57,4 +57,9 @@ public class User{
         this.nickname = nickname;
     }
 
+    public void withdrawUser(boolean status, LocalDate delDate) {
+        this.status = status;
+        this.delDate = delDate;
+    }
+
 }
