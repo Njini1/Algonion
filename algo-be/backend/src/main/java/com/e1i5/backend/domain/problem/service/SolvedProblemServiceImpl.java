@@ -12,6 +12,7 @@ import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
+import com.e1i5.backend.domain.user.service.DashboardService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     ProblemRepository problemRepo;
     @Autowired
     ProblemService problemService;
+    @Autowired
+    DashboardService dashboardService;
 
     @Autowired
     AuthRepository authRepo;
@@ -53,6 +56,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         //TODO 사용자 정보 추가
         //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
+        int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
@@ -61,7 +65,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                             log.info("ProblemServiceImpl saveSolvedProblem already exist solvedProblem");
                             System.out.println("이미 푼 문제가 존재");
                         },
-                        () -> saveSolvedProblem(solvedProblemReq, userId, problem)
+                        () -> saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore)
                 );
     }
 
@@ -69,9 +73,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         //TODO 사용자 정보 추가
+        int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
-        saveSolvedProblem(solvedProblemReq, userId, problem);
+        saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore);
     }
 
     /**
@@ -82,7 +87,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param problem          문제 정보
      */
     @Override
-    public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem) {
+    public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem, int oldAlgoScore) {
         //TODO 문제번호 비교해서 점수 더하는 거도 추가해줘
         //TODO solvedProblemReq말고 Entity로 바꾼 값으로 매개변수 받는 거로 변경? 고민
         User user = authRepo.findById(userId)
@@ -91,6 +96,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         SolvedProblem solvedProblemEntity = solvedProblemReq.toSolvedProblemEntity();
         solvedProblemEntity.updateUserAndProblem(user, problem);
         solvedProblemRepo.save(solvedProblemEntity);
+        dashboardService.updateUserScore(userId, problem.getProblemId(), oldAlgoScore);
     }
 
     /**

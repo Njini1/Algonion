@@ -13,7 +13,7 @@ import java.util.List;
 public interface SolvedProblemService {
     void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId);
     void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId);
-    void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem);
+    void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem, int oldAlgoScore);
     Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName);
     SolvedProblemDetailResponse updateSolvedProblem(int solvedProblemId, String memo);
     SolvedProblemDetailResponse updateVisibility(int solvedProblemId);

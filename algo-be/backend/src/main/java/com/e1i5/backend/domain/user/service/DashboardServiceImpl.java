@@ -91,22 +91,25 @@ public class DashboardServiceImpl implements DashboardService {
                 .getUserId();
     }
 
-//    @Transactional
-//    public void updateUserScore(int userId, int problemId, int algoScore) {
-//        boolean isProblemSolvedByUser = solvedProblemRepo.existsByUserIdAndProblemId(userId, problemId);
-//        int userScore = userInfoRepo.findUserScoreByUserId(userId);
-//        if (!isProblemSolvedByUser) {
-//            // 사용자가 해당 문제를 푼 적이 없는 경우
-//            userInfoRepo.updateUserScore(userId, userScore + algoScore);
-//        } else {
-//            // 사용자가 해당 문제를 이미 푼 경우
-//            int oldAlgoScore = problemRepo.findAlgoScoreByProblemId(problemId);
-//            if (oldAlgoScore != algoScore) {
-//                // 알고리즘 점수가 변경된 경우
-//                userInfoRepo.updateUserScore(userId, userScore + (algoScore - oldAlgoScore));
-//            }
-//        }
-//    }
+    @Transactional
+    public void updateUserScore(int userId, int problemId, int oldAlgoScore) {
+        System.out.println("DashboardServiceImpl" + userId + problemId + oldAlgoScore);
+        boolean isProblemSolvedByUser = solvedProblemRepo.existsByUser_UserIdAndProblem_ProblemId(userId, problemId);
+        System.out.println("isProblemSolvedByUser" + isProblemSolvedByUser);
+        int userScore = userInfoRepo.findUserScoreByUserId(userId);
+        System.out.println("userScore" + userScore);
+        int algoScore = problemRepo.findAlgoScoreByProblemId(problemId);
+        if (!isProblemSolvedByUser) {
+            // 사용자가 해당 문제를 푼 적이 없는 경우
+            userInfoRepo.updateUserScore(userId, userScore + algoScore);
+        } else {
+            // 사용자가 해당 문제를 이미 푼 경우
+            if (oldAlgoScore != algoScore) {
+                // 알고리즘 점수가 변경된 경우
+                userInfoRepo.updateUserScore(userId, userScore + (algoScore - oldAlgoScore));
+            }
+        }
+    }
 
 
 

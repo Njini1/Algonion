@@ -113,12 +113,12 @@ public class ProblemServiceImpl implements ProblemService {
 
     }
 
-    /**
-     * solved.ac 문제에서 이미 존재하면 난이도만 업데이하고 없으면 새로 저장
-     * @param problem 백준 문제
-     * @param siteName 사이트 이름(혹시 나중에 프로그래머스나 swea도 쓸 수 있으니까)
-     * @return 저장한 문제 반환
-     */
+//    /**
+//     * solved.ac 문제에서 이미 존재하면 난이도만 업데이하고 없으면 새로 저장
+//     * @param problem 백준 문제
+//     * @param siteName 사이트 이름(혹시 나중에 프로그래머스나 swea도 쓸 수 있으니까)
+//     * @return 저장한 문제 반환
+//     */
 //    @Override
 //    public Problem saveOrUpdateProblem(Problem problem, String siteName) {
 //        problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName)
@@ -127,6 +127,13 @@ public class ProblemServiceImpl implements ProblemService {
 //
 //        return problemRepo.save(problem);
 //    }
+
+    @Override
+    public int getOldAlgoScore(String problemNum, String siteName) {
+        Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problemNum, siteName);
+        return existingProblem.map(Problem::getAlgoScore).orElse(0);
+    }
+
     @Override
     public Problem saveOrUpdateProblem(Problem problem, String siteName) {
         Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName);
