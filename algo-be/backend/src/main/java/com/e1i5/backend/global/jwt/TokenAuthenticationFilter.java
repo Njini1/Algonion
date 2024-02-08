@@ -78,15 +78,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
      * @param
      * @return 토큰값
      */
-//    public String getAccessToken(HttpServletRequest request) {
-//        String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
-//        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
-//            authorizationHeader = authorizationHeader.replace(TOKEN_PREFIX, ""); // 가져온 값에서 접두사 제거
-////            return authorizationHeader.substring(TOKEN_PREFIX.length());
-//            return authorizationHeader;
-//        }
-//        return null;
-//    }
 
     private String getAccessToken(String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {

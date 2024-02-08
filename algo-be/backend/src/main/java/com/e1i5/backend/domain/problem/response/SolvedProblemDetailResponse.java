@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SolvedProblemDetailResponse {
+    private String siteName;
     private String submissionId; //제출번호
     private String problemNum; //문제번호
     private String problemTitle; //문제 제목
@@ -19,7 +20,6 @@ public class SolvedProblemDetailResponse {
     private String language;
     private String submissionCode; //내가 푼 코드
     private String codeLength; //코드 길이
-//    private LocalDateTime submissionTime; //제출한 시간
     private String submissionTime;
     private String url;
     private String memo;
@@ -27,6 +27,7 @@ public class SolvedProblemDetailResponse {
 
     @Builder
     public SolvedProblemDetailResponse(SolvedProblem solvedProblem) {
+        this.siteName = solvedProblem.getProblem().getSiteName();
         this.submissionId = solvedProblem.getSubmissionId();
         this.problemNum = solvedProblem.getProblem().getProblemNum();
         this.problemTitle = solvedProblem.getProblem().getProblemTitle();
