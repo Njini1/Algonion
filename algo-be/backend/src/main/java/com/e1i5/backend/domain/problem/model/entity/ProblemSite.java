@@ -1,7 +1,7 @@
 package com.e1i5.backend.domain.problem.model.entity;
 
 public enum ProblemSite {
-    PROGRAMMERS("programmers"), BAEKJOON("baekjoon"), SWEA("swea");
+    PROGRAMMERS("Programmers"), BAEKJOON("Baekjoon"), SWEA("Swea");
 
     private final String problemSite;
 

@@ -39,10 +39,14 @@ public class DashboardController {
         return new ResponseEntity<>(algoScoreCounts, HttpStatus.OK);
     }
 
+    /**
+     * 누적 개수 합 그래프
+     * @return
+     */
     @GetMapping("/problem-stack")
-    public ResponseEntity<?> getProblemCountSum(/*@RequestParam("nickname") String nickname*/) {
-        String test = dashboardService.makeAccumulatedNumGraph("화려한 코딩대장");
-        return new ResponseEntity<>(test, HttpStatus.OK);
+    public ResponseEntity<?> getProblemCountSum(@RequestParam("nickname") String nickname) {
+        String graphData = dashboardService.makeAccumulatedNumGraph(nickname);
+        return new ResponseEntity<>(graphData, HttpStatus.OK);
     }
 
 }
