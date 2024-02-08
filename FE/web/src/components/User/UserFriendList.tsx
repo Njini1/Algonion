@@ -1,6 +1,10 @@
 
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import { getFriendList } from "../../api/friendListAPI";
 // import classes from './UserFriendList.module.scss'
+type item = { siteName: string; problemNum: string; problemTitle: string ; problemLevel: string; url: string; }[]
+
 
 const rows = [
   {
@@ -45,7 +49,18 @@ const columns = [
 ];
 
 function UserFriendList() {
-	return (
+  const [data, setData] = useState<item>();
+  useEffect(() => {
+    async function getAxios(){
+      let res =await getFriendList();
+      setData(res);
+      console.log(res)
+      console.log(data)
+    }
+    getAxios()
+  },[]);
+
+  return (
     <div>
       <Table aria-label="Example table with dynamic content">
       <TableHeader columns={columns}>
