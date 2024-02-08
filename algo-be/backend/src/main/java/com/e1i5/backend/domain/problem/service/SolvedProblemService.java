@@ -14,7 +14,6 @@ public interface SolvedProblemService {
     void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId);
     void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId);
     void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem);
-    Problem saveOrGetProblem(SolvedProblemRequest solvedProblemReq, String siteName);
     SolvedProblemDetailResponse updateSolvedProblem(int solvedProblemId, String memo);
     SolvedProblemDetailResponse updateVisibility(int solvedProblemId);
     List<SolvedProblemListResponse> getSolvedProblemListByUser();

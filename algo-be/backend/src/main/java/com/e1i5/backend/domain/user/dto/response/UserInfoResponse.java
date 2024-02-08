@@ -1,6 +1,5 @@
 package com.e1i5.backend.domain.user.dto.response;
 
-import com.e1i5.backend.domain.user.entity.ProfileFileInfo;
 import lombok.*;
 
 /**
@@ -26,7 +25,6 @@ public class UserInfoResponse {
     private Long problemCount;
 
     @Builder
-
     public UserInfoResponse(String tier, Integer userId, Integer score,
                             String originalFile, String saveFile, Long problemCount) {
         this.tier = tier;
