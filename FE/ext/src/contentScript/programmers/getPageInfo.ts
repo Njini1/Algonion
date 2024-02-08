@@ -24,6 +24,7 @@ const parseData = () => {
 
   const passedTestCase = document.querySelectorAll('td.result.passed').length;
   const failedTestCase = document.querySelectorAll('td.result.failed').length;
+  const url = window.location.href;
 
   return {
     problemNum,
@@ -31,6 +32,7 @@ const parseData = () => {
     problemTitle,
     language,
     submissionCode,
+    url,
   };
 };
 
