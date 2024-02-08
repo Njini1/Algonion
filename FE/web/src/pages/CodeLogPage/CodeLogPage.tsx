@@ -9,12 +9,11 @@ import classes from "./CodeLogPage.module.scss"
 import {CodeLog} from "../../api/CodeLogAPI.ts"
 
 export interface CodeLog {
-  id: number;
   siteName: string;
   language: string;
   problemNum: string;
   problemTitle: string;
-  classification: string;
+  classification: string[];
   problemLevel: string;
   submissionTime: string;
   username: string;

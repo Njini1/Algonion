@@ -1,5 +1,6 @@
 import classes from './CodeLogList.module.scss'
 import { CodeLog } from '../../pages/CodeLogPage/CodeLogPage'
+import { Key } from 'react'
 
 const CodeLogList = ({ data }: {data: CodeLog[]}) => {
   
@@ -22,12 +23,12 @@ const CodeLogList = ({ data }: {data: CodeLog[]}) => {
             </tr>
           </thead>
           <tbody>
-          {data.map((item: CodeLog) => (
-            <tr key={item.id} className={classes.tdHover} onClick={() => goToDetailPage(item.username, item.problemNum)}>
+          {data.map((item: CodeLog, index: Key) => (
+            <tr key={index} className={classes.tdHover} onClick={() => goToDetailPage(item.username, item.problemNum)}>
               <td>{item.siteName}</td>
               <td>{item.problemNum}</td>
               <td><a className={classes.nameHover} href={item.url}>{item.problemTitle}</a></td>
-              <td>{item.classification}</td>
+              <td>{item.classification.join("\n")}</td>
               <td>{item.problemLevel}</td>
               <td>{item.submissionTime.split('T')[0]}</td>
             </tr>
