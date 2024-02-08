@@ -18,9 +18,8 @@ export function mutationObserver(lastResultCategory) {
 			const correctResultTable = parsingCorrectResultTable(resultTableList);
 
 			saveData(correctResultTable);
-			uploadData(baekjoonInfo);
+			
 			console.log("Judging Complete!!");
-			// console.log(baekjoonInfo);
 
 			observer.disconnect();
 		}
@@ -39,10 +38,8 @@ export function mutationObserver(lastResultCategory) {
 	    const correctResultTable = parsingCorrectResultTable(resultTableList);
 
 	    saveData(correctResultTable);
-		uploadData(baekjoonInfo);
 
 	    console.log("already judged!!");
-	    // console.log(baekjoonInfo);
 	}
 
 	return

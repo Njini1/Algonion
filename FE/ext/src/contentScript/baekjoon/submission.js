@@ -1,4 +1,5 @@
 import {convertResultTableHeader, convertResultTableList, isNull, isEmpty} from "./util.js";
+import { baekjoonInfo } from "./storage.js";
 
 // 문제 제출 페이지에서 테이블을 가져오는 함수
 export function parsingResultTableList(doc) {
@@ -49,8 +50,9 @@ export async function getSubmissionCode(submissionId) {
     });
     // console.log(res)
     const code = await res.text();
-    // console.log(code)
-    return code;
+    console.log(code)
+    // baekjoonInfo.submissionCode = code;
+    return code
 }
 
 // 문제의 정보를 가져오는 함수

@@ -33,24 +33,26 @@ export function saveData(table) {
 
     getSubmissionCode(baekjoonInfo.submissionId).then(res => {
         baekjoonInfo.submissionCode = res;
-    });
-
-    getProblem(baekjoonInfo.problemNum).then(res => {
+        return getProblem(baekjoonInfo.problemNum);
+    }).then(res => {
         baekjoonInfo.problemTitle = res[0];
         baekjoonInfo.problemCategory = res[1];
-    });
-    
-    getProblemLevel(baekjoonInfo.problemNum).then(res => {
+        return getProblemLevel(baekjoonInfo.problemNum);
+    }).then(res => {
         baekjoonInfo.problemLevel = res;
+
+        // 모든 데이터 저장 후에 uploadData 호출
+        uploadData(baekjoonInfo);
+    }).catch(err => {
+        console.error('데이터 저장 중 오류 발생:', err);
     });
-    // console.log(baekjoonInfo.problemTitle)
 }
 
 export function uploadData(data) {
-    console.log('업로드하는 데이터->', data)
     chrome.storage.sync.get(["access_token"], (res) => {
         axios.post(`${api}/v1/solved-problems/baekjoon`, data, { headers: { "Authorization": `Bearer ${res.access_token}` } })
-            .then(res => {
+        .then(res => {
+                console.log(data);
                 console.log("[ALGONION] 업로드 성공");
             });
     })
