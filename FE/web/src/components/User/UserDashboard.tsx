@@ -17,8 +17,8 @@ function UserDashboard() {
   useEffect(() => {
     async function getAxios(){
       // - [방사형 그래프] 문제 유형
-      let res1 =await getCategoryGraph(nickname);
-      setData1(res1);
+      // let res1 =await getCategoryGraph(nickname);
+      // setData1(res1);
       // - [원형 그래프] 문제 난이도 (우리 티어) 
       let res2 =await getLevelGraph(nickname);
       setData2(res2);
@@ -26,13 +26,8 @@ function UserDashboard() {
       let res3 =await getProblemStackGraph(nickname);
       setData3(res3);
       // - [선형 그래프] 기간별 포인트 상승량 누적 추이
-      let res4 =await getPointStackGraph(nickname);
-      setData4(res4);
-      // console.log(res1)
-      console.log(categoryData)
-      console.log(levelData)
-      console.log(problemData)
-      console.log(pointData)    
+      // let res4 =await getPointStackGraph(nickname);
+      // setData4(res4); 
 
     }
     getAxios()
@@ -65,16 +60,16 @@ function UserDashboard() {
       <div className={classes.graphTable}>
         <p>365일의 걸음, 푼 문제</p>
         <div className={classes.graph}>
-        <BoardLinearGraph/>
+        {/* <BoardLinearGraph/> */}
 
-          {/* <BoardLinearGraph items={problemData}/> */}
+          <BoardLinearGraph items={problemData}/>
         </div>
       </div>
 
       <div className={classes.graphTable}>
         <p>365일의 걸음, 누적 점수</p>
         <div className={classes.graph}>
-        <BoardLinearGraph/>
+        {/* <BoardLinearGraph/> */}
 
           {/* <BoardLinearGraph items={pointData}/> */}
         </div>
