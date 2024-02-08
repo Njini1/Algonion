@@ -1,4 +1,4 @@
-import { getProblem, getSubmissionCode } from "./submission.js";
+import { getProblem, getSubmissionCode, getProblemLevel } from "./submission.js";
 // import { bj_level } from "./variable.js"
 
 import { default as axios } from "axios";
@@ -38,11 +38,16 @@ export function saveData(table) {
     getProblem(baekjoonInfo.problemNum).then(res => {
         baekjoonInfo.problemTitle = res[0];
         baekjoonInfo.problemCategory = res[1];
-        baekjoonInfo.problemLevel = [res[2], res[2]];
     });
+    
+    getProblemLevel(baekjoonInfo.problemNum).then(res => {
+        baekjoonInfo.problemLevel = res;
+    });
+    // console.log(baekjoonInfo.problemTitle)
 }
 
 export function uploadData(data) {
+    console.log('업로드하는 데이터->', data)
     chrome.storage.sync.get(["access_token"], (res) => {
         axios.post(`${api}/v1/solved-problems/baekjoon`, data, { headers: { "Authorization": `Bearer ${res.access_token}` } })
             .then(res => {

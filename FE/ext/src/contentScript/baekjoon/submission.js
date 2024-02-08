@@ -64,13 +64,31 @@ export async function getProblem(problemNum) {
         const title = doc.querySelector("title").innerText.split(": ")[1];
         const categories = doc.querySelector(".spoiler-list").querySelectorAll("li");
         const category = Array.from(categories).map((category) => category.innerText.trim());
-        const level = doc.querySelector(".solvedac-tier").src.split("/tier/")[1].split(".svg")[0];
-        return [title, category, level]
+        return [title, category]
     }
 
     catch (err) {
         // console.log(err);
-        return [null, null, null]
+        return [null, null]
+    }
+
+}
+
+// 문제의 정보를 가져오는 함수
+export async function getProblemLevel(problemNum) {
+    const res = await fetch(`https://www.acmicpc.net/problem/${problemNum}`, {
+        method: 'GET',
+    })
+    
+    const doc = new DOMParser().parseFromString(await res.text(), "text/html");
+    try {
+        const level = doc.querySelector(".solvedac-tier").src.split("/tier/")[1].split(".svg")[0];
+        return level
+    }
+
+    catch (err) {
+        // console.log(err);
+        return null
     }
 
 }

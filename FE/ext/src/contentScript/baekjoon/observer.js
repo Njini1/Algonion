@@ -20,7 +20,7 @@ export function mutationObserver(lastResultCategory) {
 			saveData(correctResultTable);
 			uploadData(baekjoonInfo);
 			console.log("Judging Complete!!");
-			console.log(baekjoonInfo);
+			// console.log(baekjoonInfo);
 
 			observer.disconnect();
 		}
@@ -42,7 +42,7 @@ export function mutationObserver(lastResultCategory) {
 		uploadData(baekjoonInfo);
 
 	    console.log("already judged!!");
-	    console.log(baekjoonInfo);
+	    // console.log(baekjoonInfo);
 	}
 
 	return
