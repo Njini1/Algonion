@@ -14,7 +14,6 @@ export default function UserRecommendation() {
   useEffect(() => {
     async function getAxios(){
       let res =await getRecommendation();
-      // console.log('res', res)
       setData(res);
     }
     getAxios()
@@ -32,7 +31,6 @@ export default function UserRecommendation() {
       <div className="flex gap-4 items-center">
         <Button isIconOnly color="secondary" variant="faded" aria-label="refresh">
           <img src={getAsset('img/refresh.png')} alt="refresh-icon" />
-
         </Button>    
         {data.map((item: { siteName: string; problemNum: string; problemTitle: string; problemLevel: string; url: string; }, index: Key) => (
           <div key={index} className={classes.items}>

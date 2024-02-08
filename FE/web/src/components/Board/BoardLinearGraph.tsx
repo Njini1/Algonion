@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Chart from "react-apexcharts";
 
-function BoardLinearGraph(props) {
+function BoardLinearGraph() {
   const [state] = useState({
     options: {
       stroke: {

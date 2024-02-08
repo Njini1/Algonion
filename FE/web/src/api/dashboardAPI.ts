@@ -4,7 +4,7 @@ const api = import.meta.env.VITE_BACK_END;
 
 export const getLevelGraph = async (nickname: string) => {
    const results = await axios.get(`${api}/v1/dashboard/level-graph?nickname=${nickname}`);
-
+   console.log(results)
    return results.data
 };
 
