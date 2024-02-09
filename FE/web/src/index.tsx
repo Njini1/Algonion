@@ -1,26 +1,22 @@
-import React from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./index.css";
-import UserPage from "./pages/UserPage/UserPage.tsx";
-import CodeLogPage from "./pages/CodeLogPage/CodeLogPage.tsx";
-import CodeLogDetailPage from "./pages/CodeLogDetailPage/CodeLogDetailPage.tsx";
-import SearchPage from "./pages/SearchPage/SearchPage.tsx";
-import CommunityPage from "./pages/CommunityPage/CommunityPage.tsx";
-import RoomDetailPage from "./pages/RoomDetailPage/RoomDetailPage.tsx";
-import MainPage from "./pages/MainPage/MainPage.tsx";
-import LoginSuccessPage from "./pages/LoginSuccessPage/LoginSuccessPage.tsx";
 
+
+const UserPage = lazy(() => import('./pages/UserPage/UserPage.tsx'))
+const CodeLogPage = lazy(() => import('./pages/CodeLogPage/CodeLogPage.tsx'))
+const CodeLogDetailPage = lazy(() => import('./pages/CodeLogDetailPage/CodeLogDetailPage.tsx'))
+const SearchPage = lazy(() => import('./pages/SearchPage/SearchPage.tsx'))
+const CommunityPage = lazy(() => import('./pages/CommunityPage/CommunityPage.tsx'))
+const RoomDetailPage = lazy(() => import('./pages/RoomDetailPage/RoomDetailPage.tsx'))
+const LoginSuccessPage = lazy(() => import('./pages/LoginSuccessPage/LoginSuccessPage.tsx'))
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-  {
-    path: "/mainpage",
-    element: <MainPage />,
   },
   {
     path: "/profile/:username",
