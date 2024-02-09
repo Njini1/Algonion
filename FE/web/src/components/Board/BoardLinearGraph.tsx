@@ -1,34 +1,43 @@
 // https://apexcharts.com/docs/react-charts/
 import { useState } from "react";
+
+// import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
 function BoardLinearGraph(props: any) {
   console.log(props);
-  console.log(JSON.parse(props));
-
+  // const [states, setState] = useState(); 
   
-  // const [state] = useState({
-  //   options: {
-  //     stroke: {
-  //       curve: 'stepline' as 'stepline',
-  //       width: 2,
-  //     },
-  //     chart: {
-  //       id: "basic-bar",
-  //     },
-  //     xaxis: {
-  //       categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
-  //     },
-  //     colors: ['#9f22ff']
-  //   },
-  //   series: [
-  //     {
-  //       name: "points",
-  //       data: [30, 40, 45, 50, 49, 60, 70, 91]
-  //     },
-  //   ],
-  // })
-  const [state] = useState(JSON.parse(props))
+  // useEffect(() => {
+  //   if (props.items !== undefined) {
+  //     // console.log(JSON.parse(props.items));
+  //     setState(props.items);
+
+  //     // console.log(props.items)
+  //   }
+  // }, [props.items]); 
+  
+  const [state] = useState({
+    options: {
+      stroke: {
+        curve: 'stepline' as 'stepline',
+        width: 2,
+      },
+      chart: {
+        id: "basic-bar",
+      },
+      xaxis: {
+        categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+      },
+      colors: ['#9f22ff']
+    },
+    series: [
+      {
+        name: "points",
+        data: [30, 40, 45, 50, 49, 60, 70, 91]
+      },
+    ],
+  })
 
   return (<div className="app">
     <div className="row">

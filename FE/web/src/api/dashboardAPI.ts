@@ -4,7 +4,7 @@ const api = import.meta.env.VITE_BACK_END;
 
 export const getLevelGraph = async (nickname: string) => {
    const results = await axios.get(`${api}/v1/dashboard/level-graph?nickname=${nickname}`);
-   console.log("예진", results)
+   // console.log("예진", results.data)
    return results.data
 };
 
@@ -16,7 +16,7 @@ export const getCategoryGraph = async (nickname: string) => {
 
 export const getProblemStackGraph = async (nickname: string) => {
    const results = await axios.get(`${api}/v1/dashboard/problem-stack?nickname=${nickname}`);
-   console.log("유진",results)
+   // console.log("유진",results.data)
 
    return results.data
 };
