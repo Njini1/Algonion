@@ -2,9 +2,25 @@
 import {CardHeader, CardBody, CardFooter, Button, Card} from "@nextui-org/react";
 // import classes from "./UserSolvedProblem.module.scss"
 import UserProblem from './UserProblem'
+import { getSolved100 } from "../../api/mainInfoAPI";
+
 import classes from './UserSolvedProblem.module.scss'
+import { useEffect, useState } from "react";
 
 function UserSolvedProblem() {
+  const nickname = '뛰어난 코더';
+  
+  const [problems, setProblems] = useState();
+  
+  useEffect(() => {
+    async function getAxios(){
+      let res =await getSolved100(nickname);
+      setProblems(res);
+    }
+    getAxios()
+  }, []);
+
+
   return (
     <Card className={`'max' ${classes['solved100-container']}`}>
       <CardHeader className="justify-between">
@@ -31,7 +47,7 @@ function UserSolvedProblem() {
         </p>
         <span className="pt-2">
           여기에 문제 풀 때마다 표시<br />
-          <UserProblem/>
+          <UserProblem items={problems}/>
         </span>
       </CardBody>
       <CardFooter className="gap-3">

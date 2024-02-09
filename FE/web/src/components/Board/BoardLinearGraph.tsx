@@ -1,8 +1,22 @@
 // https://apexcharts.com/docs/react-charts/
 import { useState } from "react";
+
+// import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
-function BoardLinearGraph() {
+function BoardLinearGraph(props: any) {
+  console.log(props);
+  // const [states, setState] = useState(); 
+  
+  // useEffect(() => {
+  //   if (props.items !== undefined) {
+  //     // console.log(JSON.parse(props.items));
+  //     setState(props.items);
+
+  //     // console.log(props.items)
+  //   }
+  // }, [props.items]); 
+  
   const [state] = useState({
     options: {
       stroke: {
@@ -24,7 +38,6 @@ function BoardLinearGraph() {
       },
     ],
   })
-
 
   return (<div className="app">
     <div className="row">

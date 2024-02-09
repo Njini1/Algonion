@@ -1,8 +1,18 @@
+// import { useEffect, useState } from 'react';
 import classes from './UserProblem.module.scss'
 
 
-export default function problem100 () {
+export default function problem100(props: any) {
+  console.log(props)
+  // const [problems, setProblems] = useState(); 
   
+  // useEffect(() => {
+  //   if (props.items !== undefined) {
+  //     setProblems(props.items);
+  //     console.log(props.items)
+  //   }
+  // }, [props.items]); 
+
   // function goToProblem(problemId: number) {
     //   window.location.href=`https://www.acmicpc.net/problem/${problemId}`
     // }
