@@ -1,37 +1,32 @@
-import { useState } from 'react';
+// src/Tiptap.jsx
+import { useEditor, EditorContent, FloatingMenu, BubbleMenu } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+import classes from "./CodeLogMemo.module.scss"
+// define your extension array
+const extensions = [
+  StarterKit,
+]
 
-import classes from './CodeLogMemo.module.scss'
+const content = '<h1>📝메모</h1><h2>문제 요약</h2><p></p><p></p><h2>사용한 알고리즘</h2><ul><li></li><li></li></ul><h2>풀이</h2>'
 
-function CodeLogMemo() {
-  const [content, setContent] = useState("");
-  const [isEditable, setIsEditable] = useState(false);
+const Tiptap = () => {
+  const editor = useEditor({
+    extensions,
+    content,
+    onUpdate({ editor }) {
+      // 내용이 업데이트 되었을 때
+      const html = editor.getHTML();
+      console.log(html);
+    },
+  })
 
-  const textarea = document.querySelector('textarea')!;
-
-  const handleEditClick = () => {
-    setIsEditable(true);
-  };
-
-  const handleSaveClick = () => {
-    setIsEditable(false);
-  };
-
-  return (    
-    <div className={classes.container}>
-      <textarea
-        className={classes.memo}
-        value={content}
-        onChange={(e) => {
-          setContent(e.target.value);
-          textarea.style.height = 'auto';
-          textarea.style.height = textarea.scrollHeight + 'px';
-        }}
-        readOnly={!isEditable}
-      />
-      <button onClick={handleEditClick} style={{ display: isEditable ? 'none' : 'block' }} className={classes.editButton}>수 정</button>
-      <button onClick={handleSaveClick} style={{ display: isEditable ? 'block' : 'none' }} className={classes.saveButton}>확 인</button>
+  return (
+    <div className={classes.editor}>
+      <EditorContent editor={editor} />
+      <FloatingMenu editor={editor ? editor : undefined}> </FloatingMenu>
+      <BubbleMenu editor={editor ? editor : undefined}> </BubbleMenu>
     </div>
-    )
+  )
 }
-  
-export default CodeLogMemo
+
+export default Tiptap
