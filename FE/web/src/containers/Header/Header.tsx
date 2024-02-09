@@ -94,6 +94,9 @@ export default function Header() {
 
               </DropdownTrigger>
               <DropdownMenu variant="flat" aria-label="Dropdown menu with shortcut">
+                <DropdownItem key="change-nickname">
+                  닉네임 변경
+                </DropdownItem>
                 <DropdownItem key="log-out">
                   로그아웃
                 </DropdownItem>
