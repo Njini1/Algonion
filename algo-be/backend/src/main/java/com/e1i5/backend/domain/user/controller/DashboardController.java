@@ -23,8 +23,8 @@ public class DashboardController {
      * @return 난이도 상위 100문제 리스트 반환
      */
     @GetMapping("/top100")
-    public ResponseEntity<List<DashBoardProblemListResponse>> getProblemsByNickname(@RequestParam("nickname") String nickname) {
-        List<DashBoardProblemListResponse> problemsList = dashboardService.getProblemsByNickname(nickname);
+    public ResponseEntity<List<DashBoardProblemListResponse>> getTop100ProblemsByNickname(@RequestParam("nickname") String nickname) {
+        List<DashBoardProblemListResponse> problemsList = dashboardService.getTop100ProblemsByNickname(nickname);
         return new ResponseEntity<>(problemsList, HttpStatus.OK);
     }
 

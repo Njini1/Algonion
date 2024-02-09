@@ -38,17 +38,16 @@ public class DashboardServiceImpl implements DashboardService {
 
 
     @Override
-    public List<DashBoardProblemListResponse> getProblemsByNickname(String nickname) {
+    public List<DashBoardProblemListResponse> getTop100ProblemsByNickname(String nickname) {
         int userId = getUserIdByNickname(nickname);
 
-        List<Problem> solvedProblemsList = dashboardRepo.findProblemsByNicknameOrderedByLevel(userId);
+        List<Problem> solvedProblemsList = dashboardRepo.findProblemsByNicknameOrderedByAlgoScore(userId);
 
         // Entity를 Response로 변환
-        List<DashBoardProblemListResponse> responseList = solvedProblemsList.stream()
+
+        return solvedProblemsList.stream()
                 .map(DashBoardProblemListResponse::new)
                 .collect(Collectors.toList());
-
-        return responseList;
     }
 
     @Override
