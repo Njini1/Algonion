@@ -95,8 +95,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
 
         SolvedProblem solvedProblemEntity = solvedProblemReq.toSolvedProblemEntity();
         solvedProblemEntity.updateUserAndProblem(user, problem);
-        solvedProblemRepo.save(solvedProblemEntity);
         dashboardService.updateUserScore(userId, problem.getProblemId(), oldAlgoScore);
+        solvedProblemRepo.save(solvedProblemEntity);
     }
 
     /**

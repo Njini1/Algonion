@@ -11,7 +11,8 @@ import java.util.Optional;
 
 public interface UserInfoRepository extends JpaRepository<User, Integer> {
     Optional<User> findByNickname(String nickname);
-    Integer findUserScoreByUserId(int userId);
+    @Query("SELECT u.userScore FROM User u WHERE u.userId = :userId")
+    Integer findUserScoreByUserId(@Param("userId") int userId);
     @Modifying
     @Query("UPDATE User u SET u.userScore = :newScore WHERE u.userId = :userId")
     void updateUserScore(@Param("userId") int userId, @Param("newScore") int newScore);

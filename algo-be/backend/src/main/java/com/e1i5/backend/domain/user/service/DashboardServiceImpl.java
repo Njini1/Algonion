@@ -93,11 +93,8 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Transactional
     public void updateUserScore(int userId, int problemId, int oldAlgoScore) {
-        System.out.println("DashboardServiceImpl" + userId + problemId + oldAlgoScore);
         boolean isProblemSolvedByUser = solvedProblemRepo.existsByUser_UserIdAndProblem_ProblemId(userId, problemId);
-        System.out.println("isProblemSolvedByUser" + isProblemSolvedByUser);
         int userScore = userInfoRepo.findUserScoreByUserId(userId);
-        System.out.println("userScore" + userScore);
         int algoScore = problemRepo.findAlgoScoreByProblemId(problemId);
         if (!isProblemSolvedByUser) {
             // 사용자가 해당 문제를 푼 적이 없는 경우
