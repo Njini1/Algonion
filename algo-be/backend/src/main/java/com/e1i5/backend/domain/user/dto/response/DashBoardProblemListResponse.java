@@ -12,6 +12,8 @@ public class DashBoardProblemListResponse {
     private String problemNum;
     private String problemTitle;
     private String problemLevel;
+    private int algoScore;
+    private String siteName;
     private String url;
 
     @Builder
@@ -20,6 +22,8 @@ public class DashBoardProblemListResponse {
         this.problemNum = problem.getProblemNum();
         this.problemTitle = problem.getProblemTitle();
         this.problemLevel = problem.getProblemLevel();
+        this.algoScore = problem.getAlgoScore();
+        this.siteName = problem.getSiteName();
         this.url = problem.getUrl();
     }
 }

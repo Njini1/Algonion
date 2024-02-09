@@ -46,11 +46,13 @@ public class User{
 
 
     @Builder
-    public User(String nickname, String email, LocalDate regDate, int tier) {
+    public User(int userId, String nickname, String email, LocalDate regDate, int tier, int userScore) {
+        this.userId = userId;
         this.nickname = nickname;
         this.email = email;
         this.regDate = regDate;
         this.tier = 0;
+        this.userScore = userScore;
     }
 
     public void updateNickname(String nickname) {

@@ -38,17 +38,16 @@ public class DashboardServiceImpl implements DashboardService {
 
 
     @Override
-    public List<DashBoardProblemListResponse> getProblemsByNickname(String nickname) {
+    public List<DashBoardProblemListResponse> getTop100ProblemsByNickname(String nickname) {
         int userId = getUserIdByNickname(nickname);
 
-        List<Problem> solvedProblemsList = dashboardRepo.findProblemsByNicknameOrderedByLevel(userId);
+        List<Problem> solvedProblemsList = dashboardRepo.findProblemsByNicknameOrderedByAlgoScore(userId);
 
         // Entity를 Response로 변환
-        List<DashBoardProblemListResponse> responseList = solvedProblemsList.stream()
+
+        return solvedProblemsList.stream()
                 .map(DashBoardProblemListResponse::new)
                 .collect(Collectors.toList());
-
-        return responseList;
     }
 
     @Override
@@ -91,22 +90,22 @@ public class DashboardServiceImpl implements DashboardService {
                 .getUserId();
     }
 
-//    @Transactional
-//    public void updateUserScore(int userId, int problemId, int algoScore) {
-//        boolean isProblemSolvedByUser = solvedProblemRepo.existsByUserIdAndProblemId(userId, problemId);
-//        int userScore = userInfoRepo.findUserScoreByUserId(userId);
-//        if (!isProblemSolvedByUser) {
-//            // 사용자가 해당 문제를 푼 적이 없는 경우
-//            userInfoRepo.updateUserScore(userId, userScore + algoScore);
-//        } else {
-//            // 사용자가 해당 문제를 이미 푼 경우
-//            int oldAlgoScore = problemRepo.findAlgoScoreByProblemId(problemId);
-//            if (oldAlgoScore != algoScore) {
-//                // 알고리즘 점수가 변경된 경우
-//                userInfoRepo.updateUserScore(userId, userScore + (algoScore - oldAlgoScore));
-//            }
-//        }
-//    }
+    @Transactional
+    public void updateUserScore(int userId, int problemId, int oldAlgoScore) {
+        boolean isProblemSolvedByUser = solvedProblemRepo.existsByUser_UserIdAndProblem_ProblemId(userId, problemId);
+        int userScore = userInfoRepo.findUserScoreByUserId(userId);
+        int algoScore = problemRepo.findAlgoScoreByProblemId(problemId);
+        if (!isProblemSolvedByUser) {
+            // 사용자가 해당 문제를 푼 적이 없는 경우
+            userInfoRepo.updateUserScore(userId, userScore + algoScore);
+        } else {
+            // 사용자가 해당 문제를 이미 푼 경우
+            if (oldAlgoScore != algoScore) {
+                // 알고리즘 점수가 변경된 경우
+                userInfoRepo.updateUserScore(userId, userScore + (algoScore - oldAlgoScore));
+            }
+        }
+    }
 
 
 

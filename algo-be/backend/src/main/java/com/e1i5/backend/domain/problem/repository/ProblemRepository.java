@@ -12,7 +12,8 @@ import java.util.Optional;
 
 public interface ProblemRepository extends JpaRepository<Problem, Integer> {
     Optional<Problem> findByProblemNumAndSiteName(String problemNum, String siteName);
-//    Integer findAlgoScoreByProblemId(int problemId);
+    @Query("SELECT p.algoScore FROM Problem p WHERE p.problemId = :problemId")
+    Integer findAlgoScoreByProblemId(@Param("problemId") int problemId);
     @Query("SELECT new com.e1i5.backend.domain.problem.response.ProblemResponse(" +
             "p.siteName, p.problemNum, p.problemTitle, p.problemLevel, p.url) " +
             "FROM Problem p " +
