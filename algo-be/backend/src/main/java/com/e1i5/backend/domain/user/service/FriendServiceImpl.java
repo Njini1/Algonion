@@ -11,7 +11,9 @@ import com.e1i5.backend.global.error.GlobalErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FriendServiceImpl implements FriendService{
@@ -36,7 +38,24 @@ public class FriendServiceImpl implements FriendService{
     public List<FriendListInterfaceResponse> listFriendship(int userId) {
         // 리스트가 비었을 경우 isEmpty 처리
         // 높은 등급 순위대로 티어, 닉네임, 점수, 푼 문제수?
-        List<FriendListInterfaceResponse> friends = friendRepo.getFriendInfoByFriendId(userId);
+        List<FriendListInterfaceResponse> friends = new ArrayList<>();
+        friends = friendRepo.getFriendInfoByFriendId(userId);
+
+        return friends;
+    }
+
+    @Override
+    public List<FriendListInterfaceResponse> searchNickname(String nickname) {
+
+        List<FriendListInterfaceResponse> friends = new ArrayList<>();
+
+        friends = authRepo.findByNicknameContaining(nickname);
+        for (FriendListInterfaceResponse f : friends) {
+            System.out.println(f);
+        }
+
+        if (friends.isEmpty()) return friends;
+
         return friends;
     }
 

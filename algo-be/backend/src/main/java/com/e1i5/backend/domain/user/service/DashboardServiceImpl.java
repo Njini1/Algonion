@@ -134,7 +134,7 @@ public class DashboardServiceImpl implements DashboardService {
      * @param nickname 원하는 사용자의 그래프
      * @return 날짜 배열과 누적 합 배열을 담은 스트링 반환
      */
-    public String makeAccumulatedNumGraph(String nickname) {
+    public AccCountGraphResponse makeAccumulatedNumGraph(String nickname) {
 
         int totalDays = 365;
 
@@ -165,16 +165,20 @@ public class DashboardServiceImpl implements DashboardService {
             countSum += dateList.get(startDate.plusDays(i).toString());
             data[i] = countSum;
         }
-
+//
+//        AccCountGraphResponse graphData = AccCountGraphResponse.builder()
+//                .width(2)
+//                .curve("stepline")
+//                .chartId("basic-bar")
+//                .colors("#9f22ff")
+//                .data(Arrays.toString(data))
+//                .categories(Arrays.toString(categories)).build();
         AccCountGraphResponse graphData = AccCountGraphResponse.builder()
-                .width(2)
-                .curve("stepline")
-                .chartId("basic-bar")
-                .colors("#9f22ff")
-                .data(Arrays.toString(data))
-                .categories(Arrays.toString(categories)).build();
+                .categories(categories)
+                .data(data)
+                .build();
 
-        return graphData.toString();
+        return graphData;
     }
 
     /**
