@@ -4,6 +4,7 @@ import com.e1i5.backend.domain.user.dto.response.FriendListInterfaceResponse;
 import com.e1i5.backend.domain.user.dto.response.FriendListResponse;
 import com.e1i5.backend.domain.user.service.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,5 +40,11 @@ public class FriendshipController {
     private ResponseEntity<String> exceptionHandling(Exception e) {
         e.printStackTrace();
         return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @GetMapping("/{nickname}")
+    public ResponseEntity<?> searchUser(@PathVariable("nickname") String nickname) {
+        List<FriendListInterfaceResponse> friends = friendService.searchNickname(nickname);
+        return new ResponseEntity<>(friends, HttpStatus.OK);
     }
 }

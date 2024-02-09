@@ -1,5 +1,6 @@
 package com.e1i5.backend.domain.user.controller;
 
+import com.e1i5.backend.domain.user.dto.response.AccCountGraphResponse;
 import com.e1i5.backend.domain.user.dto.response.AlgoScoreCountResponse;
 import com.e1i5.backend.domain.user.dto.response.DashBoardProblemListResponse;
 import com.e1i5.backend.domain.user.service.DashboardService;
@@ -45,7 +46,8 @@ public class DashboardController {
      */
     @GetMapping("/problem-stack")
     public ResponseEntity<?> getProblemCountSum(@RequestParam("nickname") String nickname) {
-        String graphData = dashboardService.makeAccumulatedNumGraph(nickname);
+        AccCountGraphResponse graphData = dashboardService.makeAccumulatedNumGraph(nickname);
+        System.out.println("그래프 : " + graphData);
         return new ResponseEntity<>(graphData, HttpStatus.OK);
     }
 
