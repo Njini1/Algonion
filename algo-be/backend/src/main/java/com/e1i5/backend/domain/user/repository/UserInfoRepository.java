@@ -16,5 +16,8 @@ public interface UserInfoRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query("UPDATE User u SET u.userScore = :newScore WHERE u.userId = :userId")
     void updateUserScore(@Param("userId") int userId, @Param("newScore") int newScore);
+    @Modifying
+    @Query("UPDATE User u SET u.tier = :newTier WHERE u.userId = :userId")
+    void updateUserTier(@Param("userId") int userId, @Param("newTier") int newTier);
 
 }

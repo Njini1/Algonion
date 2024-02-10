@@ -11,6 +11,7 @@ import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.repository.DashboardRepository;
 import com.e1i5.backend.domain.user.repository.UserInfoRepository;
+import com.e1i5.backend.global.util.TierUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,9 +106,15 @@ public class DashboardServiceImpl implements DashboardService {
                 userInfoRepo.updateUserScore(userId, userScore + (algoScore - oldAlgoScore));
             }
         }
+        updateUserTier(userId);
     }
 
 
+    @Transactional
+    public void updateUserTier(int userId) {
+        int userScore = userInfoRepo.findUserScoreByUserId(userId);
+        userInfoRepo.updateUserTier(userId, TierUtil.calculateTier(userScore));
+    }
 
     /**
      * 스트릭 만드는 메서드
