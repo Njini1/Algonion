@@ -1,8 +1,7 @@
 package com.e1i5.backend.global.jwt;
 
 import com.e1i5.backend.global.error.GlobalErrorCode;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.*;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,48 +32,58 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("토큰 인증 필터 구간");
-        // 요청 헤더의 Authorization 키의 값 조회
-        // 방법 1
-//        String token = getAccessToken(request);
-
-        // 방법 2
         String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
         String token = getAccessToken(authorizationHeader);
 
-
-        // 가져온 토큰이 유효한지 확인하고, 유효한 때는 인증 정보 설정
-//        TokenValidResultResponse tokenValidResultResponse = tokenProvider.validateToken(token);
-//        if (tokenProvider.validateToken(token)) {
-//            Authentication authentication = tokenProvider.getAuthentication(token);
-//            SecurityContextHolder.getContext().setAuthentication(authentication); // 인증 정보 설정
-//            System.out.println("인증 정보 설정 : " + authentication.getName());
-//        } else {
-//            log.error(tokenValidResultResponse.getErrMsg());
-//            // SecurityConfig에서 addFilterAfter 코드를 http.addFilterAfter(tokenAuthenticationFilter(), BasicAuthenticationFilter.class);로 바꾸면 사용가능
-////            response.sendError(tokenValidResultResponse.getStatusCode(), tokenValidResultResponse.getErrMsg());
-////            return;
-//        }
         Claims claims;
         try {
             claims = tokenProvider.getClaims(token);
-        } catch (ExpiredJwtException e) {
-            log.error("expired access token", e.getMessage());
-            response.sendError(401, "토큰 만료");
-//            request.setAttribute("exception", "토큰 만료");
-//            filterChain.doFilter(request, response);
+        } catch (SignatureException ex) {
+            log.error("Unsupported Signature");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
             return;
+         } catch (MalformedJwtException ex) {
+            log.error("Invalid JWT token");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
+            return;
+        } catch (ExpiredJwtException ex) {
+            log.error("Expired JWT token");
+            // access token이 만료됐을 때
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
+//            response.sendError(GlobalErrorCode.TOKEN_EXPIRED.getStatus(), GlobalErrorCode.TOKEN_EXPIRED.getMessage());
+            return;
+        } catch (UnsupportedJwtException ex) {
+            log.error("Unsupported JWT token");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
+            return;
+        } catch (IllegalArgumentException ex) {
+            log.error("JWT claims string is empty.");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
+            return;
+        } catch (Exception ex) {
+            log.error(ex.toString());
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+            return;
+    }
 
-//            log.error("Expired JWT token");
-//            // access token이 만료됐을 때
-//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+//        catch (ExpiredJwtException e) {
+//            log.error("expired access token", e.getMessage());
+//            response.sendError(401, "토큰 만료");
+////            request.setAttribute("exception", "토큰 만료");
+////            filterChain.doFilter(request, response);
 //            return;
-
-        } catch (Exception e) {
-            log.info("jwt exception message : {} token : {}", e.getMessage(), token);
-            response.sendError(401, "유효하지 않은 토큰");
-//            filterChain.doFilter(request, response);
-            return;
-        }
+//
+////            log.error("Expired JWT token");
+////            // access token이 만료됐을 때
+////            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+////            return;
+//
+//        } catch (Exception e) {
+//            log.info("jwt exception message : {} token : {}", e.getMessage(), token);
+//            response.sendError(401, "유효하지 않은 토큰");
+////            filterChain.doFilter(request, response);
+//            return;
+//        }
 
         Authentication authentication = tokenProvider.getAuthentication(token);
         SecurityContextHolder.getContext().setAuthentication(authentication); // 인증 정보 설정
@@ -86,7 +95,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
      * @param
      * @return 토큰값
      */
-
     private String getAccessToken(String authorizationHeader) {
         if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
             return authorizationHeader.substring(TOKEN_PREFIX.length());

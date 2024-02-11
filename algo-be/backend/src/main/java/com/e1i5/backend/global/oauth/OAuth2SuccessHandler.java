@@ -38,21 +38,18 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
 
-        System.out.println("로그인 유저 값: "+oAuth2User.toString());
         System.out.println("로그인한 유저 email: " + oAuth2User.getEmail());
-//        System.out.println("로그인한 유저 email: " + oAuth2User.getAttributes().get("email"));
         User user = userService.findByEmail(oAuth2User.getEmail());
 
         // 리프레시 토큰 생성 -> 저장 -> 쿠키에 사용
         String refreshToken = tokenProvider.createRefreshToken(user);
 
-        addRefreshTokenToCookie(request, response, refreshToken); //TODO ResponseCookie 변경
+        addRefreshTokenToCookie(request, response, refreshToken);
         //액세스 토큰 생성 -> 패스에 액세스 토큰 추가
         String accessToken = tokenProvider.createAccessToken(user);
         addAccessTokenToCookie(request, response, accessToken);
 
         String targetUrl = getTargetUrl();
-//        String targetUrl = getTargetUrl(accessToken);
         // 인증 관련 설정값, 쿠키 제거
         clearAuthenticationAttributes(request, response);
         // 리다이렉트
@@ -88,10 +85,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     // 액세스 토큰을 패스에 추가
-//    private String getTargetUrl(String token) {
     private String getTargetUrl() {
         return UriComponentsBuilder.fromUriString(REDIRECT_PATH)
-//                .queryParam("token", token)
                 .build()
                 .toUriString();
     }
