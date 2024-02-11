@@ -11,18 +11,19 @@ import com.e1i5.backend.global.oauth.OAuth2UserCustomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true) // @PreAuthorize, @PreFilter /@PostAuthorize, @PostFilter어노테이션 활성화 여부
 public class SecurityConfig{
     private final OAuth2UserCustomService oAuth2UserCustomService;
     private final TokenProvider tokenProvider;
@@ -47,20 +48,23 @@ public class SecurityConfig{
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
-//        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(tokenAuthenticationFilter(), BasicAuthenticationFilter.class); // filter의 에러값을 받을 수 있음
+//        http.addFilterBefore(tokenAuthenticationFilter(), BasicAuthenticationFilter.class); // filter의 에러값을 받을 수 있음
 //        http.addFilterBefore(new TokenAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), tokenProvider), BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
-                .requestMatchers("/login-test").authenticated()
-                .requestMatchers("/v1/user/login-test").authenticated()
-                .requestMatchers("/v1/solved-problems/programmers").authenticated()
-                .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
-                .requestMatchers("/v1/profile/ext").authenticated()
-                .requestMatchers("/v1/user/token").permitAll()
-                .requestMatchers("/ext").authenticated();
+//                .anyRequest().permitAll();
+//                .requestMatchers("/login-test").permitAll();
+                .requestMatchers("/login-test").authenticated();
+//                .requestMatchers("/v1/user/login-test").authenticated()
+//                .requestMatchers("/v1/solved-problems/programmers").authenticated()
+//                .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
+//                .requestMatchers("/v1/profile/ext").authenticated()
+//                .requestMatchers("/v1/user/token").permitAll()
+//                .requestMatchers("/ext").authenticated();
 
+//        http.addFilterBefore(tokenAuthenticationFilter(), BasicAuthenticationFilter.class);
+        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);
         http.oauth2Login()
                 .authorizationEndpoint()
                 .authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository())
