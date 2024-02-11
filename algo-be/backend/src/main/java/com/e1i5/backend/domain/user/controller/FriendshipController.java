@@ -27,12 +27,9 @@ public class FriendshipController {
     @PostMapping()
     public ResponseEntity<?> makeFriendship(@RequestParam String nickname, Principal principal) {
         int userId = Integer.parseInt(principal.getName());
-        try {
-            friendService.addFriend(userId, nickname);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return exceptionHandling(e);
-        }
+        friendService.addFriend(userId, nickname);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
@@ -70,10 +67,5 @@ public class FriendshipController {
         int userId = Integer.parseInt(principal.getName());
         friendService.cancelFriendship(userId, nickname);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    private ResponseEntity<String> exceptionHandling(Exception e) {
-        e.printStackTrace();
-        return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
