@@ -1,6 +1,8 @@
 package com.e1i5.backend.global.jwt;
 
+import com.e1i5.backend.global.error.GlobalErrorCode;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,16 +57,22 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         Claims claims;
         try {
             claims = tokenProvider.getClaims(token);
-        } /*catch (ExpiredJwtException e) {
-            log.error("expired access token", e);
+        } catch (ExpiredJwtException e) {
+            log.error("expired access token", e.getMessage());
             response.sendError(401, "토큰 만료");
-//            request.setAttribute("exception", GlobalErrorCode.TOKEN_EXPIRED);
-            filterChain.doFilter(request, response);
+//            request.setAttribute("exception", "토큰 만료");
+//            filterChain.doFilter(request, response);
             return;
 
-        }*/ catch (Exception e) {
+//            log.error("Expired JWT token");
+//            // access token이 만료됐을 때
+//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+//            return;
+
+        } catch (Exception e) {
             log.info("jwt exception message : {} token : {}", e.getMessage(), token);
-            filterChain.doFilter(request, response);
+            response.sendError(401, "유효하지 않은 토큰");
+//            filterChain.doFilter(request, response);
             return;
         }
 

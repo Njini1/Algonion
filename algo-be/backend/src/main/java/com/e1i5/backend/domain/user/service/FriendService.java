@@ -8,9 +8,9 @@ import java.util.List;
 public interface FriendService {
     /**
      * 2. 친구 취소
-     * 4. 친구 검색
      */
     void addFriend(int userId, String friendNickname);
     List<FriendListInterfaceResponse> listFriendship(int userId);
     List<FriendListInterfaceResponse> searchNickname(String nickname);
+    void cancelFriendship(int userId, String friendNickname);
 }

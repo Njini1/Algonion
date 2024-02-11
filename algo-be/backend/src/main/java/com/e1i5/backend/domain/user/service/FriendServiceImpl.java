@@ -25,18 +25,23 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public void addFriend(int userId, String friendNickname) {
-        User friend = getUserByNickname(friendNickname);
         User user = getUserByUserId(userId);
+        User friend = getUserByNickname(friendNickname);
 
-        friendRepo.save(Friend.builder()
-                .user(user)
-                .friend(friend).build());
+        boolean friendship = friendRepo.existsByUserAndFriend(user, friend);
 
+        if (!friendship) {
+            Friend friendEntity = Friend.builder()
+                    .user(user)
+                    .friend(friend)
+                    .build();
+
+            friendRepo.save(friendEntity);
+        }
     }
 
     @Override
     public List<FriendListInterfaceResponse> listFriendship(int userId) {
-        // 리스트가 비었을 경우 isEmpty 처리
         // 높은 등급 순위대로 티어, 닉네임, 점수, 푼 문제수?
         List<FriendListInterfaceResponse> friends = new ArrayList<>();
         friends = friendRepo.getFriendInfoByFriendId(userId);
@@ -46,17 +51,20 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public List<FriendListInterfaceResponse> searchNickname(String nickname) {
-
-        List<FriendListInterfaceResponse> friends = new ArrayList<>();
-
-        friends = authRepo.findByNicknameContaining(nickname);
-        for (FriendListInterfaceResponse f : friends) {
-            System.out.println(f);
-        }
-
-        if (friends.isEmpty()) return friends;
+        // 로그인한 사람과 친구 관계 여부도 추가 고려
+        List<FriendListInterfaceResponse> friends = authRepo.findByNicknameContaining(nickname);
 
         return friends;
+    }
+
+    @Override
+    public void cancelFriendship(int userId, String friendNickname) {
+        User user = getUserByUserId(userId);
+        User friend = getUserByNickname(friendNickname);
+
+        Optional<Friend> friendship = friendRepo.findByUserAndFriend(user, friend);
+
+        friendship.ifPresent(value -> friendRepo.delete(value));
     }
 
     private User getUserByNickname(String nickname) {

@@ -2,11 +2,13 @@ package com.e1i5.backend.domain.user.repository;
 
 import com.e1i5.backend.domain.user.dto.response.FriendListInterfaceResponse;
 import com.e1i5.backend.domain.user.entity.Friend;
+import com.e1i5.backend.domain.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FriendRepository extends JpaRepository<Friend, Integer> {
 
@@ -20,4 +22,8 @@ public interface FriendRepository extends JpaRepository<Friend, Integer> {
             "JOIN fr.friend u " +
             "WHERE fr.user.userId = :userId")
     List<FriendListInterfaceResponse> getFriendInfoByFriendId(@Param("userId") int userId);
+
+    boolean existsByUserAndFriend(User user, User friend);
+
+    Optional<Friend> findByUserAndFriend(User user, User friend);
 }
