@@ -1,4 +1,5 @@
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
+
 import classes from './SearchResults.module.scss'
 
 const rows = [
