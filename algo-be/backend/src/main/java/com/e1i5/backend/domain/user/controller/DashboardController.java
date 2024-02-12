@@ -45,7 +45,7 @@ public class DashboardController {
      * @return
      */
     @GetMapping("/problem-stack")
-    public ResponseEntity<?> getProblemCountSum(@RequestParam("nickname") String nickname) {
+    public ResponseEntity<AccCountGraphResponse> getProblemCountSum(@RequestParam("nickname") String nickname) {
         AccCountGraphResponse graphData = dashboardService.makeAccumulatedNumGraph(nickname);
         System.out.println("그래프 : " + graphData);
         return new ResponseEntity<>(graphData, HttpStatus.OK);

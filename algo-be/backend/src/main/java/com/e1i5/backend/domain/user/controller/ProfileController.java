@@ -43,16 +43,16 @@ public class ProfileController {
 
     /**
      * 1년치 스트릭 만드는 메서드
-     * @param username
+     * @param nickname
      * @return 날짜와 그 날짜에 푼 문제 개수 리스트 반환
      */
     @GetMapping("/streak")
     public ResponseEntity<Map<String, Long>> getAllStreak(
-            @RequestParam("username") String username,
+            @RequestParam("nickname") String nickname,
             @RequestParam("from") String startDate,
             @RequestParam("to") String endDate) {
 
-        Map<String, Long> streakResponses = dashboardService.makeStreak(username, startDate, endDate);
+        Map<String, Long> streakResponses = dashboardService.makeStreak(nickname, startDate, endDate);
 
         return new ResponseEntity<>(streakResponses, HttpStatus.OK);
     }
@@ -83,7 +83,7 @@ public class ProfileController {
      * @return 사용자 아이디, 티어, 점수, 프로필 이미지
      */
     @GetMapping()
-    public ResponseEntity<UserInfoResponse> getUserInfo(@Param("nickname") String nickname) {
+    public ResponseEntity<UserInfoResponse> getUserInfo(@RequestParam("nickname") String nickname) {
         //TODO 배경 이미지 추가
         UserInfoResponse user = profileService.getUserInfo(nickname);
 

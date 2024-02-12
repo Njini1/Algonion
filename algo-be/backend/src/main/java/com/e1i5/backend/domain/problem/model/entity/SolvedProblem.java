@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "solved_problem")
 @Getter
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SolvedProblem {
     @Id
@@ -80,46 +81,7 @@ public class SolvedProblem {
     }
 
     public void updateUserAndProblem(User user, Problem problem) {
-
         this.user = user;
         this.problem = problem;
-    }
-
-//    public void updateProblem(Problem problem) {
-//        this.problem = problem;
-//    }
-
-//    @Override
-//    public String toString() {
-//        return "SolvedProblem{" +
-//                "solvedProblemId=" + solvedProblemId +
-//                ", submissionId='" + submissionId + '\'' +
-//                ", user=" + user +
-//                ", problem=" + problem +
-//                ", language='" + language + '\'' +
-//                ", code='" + submissionCode + '\'' +
-//                ", memo='" + memo + '\'' +
-//                ", memory='" + memory + '\'' +
-//                ", runtime='" + runtime + '\'' +
-//                ", codeLength='" + codeLength + '\'' +
-//                ", submissionTime=" + submissionTime +
-//                ", visible=" + visible +
-//                '}';
-//    }
-
-    @Override
-    public String toString() {
-        return "SolvedProblem{" +
-                "solvedProblemId=" + solvedProblemId +
-                ", submissionId='" + submissionId + '\'' +
-                ", language='" + language + '\'' +
-                ", submissionCode='" + submissionCode + '\'' +
-                ", memo='" + memo + '\'' +
-                ", memory='" + memory + '\'' +
-                ", runtime='" + runtime + '\'' +
-                ", codeLength='" + codeLength + '\'' +
-                ", submissionTime=" + submissionTime +
-                ", visible=" + visible +
-                '}';
     }
 }

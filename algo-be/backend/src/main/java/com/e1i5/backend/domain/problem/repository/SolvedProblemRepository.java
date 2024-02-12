@@ -6,13 +6,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
 public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, Integer> {
 
     Optional<SolvedProblem> findBySubmissionId(String submissionId);
-    List<SolvedProblem> findAllByUser_UserIdAndVisible(int userId, boolean visible);
+//    List<SolvedProblem> findAllByUser_UserIdAndVisible(int userId, boolean visible);
+    List<SolvedProblem> findAllByUser_NicknameAndVisible(String nickname, boolean visibile, Pageable pageable);
     boolean existsByUser_UserIdAndProblem_ProblemId(int userId, int problemId);
 
     @Query("SELECT minTime AS submissionTime, COUNT(*) AS count " +

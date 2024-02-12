@@ -9,17 +9,17 @@ import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
-import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.entity.User;
+import com.e1i5.backend.domain.user.exception.UserNotFoundException;
 import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.domain.user.service.DashboardService;
+import com.e1i5.backend.global.error.GlobalErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +38,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     ProblemService problemService;
     @Autowired
     DashboardService dashboardService;
-
     @Autowired
     AuthRepository authRepo;
 
@@ -55,8 +54,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Transactional
     @Override
     public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
-        //TODO 사용자 정보 추가
-        //TODO submissionId로 제출 여부를 먼저 검사 후 문제 저장으로 변경
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
         // 임시방편 코드
         if (solvedProblemReq.getProblemLevel() == null) {
@@ -69,7 +66,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                 .ifPresentOrElse( //TODO orElseGet으로?
                         solvedProblem -> {
                             log.info("ProblemServiceImpl saveSolvedProblem already exist solvedProblem");
-                            System.out.println("이미 푼 문제가 존재");
                         },
                         () -> saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore)
                 );
@@ -78,7 +74,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Transactional
     @Override
     public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
-        //TODO 사용자 정보 추가
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
@@ -94,10 +89,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Override
     public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem, int oldAlgoScore) {
-        //TODO 문제번호 비교해서 점수 더하는 거도 추가해줘
-        //TODO solvedProblemReq말고 Entity로 바꾼 값으로 매개변수 받는 거로 변경? 고민
         User user = authRepo.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
         SolvedProblem solvedProblemEntity = solvedProblemReq.toSolvedProblemEntity();
         solvedProblemEntity.updateUserAndProblem(user, problem);
@@ -112,10 +105,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Transactional
     @Override
-    public SolvedProblemDetailResponse updateSolvedProblem(int solvedProblemId, String memo) {
+    public SolvedProblemDetailResponse updateSolvedProblem(int userId, int solvedProblemId, String memo) {
 
-        SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
-                .orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함")); //TODO 추후 상태코드로 변경
+        // checkAuth 로직 추가
+        SolvedProblem solvedProblem = checkAuth(userId, solvedProblemId);
 
         solvedProblem.updateMemo(memo);
         SolvedProblem saveProblem = solvedProblemRepo.save(solvedProblem);
@@ -130,8 +123,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Transactional
     @Override
-    public SolvedProblemDetailResponse updateVisibility(int solvedProblemId) {
-        //TODO 추후 상태코드로 변경
+    public SolvedProblemDetailResponse updateVisibility(int userId, int solvedProblemId) {
+        //TODO 추후 상태코드로 변경, checkAuth 로직 추가
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
                 .orElseThrow(() -> new SolvedProblemNotFoundException("사용자가 푼 문제 데이터를 찾지 못함"));
 
@@ -147,11 +140,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @return 사용자가 푼 문제 리스트
      */
     @Override
-    public List<SolvedProblemListResponse> getSolvedProblemListByUser() {
+    public List<SolvedProblemListResponse> getSolvedProblemListByUser(String nickname, Pageable pageable) {
         //TODO 페이징 처리
-        //TODO 사용자 정보 추가
         List<SolvedProblemListResponse> solvedProblemList = new ArrayList<>();
-        List<SolvedProblem> solvedProblemListEntity = solvedProblemRepo.findAllByUser_UserIdAndVisible(1, true);
+        List<SolvedProblem> solvedProblemListEntity = solvedProblemRepo.findAllByUser_NicknameAndVisible(nickname, true, pageable);
 
         if (solvedProblemListEntity.isEmpty()) return solvedProblemList;
 
@@ -178,7 +170,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @return 사용자가 푼 데이터와 문제 데이터
      */
     @Override
-    public SolvedProblemDetailResponse getSolvedProblemDetail(int username, int solvedProblemId) {
+    public SolvedProblemDetailResponse getSolvedProblemDetail(int solvedProblemId) {
 
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected solvedProblem"));
@@ -186,18 +178,12 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         return SolvedProblemDetailResponse.builder()
                 .solvedProblem(solvedProblem).build();
     }
+    
+    public SolvedProblem checkAuth(int userId, int solvedProblemId) {
+        SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected solvedProblem"));
 
-//    public List<String> makeDateList(int totalDate) {
-//        List<String> dateList = new ArrayList<>();
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("####-##-##");
-//
-//        LocalDate endDate = LocalDate.now();
-//        LocalDate startDate = endDate.minusDays(totalDate);
-//
-//        while (startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
-//            dateList.add(startDate.format(formatter));
-//            startDate = startDate.plusDays(1);
-//        }
-//        return dateList;
-//    }
+        if (solvedProblem.getUser().getUserId() == userId) return solvedProblem;
+        else throw new IllegalArgumentException("Unexpected writer");
+    }
 }

@@ -109,8 +109,8 @@ public class TokenProvider {
         return ResponseCookie.from("refreshToken", refreshToken)
                 .path("/")
                 .sameSite("None")
-                .httpOnly(true)
-                .secure(true)
+                .httpOnly(false) // 원래는 true이나 우리 서비스는 확장 프로그램에서 쿠키에 있는 값을 써야하기 때문에
+                .secure(true) // https를 사용하면 true
                 .maxAge(REFRESH_TOKEN_EXPIRATION)
                 .build();
     }

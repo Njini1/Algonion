@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.security.Principal;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ProblemController {
 
     @PostMapping("/baekjoon")
     public ResponseEntity<Void> saveBojProblem(
-            @RequestBody SolvedProblemRequest problem, Principal principal) throws Exception {
+            @RequestBody SolvedProblemRequest problem, Principal principal){
         int userId = Integer.parseInt(principal.getName());
 
         log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
@@ -44,7 +45,7 @@ public class ProblemController {
     @PostMapping("/programmers")
 //    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> saveProgrammersProblem(
-            @RequestBody SolvedProblemRequest problem, Principal principal) throws Exception {
+            @RequestBody SolvedProblemRequest problem, Principal principal){
         int userId = Integer.parseInt(principal.getName());
 
         log.info("ProblemController 프로그래머스 SolvedProblemRequest problem: {}", problem.toString());
@@ -57,7 +58,7 @@ public class ProblemController {
 
     @PostMapping("/swea")
     public ResponseEntity<Void> saveSWEA(
-            @RequestBody SolvedProblemRequest problem, Principal principal) throws Exception {
+            @RequestBody SolvedProblemRequest problem, Principal principal){
         int userId = Integer.parseInt(principal.getName());
 
         log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());
@@ -69,15 +70,15 @@ public class ProblemController {
 
     /**
      * 사용자가 푼 문제 리스드 가져오기
-     * @param username
+     * @param nickname
      * @return
      * @throws Exception
 //     */
     @GetMapping("/mysolved")
-    public ResponseEntity<List<SolvedProblemListResponse>> getSolved(
-            @RequestParam String username){
+    public ResponseEntity<List<SolvedProblemListResponse>> getSolvedProblemList(
+            @RequestParam String nickname, Pageable pageable){
 
-        List<SolvedProblemListResponse> solvedProblemListByUser = solvedProblemService.getSolvedProblemListByUser();
+        List<SolvedProblemListResponse> solvedProblemListByUser = solvedProblemService.getSolvedProblemListByUser(nickname, pageable);
 
         return new ResponseEntity<>(solvedProblemListByUser, HttpStatus.OK);
     }
@@ -90,26 +91,26 @@ public class ProblemController {
     @GetMapping("/mysolved/detail")
     public ResponseEntity<SolvedProblemDetailResponse> getSolvedDetail(
             @RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId){
-
-        //TODO 현재 로그인한 사람과 같은지 검사
-        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.getSolvedProblemDetail(username, solvedProblemId);
+        //TODO 현재 로그인한 사람과 같은지 검사 or username 필요 없음
+        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.getSolvedProblemDetail(solvedProblemId);
         return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
     }
 
     /**
      * 사용자가 푼 문제 메모 수정
-     * @param username 사용자 이름
      * @param solvedProblemId 수정할 문제 인덱스
      * @param memo 수정할 메모
      * @return 수정한 푼 문제 데이터
      */
     @PutMapping("/mysolved")
     public ResponseEntity<SolvedProblemDetailResponse> updateSolvedProblemMemo(
-            @RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId, String memo){
+            @RequestParam String nickname, @RequestParam("solvednum") int solvedProblemId, String memo, Principal principal){
 
-        //TODO 로그인 사용자 정보 추가
+        // nickname 필요없음
+        int userId = Integer.parseInt(principal.getName());
+
         SolvedProblemDetailResponse solvedProblemDetail =
-                solvedProblemService.updateSolvedProblem(solvedProblemId, memo);
+                solvedProblemService.updateSolvedProblem(userId, solvedProblemId, memo);
 
         return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
     }
@@ -122,10 +123,11 @@ public class ProblemController {
      */
     @PutMapping("/visible")
     public ResponseEntity<SolvedProblemDetailResponse> updateVisibility(
-            @RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId) {
+            @RequestParam("username") int username, @RequestParam("solvednum") int solvedProblemId, Principal principal) {
 
-        //TODO 로그인 사용자 정보 추가
-        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateVisibility(solvedProblemId);
+        int userId = Integer.parseInt(principal.getName());
+        //username 필요없음
+        SolvedProblemDetailResponse solvedProblemDetail = solvedProblemService.updateVisibility(userId, solvedProblemId);
 
         return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
     }
@@ -139,10 +141,4 @@ public class ProblemController {
         problemService.saveBojProblemAndClassification(3);
     }
 
-    
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        System.out.println("test입니당");
-        return new ResponseEntity<String>("test", HttpStatus.OK);
-    };
 }

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.UUID;
 
 @CrossOrigin("*")
@@ -28,15 +29,6 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-//    @PostMapping("/token")
-//    public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(@RequestBody CreateAccessTokenRequest request) {
-////        String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
-//        String newAccessToken = authService.createNewAccessToken(request.getRefreshToken());
-//
-//        return ResponseEntity.status(HttpStatus.CREATED)
-//                .body(new CreateAccessTokenResponse(newAccessToken));
-//
-//    }
     @PostMapping("/token")
     public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(HttpServletRequest httpServletRequest) {
         // 1. 쿠키에서 refresh token 가져오기
@@ -49,31 +41,37 @@ public class AuthController {
                 .body(new CreateAccessTokenResponse(newAccessToken));
     }
 
+    /**
+     * 닉네임 중복검사
+     * @param nicknameReq
+     * @return true 사용가능, false 사용불가능
+     */
     @GetMapping("/nickname")
     public ResponseEntity<Boolean> checkNickname(@RequestBody NicknameRequest nicknameReq) {
         //TODO @Valid 유효성 검사 추가
         boolean checkResult = authService.duplicateCheckNickname(nicknameReq.getNickname());
+
         return new ResponseEntity<>(checkResult, HttpStatus.OK);
     }
 
+    /**
+     * 닉네임 변경
+     * @param nicknameReq
+     * @return
+     */
     @PutMapping("/nickname")
-    public ResponseEntity<String> changeNickname(@RequestBody NicknameRequest nicknameReq) {
+    public ResponseEntity<String> changeNickname(@RequestBody NicknameRequest nicknameReq, Principal principal) {
+        int userId = Integer.parseInt(principal.getName());
         //TODO @Valid 유효성 검사 추가
-        String changeNickname = authService.changeNickname(nicknameReq.getNickname(), 2);
+        String changeNickname = authService.changeNickname(nicknameReq.getNickname(), userId);
+
         return new ResponseEntity<>(changeNickname, HttpStatus.OK);
     }
-
 
     @GetMapping("/login-test")
     public ResponseEntity<String> loginTest() {
         System.out.println("login test입니당");
         return new ResponseEntity<String>("test", HttpStatus.OK);
-    }
-
-
-    private ResponseEntity<String> exceptionHandling(Exception e) {
-        e.printStackTrace();
-        return new ResponseEntity<String>("Error : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
