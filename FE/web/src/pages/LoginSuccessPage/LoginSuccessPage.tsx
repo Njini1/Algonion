@@ -1,11 +1,19 @@
 import { useEffect } from "react";
 import { deleteCookie, getCookie } from "../../utils/cookieUtil";
+
 function LoginSuccessPage() {
   useEffect(() => {
     const accessToken = getCookie("access_token");
-    accessToken && localStorage.setItem("access_token", accessToken);
-    deleteCookie("access_token");
+    if (accessToken) {
+      deleteCookie("access_token");
+    }
   }, []);
+
+  // 페이지 접속하자마자 바로 이동
+  window.onload = function () {
+    window.location.replace("https://algonion.store/");
+  };
+
 
   return (
     <div className="text-2xl bold h-100">
@@ -14,4 +22,5 @@ function LoginSuccessPage() {
     </div>
   );
 }
+
 export default LoginSuccessPage;

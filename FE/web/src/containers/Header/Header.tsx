@@ -17,6 +17,56 @@ export default function Header() {
     "로그아웃",
     "회원탈퇴",
   ];
+
+  // 로그아웃 처리
+  const Logout = () => {
+  
+    fetch("/api/logout", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log("로그아웃 성공!");
+  
+          localStorage.removeItem("access_token");
+  
+          window.location.href = "/";
+        } else {
+          console.log("로그아웃 실패!");
+        }
+      })
+      .catch((err) => {
+        console.log("로그아웃 API 호출 오류:", err);
+      });
+  }
+  
+  // 회원탈퇴 처리
+  const Withdraw = () => {
+  
+    fetch("api/v1/user/withdraw", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          console.log("회원탈퇴 성공!");
+          localStorage.removeItem("access_token");
+          window.location.href = "/mainpage";
+        } else {
+          console.log("회원탈퇴 실패!");
+        }
+      })
+      .catch((err) => {
+        console.log("회원탈퇴 API 호출 오류:", err);
+      });
+    }
+      
+
   // const profileColor = [
   //   "default",
   //   "bronze",
@@ -87,20 +137,26 @@ export default function Header() {
             <Avatar isBordered color="#00FFFF " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" /> */}
               <Dropdown>
               <DropdownTrigger>
-                <Avatar isBordered
-                color="secondary" 
-                src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" 
-                />
+              <div className="profile_wrapper">
+                  <div className="gradation_animate"></div>
+                  <div className="image_wrapper">
+                    <Avatar
+                    className="image"
+                    // color="secondary" 
+                    src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" 
+                    />
+                  </div>
+              </div>
 
               </DropdownTrigger>
               <DropdownMenu variant="flat" aria-label="Dropdown menu with shortcut">
                 <DropdownItem key="change-nickname">
                   닉네임 변경
                 </DropdownItem>
-                <DropdownItem key="log-out">
+                <DropdownItem key="log-out" onClick={Logout}>
                   로그아웃
                 </DropdownItem>
-                <DropdownItem key="sign-out" className="text-danger" color="danger">
+                <DropdownItem key="sign-out" onClick={Withdraw} className="text-danger" color="danger">
                   회원탈퇴
                 </DropdownItem>
               </DropdownMenu>

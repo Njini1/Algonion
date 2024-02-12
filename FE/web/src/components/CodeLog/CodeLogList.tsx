@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
 import classes from './CodeLogList.module.scss'
 
-import { getCodeLog } from "../../api/codeLogAPI.ts"
+import { getCodeLog } from "../../api/CodeLogAPI.ts"
 
 // import { Key } from 'react'
 
