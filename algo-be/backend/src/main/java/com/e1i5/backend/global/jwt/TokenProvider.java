@@ -81,47 +81,7 @@ public class TokenProvider {
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
-//      return tokenProvider.createAccessToken(user);
     }
-
-    /**
-     * JWT 토큰 유효성 검증 메서드
-     * @param authToken
-     * @return true: 유효한 토큰, false: 유효하지 않은 토큰
-     */
-//    public TokenValidResultResponse validateToken(String authToken) {
-//        try {
-//            log.info("유효한 토큰인지 검사할 토큰값: {}", authToken);
-//            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);  // 비밀값으로 복호화하여 JWT 클레임을 구문 분석하고 확인
-////            return new TokenValidResultResponse(true, HttpServletResponse.SC_OK, null); // Valid token
-//            return TokenValidResultResponse.builder().isValid(true).statusCode(HttpServletResponse.SC_OK).build();
-//        } catch (SignatureException e) {
-//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_UNAUTHORIZED).errMsg("Invalid signature").build();
-//        } catch (MalformedJwtException e) {
-//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_UNAUTHORIZED).errMsg("Malformed JWT token").build();
-//        } catch (ExpiredJwtException e) {
-//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_UNAUTHORIZED).errMsg("Expired JWT token").build();
-//        } catch (UnsupportedJwtException e) {
-//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_BAD_REQUEST).errMsg("Unsupported JWT token").build();
-//        } catch (IllegalArgumentException e) {
-//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_BAD_REQUEST).errMsg("Invalid arguments").build();
-//        } catch (Exception e) {
-//            return TokenValidResultResponse.builder().isValid(false).statusCode(HttpServletResponse.SC_INTERNAL_SERVER_ERROR).errMsg("exception token").build();
-//        }
-//    }
-//    public boolean validateToken(String token) {
-//        try {
-//            Jwts.parser()
-//                    .setSigningKey(SECRET_KEY)
-//                    .parseClaimsJws(token);
-//            System.out.println("token 필터일 때 true");
-//            return true;
-//        } catch (Exception e) {
-//            System.out.println("token 필터일 때 fasle");
-//            System.out.println("token error: " + e.getMessage());
-//            return false;
-//        }
-//    }
     public Claims getClaims(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
@@ -131,11 +91,6 @@ public class TokenProvider {
      * @param token
      * @return 사용자 이메일이 들어 있는 토큰 제목 sub와 토큰 기반으로 인증 정보 반환
      */
-//    public Authentication getAuthentication(String token) {
-//        Claims claims = getClaims(token);
-//        UserDetails userDetails = userDetailService.loadUserByUsername(claims.getSubject());
-//        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities()); // userDetails.getAuthorities(): 사용자 권한 설정
-//    }
 
     public Authentication getAuthentication(String token) {
         Claims claims = getClaims(token); // claim에 권한을 넣고 밑에 값을 claim에 있는 권한값으로 변경
