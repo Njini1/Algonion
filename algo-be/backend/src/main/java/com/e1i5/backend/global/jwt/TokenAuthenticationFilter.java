@@ -74,15 +74,17 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             claims = tokenProvider.getClaims(token);
-        } catch (ExpiredJwtException e) {
+        } /*catch (ExpiredJwtException e) {
             log.info("expired access token: {}", e.getMessage());
             request.setAttribute("exception", GlobalErrorCode.TOKEN_EXPIRED.getMessage());
 //            response.sendError(401, "토큰 만료");
             filterChain.doFilter(request, response);
             return;
-        } catch (Exception e) {
+        } */catch (Exception e) {
             log.info("jwt exception message : {} token : {}", e.getMessage(), token);
-//            response.sendError(401, "토큰 유효하지 않음");
+//            response.sendError(400, "토큰 유효하지 않음");
+//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+//            response.getWriter().write("Invalid token: Signature verification failed");
             filterChain.doFilter(request, response);
             return;
         }

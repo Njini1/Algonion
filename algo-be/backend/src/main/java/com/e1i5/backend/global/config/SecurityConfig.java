@@ -54,13 +54,14 @@ public class SecurityConfig{
         http.authorizeRequests()
 //                .anyRequest().permitAll();
 //                .requestMatchers("/login-test").permitAll();
-                .requestMatchers("/login-test").authenticated();
-//                .requestMatchers("/v1/user/login-test").authenticated()
-//                .requestMatchers("/v1/solved-problems/programmers").authenticated()
-//                .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
-//                .requestMatchers("/v1/profile/ext").authenticated()
-//                .requestMatchers("/v1/user/token").permitAll()
-//                .requestMatchers("/ext").authenticated();
+                .requestMatchers("/login-test").permitAll()
+                .requestMatchers("/v1/user/login-test").authenticated()
+                .requestMatchers("/v1/solved-problems/programmers").authenticated()
+                .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
+                .requestMatchers("/v1/profile/ext").authenticated()
+                .requestMatchers("/v1/user/token").permitAll()
+                .requestMatchers("/ext").authenticated();
+//                        .anyRequest().authenticated();
 
 //        http.addFilterBefore(tokenAuthenticationFilter(), BasicAuthenticationFilter.class);
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
