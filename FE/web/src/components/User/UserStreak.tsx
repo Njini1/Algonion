@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import classes from "./UserStreak.module.scss";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 function UserStreak() {
   dayjs.extend(weekOfYear);
 
@@ -17,30 +19,29 @@ function UserStreak() {
       from = sameWeek.subtract(sameWeek.day(), "day"); // 첫번째 일요일을 구한다
     }
     const dayOfWeekList = ["일", "월", "화", "수", "목", "금", "토"];
-    const arr: JSX.Element[][] = Array.from({ length: 7 }, (_, i) => [
+    const td: JSX.Element[][] = Array.from({ length: 7 }, (_, i) => [
       <td>{dayOfWeekList[i]}</td>,
     ]);
     const diff = to.diff(from, "day");
     let date = from;
     for (let i = 0; i <= diff; i++) {
-      arr[date.day()].push(
-        <td
-          key={date.format("YYYY-MM-DD")}
-          className={classes.streak}
-          title={date.format("YYYY-MM-DD")}
-        ></td>
+      td[date.day()].push(
+        <Tippy content={date.format("YYYY-MM-DD")}>
+          <td
+            key={date.format("YYYY-MM-DD")}
+            className={classes.streak}
+          ></td>
+        </Tippy>
       );
       date = date.add(1, "day");
     }
-    // console.log(from);
-    return arr.map((e) => <tr>{e}</tr>);
+    const tr = td.map((v, i) => <tr key={dayOfWeekList[i]}>{v}</tr>);
+    return tr;
   };
   return (
-    <div className="app">
-      <table className={classes.streakTable}>
-        <tbody>{table()}</tbody>
-      </table>
-    </div>
+    <table className={classes.streakTable}>
+      <tbody>{table()}</tbody>
+    </table>
   );
 }
 
