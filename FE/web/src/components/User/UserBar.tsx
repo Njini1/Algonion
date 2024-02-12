@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import UserInformation from './UserInformation.tsx'
 import UserDashboard from './UserDashboard.tsx'
-import UserRecommendation from './UserRecommendation.tsx'
 import UserFriendList from './UserFriendList.tsx'
 import classes from "./UserBar.module.scss"
 
@@ -28,12 +27,6 @@ function UserBar() {
             대시보드
           </button>
           <button
-            className={selectedTab === 'userRecommendation' ? classes.activeTab : ''}
-            onClick={() => TabClick('userRecommendation')}
-            >
-            문제추천
-          </button>
-          <button
             className={selectedTab === 'friendList' ? classes.activeTab : ''}
             onClick={() => TabClick('friendList')}
             >
@@ -49,11 +42,6 @@ function UserBar() {
           {selectedTab === 'userDashboard' && 
           <UserDashboard/>
           }
-
-          {selectedTab === 'userRecommendation' &&
-          <UserRecommendation/>
-          }
-
           {selectedTab === 'friendList' && 
           <UserFriendList/>
           }
