@@ -6,18 +6,27 @@ import { getSolved100 } from "../../api/mainInfoAPI";
 
 import classes from './UserSolvedProblem.module.scss'
 import { useEffect, useState } from "react";
+import { getNickname } from "../../api/nicknameAPI";
 
 function UserSolvedProblem() {
+  const [nickname, setNickname] = useState('');
   const [problems, setProblems] = useState();
   
   useEffect(() => {
     async function getAxios(){
-      let res =await getSolved100();
-      setProblems(res);
+      let name =await getNickname();
+      setNickname(name);
     }
     getAxios()
   }, []);
 
+  useEffect(() => {
+    async function getAxios(){
+      let res = await getSolved100(nickname);
+      setProblems(res);
+    }
+    getAxios()
+  }, [nickname]);
 
   return (
     <Card className={`'max' ${classes['solved100-container']}`}>

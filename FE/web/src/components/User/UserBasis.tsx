@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Progress} from "@nextui-org/react";
 import {Button} from "@nextui-org/react";
 import classes from './UserBasis.module.scss';
+import { getNickname } from '../../api/nicknameAPI';
 
 
 export default function UserBasis() {
+  // nickname 불러 오기
+  const [nickname, setNickname] = useState('');
+  
+  useEffect(() => {
+    async function getAxios(){
+      let name = await getNickname()
+      setNickname(name)
+    }
+    getAxios()
+  }, []);
+
   // 기본 제공 이미지
   const defaultBackgroundImage = "https://i.ibb.co/W0fNK2m/1600w-rssv-Ab9-JL4-I.webp";
   const defaultProfileImage = "https://i.ibb.co/vZDFkkQ/1587535553105.jpg";
@@ -99,7 +111,7 @@ export default function UserBasis() {
   
         {/* 닉네임 */}
         <div className={classes.nickname}>
-          <h2>Nickname</h2>
+          <h2>{nickname}</h2>
         </div>
 
         {/* 경험치 바 */}

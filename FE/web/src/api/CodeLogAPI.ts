@@ -1,5 +1,4 @@
 import { axiosAuthApi } from "../utils/instance";
-// const username = "뛰어난 코더"
 
 export const getCodeLog = async (nickname: string) => {
    // const result = await axios.get(`${api}/v1/solved-problems/mysolved?nickname=${nickname}&page=0`);

@@ -1,9 +1,7 @@
 import { axiosAuthApi } from "../utils/instance";
 
-const nickname = "뛰어난 코더"
 
-
-export const getSolved100 = async () => {
+export const getSolved100 = async (nickname: string) => {
     // const results = await axios.get(`${api}/v1/dashboard/top100?nickname=${nickname}`);
    const results = await axiosAuthApi().get(`/v1/dashboard/top100?nickname=${nickname}`);
 

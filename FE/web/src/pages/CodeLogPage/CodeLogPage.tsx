@@ -8,11 +8,20 @@ import CodeLogRecommendation from '../../components/CodeLog/CodeLogRecommendatio
 import Footer from '../../containers/Footer/Footer.tsx';
 
 import classes from "./CodeLogPage.module.scss"
-
+import { useEffect, useState } from 'react';
+import { getNickname } from '../../api/nicknameAPI.ts';
 
 
 export default function CodeLogPage() {
-  const nickname = '뛰어난 코더';
+  const [nickname, setNickname] = useState('');
+  
+  useEffect(() => {
+    async function getAxios(){
+      let name = await getNickname()
+      setNickname(name)
+    }
+    getAxios()
+  }, []);
 
 	
   return (

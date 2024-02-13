@@ -32,10 +32,10 @@ function UserDashboard() {
       // let res1 =await getCategoryGraph();
       // setData1(res1);
       // - [원형 그래프] 문제 난이도 (우리 티어) 
-      let res2 =await getLevelGraph();
+      let res2 =await getLevelGraph(nickname);
       setLevelData(res2);
       // - [선형 그래프] 기간별 문제 푼 수 누적 추이
-      let res3 =await getProblemStackGraph();
+      let res3 =await getProblemStackGraph(nickname);
       setProblemData(res3);
       // - [선형 그래프] 기간별 포인트 상승량 누적 추이
       // let res4 =await getPointStackGraph();
@@ -51,7 +51,6 @@ function UserDashboard() {
 
       <div className={classes.graphTable}>
       <p>기록의 여정, 육각형 개발자</p>
-          {nickname && <p>닉네임: {nickname}</p>}
 
         <div className={classes.graph}>
           <BoardRadarGraph/>

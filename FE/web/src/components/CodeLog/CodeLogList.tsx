@@ -7,10 +7,10 @@ import { deleteCodeLog, getCodeLog } from "../../api/codeLogAPI.ts"
 // import {columns, logs} from "./CodeLogList/data";
 
 import classes from './CodeLogList.module.scss'
+import { getNickname } from '../../api/nicknameAPI.ts';
 
 
 export default function CodeLogList() {
-  const nickname = '뛰어난 코더'
   interface Log {
     solvedId: string,
     siteName: string;
@@ -32,18 +32,23 @@ export default function CodeLogList() {
     {name: "삭  제", uid: "delete"},
   ];
   
-  const [logs, setlogs] = useState<Log[]>([]);;
-  
+  const [nickname, setNickname] = useState('');
+  const [logs, setlogs] = useState<Log[]>([]);
   useEffect(() => {
     async function getAxios(){
-      let res = await getCodeLog(nickname);
-      setlogs(res);
-      console.log(res)
+      let name = await getNickname()
+      setNickname(name)
     }
     getAxios()
   }, []);
 
-
+  useEffect(() => {
+    async function getAxios(){
+      let res = await getCodeLog(nickname);
+      setlogs(res);
+    }
+    getAxios()
+  }, [nickname]);
   
   function goToDetailPage(nickname: string, problemId: string) {
     window.location.href=`/code-log/${nickname}/${problemId}`;

@@ -28,7 +28,6 @@ interface Data {
 }
 
 function CodeLogDetailPage() {
-  // const nickname = '뛰어난 코더';
   const problemId = window.location.href.split('/')[5];
   console.log(problemId)
   
