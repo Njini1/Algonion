@@ -39,6 +39,8 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	// 스프링 시큐리티를 테스트하기 위한 의존성 추가
 	testImplementation 'org.springframework.security:spring-security-test'
+	//notion을 위한 의존성 추가
+	implementation 'org.apache.httpcomponents.client5:httpclient5:5.3'
 }
 
 tasks.named('test') {
