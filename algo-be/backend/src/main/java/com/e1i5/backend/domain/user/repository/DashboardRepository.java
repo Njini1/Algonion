@@ -16,18 +16,18 @@ public interface DashboardRepository extends JpaRepository<Problem, Integer> {
             "LIMIT 100")
     List<Problem> findProblemsByNicknameOrderedByAlgoScore(@Param("userId") int userId);
 
-    @Query("SELECT sp.problem.problemId, ag.classification " +
-            "FROM SolvedProblem sp " +
-            "JOIN sp.problem p " +
-            "JOIN p.algoGroup ag " +
-            "WHERE sp.user.userId = :userId " +  // :nickname -> :userId로 변경
-            "GROUP BY sp.problem.problemId, ag.classification")
-    List<Object[]> findAlgoGroupsByUserId(@Param("userId") int userId);
-
     @Query("SELECT sp.problem.algoScore, COUNT(DISTINCT sp.problem.problemId) " +
             "FROM SolvedProblem sp " +
             "WHERE sp.user.userId = :userId " +
             "GROUP BY sp.problem.algoScore " +
             "ORDER BY sp.problem.algoScore ASC")
     List<Object[]> findAlgoScoreCountsByUserId(@Param("userId") int userId);
+
+    @Query("SELECT sp.problem.problemId, ag.classification " +
+            "FROM SolvedProblem sp " +
+            "JOIN sp.problem p " +
+            "JOIN p.algoGroup ag " +
+            "WHERE sp.user.userId = :userId " +
+            "GROUP BY sp.problem.problemId, ag.classification")
+    List<Object[]> findAlgoGroupsByUserId(@Param("userId") int userId);
 }
