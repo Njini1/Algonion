@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,6 +26,7 @@ public class SolvedProblemRequest {
     private String submissionTime; //제출한 시간
 //    private LocalDateTime submissionTime; //제출한 시간
     private String url;
+    private List<String> problemCategories; // 문제 카테고리 리스트
 
     public SolvedProblem toSolvedProblemEntity() {
         return SolvedProblem.builder()
