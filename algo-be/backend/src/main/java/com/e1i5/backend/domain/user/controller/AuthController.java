@@ -3,6 +3,7 @@ package com.e1i5.backend.domain.user.controller;
 import com.e1i5.backend.domain.user.dto.request.CreateAccessTokenRequest;
 import com.e1i5.backend.domain.user.dto.request.NicknameRequest;
 import com.e1i5.backend.domain.user.dto.response.CreateAccessTokenResponse;
+import com.e1i5.backend.domain.user.dto.response.NicknameResponse;
 import com.e1i5.backend.domain.user.service.AuthService;
 import com.e1i5.backend.global.util.CookieUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,6 +42,16 @@ public class AuthController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new CreateAccessTokenResponse(newAccessToken));
+    }
+
+    @Operation(summary = "닉네임 가져오기")
+    @GetMapping("/login-nickname")
+    public ResponseEntity<NicknameResponse> getLoginNickname(Principal principal) {
+        int userId = 1;
+//        int userId = Integer.parseInt(principal.getName());
+        NicknameResponse loginNickname = authService.getLoginNickname(userId);
+
+        return new ResponseEntity<>(loginNickname, HttpStatus.OK);
     }
 
     /**

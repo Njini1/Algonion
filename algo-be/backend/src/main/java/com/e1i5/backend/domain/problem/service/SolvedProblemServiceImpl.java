@@ -152,15 +152,27 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         if (solvedProblemListEntity.isEmpty()) return solvedProblemList;
 
         for (SolvedProblem solvedProblem : solvedProblemListEntity.getContent()) {
-            // 분류 값 추가
+            // 분류 값 배열 추가
             List<AlgoGroup> algoGroups = solvedProblem.getProblem().getAlgoGroup();
             List<String> classifications = algoGroups.stream()
                     .map(AlgoGroup::getClassification)
                     .collect(Collectors.toList());
 
+            // 분류 값 문자열 추가
+            StringBuilder strClassificationBuilder = new StringBuilder();
+            for (String classification : classifications) {
+                strClassificationBuilder.append(classification).append(", "); // '.'을 붙여 문자열 연결
+            }
+            if (!classifications.isEmpty()) {
+                strClassificationBuilder.deleteCharAt(strClassificationBuilder.length() - 2); // 마지막 '.' 제거
+            }
+
+            String strClassification = strClassificationBuilder.toString(); // 최종 문자열 얻기
+
             SolvedProblemListResponse solvedProblemListResponse = SolvedProblemListResponse.builder()
                     .solvedProblem(solvedProblem)
                     .classification(classifications)
+                    .strClassification(strClassification)
                     .build();
             solvedProblemList.add(solvedProblemListResponse);
         }
