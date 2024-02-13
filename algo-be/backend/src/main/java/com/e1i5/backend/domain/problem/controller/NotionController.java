@@ -22,7 +22,7 @@ public class NotionController {
     public ResponseEntity<String> notion(@RequestBody NotionRequest request) {
         System.out.println(request.getApiKey());
         System.out.println(request.getDbId());
-        ResponseEntity<String> responseEntity = notionService.saveNotion("secret_TgzUYaKgJObl07S2NP2xtzamxizj6asITFyZ44w1V6y", "9c5d2739bfe44b1697e3463ba85dcebf");
+        ResponseEntity<String> responseEntity = notionService.saveNotion("secret_h31SQQ4tJOmUXkpkujqSkyc0QiuFpZQnfT5QmN8chhs", "cb5fcf5432ec41a79601dec342d94017");
 //        ResponseEntity<String> responseEntity = notionService.saveNotion(request.getApiKey(), request.getDbId());
 
         if(responseEntity.getStatusCode().is2xxSuccessful()) {

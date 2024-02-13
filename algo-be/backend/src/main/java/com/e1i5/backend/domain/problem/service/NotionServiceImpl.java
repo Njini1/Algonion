@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class NotionServiceImpl implements NotionService{
+public class NotionServiceImpl implements NotionService {
     private final String NOTION_VERSION = "2022-06-28";
     private final String URL = "https://api.notion.com/v1/pages/";
 
@@ -22,7 +22,6 @@ public class NotionServiceImpl implements NotionService{
         apiKey = "Bearer " + apiKey;
         String content = "this is 123123123123123123";
 
-        
 
 //        String json = "{\n" +
 //                "    \"parent\": {\n" +
@@ -42,7 +41,7 @@ public class NotionServiceImpl implements NotionService{
 //                "}";
         String json = "{\n" +
                 "    \"parent\": {\n" +
-                "        \"database_id\": \"9c5d2739bfe44b1697e3463ba85dcebf\"\n" +
+                "        \"database_id\": \"cb5fcf5432ec41a79601dec342d94017\"\n" +
                 "    },\n" +
                 "    \"properties\": {\n" +
                 "        \"사이트\": {\n" +
@@ -69,16 +68,14 @@ public class NotionServiceImpl implements NotionService{
                 "                }\n" +
                 "            ]\n" +
                 "        },\n" +
-                "        \"링크\": {\n" +
-                "            \"type\": \"rich_text\",\n" +
-                "            \"rich_text\": [\n" +
-                "                {\n" +
-                "                    \"text\": {\n" +
-                "                        \"link\": \"https://en.wikipedia.org/wiki/Kale\"\n" +
-                "                    }\n" +
-                "                }\n" +
-                "            ]\n" +
-                "        },\n" +
+                "        \"분류\": {\n" +
+                "            \"multi_select\": [{\n" +
+                "             \"name\" : \"bfs\"" +
+                "          }]\n" +
+                "        }, \n" +
+                "         \"URL\" : {\n" +
+                "             \"url\" : \"www.naver.com\" " +
+                "          }, " +
                 "        \"비고\": {\n" +
                 "            \"type\": \"rich_text\",\n" +
                 "            \"rich_text\": [\n" +
