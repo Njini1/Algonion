@@ -3,7 +3,7 @@ import classes from "./Footer.module.scss"
 export default function Footer() {
   return (
     <footer className={classes.footer}>
-      <div className={classes.block}></div>
+      {/* <div className={classes.block}></div> */}
 
       <div className={classes.contents}>
         <div className={classes['contents-container']}>
@@ -50,14 +50,14 @@ export default function Footer() {
         <div className={classes.block}></div>
         <div>
           <b>알고니온 </b>
-          팀장 엄예진 / 팀 B108
+          B108 - E1I5
         </div>
         <div>
           34153 대전광역시 유성구 동서대로 98-39 (덕명동 124, 삼성화재연수원)
         </div>
         <div className={classes.block}></div>
         <div>
-          'algonion.store', 'algonion', '알고니온'은 E1I5의 
+          'algonion.store', 'algonion', '알고니온'은 팀 E1I5의 산물입니다.
         </div>
       </div>
     </footer>

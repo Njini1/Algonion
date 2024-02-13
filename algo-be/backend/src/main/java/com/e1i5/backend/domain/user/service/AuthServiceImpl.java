@@ -11,9 +11,12 @@ import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Random;
 
 @RequiredArgsConstructor
@@ -91,6 +94,20 @@ public class AuthServiceImpl implements AuthService{
         user.updateNickname(nickname);
         User changeUser = authRepo.save(user);
         return changeUser.getNickname(); //TODO 반환 값을 interface dto로?
+    }
+
+    @Override
+    public ResponseEntity<Void> withdrawUser(int userId) {
+        User user = authRepo.findById(userId).orElseThrow(()
+                -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+        user.withdrawUser(true, LocalDate.now());
+        User updateUser = authRepo.save(user);
+
+        if (updateUser.isStatus()) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

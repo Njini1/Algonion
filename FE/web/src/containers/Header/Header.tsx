@@ -20,27 +20,7 @@ export default function Header() {
 
   // 로그아웃 처리
   const Logout = () => {
-  
-    fetch("/api/logout", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    })
-      .then((res) => {
-        if (res.status === 200) {
-          console.log("로그아웃 성공!");
-  
-          localStorage.removeItem("access_token");
-  
-          window.location.href = "/";
-        } else {
-          console.log("로그아웃 실패!");
-        }
-      })
-      .catch((err) => {
-        console.log("로그아웃 API 호출 오류:", err);
-      });
+    localStorage.removeItem("access_token");
   }
   
   // 회원탈퇴 처리
@@ -56,6 +36,7 @@ export default function Header() {
         if (res.status === 200) {
           console.log("회원탈퇴 성공!");
           localStorage.removeItem("access_token");
+          
           window.location.href = "/mainpage";
         } else {
           console.log("회원탈퇴 실패!");

@@ -11,7 +11,7 @@ function LoginSuccessPage() {
 
   // 페이지 접속하자마자 바로 이동
   window.onload = function () {
-    window.location.replace("https://algonion.store/");
+    window.location.replace("/mainpage");
   };
 
 
