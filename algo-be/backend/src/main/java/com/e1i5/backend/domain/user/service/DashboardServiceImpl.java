@@ -89,11 +89,21 @@ public class DashboardServiceImpl implements DashboardService {
     public int[] getCategoryCountsByNickname(String nickname) {
         int userId = getUserIdByNickname(nickname);
 
-        List<String> algoGroups = dashboardRepo.findAlgoGroupsByUserId(userId);
+        List<Object[]> algoGroups = dashboardRepo.findAlgoGroupsByUserId(userId);
 
-        // 알고리즘 그룹별로 카운트를 매핑합니다.
-        Map<String, Long> categoryCounts = algoGroups.stream()
+        // 각 문제별로 중복된 카테고리를 제거하고 개수를 세는 맵을 생성합니다.
+        Map<Integer, Set<String>> categoryMap = new HashMap<>();
+        for (Object[] group : algoGroups) {
+            int problemId = (int) group[0];
+            String classification = (String) group[1];
+            categoryMap.computeIfAbsent(problemId, k -> new HashSet<>()).add(classification);
+        }
+
+        // 각 카테고리의 개수를 카운트합니다.
+        Map<String, Long> categoryCounts = categoryMap.values().stream()
+                .flatMap(Set::stream)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        System.out.println(categoryCounts);
 
         // 카테고리에 따른 카운트 배열을 생성합니다.
         int[] responseArray = {
