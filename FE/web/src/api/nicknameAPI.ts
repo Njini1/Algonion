@@ -3,7 +3,7 @@ import { axiosAuthApi } from "../utils/instance";
 export const getNickname = async () => {
      const results = await axiosAuthApi().get(`/v1/user/login-nickname`);
      
-     localStorage.setItem("nickname", results.data);
+     localStorage.setItem("nickname", results.data.nickname);
      return results.data.nickname;
  };
  
