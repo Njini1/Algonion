@@ -24,22 +24,73 @@ public class NotionServiceImpl implements NotionService{
 
         
 
+//        String json = "{\n" +
+//                "    \"parent\": {\n" +
+//                "        \"database_id\": \"" + dbId + "\"\n" +
+//                "    },\n" +
+//                "    \"properties\": {\n" +
+//                "        \"이름\": {\n" +
+//                "            \"title\": [\n" +
+//                "                {\n" +
+//                "                    \"text\": {\n" +
+//                "                        \"content\": \"" + content + "\"\n" +
+//                "                    }\n" +
+//                "                }\n" +
+//                "            ]\n" +
+//                "        }\n" +
+//                "    }\n" +
+//                "}";
         String json = "{\n" +
                 "    \"parent\": {\n" +
-                "        \"database_id\": \"" + dbId + "\"\n" +
+                "        \"database_id\": \"d61a56089ae64b02a575432003e21252\"\n" +
                 "    },\n" +
                 "    \"properties\": {\n" +
-                "        \"이름\": {\n" +
+                "        \"사이트\": {\n" +
+                "            \"select\": {\n" +
+                "                \"name\": \"Programmers\"\n" +
+                "            }\n" +
+                "        },\n" +
+                "        \"문제 번호\": {\n" +
+                "                    \"type\": \"rich_text\",\n" +
+                "                    \"rich_text\": [\n" +
+                "                        {\n" +
+                "                            \"text\": {\n" +
+                "                                \"content\": \"1830\"\n" +
+                "                            }\n" +
+                "                        }\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "        \"문제 이름\": {\n" +
                 "            \"title\": [\n" +
                 "                {\n" +
                 "                    \"text\": {\n" +
-                "                        \"content\": \"" + content + "\"\n" +
+                "                        \"content\": \"달로 떠나자\"\n" +
+                "                    }\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        \"비고\": {\n" +
+                "            \"type\": \"rich_text\",\n" +
+                "            \"rich_text\": [\n" +
+                "                {\n" +
+                "                    \"text\": {\n" +
+                "                        \"content\": \"테스트\"\n" +
+                "                    }\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        \"날짜\": {\n" +
+                "            \"type\": \"rich_text\",\n" +
+                "            \"rich_text\": [\n" +
+                "                {\n" +
+                "                    \"text\": {\n" +
+                "                        \"content\": \"테스트\"\n" +
                 "                    }\n" +
                 "                }\n" +
                 "            ]\n" +
                 "        }\n" +
                 "    }\n" +
-                "}";
+                "} ";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
