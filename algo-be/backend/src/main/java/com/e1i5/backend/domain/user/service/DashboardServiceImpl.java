@@ -67,7 +67,6 @@ public class DashboardServiceImpl implements DashboardService {
         System.out.println(algoScoreCounts);
         // 특정 알고리즘 점수에 대한 배열 생성
         int[] responseArray = {
-                algoScoreMap.getOrDefault(0, 0),
                 algoScoreMap.getOrDefault(1, 0),
                 algoScoreMap.getOrDefault(8, 0),
                 algoScoreMap.getOrDefault(40, 0),
@@ -81,7 +80,7 @@ public class DashboardServiceImpl implements DashboardService {
                 .filter(count -> count > 0)
                 .mapToObj(AlgoScoreCountResponse::new)
                 .collect(Collectors.toList());
-
+        System.out.println("responseArray" + responseArray + "/////////////////////////");
         return responseArray;
     }
 

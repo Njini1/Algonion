@@ -60,8 +60,10 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
         // 임시방편 코드
         if (solvedProblemReq.getProblemLevel() == null) {
-            solvedProblemReq.isNullUpateLevel("0");
+//            solvedProblemReq.isNullUpateLevel("0");
+//            solvedProblemReq = getUpdatedSolvedProblemRequest(solvedProblemReq.getProblemNum());
         }
+        System.out.println("solvedProblemReq" + solvedProblemReq);
 
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
