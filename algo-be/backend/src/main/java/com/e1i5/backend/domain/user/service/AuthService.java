@@ -1,11 +1,8 @@
 package com.e1i5.backend.domain.user.service;
 
+import com.e1i5.backend.domain.user.dto.response.NicknameResponse;
 import com.e1i5.backend.domain.user.entity.User;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Optional;
-import java.util.UUID;
 
 public interface AuthService {
     User findByEmail(String email);
@@ -15,4 +12,5 @@ public interface AuthService {
     String generateRandomNickname();
     String changeNickname(String nickname, int userId);
     ResponseEntity<Void> withdrawUser(int userId);
+    NicknameResponse getLoginNickname(int userId);
 }

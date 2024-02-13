@@ -1,6 +1,7 @@
 package com.e1i5.backend.domain.user.service;
 
 import com.e1i5.backend.domain.user.dto.RandomNickname;
+import com.e1i5.backend.domain.user.dto.response.NicknameResponse;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.exception.DuplicateNickname;
 import com.e1i5.backend.domain.user.exception.UserNotFoundException;
@@ -94,6 +95,11 @@ public class AuthServiceImpl implements AuthService{
         user.updateNickname(nickname);
         User changeUser = authRepo.save(user);
         return changeUser.getNickname(); //TODO 반환 값을 interface dto로?
+    }
+
+    @Override
+    public NicknameResponse getLoginNickname(int userId) {
+        return authRepo.findByUserId(userId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
     }
 
     @Override

@@ -56,6 +56,7 @@ public class SecurityConfig{
 //                .requestMatchers("/login-test").permitAll();
                 .requestMatchers("/login-test").permitAll()
                 .requestMatchers("/v1/user/login-test").authenticated()
+                .requestMatchers("/v1/user/login-nickname").authenticated()
                 .requestMatchers("/v1/solved-problems/programmers").authenticated()
                 .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
                 .requestMatchers("/v1/profile/ext").authenticated()

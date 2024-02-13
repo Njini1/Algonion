@@ -2,15 +2,19 @@ package com.e1i5.backend.domain.user.controller;
 
 import com.e1i5.backend.domain.user.dto.request.NicknameRequest;
 import com.e1i5.backend.domain.user.dto.response.CreateAccessTokenResponse;
+import com.e1i5.backend.domain.user.dto.response.NicknameResponse;
 import com.e1i5.backend.domain.user.exception.UserNotFoundException;
 import com.e1i5.backend.domain.user.service.AuthService;
 import com.e1i5.backend.global.util.CookieUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @CrossOrigin("*")
 @RestController
@@ -21,15 +25,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-//    @PostMapping("/token")
-//    public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(@RequestBody CreateAccessTokenRequest request) {
-////        String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
-//        String newAccessToken = authService.createNewAccessToken(request.getRefreshToken());
-//
-//        return ResponseEntity.status(HttpStatus.CREATED)
-//                .body(new CreateAccessTokenResponse(newAccessToken));
-//
-//    }
+    @Operation(summary = "토큰 재발급")
     @PostMapping("/token")
     public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(HttpServletRequest httpServletRequest) {
         // 1. 쿠키에서 refresh token 가져오기
@@ -42,21 +38,46 @@ public class AuthController {
                 .body(new CreateAccessTokenResponse(newAccessToken));
     }
 
+    @Operation(summary = "닉네임 가져오기")
+    @GetMapping("/login-nickname")
+    public ResponseEntity<NicknameResponse> getLoginNickname(Principal principal) {
+        int userId = 1;
+//        int userId = Integer.parseInt(principal.getName());
+        NicknameResponse loginNickname = authService.getLoginNickname(userId);
+
+        return new ResponseEntity<>(loginNickname, HttpStatus.OK);
+    }
+
+    /**
+     * 닉네임 중복검사
+     * @param nicknameReq
+     * @return true 사용가능, false 사용불가능
+     */
+    @Operation(summary = "닉네임 중복검사")
     @GetMapping("/nickname")
     public ResponseEntity<Boolean> checkNickname(@RequestBody NicknameRequest nicknameReq) {
         //TODO @Valid 유효성 검사 추가
         boolean checkResult = authService.duplicateCheckNickname(nicknameReq.getNickname());
+
         return new ResponseEntity<>(checkResult, HttpStatus.OK);
     }
 
+    /**
+     * 닉네임 변경
+     * @param nicknameReq
+     * @return
+     */
+    @Operation(summary = "닉네임 변경")
     @PutMapping("/nickname")
-    public ResponseEntity<String> changeNickname(@RequestBody NicknameRequest nicknameReq) {
+    public ResponseEntity<String> changeNickname(@RequestBody NicknameRequest nicknameReq, Principal principal) {
+        int userId = Integer.parseInt(principal.getName());
         //TODO @Valid 유효성 검사 추가
-        String changeNickname = authService.changeNickname(nicknameReq.getNickname(), 2);
+        String changeNickname = authService.changeNickname(nicknameReq.getNickname(), userId);
+
         return new ResponseEntity<>(changeNickname, HttpStatus.OK);
     }
 
-
+    @Operation(summary = "로그인 테스트")
     @GetMapping("/login-test")
     public ResponseEntity<String> loginTest() {
         System.out.println("login test입니당");

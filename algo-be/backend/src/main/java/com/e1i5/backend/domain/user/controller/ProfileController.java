@@ -9,6 +9,7 @@ import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.service.AuthService;
 import com.e1i5.backend.domain.user.service.DashboardService;
 import com.e1i5.backend.domain.user.service.ProfileService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -34,6 +35,7 @@ public class ProfileController {
     @Autowired
     private AuthService authService;
 
+    @Operation(summary = "프로필 이미지 저장")
     @PostMapping("/profile-img")
     public ResponseEntity<Void> saveUserProfile(MultipartFile profileImg, Principal principal) {
         int userId = Integer.parseInt(principal.getName());
@@ -43,16 +45,17 @@ public class ProfileController {
 
     /**
      * 1년치 스트릭 만드는 메서드
-     * @param username
+     * @param nickname
      * @return 날짜와 그 날짜에 푼 문제 개수 리스트 반환
      */
+    @Operation(summary = "1년치 스트릭 만드는 메서드")
     @GetMapping("/streak")
     public ResponseEntity<Map<String, Long>> getAllStreak(
-            @RequestParam("username") String username,
+            @RequestParam("nickname") String nickname,
             @RequestParam("from") String startDate,
             @RequestParam("to") String endDate) {
 
-        Map<String, Long> streakResponses = dashboardService.makeStreak(username, startDate, endDate);
+        Map<String, Long> streakResponses = dashboardService.makeStreak(nickname, startDate, endDate);
 
         return new ResponseEntity<>(streakResponses, HttpStatus.OK);
     }
@@ -61,6 +64,7 @@ public class ProfileController {
      * 7일 스트릭 만드는 메서드(확장 프로그램 ver)
      * @return
      */
+    @Operation(summary = "7일 스트릭 만드는 메서드(확장 프로그램 ver)")
     @GetMapping("/ext")
     public ResponseEntity<ExtUserInfoResponse> getExtUserInfo(Principal principal) {
 
@@ -82,14 +86,16 @@ public class ProfileController {
      * @param nickname 사용자 닉네임
      * @return 사용자 아이디, 티어, 점수, 프로필 이미지
      */
+    @Operation(summary = "사용자 정보 불러오기 ")
     @GetMapping()
-    public ResponseEntity<UserInfoResponse> getUserInfo(@Param("nickname") String nickname) {
+    public ResponseEntity<UserInfoResponse> getUserInfo(@RequestParam("nickname") String nickname) {
         //TODO 배경 이미지 추가
         UserInfoResponse user = profileService.getUserInfo(nickname);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @Operation(summary = "문제 추천하기")
     @GetMapping("/recommand")
     public ResponseEntity<?> recommandLevelProblem() {
 
