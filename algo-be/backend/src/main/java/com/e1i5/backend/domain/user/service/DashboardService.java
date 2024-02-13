@@ -10,6 +10,7 @@ public interface DashboardService {
     List<DashBoardProblemListResponse> getTop100ProblemsByNickname(String nickname);
     Map<String, Long> makeStreak(String userName, String startDate, String endDate);
     int[] getAlgoScoreCountsByNickname(String nickname);
+    int[] getCategoryCountsByNickname(String nickname);
     void updateUserScore(int userId, int problemId, int algoScore);
 //    void updateUserScore(int userId, int problemId, int algoScore);
 AccCountGraphResponse makeAccumulatedNumGraph(String nickname);

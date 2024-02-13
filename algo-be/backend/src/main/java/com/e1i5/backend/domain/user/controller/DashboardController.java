@@ -41,6 +41,17 @@ public class DashboardController {
     }
 
     /**
+     * 카테고리별 갯수 가져오기
+     * @param nickname
+     * @return 카테고리 별 갯수 리스트 반환
+     */
+    @GetMapping("/category-graph")
+    public ResponseEntity<int[]> getCategoryCountsByNickname(@RequestParam("nickname") String nickname) {
+        int[] categoryCounts = dashboardService.getCategoryCountsByNickname(nickname);
+        return new ResponseEntity<>(categoryCounts, HttpStatus.OK);
+    }
+
+    /**
      * 누적 개수 합 그래프
      * @return
      */

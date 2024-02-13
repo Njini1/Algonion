@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -81,6 +82,47 @@ public class DashboardServiceImpl implements DashboardService {
                 .mapToObj(AlgoScoreCountResponse::new)
                 .collect(Collectors.toList());
         System.out.println("responseArray" + responseArray + "/////////////////////////");
+        return responseArray;
+    }
+
+    @Override
+    public int[] getCategoryCountsByNickname(String nickname) {
+        int userId = getUserIdByNickname(nickname);
+
+        List<Object[]> algoGroups = dashboardRepo.findAlgoGroupsByUserId(userId);
+
+        // 각 문제별로 중복된 카테고리를 제거하고 개수를 세는 맵을 생성합니다.
+        Map<Integer, Set<String>> categoryMap = new HashMap<>();
+        for (Object[] group : algoGroups) {
+            int problemId = (int) group[0];
+            String classification = (String) group[1];
+            categoryMap.computeIfAbsent(problemId, k -> new HashSet<>()).add(classification);
+        }
+
+        // 각 카테고리의 개수를 카운트합니다.
+        Map<String, Long> categoryCounts = categoryMap.values().stream()
+                .flatMap(Set::stream)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        System.out.println(categoryCounts);
+
+        // 카테고리에 따른 카운트 배열을 생성합니다.
+        int[] responseArray = {
+                categoryCounts.getOrDefault("수학", 0L).intValue(),
+                categoryCounts.getOrDefault("구현", 0L).intValue(),
+                categoryCounts.getOrDefault("그리디 알고리즘", 0L).intValue(),
+                categoryCounts.getOrDefault("문자열", 0L).intValue(),
+                categoryCounts.getOrDefault("자료 구조", 0L).intValue(),
+                categoryCounts.getOrDefault("그래프 이론", 0L).intValue(),
+                categoryCounts.getOrDefault("다이나믹 프로그래밍", 0L).intValue(),
+                categoryCounts.getOrDefault("기하학", 0L).intValue(),
+        };
+
+        // 카운트가 0보다 큰 경우에만 AlgoScoreCountResponse를 생성하여 리스트에 추가합니다.
+        List<AlgoScoreCountResponse> responseList = Arrays.stream(responseArray)
+                .filter(count -> count > 0)
+                .mapToObj(AlgoScoreCountResponse::new)
+                .collect(Collectors.toList());
+
         return responseArray;
     }
 
