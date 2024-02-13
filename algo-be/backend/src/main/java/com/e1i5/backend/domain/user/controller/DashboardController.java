@@ -4,6 +4,7 @@ import com.e1i5.backend.domain.user.dto.response.AccCountGraphResponse;
 import com.e1i5.backend.domain.user.dto.response.AlgoScoreCountResponse;
 import com.e1i5.backend.domain.user.dto.response.DashBoardProblemListResponse;
 import com.e1i5.backend.domain.user.service.DashboardService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class DashboardController {
      * @param nickname
      * @return 난이도 상위 100문제 리스트 반환
      */
+    @Operation(summary = "난이도 기준 top100 문제 가져오기")
     @GetMapping("/top100")
     public ResponseEntity<List<DashBoardProblemListResponse>> getTop100ProblemsByNickname(@RequestParam("nickname") String nickname) {
         List<DashBoardProblemListResponse> problemsList = dashboardService.getTop100ProblemsByNickname(nickname);
@@ -34,6 +36,7 @@ public class DashboardController {
      * @param nickname
      * @return 난이도 별 갯수 리스트 반환
      */
+    @Operation(summary = "난이도별 갯수 가져오기")
     @GetMapping("/level-graph")
     public ResponseEntity<int[]> getAlgoScoreCountsByNickname(@RequestParam("nickname") String nickname) {
         int[] algoScoreCounts = dashboardService.getAlgoScoreCountsByNickname(nickname);
@@ -44,6 +47,7 @@ public class DashboardController {
      * 누적 개수 합 그래프
      * @return
      */
+    @Operation(summary = "누적 개수 합 그래프")
     @GetMapping("/problem-stack")
     public ResponseEntity<AccCountGraphResponse> getProblemCountSum(@RequestParam("nickname") String nickname) {
         AccCountGraphResponse graphData = dashboardService.makeAccumulatedNumGraph(nickname);

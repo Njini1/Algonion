@@ -5,6 +5,7 @@ import com.e1i5.backend.domain.user.dto.request.NicknameRequest;
 import com.e1i5.backend.domain.user.dto.response.CreateAccessTokenResponse;
 import com.e1i5.backend.domain.user.service.AuthService;
 import com.e1i5.backend.global.util.CookieUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @Operation(summary = "토큰 재발급")
     @PostMapping("/token")
     public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken(HttpServletRequest httpServletRequest) {
         // 1. 쿠키에서 refresh token 가져오기
@@ -46,6 +48,7 @@ public class AuthController {
      * @param nicknameReq
      * @return true 사용가능, false 사용불가능
      */
+    @Operation(summary = "닉네임 중복검사")
     @GetMapping("/nickname")
     public ResponseEntity<Boolean> checkNickname(@RequestBody NicknameRequest nicknameReq) {
         //TODO @Valid 유효성 검사 추가
@@ -59,6 +62,7 @@ public class AuthController {
      * @param nicknameReq
      * @return
      */
+    @Operation(summary = "닉네임 변경")
     @PutMapping("/nickname")
     public ResponseEntity<String> changeNickname(@RequestBody NicknameRequest nicknameReq, Principal principal) {
         int userId = Integer.parseInt(principal.getName());
@@ -68,6 +72,7 @@ public class AuthController {
         return new ResponseEntity<>(changeNickname, HttpStatus.OK);
     }
 
+    @Operation(summary = "로그인 테스트")
     @GetMapping("/login-test")
     public ResponseEntity<String> loginTest() {
         System.out.println("login test입니당");

@@ -17,6 +17,7 @@ public interface SolvedProblemService {
     void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem, int oldAlgoScore);
     SolvedProblemDetailResponse updateSolvedProblem(int userId, int solvedProblemId, String memo);
     SolvedProblemDetailResponse updateVisibility(int userId, int solvedProblemId);
-    List<SolvedProblemListResponse> getSolvedProblemListByUser(String nickname, Pageable pageable);
+    List<SolvedProblemListResponse> getSolvedProblemListByUser(String nickname, int pageNum);
     SolvedProblemDetailResponse getSolvedProblemDetail(int solvedProblemId);
+    int countUserSolvedProblem(String nickname);
 }

@@ -2,6 +2,7 @@ package com.e1i5.backend.domain.user.controller;
 
 import com.e1i5.backend.domain.user.dto.response.FriendListInterfaceResponse;
 import com.e1i5.backend.domain.user.service.FriendService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class FriendshipController {
      * @param nickname
      * @return 없음
      */
+    @Operation(summary = "친구 추가")
     @PostMapping()
     public ResponseEntity<?> makeFriendship(@RequestParam String nickname, Principal principal) {
         int userId = Integer.parseInt(principal.getName());
@@ -34,6 +36,7 @@ public class FriendshipController {
      * 친구 목록 불러오기
      * @return 닉네임, 티어, 점수
      */
+    @Operation(summary = "친구 목록 불러오기")
     @GetMapping("/friends")
     public ResponseEntity<List<FriendListInterfaceResponse>> getFriendsList(Principal principal) {
         // 친구 목록 불러오기는 로그인한 사용자만 볼 수 있는 건지
@@ -48,6 +51,7 @@ public class FriendshipController {
      * @param nickname
      * @return 닉네임, 티어, 점수
      */
+    @Operation(summary = "친구 검색")
     @GetMapping("/search")
     public ResponseEntity<List<FriendListInterfaceResponse>> searchUser(@RequestParam("nickname") String nickname) {
         List<FriendListInterfaceResponse> friends = friendService.searchNickname(nickname);
@@ -60,6 +64,7 @@ public class FriendshipController {
      * @param principal 로그인한 유저
      * @return 없음
      */
+    @Operation(summary = "친구 삭제")
     @DeleteMapping()
     public ResponseEntity<Void> cancleFriendship(@RequestParam("nickname") String nickname, Principal principal) {
         int userId = Integer.parseInt(principal.getName());

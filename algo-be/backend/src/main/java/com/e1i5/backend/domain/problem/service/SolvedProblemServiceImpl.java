@@ -18,11 +18,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.awt.print.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,6 +40,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     DashboardService dashboardService;
     @Autowired
     AuthRepository authRepo;
+
+    private static final int PAGE_SIZE = 20;
 
     /**
      * 사용자가 푼 문제 저장하는 메서드
@@ -140,14 +142,16 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @return 사용자가 푼 문제 리스트
      */
     @Override
-    public List<SolvedProblemListResponse> getSolvedProblemListByUser(String nickname, Pageable pageable) {
-        //TODO 페이징 처리
+    public List<SolvedProblemListResponse> getSolvedProblemListByUser(String nickname, int pageNum) {
+
+        Pageable pageable = PageRequest.of(pageNum, PAGE_SIZE);
+
         List<SolvedProblemListResponse> solvedProblemList = new ArrayList<>();
-        List<SolvedProblem> solvedProblemListEntity = solvedProblemRepo.findAllByUser_NicknameAndVisible(nickname, true, pageable);
+        Page<SolvedProblem> solvedProblemListEntity = solvedProblemRepo.findAllByUser_NicknameAndVisible(nickname, true, pageable);
 
         if (solvedProblemListEntity.isEmpty()) return solvedProblemList;
 
-        for (SolvedProblem solvedProblem : solvedProblemListEntity) {
+        for (SolvedProblem solvedProblem : solvedProblemListEntity.getContent()) {
             // 분류 값 추가
             List<AlgoGroup> algoGroups = solvedProblem.getProblem().getAlgoGroup();
             List<String> classifications = algoGroups.stream()
@@ -178,7 +182,17 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         return SolvedProblemDetailResponse.builder()
                 .solvedProblem(solvedProblem).build();
     }
-    
+
+    /**
+     * 페이지 네이션 사이즈
+     * @param nickname
+     * @return
+     */
+    @Override
+    public int countUserSolvedProblem(String nickname) {
+        return solvedProblemRepo.countVisibleSolvedProblemsByUserNickname(nickname);
+    }
+
     public SolvedProblem checkAuth(int userId, int solvedProblemId) {
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected solvedProblem"));
