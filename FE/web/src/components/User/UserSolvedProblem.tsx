@@ -8,13 +8,11 @@ import classes from './UserSolvedProblem.module.scss'
 import { useEffect, useState } from "react";
 
 function UserSolvedProblem() {
-  const nickname = '뛰어난 코더';
-  
   const [problems, setProblems] = useState();
   
   useEffect(() => {
     async function getAxios(){
-      let res =await getSolved100(nickname);
+      let res =await getSolved100();
       setProblems(res);
     }
     getAxios()

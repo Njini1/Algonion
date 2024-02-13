@@ -66,7 +66,7 @@ export default function Header() {
 
 
   // nickname 받아오기
-  const username = '뛰어난 코더';
+  const nickname = '뛰어난 코더';
 
   return (
     <NextUIProvider className={classes.header}>
@@ -86,13 +86,13 @@ export default function Header() {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-            <Link href={`/profile/${username}`} color="foreground" className={classes.hover}>
+            <Link href={`/profile/${nickname}`} color="foreground" className={classes.hover}>
               나의정보
             </Link>
           </NavbarItem>
 
           <NavbarItem>
-            <Link href={`/code-log/${username}`} color="foreground" className={classes.hover}>
+            <Link href={`/code-log/${nickname}`} color="foreground" className={classes.hover}>
               코드로그
             </Link>
           </NavbarItem>
@@ -163,8 +163,8 @@ export default function Header() {
                 }
                 className={`"w-full" ${classes.hover}`}
                 href={
-                  index === 0? `/profile/${username}`  :
-                  index === 1? `/code-log/${username}` :
+                  index === 0? `/profile/${nickname}`  :
+                  index === 1? `/code-log/${nickname}` :
                   index === 2? `/community` : `/`
                 }
                 size="lg"
