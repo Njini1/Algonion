@@ -6,6 +6,8 @@ import Footer from '../../containers/Footer/Footer.tsx';
 import classes from "./UserPage.module.scss"
 
 function UserPage() {
+
+
 	return (
     <div className={classes.page}>
       <Header/>

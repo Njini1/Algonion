@@ -66,7 +66,7 @@ export default function Header() {
 
 
   // nickname 받아오기
-  const username = '김수환';
+  const username = '뛰어난 코더';
 
   return (
     <NextUIProvider className={classes.header}>

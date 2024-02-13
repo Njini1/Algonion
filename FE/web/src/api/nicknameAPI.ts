@@ -1,10 +1,10 @@
 import { axiosAuthApi } from "../utils/instance";
 
 export const getNickname = async () => {
-     const results = await axiosAuthApi().get(`/v1/user/login-test`);
+     const results = await axiosAuthApi().get(`/v1/user/login-nickname`);
      
      localStorage.setItem("nickname", results.data);
-     return results;
+     return results.data.nickname;
  };
  
  // 닉네임 중복검사
@@ -24,3 +24,15 @@ export const updateNickname = async (newNickname: string) => {
       localStorage.setItem("nickname", newNickname)
    }
 };
+
+// function UserDashboard() {
+//    const [nickname, setNickname] = useState("");
+   
+//    useEffect(() => {
+//      const fetchData = async () => {
+//        const results = await getNickname();
+//        setNickname(results.data.nickname);
+//      };
+   
+//      fetchData();
+//    }, []);
