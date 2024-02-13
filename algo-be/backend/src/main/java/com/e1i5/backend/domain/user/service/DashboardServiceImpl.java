@@ -230,6 +230,68 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     /**
+     * 누적 문제 푼 개수 합 그래프
+     * @param nickname 원하는 사용자의 그래프
+     * @return 날짜 배열과 누적 합 배열을 담은 스트링 반환
+     */
+    @Override
+    public AccCountGraphResponse makeAccumulatedAlgoScoreGraph(String nickname) {
+        int totalDays = 365;
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusDays(totalDays - 1);
+
+        int userId = getUserIdByNickname(nickname);
+
+        List<Object[]> firstSubmissionDatesAndAccumulatedAlgoScores = dashboardRepo.findFirstSubmissionDateAndAccumulatedAlgoScoreByUserId(userId);
+
+        for (Object[] entry : firstSubmissionDatesAndAccumulatedAlgoScores) {
+            String firstSubmissionDate = entry[0] != null ? entry[0].toString() : "null";
+            int accumulatedAlgoScore = entry[1] != null ? Integer.parseInt(entry[1].toString()) : 0;
+//            int problemId = entry[2] != null ? Integer.parseInt(entry[2].toString()) : 0;
+            System.out.println("First Submission Date: " + firstSubmissionDate + ", Accumulated Algo Score: " + accumulatedAlgoScore);
+        }
+
+        LinkedHashMap<String, Long> dateList = makeDateList(totalDays);
+
+        for (Object[] entry : firstSubmissionDatesAndAccumulatedAlgoScores) {
+            String submissionDate = entry[0] != null ? entry[0].toString() : null; // 첫 번째 제출일을 문자열로 변환합니다.
+            if (submissionDate == null) {
+                continue; // 첫 번째 제출일이 null인 경우 다음 반복으로 넘어갑니다.
+            }
+            int accumulatedAlgoScore = Integer.parseInt(entry[1].toString()); // 누적 알고리즘 점수를 가져옵니다.
+
+            // 해당 날짜에 누적 알고리즘 점수를 저장합니다.
+            if (dateList.containsKey(submissionDate)) {
+                dateList.put(submissionDate, (long) accumulatedAlgoScore);
+            }
+        }
+
+        long[] data = new long[totalDays];
+        long accumulatedScore = 0;
+
+        for (int i = 0; i < totalDays; i++) {
+            LocalDate currentDate = startDate.plusDays(i);
+            String currentDateStr = currentDate.toString();
+
+            // 해당 날짜에 누적된 알고리즘 점수를 가져옵니다.
+            if (dateList.containsKey(currentDateStr)) {
+                accumulatedScore = dateList.get(currentDateStr);
+            }
+            data[i] = accumulatedScore;
+        }
+
+        String[] categories = new String[totalDays];
+        for (int i = 0; i < totalDays; i++) {
+            categories[i] = startDate.plusDays(i).toString();
+        }
+
+        return AccCountGraphResponse.builder()
+                .categories(categories)
+                .data(data)
+                .build();
+    }
+
+    /**
      * 통계를 위해 날짜 데이터를 만드는 함수
      * @param totalDays 원하는 날짜 총일수
      * @return key는 날짜, value는 문제 푼 개수

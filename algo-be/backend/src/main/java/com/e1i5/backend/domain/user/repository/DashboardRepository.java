@@ -30,4 +30,22 @@ public interface DashboardRepository extends JpaRepository<Problem, Integer> {
             "GROUP BY sp.problem.algoScore " +
             "ORDER BY sp.problem.algoScore ASC")
     List<Object[]> findAlgoScoreCountsByUserId(@Param("userId") int userId);
+
+//    @Query("SELECT MIN(sp.submissionTime), sp.problem.algoScore, sp.problem.problemId " +
+//            "FROM SolvedProblem sp " +
+//            "WHERE sp.user.userId = :userId " +
+//            "GROUP BY sp.problem.problemId " +
+//            "ORDER BY MIN(sp.submissionTime)")
+//    List<Object[]> findFirstSubmissionDateAndAccumulatedAlgoScoreByUserId(@Param("userId") int userId);
+
+    @Query("SELECT MIN(submissionTime), SUM(algoScore) " +
+            "FROM (" +
+            "    SELECT MIN(sp.submissionTime) AS submissionTime, sp.problem.algoScore AS algoScore " +
+            "    FROM SolvedProblem sp " +
+            "    WHERE sp.user.userId = :userId " +
+            "    GROUP BY sp.problem.problemId)" +
+            "GROUP BY submissionTime " +
+            "ORDER BY MIN(submissionTime)")
+    List<Object[]> findFirstSubmissionDateAndAccumulatedAlgoScoreByUserId(@Param("userId") int userId);
+
 }
