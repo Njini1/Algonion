@@ -2,15 +2,16 @@ import BoardRadarGraph from "../Board/BoardRadarGraph";
 import BoardLinearGraph from "../Board/BoardLinearGraph";
 import BoardRoundGraph from "../Board/BoardRoundGraph";
 import classes from "./UserDashboard.module.scss"
-
+import { getNickname } from "../../api/nicknameAPI.ts";
 // import {getCategoryGraph, getLevelGraph, getProblemStackGraph, getPointStackGraph} from '../../api/dashboardAPI.ts'
 import {getLevelGraph, getProblemStackGraph} from '../../api/dashboardAPI.ts'
 
 import { useEffect, useState } from "react";
 
 function UserDashboard() {
-  const nickname = '뛰어난 코더';
-  
+  const nickname = getNickname()
+  console.log(nickname)
+
   // const [categoryData, setCategoryData] = useState();
   const [levelData, setLevelData] = useState();
   const [problemData, setProblemData] = useState();

@@ -11,8 +11,12 @@ const CodeLogPage = lazy(() => import('./pages/CodeLogPage/CodeLogPage.tsx'))
 const CodeLogDetailPage = lazy(() => import('./pages/CodeLogDetailPage/CodeLogDetailPage.tsx'))
 const SearchPage = lazy(() => import('./pages/SearchPage/SearchPage.tsx'))
 const CommunityPage = lazy(() => import('./pages/CommunityPage/CommunityPage.tsx'))
+// eslint-disable-next-line react-refresh/only-export-components
 const RoomDetailPage = lazy(() => import('./pages/RoomDetailPage/RoomDetailPage.tsx'))
+// eslint-disable-next-line react-refresh/only-export-components
 const LoginSuccessPage = lazy(() => import('./pages/LoginSuccessPage/LoginSuccessPage.tsx'))
+// eslint-disable-next-line react-refresh/only-export-components
+const UserNicknameSetting = lazy(() => import ('./pages/UserPage/UserNicknameSetting.tsx'))
 const router = createBrowserRouter([
   {
     path: "/",
@@ -46,6 +50,11 @@ const router = createBrowserRouter([
     path: "/login/success",
     element: <LoginSuccessPage />,
   },
+  {
+    path: "/user/nickname",
+    element: <UserNicknameSetting />,
+  },
+  
 ]);
 
 

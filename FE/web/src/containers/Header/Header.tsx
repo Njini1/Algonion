@@ -1,12 +1,12 @@
 import classes from "./Header.module.scss"
 import React from 'react';
-
 import { Avatar } from "@nextui-org/react";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/react";
 import getAsset from "../../utils/getAsset";
 import SearchModal from "./searchModal";
+import { deleteCookie } from "../../utils/cookieUtil";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -18,6 +18,22 @@ export default function Header() {
     "회원탈퇴",
   ];
 
+  // 닉네임 변경 페이지로 이동
+  const NicknameSet = () => {
+    // 페이지 이동 함수
+    const navigate = () => {
+      window.location.href = "/nickname-setting";
+    };
+  
+    // 확인 메시지
+    const confirm = window.confirm("닉네임 변경 페이지로 이동하시겠습니까?");
+  
+    // 확인 메시지에 따라 페이지 이동
+    if (confirm) {
+      navigate();
+    }
+  };
+  
   // 로그아웃 처리
   const Logout = () => {
     localStorage.removeItem("access_token");
@@ -34,8 +50,9 @@ export default function Header() {
     })
       .then((res) => {
         if (res.status === 200) {
-          console.log("회원탈퇴 성공!");
           localStorage.removeItem("access_token");
+          deleteCookie("refresh_token")
+          console.log("회원탈퇴 성공!");
           
           window.location.href = "/mainpage";
         } else {
@@ -46,19 +63,10 @@ export default function Header() {
         console.log("회원탈퇴 API 호출 오류:", err);
       });
     }
-      
 
-  // const profileColor = [
-  //   "default",
-  //   "bronze",
-  //   "silver",
-  //   "gold",
-  //   "platinum",
-  //   "diamond",
-  //   "master"
-  // ]
 
-  const username = 'Alice';
+  // nickname 받아오기
+  const username = '김수환';
 
   return (
     <NextUIProvider className={classes.header}>
@@ -131,7 +139,7 @@ export default function Header() {
 
               </DropdownTrigger>
               <DropdownMenu variant="flat" aria-label="Dropdown menu with shortcut">
-                <DropdownItem key="change-nickname">
+                <DropdownItem key="change-nickname" onClick={NicknameSet}>
                   닉네임 변경
                 </DropdownItem>
                 <DropdownItem key="log-out" onClick={Logout}>
