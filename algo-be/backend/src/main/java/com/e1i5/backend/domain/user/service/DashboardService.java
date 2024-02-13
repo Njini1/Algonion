@@ -13,5 +13,6 @@ public interface DashboardService {
     int[] getCategoryCountsByNickname(String nickname);
     void updateUserScore(int userId, int problemId, int algoScore);
 //    void updateUserScore(int userId, int problemId, int algoScore);
-AccCountGraphResponse makeAccumulatedNumGraph(String nickname);
+    AccCountGraphResponse makeAccumulatedNumGraph(String nickname);
+    AccCountGraphResponse makeAccumulatedAlgoScoreGraph(String nickname);
 }

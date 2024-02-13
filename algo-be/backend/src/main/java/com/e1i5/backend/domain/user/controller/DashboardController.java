@@ -66,5 +66,15 @@ public class DashboardController {
         return new ResponseEntity<>(graphData, HttpStatus.OK);
     }
 
+    /**
+     * 누적 Score 합 그래프
+     * @return 누적 Score 리스트 반환
+     */
+    @GetMapping("/point-stack")
+    public ResponseEntity<?> getProblemScoreSum(@RequestParam("nickname") String nickname) {
+        AccCountGraphResponse graphData = dashboardService.makeAccumulatedAlgoScoreGraph(nickname);
+        return new ResponseEntity<>(graphData, HttpStatus.OK);
+    }
+
 }
 
