@@ -42,7 +42,7 @@ public class NotionServiceImpl implements NotionService{
 //                "}";
         String json = "{\n" +
                 "    \"parent\": {\n" +
-                "        \"database_id\": \"d61a56089ae64b02a575432003e21252\"\n" +
+                "        \"database_id\": \"9c5d2739bfe44b1697e3463ba85dcebf\"\n" +
                 "    },\n" +
                 "    \"properties\": {\n" +
                 "        \"사이트\": {\n" +
@@ -69,6 +69,16 @@ public class NotionServiceImpl implements NotionService{
                 "                }\n" +
                 "            ]\n" +
                 "        },\n" +
+                "        \"링크\": {\n" +
+                "            \"type\": \"rich_text\",\n" +
+                "            \"rich_text\": [\n" +
+                "                {\n" +
+                "                    \"text\": {\n" +
+                "                        \"link\": \"https://en.wikipedia.org/wiki/Kale\"\n" +
+                "                    }\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
                 "        \"비고\": {\n" +
                 "            \"type\": \"rich_text\",\n" +
                 "            \"rich_text\": [\n" +
@@ -90,7 +100,7 @@ public class NotionServiceImpl implements NotionService{
                 "            ]\n" +
                 "        }\n" +
                 "    }\n" +
-                "} ";
+                "}  ";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
