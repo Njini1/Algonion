@@ -8,6 +8,7 @@ import getAsset from "../../utils/getAsset";
 import SearchModal from "./searchModal";
 import { deleteCookie } from "../../utils/cookieUtil";
 import { getNickname } from "../../api/nicknameAPI";
+import { getUserProfile } from "../../api/getUserDataAPI";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -76,6 +77,12 @@ export default function Header() {
     }
     getAxios()
   }, []);
+  console.log(nickname, 'nickname')
+
+  // user 데이터 가져오기
+  const userProfile = getUserProfile(nickname)
+  console.log(userProfile, 'userprofile')
+
 
   return (
     <NextUIProvider className={classes.header}>
