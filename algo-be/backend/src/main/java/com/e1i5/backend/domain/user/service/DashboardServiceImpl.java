@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -81,6 +82,37 @@ public class DashboardServiceImpl implements DashboardService {
                 .mapToObj(AlgoScoreCountResponse::new)
                 .collect(Collectors.toList());
         System.out.println("responseArray" + responseArray + "/////////////////////////");
+        return responseArray;
+    }
+
+    @Override
+    public int[] getCategoryCountsByNickname(String nickname) {
+        int userId = getUserIdByNickname(nickname);
+
+        List<String> algoGroups = dashboardRepo.findAlgoGroupsByUserId(userId);
+
+        // 알고리즘 그룹별로 카운트를 매핑합니다.
+        Map<String, Long> categoryCounts = algoGroups.stream()
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
+        // 카테고리에 따른 카운트 배열을 생성합니다.
+        int[] responseArray = {
+                categoryCounts.getOrDefault("수학", 0L).intValue(),
+                categoryCounts.getOrDefault("구현", 0L).intValue(),
+                categoryCounts.getOrDefault("그리디 알고리즘", 0L).intValue(),
+                categoryCounts.getOrDefault("문자열", 0L).intValue(),
+                categoryCounts.getOrDefault("자료 구조", 0L).intValue(),
+                categoryCounts.getOrDefault("그래프 이론", 0L).intValue(),
+                categoryCounts.getOrDefault("다이나믹 프로그래밍", 0L).intValue(),
+                categoryCounts.getOrDefault("기하학", 0L).intValue(),
+        };
+
+        // 카운트가 0보다 큰 경우에만 AlgoScoreCountResponse를 생성하여 리스트에 추가합니다.
+        List<AlgoScoreCountResponse> responseList = Arrays.stream(responseArray)
+                .filter(count -> count > 0)
+                .mapToObj(AlgoScoreCountResponse::new)
+                .collect(Collectors.toList());
+
         return responseArray;
     }
 
