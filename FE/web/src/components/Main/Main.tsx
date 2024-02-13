@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import classes from "./Main.module.scss";
 import getAsset from '../../utils/getAsset';
+import { useEffect, useState } from 'react';
 const getLoginUrl = (platform: string): string => `${import.meta.env.VITE_BACK_END}/oauth2/authorization/${platform}`;
 
 const sloganVariants = {
-  hidden: { y: 20, opacity: 0 },
+  hidden: { y: 50, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
@@ -14,10 +15,24 @@ const sloganVariants = {
   }
 };
 
+const loginVariants = {
+  hidden: { y: 50, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 1.3,
+    }
+  }
+};
+
+
 export default function Main() {
-  let isLogin = localStorage.getItem('access_token');
-  // useEffect(() => {
-  // }, [])
+  const [isLogin, setIsLogin] = useState(localStorage.getItem('access_token'));
+  useEffect(() => {
+    setIsLogin(localStorage.getItem('access_token'))
+    console.log(isLogin)
+  }, [])
 
   return (
     <div className={classes.mainContainer}>
@@ -35,6 +50,10 @@ export default function Main() {
         animate="visible">
         모든 코드, 모두 모아
       </motion.div>
+      <motion.div
+        variants={loginVariants}
+        initial="hidden"
+        animate="visible">
       {!isLogin && <div className={classes.buttonContainer}>
         <a href={getLoginUrl("google")} className={classes.googleButton}>
           <img src={getAsset('social_login/googleSymbol.png')} alt="google-login" />
@@ -46,6 +65,7 @@ export default function Main() {
         </a>
       </div>
       }
+      </motion.div>
 
     </div>
   )

@@ -9,7 +9,6 @@ import {getLevelGraph, getProblemStackGraph} from '../../api/dashboardAPI.ts'
 import { useEffect, useState } from "react";
 
 function UserDashboard() {
-  const nickname = '뛰어난 코더';
   
   // const [categoryData, setCategoryData] = useState();
   const [levelData, setLevelData] = useState();
@@ -19,16 +18,16 @@ function UserDashboard() {
   useEffect(() => {
     async function getAxios(){
       // - [방사형 그래프] 문제 유형
-      // let res1 =await getCategoryGraph(nickname);
+      // let res1 =await getCategoryGraph();
       // setData1(res1);
       // - [원형 그래프] 문제 난이도 (우리 티어) 
-      let res2 =await getLevelGraph(nickname);
+      let res2 =await getLevelGraph();
       setLevelData(res2);
       // - [선형 그래프] 기간별 문제 푼 수 누적 추이
-      let res3 =await getProblemStackGraph(nickname);
+      let res3 =await getProblemStackGraph();
       setProblemData(res3);
       // - [선형 그래프] 기간별 포인트 상승량 누적 추이
-      // let res4 =await getPointStackGraph(nickname);
+      // let res4 =await getPointStackGraph();
       // setData4(res4); 
 
     }

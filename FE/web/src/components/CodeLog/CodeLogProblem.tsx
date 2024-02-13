@@ -2,20 +2,28 @@ import {Card, CardBody} from "@nextui-org/react";
 
 import classes from './CodeLogProblem.module.scss'
 
-export default function CodeLogProblem() {
-  function goToProblem(problemId: number) {
-    window.location.href=`https://www.acmicpc.net/problem/${problemId}`
+interface CodeLogProblemProps {
+  problemId: string;
+  siteName: string;
+  problemNum: string;
+  problemTitle: string;
+  url: string;
+}
+
+export default function CodeLogProblem(props: CodeLogProblemProps) {
+  function goToProblem(url: string) {
+    window.open(url, "_blank");
   }
 
   return (
     <div>
       <Card>
-      <CardBody className={classes.card} onClick={() => goToProblem(1000)}>
+      <CardBody className={classes.card} onClick={() => goToProblem(props.url)}>
         <div className={classes.number}>
-          <p>Baekjoon</p>
-          <p>1000</p>
+          <p>{props.siteName}</p>
+          <p className={classes.number2}>{props.problemNum}</p>
         </div>
-        <div className={classes.name}>A+B</div>
+        <div className={classes.name}>{props.problemTitle}</div>
       </CardBody>
       </Card>
     </div>

@@ -12,6 +12,7 @@ import classes from "./CodeLogPage.module.scss"
 
 
 export default function CodeLogPage() {
+  const nickname = '뛰어난 코더';
 
 	
   return (
@@ -23,7 +24,7 @@ export default function CodeLogPage() {
         <CodeLogSearchResults/> */}
       </div>
       <div className={classes.title}>
-        <h3><strong>Alice</strong> 님의 코드로그</h3>
+        <h3><strong>{nickname}</strong> 님의 코드로그</h3>
         <CodeLogRecommendation/>
       </div>
       <div className={classes.codeLogPage}>
