@@ -1,13 +1,24 @@
 // https://apexcharts.com/docs/react-charts/
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 
 function BoardRadarGraph() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  
   const [state] = useState({
     series: [{
       name: 'Series 1',
-      data: [20, 100, 40, 70, 50, 80, 33, 22],
+      data: [20,30,40,50,60,2,4,2],
     }],
 
     options: {
@@ -48,9 +59,10 @@ function BoardRadarGraph() {
       },
 
       xaxis: {
-        categories: ['수학', '구현', 'DP', '자료 구조', '그래프', '그리디', '문자열', '미분류']
+        categories: ['수학', '구현', '그리디 알고리즘', '문자열', '자료 구조', '그래프 이론', '다이나믹 프로그래밍', '기하학']
       }
     },
+    
     
     yaxis: {
       max: 600,
@@ -71,7 +83,7 @@ function BoardRadarGraph() {
             options={state.options}
             series={state.series}
             type="radar"
-            width="500"
+            width={width}
           />
         </div>
       </div>

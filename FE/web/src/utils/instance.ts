@@ -21,3 +21,4 @@ const axiosApi = (): AxiosInstance => {
 };
 
 export { axiosAuthApi, axiosApi };
+

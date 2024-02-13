@@ -26,7 +26,7 @@ const CodeLogList = () => {
   console.log(data)
   useEffect(() => {
     async function getAxios(){
-      let res = await getCodeLog();
+      const res = await getCodeLog();
       setData(res);
       console.log(res);
     }
