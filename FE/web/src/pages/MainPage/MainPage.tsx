@@ -2,6 +2,7 @@ import Description from "../../components/Main/Description"
 import classes from "./MainPage.module.scss"
 import Main from "../../components/Main/Main"
 import MainDescription from "../../components/Main/MainDescription"
+import { isLoggedIn } from "../../utils/isLoggedIn"
 
 const items = [
     {
@@ -17,6 +18,8 @@ const items = [
         "description": ['모각코·모함코', '실시간 피드백까지'],
     },
 ]
+
+
 
 export default function MainPage() {
 	return (

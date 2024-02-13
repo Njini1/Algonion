@@ -14,10 +14,8 @@ const sloganVariants = {
   }
 };
 
+
 export default function Main() {
-  let isLogin = localStorage.getItem('access_token');
-  // useEffect(() => {
-  // }, [])
 
   return (
     <div className={classes.mainContainer}>
@@ -35,7 +33,8 @@ export default function Main() {
         animate="visible">
         모든 코드, 모두 모아
       </motion.div>
-      {!isLogin && <div className={classes.buttonContainer}>
+      
+      <div className={classes.buttonContainer}>
         <a href={getLoginUrl("google")} className={classes.googleButton}>
           <img src={getAsset('social_login/googleSymbol.png')} alt="google-login" />
           <p>Google로 시작하기</p>
@@ -45,7 +44,7 @@ export default function Main() {
           <p>Kakao로 시작하기</p>
         </a>
       </div>
-      }
+      
 
     </div>
   )
