@@ -3,7 +3,6 @@ package com.e1i5.backend.domain.user.controller;
 
 import com.e1i5.backend.domain.problem.response.ProblemResponse;
 import com.e1i5.backend.domain.user.dto.response.ExtUserInfoResponse;
-import com.e1i5.backend.domain.user.dto.response.UserInfoInterface;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.service.AuthService;
@@ -12,7 +11,6 @@ import com.e1i5.backend.domain.user.service.ProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

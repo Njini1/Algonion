@@ -1,7 +1,9 @@
 package com.e1i5.backend.domain.user.service;
 
+import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
+import com.e1i5.backend.domain.problem.response.ProblemInterfaceResponse;
 import com.e1i5.backend.domain.problem.response.ProblemResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
@@ -133,15 +135,36 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public List<ProblemResponse> recommandProblem(int userId) {
 
-        //TODO 랜덤으로 문제 추천으로 변경
-        List<ProblemResponse> unsolvedProblemsByUserId = new ArrayList<>
-                (problemRepo.findUnsolvedProblemsByUserId(userId)
-                .stream()
-                .limit(2)
-                .toList());
+        int[] unsolvedProblemsByUserId = problemRepo.findUnsolvedProblemsIdsByUserId(userId);
 
-//        Collections.shuffle(unsolvedProblemsByUserId);
-        return unsolvedProblemsByUserId;
+        // 랜덤 숫자 뽑기
+        Random random = new Random();
+
+        int size = unsolvedProblemsByUserId.length;
+        int num1 = random.nextInt(size) + 1;
+        int num2 = random.nextInt(size) + 1;
+
+        while (num1 == num2) {
+            num2 = random.nextInt(size) + 1;
+        }
+
+        List<Integer> problemIds = Arrays.asList(num1, num2);
+        System.out.println("num 1, num 2: " + num1 + " " + num2);
+        List<ProblemInterfaceResponse> problemInterface = problemRepo.findByProblemIdIn(problemIds);
+
+        List<ProblemResponse> recommandProblem = new ArrayList<>();
+        for (ProblemInterfaceResponse p : problemInterface) {
+            ProblemResponse problem = ProblemResponse.builder()
+                    .siteName(p.getSiteName())
+                    .problemNum(p.getProblemNum())
+                    .problemTitle(p.getProblemTitle())
+                    .problemLevel(p.getProblemLevel())
+                    .url(p.getUrl())
+                    .build();
+            recommandProblem.add(problem);
+        }
+
+        return recommandProblem;
     }
 
     private int getUserIdByNickname(String nickname) {

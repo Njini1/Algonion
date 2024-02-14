@@ -111,7 +111,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public SolvedProblemDetailResponse updateSolvedProblem(int userId, int solvedProblemId, String memo) {
 
-        // checkAuth 로직 추가
         SolvedProblem solvedProblem = checkAuth(userId, solvedProblemId);
 
         solvedProblem.updateMemo(memo);
