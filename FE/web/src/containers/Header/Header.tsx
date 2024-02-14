@@ -10,6 +10,8 @@ import { deleteCookie } from "../../utils/cookieUtil";
 import { getNickname } from "../../api/nicknameAPI";
 import { getUserProfile } from "../../api/getUserDataAPI";
 
+import pImage from './profile_image.png';
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuItems = [
@@ -141,9 +143,10 @@ export default function Header() {
                   <div className="gradation_animate"></div>
                   <div className="image_wrapper">
                     <Avatar
+                    isBordered
                     className="image"
-                    // color="secondary" 
-                    src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" 
+                    color="secondary" 
+                    src={pImage}
                     />
                   </div>
               </div>

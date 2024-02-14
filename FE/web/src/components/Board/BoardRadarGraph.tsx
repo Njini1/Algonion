@@ -3,33 +3,30 @@
 import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 
-function BoardRadarGraph() {
-  const [width, setWidth] = useState(window.innerWidth);
+function BoardRadarGraph(props: any) {
 
+  // width
+  // const [width, setWidth] = useState(window.innerWidth);
 
-
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  
-  const [state] = useState({
+  // useEffect(() => {
+  //   const handleResize = () => setWidth(window.innerWidth);
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
+    
+  const [data, setData] = useState([]); 
+  const [state, setState] = useState({
     series: [{
       name: 'Series 1',
-      data: [20,30,40,50,60,2,4,2],
+      data: [],
     }],
-
     options: {
-
       dataLabels: {
         enabled: true
       },
-      
       plotOptions: {
         radar: {
-          size: 120,
+          size: 150,
           polygons: {
             strokeColors: '#e9e9e9',
             fill: {
@@ -38,18 +35,15 @@ function BoardRadarGraph() {
           }
         }
       },
-      
       title: {
         text: ''
       },
-
       colors: ['#8F00FF'],
-        markers: {
-          colors: ['#8F00FF'],
-          strokeColor: '#8F00FF',
-          strokeWidth: 2,
-        },
-
+      markers: {
+        colors: ['#8F00FF'],
+        strokeColor: '#8F00FF',
+        strokeWidth: 2,
+      },
       tooltip: {
         y: {
           formatter: function(val: number) {
@@ -57,24 +51,37 @@ function BoardRadarGraph() {
           }
         }
       },
-
       xaxis: {
-        categories: ['수학', '구현', '그리디 알고리즘', '문자열', '자료 구조', '그래프 이론', '다이나믹 프로그래밍', '기하학']
-      }
-    },
-    
-    
-    yaxis: {
-      max: 600,
-      tickAmount: 3,
-      labels: {
-        formatter: function(val: number) {
-          return val.toString();
+        categories: ['수학', '구현', '그리디', '문자열', '자료 구조', '그래프 이론', 'DP', '기하학']
+      },
+      yaxis: {
+        max: 600,
+        tickAmount: 3,
+        labels: {
+          formatter: function(val: number) {
+            return val.toString();
+          }
         }
-      }
+      },
     },
   });
 
+  useEffect(() => {
+    if (props.data) {
+      setData(props.data);
+    }
+  }, [props.data]);
+
+  useEffect(() => {
+    setState((prevState) => ({
+      ...prevState,
+      series: [{
+        ...prevState.series[0],
+        data: data,
+      }]
+    }));
+  }, [data]);
+  
   return (
     <div className="app">
       <div className="row">
@@ -83,7 +90,7 @@ function BoardRadarGraph() {
             options={state.options}
             series={state.series}
             type="radar"
-            width={width}
+            width="600px"
           />
         </div>
       </div>

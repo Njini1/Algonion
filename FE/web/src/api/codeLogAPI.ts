@@ -13,14 +13,19 @@ export const getCodeLogDetail = async (solvedProblemPK: string) => {
 };
 
 export const putCodeLogMemo = async (solvedProblemPK: string, data: {}) => {
-   // const result = await axios.get(`${api}/v1/solved-problems/mysolved?solvednum=${solvedProblemPK}`);
+   // const result = await axios.put(`${api}/v1/solved-problems/mysolved?solvednum=${solvedProblemPK}`);
    const results = await axiosAuthApi().put(`/v1/solved-problems/mysolved?solvednum=${solvedProblemPK}`, data);
    return results.data;
 };
 
-
 export const deleteCodeLog = async (solvedProblemPK: string) => {
-   // const result = await axios.get(`${api}/v1/solved-problems/mysolved?solvednum=${solvedProblemPK}`);
+   // const result = await axios.put(`${api}/v1/solved-problems/mysolved?solvednum=${solvedProblemPK}`);
    const results = await axiosAuthApi().put(`/v1/solved-problems/visible?solvednum=${solvedProblemPK}`);
+   return results.data;
+};
+
+export const shareCodeLog = async (data: {}) => {
+   // const result = await axios.post(`${api}/v1/solved-problems/mysolved?solvednum=${solvedProblemPK}`);
+   const results = await axiosAuthApi().post(`/v1/notion/save`, data);
    return results.data;
 };

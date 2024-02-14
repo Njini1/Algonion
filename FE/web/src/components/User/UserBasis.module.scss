@@ -41,15 +41,16 @@
 }
 
 .nickname {
-  margin: 1rem;
-  font-size: 20px;
+  margin: 1.5rem 0.5rem 0rem;
+  font-size: 30px;
   font-weight: bold;
 }
 
-.expBar {
+.progress {
   width: 100%;
-  margin: 1rem;
+  margin: 2rem 0rem 1rem;
 }
+
 
 .hover {
   &:hover {
