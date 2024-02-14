@@ -28,8 +28,7 @@ const Tiptap = (props: MemoProps) => {
     }
   
   useEffect(() => {
-    console.log('props', props.memo)
-    
+    // console.log('props', props.memo)
     setMemo(props.memo)
   }, [props.memo])
   

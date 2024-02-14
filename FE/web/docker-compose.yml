@@ -8,4 +8,4 @@ services:
       - "5174:5174"
     container_name: front
     restart: always
-    image: ssafy10b108/fe:test3
+    image: ssafy10b108/fe:240214-0919

@@ -29,15 +29,14 @@ interface Data {
 
 function CodeLogDetailPage() {
   const problemId = window.location.href.split('/')[5];
-  console.log(problemId)
+  // console.log(problemId)
   
-
   const [data, setData] = useState<Data>();;
   
   useEffect(() => {
     async function getAxios(){
       let res = await getCodeLogDetail(problemId);
-      console.log(res)
+      // console.log(res)
       setData(res);
     }
     getAxios()

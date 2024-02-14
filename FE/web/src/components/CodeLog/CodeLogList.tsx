@@ -32,8 +32,8 @@ export default function CodeLogList() {
     {name: "삭  제", uid: "delete"},
   ];
   
+  // nickname 받아 오기
   const [nickname, setNickname] = useState('');
-  const [logs, setlogs] = useState<Log[]>([]);
   useEffect(() => {
     async function getAxios(){
       let name = await getNickname()
@@ -41,7 +41,9 @@ export default function CodeLogList() {
     }
     getAxios()
   }, []);
-
+   
+  // logs 받아 오기
+  const [logs, setlogs] = useState<Log[]>([]);
   useEffect(() => {
     async function getAxios(){
       let res = await getCodeLog(nickname);
@@ -50,8 +52,12 @@ export default function CodeLogList() {
     getAxios()
   }, [nickname]);
   
-  function goToDetailPage(nickname: string, problemId: string) {
-    window.location.href=`/code-log/${nickname}/${problemId}`;
+
+  // edit/delete 함수
+  async function goToDetailPage(problemId: string) {
+    const name = await getNickname();
+    console.log(name, problemId);
+    window.location.href = `/code-log/${name}/${problemId}`;
   }
 
   function deleteLog(problemId: string) {
@@ -60,7 +66,7 @@ export default function CodeLogList() {
     window.location.reload();
   }
 
-  ///////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
   const renderCell = useCallback((log: Log, columnKey: Key) => {
     const cellValue = log[columnKey as keyof Log];
     
@@ -97,7 +103,7 @@ export default function CodeLogList() {
         return (
           <div className={`relative flex items-center gap-2 justify-center`}>
             <Tooltip content="Edit CodeLog">
-              <span className="text-lg text-green-500 cursor-pointer active:opacity-50" onClick={() => goToDetailPage(nickname, log.solvedId)}>
+              <span className="text-lg text-green-500 cursor-pointer active:opacity-50" onClick={() => goToDetailPage(log.solvedId)}>
                 <EditIcon />
               </span>
             </Tooltip>
