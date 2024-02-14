@@ -1,6 +1,9 @@
 package com.e1i5.backend.domain.problem.service;
 
+import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
+import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
+import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -16,37 +19,36 @@ public class NotionServiceImpl implements NotionService {
     SolvedProblemRepository solvedProblemRepo;
 
     @Override
-    public ResponseEntity<String> saveNotion(String apiKey, String dbId) {
+    public ResponseEntity<String> saveNotion(String apiKey, String dbId, int solvedProblemId) {
 
         RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
         apiKey = "Bearer " + apiKey;
-        String content = "this is 123123123123123123";
 
+        SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected solvedProblem"));
 
-//        String json = "{\n" +
-//                "    \"parent\": {\n" +
-//                "        \"database_id\": \"" + dbId + "\"\n" +
-//                "    },\n" +
-//                "    \"properties\": {\n" +
-//                "        \"이름\": {\n" +
-//                "            \"title\": [\n" +
-//                "                {\n" +
-//                "                    \"text\": {\n" +
-//                "                        \"content\": \"" + content + "\"\n" +
-//                "                    }\n" +
-//                "                }\n" +
-//                "            ]\n" +
-//                "        }\n" +
-//                "    }\n" +
-//                "}";
+        SolvedProblemDetailResponse detail = SolvedProblemDetailResponse.builder()
+                .solvedProblem(solvedProblem)
+                .build();
+
+        String siteName = "";
+
+        if (detail.getSiteName().equals(ProblemSite.BAEKJOON.getProblemSite())) {
+            siteName = "백준";
+        } else if (detail.getSiteName().equals(ProblemSite.PROGRAMMERS.getProblemSite())) {
+            siteName = "프로그래머스";
+        } else if (detail.getSiteName().equals(ProblemSite.SWEA.getProblemSite())) {
+            siteName = "SWEA";
+        }
+        System.out.println(siteName);
         String json = "{\n" +
                 "    \"parent\": {\n" +
-                "        \"database_id\": \"cb5fcf5432ec41a79601dec342d94017\"\n" +
+                "        \"database_id\": \"" + dbId + "\"\n" +
                 "    },\n" +
                 "    \"properties\": {\n" +
                 "        \"사이트\": {\n" +
                 "            \"select\": {\n" +
-                "                \"name\": \"Programmers\"\n" +
+                "                \"name\": \"" + siteName + "\"\n" +
                 "            }\n" +
                 "        },\n" +
                 "        \"문제 번호\": {\n" +
@@ -54,7 +56,7 @@ public class NotionServiceImpl implements NotionService {
                 "                    \"rich_text\": [\n" +
                 "                        {\n" +
                 "                            \"text\": {\n" +
-                "                                \"content\": \"1830\"\n" +
+                "                                \"content\": \"" + detail.getProblemNum() + "\"\n" +
                 "                            }\n" +
                 "                        }\n" +
                 "                    ]\n" +
@@ -63,7 +65,7 @@ public class NotionServiceImpl implements NotionService {
                 "            \"title\": [\n" +
                 "                {\n" +
                 "                    \"text\": {\n" +
-                "                        \"content\": \"달로 떠나자\"\n" +
+                "                        \"content\": \"" + detail.getProblemTitle() + "\"\n" +
                 "                    }\n" +
                 "                }\n" +
                 "            ]\n" +
@@ -71,17 +73,19 @@ public class NotionServiceImpl implements NotionService {
                 "        \"분류\": {\n" +
                 "            \"multi_select\": [{\n" +
                 "             \"name\" : \"bfs\"" +
+                "          },{" +
+                "             \"name\" : \"dfs\" " +
                 "          }]\n" +
                 "        }, \n" +
                 "         \"URL\" : {\n" +
-                "             \"url\" : \"www.naver.com\" " +
+                "             \"url\" : \"" + detail.getUrl() + "\" " +
                 "          }, " +
                 "        \"비고\": {\n" +
                 "            \"type\": \"rich_text\",\n" +
                 "            \"rich_text\": [\n" +
                 "                {\n" +
                 "                    \"text\": {\n" +
-                "                        \"content\": \"테스트\"\n" +
+                "                        \"content\": \"\"\n" +
                 "                    }\n" +
                 "                }\n" +
                 "            ]\n" +
@@ -91,13 +95,14 @@ public class NotionServiceImpl implements NotionService {
                 "            \"rich_text\": [\n" +
                 "                {\n" +
                 "                    \"text\": {\n" +
-                "                        \"content\": \"테스트\"\n" +
+                "                        \"content\": \"" + detail.getSubmissionTime() + "\"\n" +
                 "                    }\n" +
                 "                }\n" +
                 "            ]\n" +
                 "        }\n" +
                 "    }\n" +
                 "}  ";
+
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

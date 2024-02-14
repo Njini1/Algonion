@@ -4,5 +4,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface NotionService {
 
-    ResponseEntity<String> saveNotion(String apiKey, String dbId);
+    ResponseEntity<String> saveNotion(String apiKey, String dbId, int solvedProblemId);
 }
