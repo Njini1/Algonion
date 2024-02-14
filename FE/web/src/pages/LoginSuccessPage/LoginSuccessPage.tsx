@@ -13,6 +13,7 @@ function LoginSuccessPage() {
   useEffect(() => {
     const accessToken = getCookie("access_token");
     if (accessToken) {
+      localStorage.setItem('access_token', accessToken)
       deleteCookie("access_token");
     }
   }, []);

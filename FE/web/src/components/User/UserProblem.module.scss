@@ -7,10 +7,22 @@
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) 
 }
 
-.grid-list{
-  width: 100%;
+.grid-item {
   display: flex;
-  justify-content: space-between;
-  -webkit-box-pack: justify;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center; /* optional */
+  background-color: #fff; /* optional */
+  border: 1px solid #eee; /* optional */
+  border-radius: 5px; /* optional */
+  padding: 10px; /* optional */
+}
+
+.grid-item a {
+  color: #000;
+  text-decoration: none;
+}
+
+.grid-item a:hover {
+  text-decoration: underline;
 }
