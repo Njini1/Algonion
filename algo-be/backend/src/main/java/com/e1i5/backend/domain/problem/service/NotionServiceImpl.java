@@ -68,7 +68,6 @@ public class NotionServiceImpl implements NotionService {
                 "                        \"content\": \"" + detail.getProblemTitle() + "\"\n" +
                 "                    }\n" +
                 "                }\n" +
-                "            ]\n" +
                 "        },\n" +
                 "        \"분류\": {\n" +
                 "            \"multi_select\": [{\n" +
@@ -100,7 +99,23 @@ public class NotionServiceImpl implements NotionService {
                 "                }\n" +
                 "            ]\n" +
                 "        }\n" +
-                "    }\n" +
+                "    },\n" +
+                "    \"children\": [" +
+                "         {" +
+                "                 \"type\": \"code\"," +
+                "                 \"code\": {" +
+                "                     \"rich_text\": [" +
+                "                          {" +
+                "                                \"type\": \"text\"" +
+                "                                \"text\": {" +
+                "                                    \"content\": \"" + detail.getSubmissionCode() + "\"" +
+                "                                }" +
+                "                           }" +
+                "                    ]," +
+                "                    \"language\": \"" + detail.getLanguage() + "\"" +
+                "                }" +
+                "           }" +
+                "      ]" +
                 "}  ";
 
 
