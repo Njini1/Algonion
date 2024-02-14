@@ -41,8 +41,8 @@ public class User{
     @OneToMany(mappedBy = "user")
     private List<SolvedProblem> solvedProblems; // 사용자별 푼 문제수를 위함
 
-    @OneToOne(mappedBy = "user")
-    private ProfileFileInfo userProfile;
+//    @OneToOne(mappedBy = "user")
+//    private ProfileFileInfo userProfile;
 
 
     @Builder

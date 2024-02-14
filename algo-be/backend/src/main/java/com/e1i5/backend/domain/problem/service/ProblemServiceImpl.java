@@ -19,13 +19,8 @@ import java.util.*;
 @Slf4j
 public class ProblemServiceImpl implements ProblemService {
 
-
-//    @Autowired
-//    SolvedProblemRepository solvedProblemRepo;
     @Autowired
     ProblemRepository problemRepo;
-//    @Autowired
-//    AuthRepository userRepo;
     @Autowired
     AlgoGroupRepository algoGroupRepo;
 
@@ -81,13 +76,6 @@ public class ProblemServiceImpl implements ProblemService {
             }
 
             String url = BOJ_URL + Integer.toString(problemId);
-//            System.out.println("ProblemId : " + problemId);
-//            System.out.println("Title : " + titleKo);
-//            System.out.println("Level : " + level);
-//            System.out.println("AlgoGroup : " + algoGroup);
-//            System.out.println("url : https://www.acmicpc.net/problem/" + Integer.toString(problemId));
-//            System.out.println("algoscoreutil : " + AlgoScoreUtil.getBojScore(level));
-//            System.out.println("====================================================");
 
             // 1. 문제 저장 -> 이미 있는 값은 레벨만 변경, 없으면 새로 저장
             Problem problem = Problem.builder()
@@ -97,10 +85,9 @@ public class ProblemServiceImpl implements ProblemService {
                     .algoScore(AlgoScoreUtil.getBojScore(level))
                     .url(url).build();
             problem.updateSiteName(ProblemSite.BAEKJOON.getProblemSite());
-            Problem newProblem = saveOrUpdateProblem(problem, ProblemSite.BAEKJOON.getProblemSite());
+            Problem newProblem = saveOrUpdateProblem(problem, ProblemSite.BAEKJOON.getProblemSite(), null);
 
             // 2. 문제의 인덱스를 가지고 문제 알고리즘 분류
-            //TODO 이미 존재하는 문제 분류일 경우 처리 -> 분류는 초기에 할 것이기 때문에 table drop시키고 새로 저장해도 되긴함
             List<AlgoGroup> algoGroupList = new ArrayList<>();
             for (String algo : algoGroup) {
                 algoGroupList.add(AlgoGroup.builder()
@@ -113,21 +100,6 @@ public class ProblemServiceImpl implements ProblemService {
 
     }
 
-//    /**
-//     * solved.ac 문제에서 이미 존재하면 난이도만 업데이하고 없으면 새로 저장
-//     * @param problem 백준 문제
-//     * @param siteName 사이트 이름(혹시 나중에 프로그래머스나 swea도 쓸 수 있으니까)
-//     * @return 저장한 문제 반환
-//     */
-//    @Override
-//    public Problem saveOrUpdateProblem(Problem problem, String siteName) {
-//        problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName)
-//                .map(entity -> entity.updateLevel(problem.getProblemLevel(), problem.getAlgoScore()))
-//                .orElse(problem);
-//
-//        return problemRepo.save(problem);
-//    }
-
     @Override
     public int getOldAlgoScore(String problemNum, String siteName) {
         Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problemNum, siteName);
@@ -135,15 +107,28 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
-    public Problem saveOrUpdateProblem(Problem problem, String siteName) {
+    public Problem saveOrUpdateProblem(Problem problem, String siteName, List<String> problemCategories) {
         Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName);
-//        System.out.println(existingProblem);
+
         if (existingProblem.isPresent()) {
             // 문제가 이미 존재하면, 난이도와 algoScore 업데이트
             Problem updatedProblem = existingProblem.get();
             updatedProblem.updateLevel(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));
             return problemRepo.save(updatedProblem);
         } else {
+            // 분류값이 들어올 경우
+            if (problemCategories != null && !problemCategories.isEmpty()) {
+                List<AlgoGroup> algoGroupList = new ArrayList<>();
+
+                for (String algo : problemCategories) {
+                    algoGroupList.add(AlgoGroup.builder()
+                            .problem(problem)
+                            .classification(algo).build());
+                }
+
+                algoGroupRepo.saveAll(algoGroupList);
+            }
+
             // 문제가 존재하지 않으면, 새로운 문제 저장
             problem.updateSiteName(siteName);
             problem.updateLevel(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));

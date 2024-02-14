@@ -63,6 +63,7 @@ public class ProblemController {
     @PostMapping("/swea")
     public ResponseEntity<Void> saveSWEA(
             @RequestBody SolvedProblemRequest problem, Principal principal){
+//        int userId = 1;
         int userId = Integer.parseInt(principal.getName());
 
         log.info("ProblemController SWEA SolvedProblemRequest problem: {}", problem.toString());

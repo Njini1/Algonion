@@ -42,4 +42,10 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
             "WHERE sp.problem.problemId = :problemId")
     List<Integer> findDistinctUsersByProblem_ProblemId(@Param("problemId") int problemId);
 
+
+    @Query(value = "SELECT COUNT(DISTINCT p.site_name, p.num) " +
+            "FROM solved_problem sp\n" +
+            "JOIN problem p ON sp.problem_id = p.problem_id\n" +
+            "WHERE sp.user_id = :userId", nativeQuery = true)
+    Long countUserSolvedProblem(int userId);
 }

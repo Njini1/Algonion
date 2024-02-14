@@ -44,16 +44,6 @@ public class FriendServiceImpl implements FriendService{
         return checkFriendship(user, friend);
     }
 
-//    @Override
-//    public void cancelFriendship(int userId, String friendNickname) {
-//        User user = getUserByUserId(userId);
-//        User friend = getUserByNickname(friendNickname);
-//
-//        Optional<Friend> friendship = friendRepo.findByUserAndFriend(user, friend);
-//
-//        friendship.ifPresent(value -> friendRepo.delete(value));
-//    }
-
     /**
      * 사용자간의 친구 여부 확인
      * @param user 로그인한 사용자
@@ -85,19 +75,14 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public List<FriendListInterfaceResponse> listFriendship(int userId) {
-        // 높은 등급 순위대로 티어, 닉네임, 점수, 푼 문제수?
-        List<FriendListInterfaceResponse> friends = new ArrayList<>();
-        friends = friendRepo.getFriendInfoByFriendId(userId);
 
-        return friends;
+        return friendRepo.getFriendInfoByFriendId(userId);
     }
 
     @Override
     public List<FriendListInterfaceResponse> searchNickname(String nickname) {
-        // 로그인한 사람과 친구 관계 여부도 추가 고려
-        List<FriendListInterfaceResponse> friends = authRepo.findByNicknameContaining(nickname);
 
-        return friends;
+        return authRepo.findByNicknameContaining(nickname);
     }
 
     private User getUserByNickname(String nickname) {

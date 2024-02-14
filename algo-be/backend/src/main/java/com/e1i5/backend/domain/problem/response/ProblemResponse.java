@@ -3,7 +3,7 @@ package com.e1i5.backend.domain.problem.response;
 import lombok.*;
 
 @Getter
-@Setter
+//@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ProblemResponse {
     private String siteName;
@@ -12,6 +12,7 @@ public class ProblemResponse {
     private String problemLevel;
     private String url;
 
+    @Builder
     public ProblemResponse(String siteName, String problemNum, String problemTitle, String problemLevel, String url) {
         this.siteName = siteName;
         this.problemNum = problemNum;
@@ -19,4 +20,5 @@ public class ProblemResponse {
         this.problemLevel = problemLevel;
         this.url = url;
     }
+
 }

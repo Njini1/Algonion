@@ -1,6 +1,7 @@
 package com.e1i5.backend.domain.problem.repository;
 
 import com.e1i5.backend.domain.problem.model.entity.Problem;
+import com.e1i5.backend.domain.problem.response.ProblemInterfaceResponse;
 import com.e1i5.backend.domain.problem.response.ProblemResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,4 +23,17 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer> {
             "FROM SolvedProblem sp " +
             "WHERE sp.user.userId = :userId)")
     List<ProblemResponse> findUnsolvedProblemsByUserId(@Param("userId") int userId);
+
+    @Query("SELECT p.problemId  " +
+            "FROM Problem p " +
+            "WHERE p.problemId NOT IN " +
+            "(SELECT sp.problem.problemId " +
+            "FROM SolvedProblem sp " +
+            "WHERE sp.user.userId = :userId)")
+    int[] findUnsolvedProblemsIdsByUserId(@Param("userId") int userId);
+
+    @Query("SELECT p.siteName AS siteName, p.url AS url, p.problemNum AS problemNum, " +
+            "p.problemTitle AS problemTitle, p.problemLevel AS problemLevel " +
+            "FROM Problem p WHERE p.problemId IN :problemIds")
+    List<ProblemInterfaceResponse> findByProblemIdIn(List<Integer> problemIds);
 }

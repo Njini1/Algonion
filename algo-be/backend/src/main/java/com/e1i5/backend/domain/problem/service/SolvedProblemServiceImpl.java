@@ -73,7 +73,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                     updatedSolvedProblemReq.getProblemCategories());
         }
 
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, null);
 
         SolvedProblemRequest finalSolvedProblemReq = solvedProblemReq;
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
@@ -89,7 +89,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, solvedProblemReq.getProblemCategories());
 
         saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore);
     }
@@ -179,7 +179,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public SolvedProblemDetailResponse updateSolvedProblem(int userId, int solvedProblemId, String memo) {
 
-        // checkAuth 로직 추가
         SolvedProblem solvedProblem = checkAuth(userId, solvedProblemId);
 
         solvedProblem.updateMemo(memo);
