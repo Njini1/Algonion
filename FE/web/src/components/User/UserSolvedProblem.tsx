@@ -1,6 +1,5 @@
 // import React from "react";
 import {CardHeader, CardBody, CardFooter, Button, Card} from "@nextui-org/react";
-// import classes from "./UserSolvedProblem.module.scss"
 import UserProblem from './UserProblem'
 import { getSolved100 } from "../../api/mainInfoAPI";
 
@@ -54,7 +53,7 @@ function UserSolvedProblem() {
       <CardFooter className="gap-3">
         <div className="flex gap-1">
           <p className="font-semibold text-default-400 text-large">OO개 문제 해결</p>
-          <p className=" text-default-400 text-large">= 계산식(?)</p>
+          <p className=" text-default-400 text-large">= 계산식</p>
         </div>
         {/* <div className="flex gap-1">
           <p className="font-semibold text-default-400 text-small">1K</p>

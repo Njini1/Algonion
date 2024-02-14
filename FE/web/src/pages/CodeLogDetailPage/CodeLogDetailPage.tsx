@@ -6,7 +6,7 @@ import CodeLog from '../../components/CodeLog/CodeLog.tsx'
 import CodeLogMemo from '../../components/CodeLog/CodeLogMemo.tsx'
 import Footer from '../../containers/Footer/Footer.tsx';
 
-import {getCodeLogDetail} from '../../api/codeLogAPI.ts'
+import {getCodeLogDetail} from '../../api/CodeLogAPI.ts'
 import classes from "./CodeLogDetailPage.module.scss"
 
 
