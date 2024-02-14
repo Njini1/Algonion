@@ -14,7 +14,7 @@ const ydoc = new Y.Doc();
 // @ts-expect-error: This line intentionally creates an error for demonstration purposes.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const provider = new WebrtcProvider("tiptap-collaboration-extension", ydoc, {
-  signaling: ["wss://y-webrtc-ckynwnzncc.now.sh"],
+  signaling: ["wss://algonion.store/signal"],
 });
 
 function CollaborativeEditorPage() {
