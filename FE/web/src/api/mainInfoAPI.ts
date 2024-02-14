@@ -2,11 +2,10 @@ import { axiosAuthApi } from "../utils/instance";
 
 
 export const getSolved100 = async (nickname: string) => {
-    // const results = await axios.get(`${api}/v1/dashboard/top100?nickname=${nickname}`);
    const results = await axiosAuthApi().get(`/v1/dashboard/top100?nickname=${nickname}`);
 
-    // console.log(results.data)
-    return results.data
+   console.log(results.data, 'getSolved100')
+   return results.data
 };
 
 export const getStreak = async (nickname: string, from: string, to: string) => {

@@ -58,7 +58,7 @@ export default function Header() {
           deleteCookie("refresh_token")
           console.log("회원탈퇴 성공!");
           
-          window.location.href = "/mainpage";
+          window.location.href = "/";
         } else {
           console.log("회원탈퇴 실패!");
         }
