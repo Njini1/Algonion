@@ -3,6 +3,7 @@ import {Progress} from "@nextui-org/react";
 import {Button} from "@nextui-org/react";
 import classes from './UserBasis.module.scss';
 import { getNickname } from '../../api/nicknameAPI';
+import axios from 'axios';
 
 
 export default function UserBasis() {
@@ -35,6 +36,8 @@ export default function UserBasis() {
     const file = event.target.files?.[0];
     
     if (file) {
+      profileImageData.append('backgroundImage', file);
+
       setBackgroundImage(URL.createObjectURL(file));
     }
   };
@@ -50,9 +53,45 @@ export default function UserBasis() {
     const file = event.target.files?.[0];
 
     if (file) {
+      backgroundImageData.append('profileImage', file);
+
       setProfileImage(URL.createObjectURL(file));
     }
   };
+
+  // 파일 업로드
+const profileImageData = new FormData();
+const backgroundImageData = new FormData();
+
+// const handleSubmit = async () => {
+//   // API 요청
+//   const profileImageResponse = await axios.post(
+//     '/api/v1/profile/profile-img',
+//     profileImageData,
+//     {
+//       headers: {
+//         'Content-Type': 'multipart/form-data',
+//       },
+//     }
+//   );
+
+//   const backgroundImageResponse = await axios.post(
+//     '/api/v1/profile/background-img',
+//     backgroundImageData,
+//     {
+//       headers: {
+//         'Content-Type': 'multipart/form-data',
+//       },
+//     }
+//   );
+
+//   // API 요청 결과 처리
+//   if (profileImageResponse.status === 200 && backgroundImageResponse.status === 200) {
+//     // 성공 처리
+//   } else {
+//     // 실패 처리
+//   }
+// };
 
   // 팔로우 기능
   const [isFollowed, setIsFollowed] = React.useState(false);
