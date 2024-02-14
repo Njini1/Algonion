@@ -29,15 +29,22 @@ export default function CodeLogList() {
     {name: "레  벨", uid: "level"},
     {name: "언  어", uid: "language"},
     {name: "제 출 일", uid: "date"},
-    {name: "삭  제", uid: "delete"},
+    {name: "비  고", uid: "detail"},
   ];
   
-  // nickname 받아 오기
-  const [nickname, setNickname] = useState('');
+  // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
+  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
+
+  const [username, setUsername] = useState('');
+  const [isMe, setIsMe] = useState(false);
+
   useEffect(() => {
     async function getAxios(){
       let name = await getNickname()
-      setNickname(name)
+      setUsername(name)
+      if (username === nickname) {
+        setIsMe(true)
+      }
     }
     getAxios()
   }, []);
@@ -101,6 +108,8 @@ export default function CodeLogList() {
         );
       case "delete":
         return (
+          <div>
+          {isMe &&
           <div className={`relative flex items-center gap-2 justify-center`}>
             <Tooltip content="Edit CodeLog">
               <span className="text-lg text-green-500 cursor-pointer active:opacity-50" onClick={() => goToDetailPage(log.solvedId)}>
@@ -112,6 +121,8 @@ export default function CodeLogList() {
                 <DeleteIcon />
               </span>
             </Tooltip>
+            </div>
+          }
           </div>
         );
       default:

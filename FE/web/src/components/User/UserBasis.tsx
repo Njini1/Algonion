@@ -7,13 +7,19 @@ import { getNickname } from '../../api/nicknameAPI';
 import userImage from './user_image.png';
 
 export default function UserBasis() {
-  // nickname 불러 오기
-  const [nickname, setNickname] = useState('');
-  
+  // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
+  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
+
+  const [username, setUsername] = useState('');
+  const [isMe, setIsMe] = useState(false);
+
   useEffect(() => {
     async function getAxios(){
       let name = await getNickname()
-      setNickname(name)
+      setUsername(name)
+      if (username === nickname) {
+        setIsMe(true)
+      }
     }
     getAxios()
   }, []);
@@ -83,6 +89,7 @@ export default function UserBasis() {
           </div>
           <div className={classes.Buttons}>
           {/* 팔로우 기능 */}
+          { isMe &&
           <Button
             className={
               `${isEdited ? "bg-transparent text-foreground border-default-200" : ""} ${classes.followButton}`
@@ -95,6 +102,8 @@ export default function UserBasis() {
               >
             {isEdited ? "수정 완료" : "정보 수정"}
           </Button>
+          }
+          { !isMe &&
           <Button
             className={
               `${isFollowed ? "bg-transparent text-foreground border-default-200" : ""} ${classes.followButton}`
@@ -107,6 +116,7 @@ export default function UserBasis() {
               >
             {isFollowed ? "친구 해제" : "친구 추가"}
           </Button>
+          }
           </div>
         </div>
   
