@@ -146,10 +146,14 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
 //        System.out.println("problemCategories : " + problemCategories);
 //        System.out.println("problemNum: " + problemNum);
 
-        SolvedProblemRequest updatedRequest = new SolvedProblemRequest();
-        updatedRequest.updateProblemInfo(problemTitle, problemLevel, problemCategories);
+//        SolvedProblemRequest updatedRequest = new SolvedProblemRequest(); //merge 때문인지 오류나서 수정함
+//        updatedRequest.updateProblemInfo(problemTitle, problemLevel, problemCategories);
 
-        return updatedRequest;
+        return SolvedProblemRequest.builder()
+                    .problemTitle(problemTitle)
+                    .problemLevel(problemLevel)
+                    .problemCategories(problemCategories)
+                    .build();
     }
 
     /**

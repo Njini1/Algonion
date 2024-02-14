@@ -60,17 +60,11 @@ public class FriendshipController {
         return new ResponseEntity<>(friends, HttpStatus.OK);
     }
 
-    /**
-     * 친구 삭제
-     * @param nickname 친구 취소할 닉네임
-     * @param principal 로그인한 유저
-     * @return 없음
-     */
-//    @Operation(summary = "친구 삭제")
-//    @DeleteMapping()
-//    public ResponseEntity<Void> cancleFriendship(@RequestParam("nickname") String nickname, Principal principal) {
-//        int userId = Integer.parseInt(principal.getName());
-//        friendService.cancelFriendship(userId, nickname);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @Operation(summary = "친구 여부 확인")
+    @GetMapping("/{nickname}")
+    public ResponseEntity<Integer> checkFriendship(@PathVariable("nickname") String nickname, Principal principal) {
+        int userId = Integer.parseInt(principal.getName());
+        int checkFriendship = friendService.checkFriendship(userId, nickname);
+        return new ResponseEntity<>(checkFriendship, HttpStatus.OK);
+    }
 }

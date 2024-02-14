@@ -50,10 +50,6 @@ public class SolvedProblemRequest {
                 .build();
     }
 
-    public SolvedProblemRequest isNullUpateLevel(String problemLevel) {
-        this.problemLevel = problemLevel;
-        return this;
-    }
 
     @Builder
     public SolvedProblemRequest(String submissionId,
@@ -82,6 +78,13 @@ public class SolvedProblemRequest {
         this.submissionTime = submissionTime;
         this.url = url;
         this.problemCategories = problemCategories;
+    }
+
+    @Builder
+    public SolvedProblemRequest(String problemTitle, String problemLevel, List<String> problemCategory) {
+        this.problemTitle = problemTitle;
+        this.problemLevel = problemLevel;
+        this.problemCategories = problemCategory;
     }
 
     public void updateProblemInfo(String problemTitle, String problemLevel, List<String> problemCategory) {
