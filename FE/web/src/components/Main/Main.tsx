@@ -32,7 +32,7 @@ export default function Main() {
   useEffect(() => {
     setIsLogin(localStorage.getItem('access_token'))
     console.log(isLogin)
-  }, [])
+  }, [isLogin])
 
   return (
     <div className={classes.mainContainer}>

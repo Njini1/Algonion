@@ -21,8 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,18 +63,25 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         // 임시방편 코드
         if (solvedProblemReq.getProblemLevel() == null) {
 //            solvedProblemReq.isNullUpateLevel("0");
-//            solvedProblemReq = getUpdatedSolvedProblemRequest(solvedProblemReq.getProblemNum());
+            // 문제 정보를 업데이트하기 위해 getUpdatedSolvedProblemRequest 호출
+            SolvedProblemRequest updatedSolvedProblemReq = getUpdatedSolvedProblemRequest(Integer.parseInt(solvedProblemReq.getProblemNum()));
+//            System.out.println("solvedProblemReq" + solvedProblemReq);
+
+            // 가져온 문제 정보를 기존의 solvedProblemReq에 복사하여 업데이트
+            solvedProblemReq.updateProblemInfo(updatedSolvedProblemReq.getProblemTitle(),
+                    updatedSolvedProblemReq.getProblemLevel(),
+                    updatedSolvedProblemReq.getProblemCategories());
         }
-        System.out.println("solvedProblemReq" + solvedProblemReq);
 
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
+        SolvedProblemRequest finalSolvedProblemReq = solvedProblemReq;
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
                 .ifPresentOrElse( //TODO orElseGet으로?
                         solvedProblem -> {
                             log.info("ProblemServiceImpl saveSolvedProblem already exist solvedProblem");
                         },
-                        () -> saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore)
+                        () -> saveSolvedProblem(finalSolvedProblemReq, userId, problem, oldAlgoScore)
                 );
     }
 
@@ -82,6 +92,64 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
         saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore);
+    }
+
+    private static final String SOLVEDAC_URL = "https://solved.ac";
+
+    /**
+     * solved.ac에서 문제 데이터 받아오기
+     *
+     * @param problemNum
+     * @return
+     */
+    @Override
+    public SolvedProblemRequest getUpdatedSolvedProblemRequest(int problemNum) {
+        String code = "myCode";
+
+        // webClient 기본 설정
+        WebClient webClient =
+                WebClient
+                        .builder()
+                        .baseUrl(SOLVEDAC_URL)
+                        .build();
+
+        // api 요청
+        Map response =
+                webClient
+                        .get()
+                        .uri(uriBuilder ->
+                                uriBuilder
+                                        .path("/api/v3/problem/show")
+                                        .queryParam("problemId", problemNum)
+                                        .build())
+                        .retrieve()
+                        .bodyToMono(Map.class)
+                        .block();
+
+        assert response != null;
+//        log.info(response.toString());
+//        Map<String, Object> item = (Map<String, Object>) response.get("items");
+
+//        if (item != null) {
+//            int problemId = (int) item.get("problemId");
+        String problemTitle = (String) response.get("titleKo");
+        String problemLevel = String.valueOf(response.get("level"));
+        List<String> problemCategories = new ArrayList<>();
+        List<Map<String, Object>> tags = (List<Map<String, Object>>) response.get("tags");
+        for (Map<String, Object> tag : tags) {
+            List<Map<String, Object>> displayNames = (List<Map<String, Object>>) tag.get("displayNames");
+            problemCategories.add((String) displayNames.get(0).get("name"));
+        }
+
+//        System.out.println("problemTitle : " + problemTitle);
+//        System.out.println("problemLevel : " + problemLevel);
+//        System.out.println("problemCategories : " + problemCategories);
+//        System.out.println("problemNum: " + problemNum);
+
+        SolvedProblemRequest updatedRequest = new SolvedProblemRequest();
+        updatedRequest.updateProblemInfo(problemTitle, problemLevel, problemCategories);
+
+        return updatedRequest;
     }
 
     /**

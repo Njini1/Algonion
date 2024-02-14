@@ -88,9 +88,9 @@ public class ProfileController {
      */
     @Operation(summary = "사용자 정보 불러오기 ")
     @GetMapping()
-    public ResponseEntity<UserInfoResponse> getUserInfo(@RequestParam("nickname") String nickname) {
-        //TODO 배경 이미지 추가
-        UserInfoResponse user = profileService.getUserInfo(nickname);
+    public ResponseEntity<UserInfoResponse> getUserInfo(@RequestParam("nickname") String nickname, Principal principal) {
+        int userId = Integer.parseInt(principal.getName());
+        UserInfoResponse user = profileService.getUserInfo(userId, nickname);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

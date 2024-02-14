@@ -3,7 +3,7 @@ import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, T
 import { EditIcon } from "./CodeLogList/editIcon.tsx";
 import { DeleteIcon  } from "./CodeLogList/deleteIcon.tsx";
 
-import { deleteCodeLog, getCodeLog } from "../../api/CodeLogAPI.ts"
+import { deleteCodeLog, getCodeLog } from "../../api/codeLogAPI.ts"
 // import {columns, logs} from "./CodeLogList/data";
 
 import classes from './CodeLogList.module.scss'
@@ -29,19 +29,26 @@ export default function CodeLogList() {
     {name: "레  벨", uid: "level"},
     {name: "언  어", uid: "language"},
     {name: "제 출 일", uid: "date"},
-    {name: "삭  제", uid: "delete"},
+    {name: "비  고", uid: "detail"},
   ];
   
-  const [nickname, setNickname] = useState('');
-  const [logs, setlogs] = useState<Log[]>([]);
+  // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
+  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
+
+  const [isMe, setIsMe] = useState(false);
+
   useEffect(() => {
     async function getAxios(){
-      let name = await getNickname()
-      setNickname(name)
+      const username = await getNickname();
+      if (username == nickname) {
+        setIsMe(true);
+      }
     }
-    getAxios()
+    getAxios();
   }, []);
 
+  // logs 받아 오기
+  const [logs, setlogs] = useState<Log[]>([]);
   useEffect(() => {
     async function getAxios(){
       let res = await getCodeLog(nickname);
@@ -50,8 +57,12 @@ export default function CodeLogList() {
     getAxios()
   }, [nickname]);
   
-  function goToDetailPage(nickname: string, problemId: string) {
-    window.location.href=`/code-log/${nickname}/${problemId}`;
+
+  // edit/delete 함수
+  async function goToDetailPage(problemId: string) {
+    const name = await getNickname();
+    console.log(name, problemId);
+    window.location.href = `/code-log/${name}/${problemId}`;
   }
 
   function deleteLog(problemId: string) {
@@ -60,7 +71,7 @@ export default function CodeLogList() {
     window.location.reload();
   }
 
-  ///////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
   const renderCell = useCallback((log: Log, columnKey: Key) => {
     const cellValue = log[columnKey as keyof Log];
     
@@ -93,11 +104,13 @@ export default function CodeLogList() {
             <p className={`text-bold text-sm capitalize ${classes.center}`}>{log.submissionTime}</p>
           </div>
         );
-      case "delete":
+      case "detail":
         return (
+          <div>
+          {isMe &&
           <div className={`relative flex items-center gap-2 justify-center`}>
             <Tooltip content="Edit CodeLog">
-              <span className="text-lg text-green-500 cursor-pointer active:opacity-50" onClick={() => goToDetailPage(nickname, log.solvedId)}>
+              <span className="text-lg text-green-500 cursor-pointer active:opacity-50" onClick={() => goToDetailPage(log.solvedId)}>
                 <EditIcon />
               </span>
             </Tooltip>
@@ -106,12 +119,14 @@ export default function CodeLogList() {
                 <DeleteIcon />
               </span>
             </Tooltip>
+            </div>
+          }
           </div>
         );
       default:
         return cellValue;
     }
-  }, []);
+  }, [isMe]);
 
   return (
   <Table aria-label="Example table with custom cells">

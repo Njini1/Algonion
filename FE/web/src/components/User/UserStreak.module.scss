@@ -1,12 +1,28 @@
 .streakTable {
-  overflow: scroll;
-  
+  margin-top: 5rem;
+  padding: 1rem;
+  border: 1px solid black;
 }
 
-.streak {
-  border-radius: 2px;
-  background-color: rgb(177, 177, 177);
+.streakOff {
+  border-radius: 0.5rem;
+  background-color: #EBEDF0;
   min-width: 10px;
   min-height: 10px;
-  border:solid black 1px;
+  width: 100px;
+  border: solid white 3px;
+}
+
+.streakOn {
+  border-radius: 0.5rem;
+  background-color: #eab20a;
+  min-width: 10px;
+  min-height: 10px;
+  width: 100px;
+  border: solid white 3px;
+}
+
+.chip {
+  padding: 2rem;
+  align-items: center;
 }

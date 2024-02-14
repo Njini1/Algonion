@@ -10,9 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hocuspocus/provider": "^2.11.1",
     "@nextui-org/react": "^2.2.9",
     "@react-oauth/google": "^0.12.1",
     "@tippyjs/react": "^4.2.6",
+    "@tiptap/extension-code-block-lowlight": "^2.2.2",
+    "@tiptap/extension-collaboration": "^2.2.2",
+    "@tiptap/extension-collaboration-cursor": "^2.2.2",
+    "@tiptap/extension-placeholder": "^2.2.2",
     "@tiptap/pm": "^2.2.2",
     "@tiptap/react": "^2.2.2",
     "@tiptap/starter-kit": "^2.2.2",
@@ -24,12 +29,15 @@
     "framer-motion": "^11.0.3",
     "highlight.js": "^11.9.0",
     "i": "^0.3.7",
+    "lowlight": "^2.4.0",
     "postcss-cli": "^11.0.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
-    "react-router-dom": "^6.21.3"
+    "react-router-dom": "^6.21.3",
+    "y-prosemirror": "^1.2.2",
+    "y-webrtc": "^10.3.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",

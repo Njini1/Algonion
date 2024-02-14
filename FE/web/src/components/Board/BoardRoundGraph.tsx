@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
 function BoardRoundGraph(props: any) {
+    // console.log(props)
+
   const [series, setSeries] = useState<number[]>([]); 
 
   useEffect(() => {
     // console.log(props)
     if (props) {
-      setSeries(props.items);
-      console.log(series)
+      setSeries(props.series);
+      // console.log(series)
     }
   }, [props]); 
   

@@ -5,19 +5,13 @@ import { getSolved100 } from "../../api/mainInfoAPI";
 
 import classes from './UserSolvedProblem.module.scss'
 import { useEffect, useState } from "react";
-import { getNickname } from "../../api/nicknameAPI";
 
 function UserSolvedProblem() {
-  const [nickname, setNickname] = useState('');
-  const [problems, setProblems] = useState();
+  // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
+  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
   
-  useEffect(() => {
-    async function getAxios(){
-      let name =await getNickname();
-      setNickname(name);
-    }
-    getAxios()
-  }, []);
+  // problems 정보 가져 오기
+  const [problems, setProblems] = useState();
 
   useEffect(() => {
     async function getAxios(){

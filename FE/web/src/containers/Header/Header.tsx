@@ -10,6 +10,8 @@ import { deleteCookie } from "../../utils/cookieUtil";
 import { getNickname } from "../../api/nicknameAPI";
 import { getUserProfile } from "../../api/getUserDataAPI";
 
+import pImage from './profile_image.png';
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuItems = [
@@ -24,7 +26,7 @@ export default function Header() {
   const NicknameSet = () => {
     // 페이지 이동 함수
     const navigate = () => {
-      window.location.href = "/nickname-setting";
+      window.location.href = "/user/nickname";
     };
   
     // 확인 메시지
@@ -135,20 +137,16 @@ export default function Header() {
           <NavbarItem>    
             {/* 프로필 페이지 - 티어에 따라서 프로필 테두리 색 다르게 주기 (예정) */}
             <div className="flex gap-4 items-center">
-              {/* <Avatar isBordered color="bronze" src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" /> */}
-              {/* <Avatar isBordered color="#C0C0C0" src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" />
-              <Avatar isBordered color="#FFBF00 " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" />
-              <Avatar isBordered color="#02B7AE " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" />
-            <Avatar isBordered color="#00FFFF " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" /> */}
               <Dropdown>
               <DropdownTrigger>
               <div className="profile_wrapper">
                   <div className="gradation_animate"></div>
                   <div className="image_wrapper">
                     <Avatar
+                    isBordered
                     className="image"
-                    // color="secondary" 
-                    src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" 
+                    color="secondary" 
+                    src={pImage}
                     />
                   </div>
               </div>

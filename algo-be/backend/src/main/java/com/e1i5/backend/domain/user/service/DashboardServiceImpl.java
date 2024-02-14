@@ -65,7 +65,6 @@ public class DashboardServiceImpl implements DashboardService {
                         data -> ((Number) data[1]).intValue(),
                         Integer::sum));
 
-        System.out.println(algoScoreCounts);
         // 특정 알고리즘 점수에 대한 배열 생성
         int[] responseArray = {
                 algoScoreMap.getOrDefault(1, 0),
@@ -81,7 +80,6 @@ public class DashboardServiceImpl implements DashboardService {
                 .filter(count -> count > 0)
                 .mapToObj(AlgoScoreCountResponse::new)
                 .collect(Collectors.toList());
-        System.out.println("responseArray" + responseArray + "/////////////////////////");
         return responseArray;
     }
 
@@ -103,7 +101,6 @@ public class DashboardServiceImpl implements DashboardService {
         Map<String, Long> categoryCounts = categoryMap.values().stream()
                 .flatMap(Set::stream)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-        System.out.println(categoryCounts);
 
         // 카테고리에 따른 카운트 배열을 생성합니다.
         int[] responseArray = {
@@ -145,6 +142,19 @@ public class DashboardServiceImpl implements DashboardService {
             if (oldAlgoScore != algoScore) {
                 // 알고리즘 점수가 변경된 경우
                 userInfoRepo.updateUserScore(userId, userScore + (algoScore - oldAlgoScore));
+
+                List<Integer> solvedUserIds = solvedProblemRepo.findDistinctUsersByProblem_ProblemId(problemId);
+
+                for (Integer solvedUserId : solvedUserIds) {
+                    boolean isSolvedByUser = solvedProblemRepo.existsByUser_UserIdAndProblem_ProblemId(solvedUserId, problemId);
+                    int solvedUserScore = userInfoRepo.findUserScoreByUserId(solvedUserId);
+
+                    if (isSolvedByUser) {
+                        // 사용자가 해당 문제를 이미 푼 경우에만 점수를 업데이트합니다.
+                        userInfoRepo.updateUserScore(solvedUserId, solvedUserScore + (algoScore - oldAlgoScore));
+                    }
+                    updateUserTier(solvedUserId);
+                }
             }
         }
         updateUserTier(userId);
@@ -213,14 +223,7 @@ public class DashboardServiceImpl implements DashboardService {
             countSum += dateList.get(startDate.plusDays(i).toString());
             data[i] = countSum;
         }
-//
-//        AccCountGraphResponse graphData = AccCountGraphResponse.builder()
-//                .width(2)
-//                .curve("stepline")
-//                .chartId("basic-bar")
-//                .colors("#9f22ff")
-//                .data(Arrays.toString(data))
-//                .categories(Arrays.toString(categories)).build();
+
         AccCountGraphResponse graphData = AccCountGraphResponse.builder()
                 .categories(categories)
                 .data(data)
@@ -248,7 +251,6 @@ public class DashboardServiceImpl implements DashboardService {
             String firstSubmissionDate = entry[0] != null ? entry[0].toString() : "null";
             int accumulatedAlgoScore = entry[1] != null ? Integer.parseInt(entry[1].toString()) : 0;
 //            int problemId = entry[2] != null ? Integer.parseInt(entry[2].toString()) : 0;
-            System.out.println("First Submission Date: " + firstSubmissionDate + ", Accumulated Algo Score: " + accumulatedAlgoScore);
         }
 
         LinkedHashMap<String, Long> dateList = makeDateList(totalDays);
