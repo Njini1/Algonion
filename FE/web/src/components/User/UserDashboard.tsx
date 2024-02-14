@@ -2,23 +2,25 @@ import BoardRadarGraph from "../Board/BoardRadarGraph";
 import BoardLinearGraph from "../Board/BoardLinearGraph";
 import BoardRoundGraph from "../Board/BoardRoundGraph";
 import classes from "./UserDashboard.module.scss"
-import { getNickname } from "../../api/nicknameAPI.ts";
+// import { getNickname } from "../../api/nicknameAPI.ts";
 // import {getCategoryGraph, getLevelGraph, getProblemStackGraph, getPointStackGraph} from '../../api/dashboardAPI.ts'
 import {getLevelGraph, getProblemStackGraph} from '../../api/dashboardAPI.ts'
 
 import { useEffect, useState } from "react";
 
 function UserDashboard() {
-  const [nickname, setNickname] = useState("");
+  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
+  console.log(nickname);
+  // const [nickname, setNickname] = useState("");
   
-  useEffect(() => {
-    const fetchData = async () => {
-      const results = await getNickname();
-      setNickname(results);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const results = await getNickname();
+  //     setNickname(results);
+  //   };
   
-    fetchData();
-  }, [nickname]);
+  //   fetchData();
+  // }, [nickname]);
   
   
   // const [categoryData, setCategoryData] = useState();

@@ -8,21 +8,11 @@ import CodeLogRecommendation from '../../components/CodeLog/CodeLogRecommendatio
 import Footer from '../../containers/Footer/Footer.tsx';
 
 import classes from "./CodeLogPage.module.scss"
-import { useEffect, useState } from 'react';
-import { getNickname } from '../../api/nicknameAPI.ts';
 
 
 export default function CodeLogPage() {
-  const [nickname, setNickname] = useState('');
-  
-  useEffect(() => {
-    async function getAxios(){
-      let name = await getNickname()
-      setNickname(name)
-    }
-    getAxios()
-  }, []);
-
+  // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
+  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
 	
   return (
     <div>
