@@ -1,10 +1,9 @@
-import axios from "axios";
 import {bj_level} from './convertLevel.ts'
-const api = import.meta.env.VITE_BACK_END;
-
+import { axiosAuthApi } from "../utils/instance.ts";
 
 export const getRecommendation = async () => {
-   const results = await axios.get(`${api}/v1/profile/recommand`);
+   // const results = await axios.get(`${api}/v1/profile/recommand`);
+   const results = await axiosAuthApi().get(`/v1/profile/recommand`);
   
    for (let i = 0; i < 2; i++) {
       if (results.data[i].siteName.toLowerCase() === 'baekjoon') {

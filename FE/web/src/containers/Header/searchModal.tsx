@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -12,10 +12,28 @@ import {
 import getAsset from "../../utils/getAsset";
 import { MyInput } from "./MyInput";
 import classes from "./searchModal.module.scss";
+import { axiosApi } from "../../utils/instance";
+
+interface SearchResults {
+  nickname: string;
+  tier: string;
+  userScore: number;
+}
 
 export default function SearchModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [keyword, setKeyword] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchResults[]>([]);
+  useEffect(() => {
+    // 검색창 입력값이 바뀌면 타이머 등록
+    const delayDebounceTimer = setTimeout(() => {
+      axiosApi()
+        .get(`/v1/friendship/search?nickname=${keyword}`)
+        .then(({ data }) => setSearchResults(data));
+    }, 1000); // 1초 지연시간
+    // 이전에 설정한 타이머를 클리어하여 디바운스 취소
+    return () => clearTimeout(delayDebounceTimer);
+  }, [keyword]);
   const onChange = (event: { target: { value: string } }) => {
     setKeyword(event.target.value);
   };
@@ -23,7 +41,7 @@ export default function SearchModal() {
   return (
     <div className="flex flex-col gap-2">
       <Link onPress={onOpen} color="foreground" className={classes.searchLink}>
-        <img src={getAsset("search_icon.svg")} className={classes.searchLink}/>
+        <img src={getAsset("search_icon.svg")} className={classes.searchLink} />
         유저검색
       </Link>
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
@@ -38,7 +56,7 @@ export default function SearchModal() {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-              유저의 닉네임을 검색해주세요!
+                유저의 닉네임을 검색해주세요!
               </ModalHeader>
               <ModalBody>
                 <MyInput
@@ -55,6 +73,11 @@ export default function SearchModal() {
                     />
                   }
                 />
+                <ul>
+                  {searchResults.map((v, i) => (
+                    <li key={i}>{v.nickname}</li>
+                  ))}
+                </ul>
               </ModalBody>
               <ModalFooter>
                 <Button color="secondary" variant="light" onPress={onClose}>

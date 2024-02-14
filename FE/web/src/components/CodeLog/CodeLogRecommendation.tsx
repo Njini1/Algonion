@@ -16,17 +16,13 @@ export default function CodeLogRecommendation() {
   async function getAxios(){
     let res =await getRecommendation();
     setData(res);
-    console.log(res);
+    // console.log(res);
   }
 
   useEffect(() => {
     getAxios()
   }, []);
 
-  // function goToSolve(url: string) {
-  //   window.location.href=`${url}`;
-  // };
-  
   function onRefresh() {
     getAxios()
   };

@@ -10,7 +10,7 @@ import java.util.Map;
 public interface ProfileService {
     void saveUserProfile(int userId, MultipartFile profileImg);
     Map<String, Long> getUserSevenStreak(int userId);
-    UserInfoResponse getUserInfo(String nickname);
+    UserInfoResponse getUserInfo(int userId, String nickname);
 //    UserInfoResponse getUserInfo(String nickname);
     List<ProblemResponse> recommandProblem(int userId);
 }

@@ -52,16 +52,20 @@ public class SecurityConfig{
 //        http.addFilterBefore(new TokenAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), tokenProvider), BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
+                .requestMatchers("/v1/user/token").permitAll()
+                        .requestMatchers("/**").authenticated();
 //                .anyRequest().permitAll();
 //                .requestMatchers("/login-test").permitAll();
-                .requestMatchers("/login-test").permitAll()
-                .requestMatchers("/v1/user/login-test").authenticated()
-                .requestMatchers("/v1/user/login-nickname").authenticated()
-                .requestMatchers("/v1/solved-problems/programmers").authenticated()
-                .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
-                .requestMatchers("/v1/profile/ext").authenticated()
-                .requestMatchers("/v1/user/token").permitAll()
-                .requestMatchers("/ext").authenticated();
+
+
+//                .requestMatchers("/login-test").permitAll()
+//                .requestMatchers("/v1/user/login-test").authenticated()
+//                .requestMatchers("/v1/user/login-nickname").authenticated()
+//                .requestMatchers("/v1/solved-problems/programmers").authenticated()
+//                .requestMatchers("/v1/solved-problems/baekjoon").authenticated()
+//                .requestMatchers("/v1/profile/ext").authenticated()
+//                .requestMatchers("/v1/user/token").permitAll()
+//                .requestMatchers("/ext").authenticated();
 //                        .anyRequest().authenticated();
 
 //        http.addFilterBefore(tokenAuthenticationFilter(), BasicAuthenticationFilter.class);

@@ -24,13 +24,16 @@ public class FriendServiceImpl implements FriendService{
     private AuthRepository authRepo;
 
     @Override
-    public void addFriend(int userId, String friendNickname) {
+    public int makeFriendship(int userId, String friendNickname) {
         User user = getUserByUserId(userId);
         User friend = getUserByNickname(friendNickname);
 
-        boolean friendship = friendRepo.existsByUserAndFriend(user, friend);
+        Optional<Friend> friendship = friendRepo.findByUserAndFriend(user, friend);
 
-        if (!friendship) {
+        if (friendship.isPresent()) {
+//            friendRepo.deleteByUserAndFriend(user, friend); //401 why?
+            friendRepo.delete(friendship.get());
+        } else {
             Friend friendEntity = Friend.builder()
                     .user(user)
                     .friend(friend)
@@ -38,6 +41,46 @@ public class FriendServiceImpl implements FriendService{
 
             friendRepo.save(friendEntity);
         }
+        return checkFriendship(user, friend);
+    }
+
+//    @Override
+//    public void cancelFriendship(int userId, String friendNickname) {
+//        User user = getUserByUserId(userId);
+//        User friend = getUserByNickname(friendNickname);
+//
+//        Optional<Friend> friendship = friendRepo.findByUserAndFriend(user, friend);
+//
+//        friendship.ifPresent(value -> friendRepo.delete(value));
+//    }
+
+    /**
+     * 사용자간의 친구 여부 확인
+     * @param user 로그인한 사용자
+     * @param friend 친구 요청 대상
+     * @return 0: 로그인한 사용자와 친구 사용자가 같음
+     *         1: 두 사용자가 친구
+     *         2: 두 사용자가 친구 아님
+     */
+    @Override
+    public int checkFriendship(User user, User friend) {
+        if (user.getUserId() == friend.getUserId()) return 0;
+
+        boolean friendship = friendRepo.existsByUserAndFriend(user, friend);
+        if (friendship) return 1;
+        else return 2;
+    }
+
+    @Override
+    public int checkFriendship(int userId, String friendNickname) {
+        User user = getUserByUserId(userId);
+        User friend = getUserByNickname(friendNickname);
+
+        if (user.getUserId() == friend.getUserId()) return 0;
+
+        boolean friendship = friendRepo.existsByUserAndFriend(user, friend);
+        if (friendship) return 1;
+        else return 2;
     }
 
     @Override
@@ -55,16 +98,6 @@ public class FriendServiceImpl implements FriendService{
         List<FriendListInterfaceResponse> friends = authRepo.findByNicknameContaining(nickname);
 
         return friends;
-    }
-
-    @Override
-    public void cancelFriendship(int userId, String friendNickname) {
-        User user = getUserByUserId(userId);
-        User friend = getUserByNickname(friendNickname);
-
-        Optional<Friend> friendship = friendRepo.findByUserAndFriend(user, friend);
-
-        friendship.ifPresent(value -> friendRepo.delete(value));
     }
 
     private User getUserByNickname(String nickname) {

@@ -8,10 +8,20 @@ import CodeLogRecommendation from '../../components/CodeLog/CodeLogRecommendatio
 import Footer from '../../containers/Footer/Footer.tsx';
 
 import classes from "./CodeLogPage.module.scss"
-
+import { useEffect, useState } from 'react';
+import { getNickname } from '../../api/nicknameAPI.ts';
 
 
 export default function CodeLogPage() {
+  const [nickname, setNickname] = useState('');
+  
+  useEffect(() => {
+    async function getAxios(){
+      let name = await getNickname()
+      setNickname(name)
+    }
+    getAxios()
+  }, []);
 
 	
   return (
@@ -23,7 +33,7 @@ export default function CodeLogPage() {
         <CodeLogSearchResults/> */}
       </div>
       <div className={classes.title}>
-        <h3><strong>Alice</strong> 님의 코드로그</h3>
+        <h3><strong>{nickname}</strong> 님의 코드로그</h3>
         <CodeLogRecommendation/>
       </div>
       <div className={classes.codeLogPage}>

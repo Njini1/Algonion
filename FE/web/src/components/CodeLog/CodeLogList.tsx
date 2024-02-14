@@ -1,136 +1,140 @@
-import { useState, useEffect } from 'react';
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
+import { useState, useEffect, useCallback, Key } from 'react';
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip} from "@nextui-org/react";
+import { EditIcon } from "./CodeLogList/editIcon.tsx";
+import { DeleteIcon  } from "./CodeLogList/deleteIcon.tsx";
+
+import { deleteCodeLog, getCodeLog } from "../../api/codeLogAPI.ts"
+// import {columns, logs} from "./CodeLogList/data";
+
 import classes from './CodeLogList.module.scss'
-
-import { getCodeLog } from "../../api/CodeLogAPI.ts"
-
-// import { Key } from 'react'
+import { getNickname } from '../../api/nicknameAPI.ts';
 
 
-interface item {
-  siteName: string;
-  language: string;
-  problemNum: string;
-  problemTitle: string;
-  classification: string[];
-  problemLevel: string;
-  submissionTime: string;
-  username: string;
-  url: string;
-}
+export default function CodeLogList() {
+  interface Log {
+    solvedId: string,
+    siteName: string;
+    language: string;
+    problemNum: string;
+    problemTitle: string;
+    classification: string[];
+    problemLevel: string;
+    strClassification: string,
+    submissionTime: string;
+    url: string;
+  }
 
-
-const CodeLogList = () => {
+  const columns = [
+    {name: "제  목", uid: "title"},
+    {name: "레  벨", uid: "level"},
+    {name: "언  어", uid: "language"},
+    {name: "제 출 일", uid: "date"},
+    {name: "삭  제", uid: "delete"},
+  ];
   
-  const [data, setData] = useState<item[]>([]);
-  console.log(data)
+  // nickname 받아 오기
+  const [nickname, setNickname] = useState('');
   useEffect(() => {
     async function getAxios(){
-      const res = await getCodeLog();
-      setData(res);
-      console.log(res);
+      let name = await getNickname()
+      setNickname(name)
     }
     getAxios()
   }, []);
-
-  // function goToDetailPage(username: string, problemNum: string) {
-  //   window.location.href=`/code-log/${username}/${problemNum}`
-  // }
-
-  const rows = [
-    {
-      key: "1",
-      name: "Tony Reichert",
-      role: "CEO",
-      status: "Active",
-    },
-    {
-      key: "2",
-      name: "Zoey Lang",
-      role: "Technical Lead",
-      status: "Paused",
-    },
-    {
-      key: "3",
-      name: "Jane Fisher",
-      role: "Senior Developer",
-      status: "Active",
-    },
-    {
-      key: "4",
-      name: "William Howard",
-      role: "Community Manager",
-      status: "Vacation",
-    },
-  ];
+   
+  // logs 받아 오기
+  const [logs, setlogs] = useState<Log[]>([]);
+  useEffect(() => {
+    async function getAxios(){
+      let res = await getCodeLog(nickname);
+      setlogs(res);
+    }
+    getAxios()
+  }, [nickname]);
   
-  const columns = [
-    {
-      key: "number",
-      label: "문제 번호",
-    },
-    {
-      key: "title",
-      label: "문제 이름",
-    },
-    {
-      key: "category",
-      label: "알고리즘 분류",
-    },
-    {
-      key: "level",
-      label: "난이도",
-    },
-    {
-      key: "date",
-      label: "푼 날짜",
-    },
-  ];
 
-    return (
-      <div className={classes.page}>
-        <Table aria-label="Example table with dynamic content">
-        <TableHeader columns={columns}>
-          {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-        </TableHeader>
-        <TableBody items={rows}>
-          {(item) => (
-            <TableRow key={item.key}>
-              {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
-            </TableRow>
-          )}
-        </TableBody>
-        </Table>
+  // edit/delete 함수
+  async function goToDetailPage(problemId: string) {
+    const name = await getNickname();
+    console.log(name, problemId);
+    window.location.href = `/code-log/${name}/${problemId}`;
+  }
 
+  function deleteLog(problemId: string) {
+    deleteCodeLog(problemId);
+    console.log(problemId);
+    window.location.reload();
+  }
 
-        {/* <div>
-          <table>
-          <thead>
-            <tr>
-              <th className={classes.site}>사이트</th>
-              <th className={classes.number}>문제 번호</th>
-              <th className={classes.name}>문제 이름</th>
-              <th className={classes.category}>알고리즘 분류</th>
-              <th className={classes.tier}>난이도</th>
-              <th className={classes.date}>푼 날짜</th>
-            </tr>
-          </thead>
-          <tbody>
-          {data.map((item: CodeLog, index: Key) => (
-            <tr key={index} className={classes.tdHover} onClick={() => goToDetailPage(item.username, item.problemNum)}>
-              <td>{item.siteName}</td>
-              <td>{item.problemNum}</td>
-              <td><a className={classes.nameHover} href={item.url}>{item.problemTitle}</a></td>
-              <td>{item.classification.join("\n")}</td>
-              <td>{item.problemLevel}</td>
-              <td>{item.submissionTime.split('T')[0]}</td>
-            </tr>
-              ))}
-          </tbody>
-          </table>
-        </div> */}
-      </div>
-    )
+  ////////////////////////////////////////////////////////////////////////
+  const renderCell = useCallback((log: Log, columnKey: Key) => {
+    const cellValue = log[columnKey as keyof Log];
+    
+    switch (columnKey) {
+      case "title":
+        return (
+          <div className="flex flex-col">
+              <p className="text-bold text-sm capitalize">{log.problemNum}. {log.problemTitle}</p>
+              <p className="text-bold text-sm capitalize text-default-400">{log.strClassification}</p>
+            </div>
+        );
+      case "level":
+        return (
+          <div className="flex flex-col">
+            <p className={`text-bold text-sm capitalize ${classes.center}`}>{log.problemLevel}</p>
+            <p className={`text-bold text-sm capitalize text-default-400 ${classes.center}`}>{log.siteName}</p>
+          </div>
+        );
+      case "language":
+        return (
+          <div className={classes.center}>
+            <Chip className="capitalize" color='secondary' size="sm" variant="flat">
+              {log.language}
+            </Chip>
+          </div>
+        );
+      case "date":
+        return (
+          <div className="flex flex-col">
+            <p className={`text-bold text-sm capitalize ${classes.center}`}>{log.submissionTime}</p>
+          </div>
+        );
+      case "delete":
+        return (
+          <div className={`relative flex items-center gap-2 justify-center`}>
+            <Tooltip content="Edit CodeLog">
+              <span className="text-lg text-green-500 cursor-pointer active:opacity-50" onClick={() => goToDetailPage(log.solvedId)}>
+                <EditIcon />
+              </span>
+            </Tooltip>
+            <Tooltip color="danger" content="Delete CodeLog">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50" onClick={() => deleteLog(log.solvedId)}>
+                <DeleteIcon />
+              </span>
+            </Tooltip>
+          </div>
+        );
+      default:
+        return cellValue;
+    }
+  }, []);
+
+  return (
+  <Table aria-label="Example table with custom cells">
+      <TableHeader columns={columns}>
+        {(column) => (
+          <TableColumn key={column.uid} className={classes.center}>
+            {column.name}
+          </TableColumn>
+        )}
+      </TableHeader>
+      <TableBody items={logs}>
+        {(item) => (
+          <TableRow key={item.problemNum}>
+            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+          </TableRow>
+        )}
+      </TableBody>
+    </Table>
+  );
 }
-
-export default CodeLogList

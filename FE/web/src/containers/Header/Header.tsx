@@ -1,5 +1,5 @@
 import classes from "./Header.module.scss"
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar } from "@nextui-org/react";
 import { NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NextUIProvider } from "@nextui-org/react";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link } from "@nextui-org/react";
@@ -7,6 +7,7 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org
 import getAsset from "../../utils/getAsset";
 import SearchModal from "./searchModal";
 import { deleteCookie } from "../../utils/cookieUtil";
+import { getNickname } from "../../api/nicknameAPI";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -66,7 +67,15 @@ export default function Header() {
 
 
   // nickname 받아오기
-  const username = '김수환';
+  const [nickname, setNickname] = useState('');
+  
+  useEffect(() => {
+    async function getAxios(){
+      let name = await getNickname()
+      setNickname(name)
+    }
+    getAxios()
+  }, []);
 
   return (
     <NextUIProvider className={classes.header}>
@@ -86,13 +95,13 @@ export default function Header() {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-            <Link href={`/profile/${username}`} color="foreground" className={classes.hover}>
+            <Link href={`/profile/${nickname}`} color="foreground" className={classes.hover}>
               나의정보
             </Link>
           </NavbarItem>
 
           <NavbarItem>
-            <Link href={`/code-log/${username}`} color="foreground" className={classes.hover}>
+            <Link href={`/code-log/${nickname}`} color="foreground" className={classes.hover}>
               코드로그
             </Link>
           </NavbarItem>
@@ -163,8 +172,8 @@ export default function Header() {
                 }
                 className={`"w-full" ${classes.hover}`}
                 href={
-                  index === 0? `/profile/${username}`  :
-                  index === 1? `/code-log/${username}` :
+                  index === 0? `/profile/${nickname}`  :
+                  index === 1? `/code-log/${nickname}` :
                   index === 2? `/community` : `/`
                 }
                 size="lg"

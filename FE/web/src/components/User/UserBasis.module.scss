@@ -15,8 +15,6 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center ;
-
-
 }
 
 .profileContainer{
@@ -27,7 +25,8 @@
 .profileImage {
   width: 150px;
   height: 150px;
-  border: 1px solid black;
+  // border: 1px solid black;
+  box-shadow: 1px 1px 1px 1px #757575;
   border-radius: 50%;
   
   cursor: pointer;
