@@ -3,7 +3,7 @@ import {Progress} from "@nextui-org/react";
 import {Button} from "@nextui-org/react";
 import classes from './UserBasis.module.scss';
 import { getNickname } from '../../api/nicknameAPI';
-import axios from 'axios';
+// import axios from 'axios';
 
 import bImage from './background_image.png';
 import pImage from './profile_image.png';

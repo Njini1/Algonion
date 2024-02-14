@@ -5,7 +5,7 @@ import classes from "./UserStreak.module.scss";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { getStreak } from "../../api/mainInfoAPI";
-import {CardHeader, CardBody, CardFooter, Button, Card, Chip} from "@nextui-org/react";
+import {CardHeader, CardBody, CardFooter, Card, Chip} from "@nextui-org/react";
 
 function UserStreak() {
   // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기

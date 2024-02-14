@@ -3,7 +3,7 @@ import classes from './UserProblem.module.scss'
 
 
 export default function problem100(props: any) {
-  // console.log(props)
+  console.log(props, 'props')
   // const [problems, setProblems] = useState(); 
   
   // useEffect(() => {
