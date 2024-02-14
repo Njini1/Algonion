@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { deleteCookie, getCookie } from "../../utils/cookieUtil";
-import {CircularProgress} from "@nextui-org/react";
+import { CircularProgress } from "@nextui-org/react";
 import { getNickname } from "../../api/nicknameAPI";
 import { useNavigate } from "react-router-dom";
 
 function LoginSuccessPage() {
-  
   const navigate = useNavigate();
   const [isFinished, setIsFinished] = useState(false);
 
@@ -13,6 +12,7 @@ function LoginSuccessPage() {
   useEffect(() => {
     const accessToken = getCookie("access_token");
     if (accessToken) {
+      localStorage.setItem("access_token", accessToken);
       deleteCookie("access_token");
     }
   }, []);
@@ -21,12 +21,11 @@ function LoginSuccessPage() {
   const [nickname, setNickname] = useState("");
   useEffect(() => {
     const fetchData = async () => {
-  
       const results = await getNickname();
       setNickname(results.data);
-      console.log(nickname, 'nickname')
+      console.log(nickname, "nickname");
     };
-  
+
     fetchData();
 
     setIsFinished(true);
@@ -37,13 +36,16 @@ function LoginSuccessPage() {
     if (isFinished) {
       setTimeout(() => {
         navigate("/");
-      }, 2000)
+      }, 2000);
     }
   }, [isFinished, navigate]);
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-
-    <CircularProgress size="lg" color="secondary" label="로그인 성공! 잠시만 기다려주세요" />
+      <CircularProgress
+        size="lg"
+        color="secondary"
+        label="로그인 성공! 잠시만 기다려주세요"
+      />
     </div>
   );
 }
