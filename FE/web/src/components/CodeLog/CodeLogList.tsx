@@ -3,7 +3,7 @@ import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, T
 import { EditIcon } from "./CodeLogList/editIcon.tsx";
 import { DeleteIcon  } from "./CodeLogList/deleteIcon.tsx";
 
-import { deleteCodeLog, getCodeLog } from "../../api/ccodeLogAPI.ts"
+import { deleteCodeLog, getCodeLog } from "../../api/codeLogAPI.ts"
 // import {columns, logs} from "./CodeLogList/data";
 
 import classes from './CodeLogList.module.scss'
