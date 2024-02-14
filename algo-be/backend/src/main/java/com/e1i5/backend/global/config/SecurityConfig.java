@@ -53,8 +53,8 @@ public class SecurityConfig{
 
         http.authorizeRequests()
                 .requestMatchers("/v1/user/token").permitAll()
-                .requestMatchers("/v1/solved-problems/swea").permitAll()
                         .requestMatchers("/**").authenticated();
+//                .requestMatchers("/v1/solved-problems/swea").permitAll()
 //                .anyRequest().permitAll();
 //                .requestMatchers("/login-test").permitAll();
 

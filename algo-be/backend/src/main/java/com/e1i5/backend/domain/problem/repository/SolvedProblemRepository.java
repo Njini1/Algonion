@@ -33,4 +33,10 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
 
     @Query("SELECT COUNT(sp) FROM SolvedProblem sp JOIN sp.user u WHERE u.nickname = :nickname AND sp.visible = true")
     int countVisibleSolvedProblemsByUserNickname(@Param("nickname") String nickname);
+
+    @Query(value = "SELECT COUNT(DISTINCT p.site_name, p.num) " +
+            "FROM solved_problem sp\n" +
+            "JOIN problem p ON sp.problem_id = p.problem_id\n" +
+            "WHERE sp.user_id = :userId", nativeQuery = true)
+    Long countUserSolvedProblem(int userId);
 }

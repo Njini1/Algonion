@@ -101,34 +101,33 @@ public class ProfileServiceImpl implements ProfileService {
 
     /**
      * 사용자 프로필 정보 불러오기
-     * @param nickname 사용자 닉네임
+     * @param userId 로그인한 사용자 인덱스,, friendNickname 사용자 닉네임
      * @return 사용자 아이디, 티어, 점수, 프로필 이미지, 문제 푼 개수
      */
     @Override
-    public UserInfoResponse getUserInfo(int userId, String nickname) {
+    public UserInfoResponse getUserInfo(int userId, String friendNickname) {
 
-        log.info("ProfileServiceImpl getUserInfo 진입 userId: {}, nickname: {}", userId, nickname);
+        log.info("ProfileServiceImpl getUserInfo 진입 userId: {}, nickname: {}", userId, friendNickname);
 
 //        int userId = getUserIdByNickname(nickname);
 //        UserInfoResponse user = authRepo.getUserInfoByUserId(nickname)
 //                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
-        int findUserId = getUserIdByNickname(nickname);
+        int findFriendUserId = getUserIdByNickname(friendNickname);
 
-        User user = authRepo.findById(findUserId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+        User loginUser = authRepo.findById(userId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+        User friend = authRepo.findById(findFriendUserId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
-        int checkFriendship = friendService.checkFriendship(userId, nickname);
+        Long problemCount = solvedProblemRepo.countUserSolvedProblem(findFriendUserId);
+        int checkFriendship = friendService.checkFriendship(loginUser, friend);
 
         return UserInfoResponse.builder()
-                .score(user.getUserScore())
-                .tier(user.getTier())
-                .userId(user.getUserId())
+                .score(friend.getUserScore())
+                .tier(friend.getTier())
+                .userId(friend.getUserId())
+                .problemCount(problemCount)
                 .friendship(checkFriendship)
                 .build();
-
-//        user.updateFriendship(checkFriendship);
-
-//        return user;
     }
 
     @Override

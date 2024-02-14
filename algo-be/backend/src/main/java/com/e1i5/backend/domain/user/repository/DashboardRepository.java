@@ -30,4 +30,6 @@ public interface DashboardRepository extends JpaRepository<Problem, Integer> {
             "WHERE sp.user.userId = :userId " +
             "GROUP BY sp.problem.problemId, ag.classification")
     List<Object[]> findAlgoGroupsByUserId(@Param("userId") int userId);
+
+
 }
