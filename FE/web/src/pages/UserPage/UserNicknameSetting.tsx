@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import classes from "./UserNicknameSetting.module.scss";
 import { axiosApi } from "../../utils/instance";
 
