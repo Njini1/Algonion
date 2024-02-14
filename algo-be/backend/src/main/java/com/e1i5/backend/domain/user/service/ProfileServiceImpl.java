@@ -12,6 +12,7 @@ import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.domain.user.repository.UserProfileRepository;
 import com.e1i5.backend.global.error.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,7 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class ProfileServiceImpl implements ProfileService {
 
     @Value("${file.path.nodeValue}")
@@ -105,14 +107,28 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public UserInfoResponse getUserInfo(int userId, String nickname) {
 
+        log.info("ProfileServiceImpl getUserInfo 진입 userId: {}, nickname: {}", userId, nickname);
+
 //        int userId = getUserIdByNickname(nickname);
-        UserInfoResponse user = authRepo.getUserInfoByUserId(nickname)
-                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+//        UserInfoResponse user = authRepo.getUserInfoByUserId(nickname)
+//                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+
+        int findUserId = getUserIdByNickname(nickname);
+
+        User user = authRepo.findById(findUserId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
         int checkFriendship = friendService.checkFriendship(userId, nickname);
-        user.updateFriendship(checkFriendship);
 
-        return user;
+        return UserInfoResponse.builder()
+                .score(user.getUserScore())
+                .tier(user.getTier())
+                .userId(user.getUserId())
+                .friendship(checkFriendship)
+                .build();
+
+//        user.updateFriendship(checkFriendship);
+
+//        return user;
     }
 
     @Override
@@ -131,7 +147,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     private int getUserIdByNickname(String nickname) {
 
-        return authRepo.findByNickname(nickname)
+        return authRepo.findUserIdByNickname(nickname)
                 .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND))
                 .getUserId();
     }

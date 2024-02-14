@@ -16,28 +16,39 @@ import lombok.*;
 @ToString
 public class UserInfoResponse {
 
-    private String tier;
-    private Integer userId;
-    private Integer score;
-    private String originalFile;
-    private String saveFile;
-//    private ProfileFileInfo userProfile;
-    private Long problemCount;
+    private int tier;
+    private int userId;
+    private int score;
+//    private Integer userId;
+//    private Integer score;
+//    private String originalFile;
+//    private String saveFile;
+////    private ProfileFileInfo userProfile;
+//    private Long problemCount;
     private int friendship;
 
+//    @Builder
+//    public UserInfoResponse(String tier, Integer userId, Integer score,
+//                            String originalFile, String saveFile, Long problemCount) {
+//        this.tier = tier;
+//        this.userId = userId;
+//        this.score = score;
+//        this.originalFile = originalFile;
+//        this.saveFile = saveFile;
+//        this.problemCount = problemCount;
+//    }
+
+//    public UserInfoResponse updateFriendship(int friendship) {
+//        this.friendship = friendship;
+//        return this;
+//    }
+
+
     @Builder
-    public UserInfoResponse(String tier, Integer userId, Integer score,
-                            String originalFile, String saveFile, Long problemCount) {
+    public UserInfoResponse(int tier, Integer userId, Integer score, int friendship) {
         this.tier = tier;
         this.userId = userId;
         this.score = score;
-        this.originalFile = originalFile;
-        this.saveFile = saveFile;
-        this.problemCount = problemCount;
-    }
-
-    public UserInfoResponse updateFriendship(int friendship) {
         this.friendship = friendship;
-        return this;
     }
 }
