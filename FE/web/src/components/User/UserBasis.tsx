@@ -7,10 +7,28 @@ import { getNickname } from '../../api/nicknameAPI';
 import bImage from './background_image.png';
 import pImage from './profile_image.png';
 import { getIsFriend, toggleIsFriend } from '../../api/friendListAPI';
+import { getUserProfile } from '../../api/getUserDataAPI';
 
 export default function UserBasis() {
    // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
    const nickname = decodeURIComponent(window.location.href.split('/')[4]);
+
+  // 유저 정보 가져오기 
+  const [profile, setProfile] = useState<{
+    tier: number;
+    userId: number;
+    score: number;
+    problemCount: number;
+    friendship: number;
+  }>();
+
+  useEffect(() => {
+    async function getAxios(){
+      const res = await getUserProfile(nickname);
+      setProfile(res);
+    }
+    getAxios();
+  }, [])
 
   // + 팔로우 기능
   const [isFriend, setIsFriend] = useState(0);
@@ -108,7 +126,7 @@ const backgroundImageData = new FormData();
   const [isEdited, setIsEdited] = React.useState(false);
   
   // expBar 기능
-  const [value] = React.useState(50);
+  const [value] = React.useState(profile?.score);
   const [label] = React.useState('티어');
 
   const friend = () => {
