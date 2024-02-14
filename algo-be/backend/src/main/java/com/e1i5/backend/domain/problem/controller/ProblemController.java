@@ -1,6 +1,7 @@
 package com.e1i5.backend.domain.problem.controller;
 
 import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
+import com.e1i5.backend.domain.problem.request.MemoRequest;
 import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
 import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
 import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
@@ -107,17 +108,20 @@ public class ProblemController {
     /**
      * 사용자가 푼 문제 메모 수정
      * @param solvedProblemId 수정할 문제 인덱스
-     * @param memo 수정할 메모
+     * @param memoRequest 수정할 메모
      * @return 수정한 푼 문제 데이터
      */
     @Operation(summary = "사용자가 푼 문제 메모 수정")
     @PutMapping("/mysolved")
     public ResponseEntity<SolvedProblemDetailResponse> updateSolvedProblemMemo(
-            @RequestParam("solvednum") int solvedProblemId, String memo, Principal principal){
+            @RequestParam("solvednum") int solvedProblemId,@RequestBody MemoRequest memoRequest, Principal principal){
 
         int userId = Integer.parseInt(principal.getName());
+//        int userId = 1;
+        log.info("ProblemController updateSolvedProblemMemo solvedProblemId: {}, memo: {}, userId: {}", solvedProblemId, memoRequest.getMemo(), userId);
         SolvedProblemDetailResponse solvedProblemDetail =
-                solvedProblemService.updateSolvedProblem(userId, solvedProblemId, memo);
+                solvedProblemService.updateSolvedProblem(userId, solvedProblemId, memoRequest.getMemo());
+        log.info("ProblemController updateSolvedProblemMemo solvedProblemDetail: {}", solvedProblemDetail.toString());
 
         return new ResponseEntity<>(solvedProblemDetail, HttpStatus.OK);
     }

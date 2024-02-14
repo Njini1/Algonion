@@ -23,6 +23,7 @@ public class UserInfoResponse {
     private String saveFile;
 //    private ProfileFileInfo userProfile;
     private Long problemCount;
+    private int friendship;
 
     @Builder
     public UserInfoResponse(String tier, Integer userId, Integer score,
@@ -33,5 +34,10 @@ public class UserInfoResponse {
         this.originalFile = originalFile;
         this.saveFile = saveFile;
         this.problemCount = problemCount;
+    }
+
+    public UserInfoResponse updateFriendship(int friendship) {
+        this.friendship = friendship;
+        return this;
     }
 }

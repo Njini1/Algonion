@@ -21,15 +21,17 @@ public class FriendshipController {
     /**
      * 친구 추가
      * @param nickname
-     * @return 없음
+     * @return 0: 로그인한 사용자와 친구 사용자가 같음
+     *         1: 두 사용자가 친구
+     *         2: 두 사용자가 친구 아님
      */
-    @Operation(summary = "친구 추가")
-    @PostMapping()
-    public ResponseEntity<?> makeFriendship(@RequestParam String nickname, Principal principal) {
+    @Operation(summary = "친구 추가와 삭제")
+    @GetMapping()
+    public ResponseEntity<Integer> makeFriendship(@RequestParam String nickname, Principal principal) {
         int userId = Integer.parseInt(principal.getName());
-        friendService.addFriend(userId, nickname);
+        int checkFriendship = friendService.makeFriendship(userId, nickname);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(checkFriendship, HttpStatus.OK);
     }
 
     /**
@@ -64,11 +66,11 @@ public class FriendshipController {
      * @param principal 로그인한 유저
      * @return 없음
      */
-    @Operation(summary = "친구 삭제")
-    @DeleteMapping()
-    public ResponseEntity<Void> cancleFriendship(@RequestParam("nickname") String nickname, Principal principal) {
-        int userId = Integer.parseInt(principal.getName());
-        friendService.cancelFriendship(userId, nickname);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @Operation(summary = "친구 삭제")
+//    @DeleteMapping()
+//    public ResponseEntity<Void> cancleFriendship(@RequestParam("nickname") String nickname, Principal principal) {
+//        int userId = Integer.parseInt(principal.getName());
+//        friendService.cancelFriendship(userId, nickname);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 }
