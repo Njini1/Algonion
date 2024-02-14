@@ -127,7 +127,7 @@ const backgroundImageData = new FormData();
   
   // expBar 기능
   const [value] = React.useState(profile?.score);
-  const [label] = React.useState('티어');
+  const [label] = React.useState(profile?.tier);
 
   const friend = () => {
     async function getAxios() {
