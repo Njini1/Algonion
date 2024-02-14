@@ -27,6 +27,9 @@ const UserNicknameSetting = lazy(
   () => import("./pages/UserPage/UserNicknameSetting.tsx")
 );
 const NotFound = lazy(() => import("./pages/NotFound.tsx"));
+const CollaborativeEditorPage = lazy(
+  () => import("./pages/CollaborativeEditorPage/CollaborativeEditorPage.tsx")
+);
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,6 +66,10 @@ const router = createBrowserRouter([
   {
     path: "/user/nickname",
     element: <UserNicknameSetting />,
+  },
+  {
+    path: "/collaborative",
+    element: <CollaborativeEditorPage />,
   },
   {
     path: "*",
