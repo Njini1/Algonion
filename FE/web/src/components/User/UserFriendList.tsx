@@ -2,7 +2,7 @@
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { getFriendList } from "../../api/friendListAPI";
-import classes from './UserFriendList.module.scss'
+// import classes from './UserFriendList.module.scss'
 
 type item = { count: number; nickname: string; tier: string ; userScore: number;}[]
 

@@ -4,15 +4,6 @@ import { useState, useEffect } from "react";
 import Chart from "react-apexcharts";
 
 function BoardRadarGraph(props: any) {
-
-  // width
-  // const [width, setWidth] = useState(window.innerWidth);
-
-  // useEffect(() => {
-  //   const handleResize = () => setWidth(window.innerWidth);
-  //   window.addEventListener('resize', handleResize);
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
     
   const [data, setData] = useState([]); 
   const [state, setState] = useState({

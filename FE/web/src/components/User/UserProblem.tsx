@@ -34,8 +34,8 @@ export default function Problem100({ problems }: {
                 showArrow
                 content = {
                   <div className="px-1 py-2">
-                    <div className="text-small font-bold">{problemLevel} / {siteName} {problemNum}</div>
-                    <div className="text-tiny">{problemTitle}</div>
+                    <div className="text-tiny">{problemLevel} / {siteName} </div>
+                    <div className="text-small font-bold">{problemNum} {problemTitle}</div>
                   </div>
               }
                 classNames={{
