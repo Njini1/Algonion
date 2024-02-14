@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import classes from "./CodeLogMemo.module.scss";
 
 import { useEffect, useState } from "react";
-import { putCodeLogMemo } from "../../api/CodeLogAPI";
+import { putCodeLogMemo } from "../../api/codeLogAPI";
 
 // define your extension array
 const extensions = [
