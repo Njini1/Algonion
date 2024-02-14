@@ -3,17 +3,15 @@ package com.e1i5.backend.domain.problem.request;
 import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
 import com.e1i5.backend.global.util.AlgoScoreUtil;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class SolvedProblemRequest {
     private String submissionId; //제출번호
     private String problemNum; //문제번호
@@ -59,4 +57,41 @@ public class SolvedProblemRequest {
         this.problemLevel = problemLevel;
         return this;
     }
+
+    @Builder
+    public SolvedProblemRequest(String submissionId,
+                                String problemNum,
+                                String problemTitle,
+                                String problemLevel,
+                                String memory,
+                                String runtime,
+                                String language,
+                                String submissionCode,
+                                String memo,
+                                String codeLength,
+                                String submissionTime,
+                                String url,
+                                List<String> problemCategories) {
+        this.submissionId = submissionId;
+        this.problemNum = problemNum;
+        this.problemTitle = problemTitle;
+        this.problemLevel = problemLevel;
+        this.memory = memory;
+        this.runtime = runtime;
+        this.language = language;
+        this.submissionCode = submissionCode;
+        this.memo = memo;
+        this.codeLength = codeLength;
+        this.submissionTime = submissionTime;
+        this.url = url;
+        this.problemCategories = problemCategories;
+    }
+
+    public void updateProblemInfo(String problemTitle, String problemLevel, List<String> problemCategory) {
+        this.problemTitle = problemTitle;
+        this.problemLevel = problemLevel;
+        this.problemCategories = problemCategory;
+//        return this;
+    }
+
 }
