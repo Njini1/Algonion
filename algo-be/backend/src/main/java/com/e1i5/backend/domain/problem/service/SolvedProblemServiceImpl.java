@@ -73,7 +73,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                     updatedSolvedProblemReq.getProblemCategories());
         }
 
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, null);
 
         SolvedProblemRequest finalSolvedProblemReq = solvedProblemReq;
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
@@ -89,7 +89,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, solvedProblemReq.getProblemCategories());
 
         saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore);
     }
@@ -146,10 +146,14 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
 //        System.out.println("problemCategories : " + problemCategories);
 //        System.out.println("problemNum: " + problemNum);
 
-        SolvedProblemRequest updatedRequest = new SolvedProblemRequest();
-        updatedRequest.updateProblemInfo(problemTitle, problemLevel, problemCategories);
+//        SolvedProblemRequest updatedRequest = new SolvedProblemRequest(); //merge 때문인지 오류나서 수정함
+//        updatedRequest.updateProblemInfo(problemTitle, problemLevel, problemCategories);
 
-        return updatedRequest;
+        return SolvedProblemRequest.builder()
+                    .problemTitle(problemTitle)
+                    .problemLevel(problemLevel)
+                    .problemCategories(problemCategories)
+                    .build();
     }
 
     /**
@@ -179,7 +183,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public SolvedProblemDetailResponse updateSolvedProblem(int userId, int solvedProblemId, String memo) {
 
-        // checkAuth 로직 추가
         SolvedProblem solvedProblem = checkAuth(userId, solvedProblemId);
 
         solvedProblem.updateMemo(memo);

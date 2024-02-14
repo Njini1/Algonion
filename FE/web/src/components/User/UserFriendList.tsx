@@ -73,7 +73,7 @@ function UserFriendList() {
   return (
     <div>
       <Table aria-label="Example table with dynamic content">
-      <TableHeader columns={columns} className={classes.center}>
+      <TableHeader columns={columns}>
         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
       </TableHeader>
       <TableBody items={friendList}>

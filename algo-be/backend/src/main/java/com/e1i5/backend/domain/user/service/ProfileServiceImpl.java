@@ -1,7 +1,9 @@
 package com.e1i5.backend.domain.user.service;
 
+import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
+import com.e1i5.backend.domain.problem.response.ProblemInterfaceResponse;
 import com.e1i5.backend.domain.problem.response.ProblemResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
@@ -12,6 +14,7 @@ import com.e1i5.backend.domain.user.repository.AuthRepository;
 import com.e1i5.backend.domain.user.repository.UserProfileRepository;
 import com.e1i5.backend.global.error.GlobalErrorCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +26,7 @@ import java.util.*;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class ProfileServiceImpl implements ProfileService {
 
     @Value("${file.path.nodeValue}")
@@ -99,39 +103,73 @@ public class ProfileServiceImpl implements ProfileService {
 
     /**
      * 사용자 프로필 정보 불러오기
-     * @param nickname 사용자 닉네임
+     * @param userId 로그인한 사용자 인덱스,, friendNickname 사용자 닉네임
      * @return 사용자 아이디, 티어, 점수, 프로필 이미지, 문제 푼 개수
      */
     @Override
-    public UserInfoResponse getUserInfo(int userId, String nickname) {
+    public UserInfoResponse getUserInfo(int userId, String friendNickname) {
+
+        log.info("ProfileServiceImpl getUserInfo 진입 userId: {}, nickname: {}", userId, friendNickname);
 
 //        int userId = getUserIdByNickname(nickname);
-        UserInfoResponse user = authRepo.getUserInfoByUserId(nickname)
-                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+//        UserInfoResponse user = authRepo.getUserInfoByUserId(nickname)
+//                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
-        int checkFriendship = friendService.checkFriendship(userId, nickname);
-        user.updateFriendship(checkFriendship);
+        int findFriendUserId = getUserIdByNickname(friendNickname);
 
-        return user;
+        User loginUser = authRepo.findById(userId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+        User friend = authRepo.findById(findFriendUserId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+
+        Long problemCount = solvedProblemRepo.countUserSolvedProblem(findFriendUserId);
+        int checkFriendship = friendService.checkFriendship(loginUser, friend);
+
+        return UserInfoResponse.builder()
+                .score(friend.getUserScore())
+                .tier(friend.getTier())
+                .userId(friend.getUserId())
+                .problemCount(problemCount)
+                .friendship(checkFriendship)
+                .build();
     }
 
     @Override
     public List<ProblemResponse> recommandProblem(int userId) {
 
-        //TODO 랜덤으로 문제 추천으로 변경
-        List<ProblemResponse> unsolvedProblemsByUserId = new ArrayList<>
-                (problemRepo.findUnsolvedProblemsByUserId(userId)
-                .stream()
-                .limit(2)
-                .toList());
+        int[] unsolvedProblemsByUserId = problemRepo.findUnsolvedProblemsIdsByUserId(userId);
 
-//        Collections.shuffle(unsolvedProblemsByUserId);
-        return unsolvedProblemsByUserId;
+        // 랜덤 숫자 뽑기
+        Random random = new Random();
+
+        int size = unsolvedProblemsByUserId.length;
+        int num1 = random.nextInt(size) + 1;
+        int num2 = random.nextInt(size) + 1;
+
+        while (num1 == num2) {
+            num2 = random.nextInt(size) + 1;
+        }
+
+        List<Integer> problemIds = Arrays.asList(num1, num2);
+        System.out.println("num 1, num 2: " + num1 + " " + num2);
+        List<ProblemInterfaceResponse> problemInterface = problemRepo.findByProblemIdIn(problemIds);
+
+        List<ProblemResponse> recommandProblem = new ArrayList<>();
+        for (ProblemInterfaceResponse p : problemInterface) {
+            ProblemResponse problem = ProblemResponse.builder()
+                    .siteName(p.getSiteName())
+                    .problemNum(p.getProblemNum())
+                    .problemTitle(p.getProblemTitle())
+                    .problemLevel(p.getProblemLevel())
+                    .url(p.getUrl())
+                    .build();
+            recommandProblem.add(problem);
+        }
+
+        return recommandProblem;
     }
 
     private int getUserIdByNickname(String nickname) {
 
-        return authRepo.findByNickname(nickname)
+        return authRepo.findUserIdByNickname(nickname)
                 .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND))
                 .getUserId();
     }

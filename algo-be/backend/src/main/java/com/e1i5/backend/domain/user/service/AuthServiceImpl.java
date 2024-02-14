@@ -41,7 +41,8 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public User findById(int userId) {
-            return authRepo.findById(userId).orElseThrow(()-> new IllegalArgumentException("Unexpected user")); //통일 예정
+            return authRepo.findById(userId).orElseThrow(()
+                    -> new IllegalArgumentException("Unexpected user")); //통일 예정
     }
 
     @Override
@@ -88,18 +89,23 @@ public class AuthServiceImpl implements AuthService{
     @Transactional
     @Override
     public String changeNickname(String nickname, int userId) {
+
         if (authRepo.existsByNickname(nickname)) { //이미 존재하는 닉네임이면
             throw new DuplicateNickname(GlobalErrorCode.DUPLICATE_NICKNAME);
         }
-        User user = authRepo.findById(userId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+
+        User user = authRepo.findById(userId).orElseThrow(()
+                -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
         user.updateNickname(nickname);
-        User changeUser = authRepo.save(user);
-        return changeUser.getNickname(); //TODO 반환 값을 interface dto로?
+
+        return authRepo.save(user).getNickname();
     }
 
     @Override
     public NicknameResponse getLoginNickname(int userId) {
-        return authRepo.findByUserId(userId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+
+        return authRepo.findByUserId(userId).orElseThrow(()
+                -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
     }
 
     @Override

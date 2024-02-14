@@ -2,7 +2,6 @@ package com.e1i5.backend.domain.problem.request;
 
 import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
-import com.e1i5.backend.global.util.AlgoScoreUtil;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -10,8 +9,7 @@ import java.util.List;
 
 @Getter
 @ToString
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SolvedProblemRequest {
     private String submissionId; //제출번호
     private String problemNum; //문제번호
@@ -24,7 +22,6 @@ public class SolvedProblemRequest {
     private String memo;
     private String codeLength; //코드 길이
     private String submissionTime; //제출한 시간
-//    private LocalDateTime submissionTime; //제출한 시간
     private String url;
     private List<String> problemCategories; // 문제 카테고리 리스트
 
@@ -53,10 +50,6 @@ public class SolvedProblemRequest {
                 .build();
     }
 
-    public SolvedProblemRequest isNullUpateLevel(String problemLevel) {
-        this.problemLevel = problemLevel;
-        return this;
-    }
 
     @Builder
     public SolvedProblemRequest(String submissionId,
@@ -85,6 +78,13 @@ public class SolvedProblemRequest {
         this.submissionTime = submissionTime;
         this.url = url;
         this.problemCategories = problemCategories;
+    }
+
+    @Builder
+    public SolvedProblemRequest(String problemTitle, String problemLevel, List<String> problemCategory) {
+        this.problemTitle = problemTitle;
+        this.problemLevel = problemLevel;
+        this.problemCategories = problemCategory;
     }
 
     public void updateProblemInfo(String problemTitle, String problemLevel, List<String> problemCategory) {
