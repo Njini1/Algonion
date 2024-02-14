@@ -32,12 +32,13 @@ public class ProfileServiceImpl implements ProfileService {
     private final SolvedProblemRepository solvedProblemRepo;
     private final AuthRepository authRepo;
     private final ProblemRepository problemRepo;
+    private final FriendService friendService;
 
     @Override
     public void saveUserProfile(int userId, MultipartFile profileImg) {
         //TODO File값이 null일 때 처리
         //TODO File 확장자도 검사
-        //TODO 파일 저장 실패시 에러 처리?
+        //TODO 파일 저장 실패시 에러 처리
         String saveFileName = "";
         String originalFileName = "";
         if (profileImg != null) {
@@ -102,11 +103,14 @@ public class ProfileServiceImpl implements ProfileService {
      * @return 사용자 아이디, 티어, 점수, 프로필 이미지, 문제 푼 개수
      */
     @Override
-    public UserInfoResponse getUserInfo(String nickname) {
+    public UserInfoResponse getUserInfo(int userId, String nickname) {
 
 //        int userId = getUserIdByNickname(nickname);
         UserInfoResponse user = authRepo.getUserInfoByUserId(nickname)
                 .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+
+        int checkFriendship = friendService.checkFriendship(userId, nickname);
+        user.updateFriendship(checkFriendship);
 
         return user;
     }

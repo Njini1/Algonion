@@ -213,14 +213,7 @@ public class DashboardServiceImpl implements DashboardService {
             countSum += dateList.get(startDate.plusDays(i).toString());
             data[i] = countSum;
         }
-//
-//        AccCountGraphResponse graphData = AccCountGraphResponse.builder()
-//                .width(2)
-//                .curve("stepline")
-//                .chartId("basic-bar")
-//                .colors("#9f22ff")
-//                .data(Arrays.toString(data))
-//                .categories(Arrays.toString(categories)).build();
+
         AccCountGraphResponse graphData = AccCountGraphResponse.builder()
                 .categories(categories)
                 .data(data)

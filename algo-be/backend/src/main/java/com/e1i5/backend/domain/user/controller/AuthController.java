@@ -41,8 +41,8 @@ public class AuthController {
     @Operation(summary = "닉네임 가져오기")
     @GetMapping("/login-nickname")
     public ResponseEntity<NicknameResponse> getLoginNickname(Principal principal) {
-        int userId = 1;
-//        int userId = Integer.parseInt(principal.getName());
+//        int userId = 1;
+        int userId = Integer.parseInt(principal.getName());
         NicknameResponse loginNickname = authService.getLoginNickname(userId);
 
         return new ResponseEntity<>(loginNickname, HttpStatus.OK);
