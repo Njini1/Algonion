@@ -50,14 +50,21 @@ export default function Footer() {
         <div className={classes.block}></div>
         <div>
           <b>알고니온 </b>
-          B108 - E1I5
+          B108 / E1I5
         </div>
         <div>
           34153 대전광역시 유성구 동서대로 98-39 (덕명동 124, 삼성화재연수원)
         </div>
         <div className={classes.block}></div>
         <div>
-          'algonion.store', 'algonion', '알고니온'은 팀 E1I5의 산물입니다.
+          <b>저작권 표시</b>
+          <div>
+            <a href="https://kr.freepik.com/free-vector/bronze-silver-and-gold-stars-in-3-styles_38720257.htm#query=star&position=10&from_view=keyword&track=sph&uuid=ffe0e88b-8a13-49cf-a9e5-a2db5fa63379?log-in=google">작가 juicy_fish</a> 출처 Freepik / 이미지 크기 조정
+          </div>
+          <div>
+            <a href='https://kor.pngtree.com/freepng/holographic-stickers-star-shape-hologram-labels-and-badge-empty_14558663.html'>pngtree.com 의 이미지 </a> / 이미지 크기 조정
+          </div>
+        
         </div>
       </div>
     </footer>

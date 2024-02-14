@@ -11,34 +11,35 @@ function UserSolvedProblem() {
   const nickname = decodeURIComponent(window.location.href.split('/')[4]);
   
   // problems 정보 가져 오기
-  const [problems, setProblems] = useState();
+  const [problems, setProblems] = useState<{ problemId: number; problemNum: string; problemTitle: string; problemLevel: string; algoScore: number; siteName: string; url: string; }[]>([]);
   useEffect(() => {
     async function getAxios(){
       let res = await getSolved100(nickname);
+      console.log(res, 'res')
       setProblems(res);
     }
     getAxios()
   }, [nickname]);
 
   // 예시 유저 문제 푼거 정보
-  const list: { 
-    problemId: number,
-    problemNum: string,
-    problemTitle: string,
-    problemLevel: string,
-    algoScore: number,
-    siteName: string,
-    url: string,
-  } [] = [
-    {
-    problemId: 30,
-    problemNum: "1103",
-    problemTitle: "집에 가라",
-    problemLevel: "19",
-    algoScore: 200,
-    siteName: "baekjoon",
-    url: "ssss"},
-  ];
+  // const list: { 
+  //   problemId: number,
+  //   problemNum: string,
+  //   problemTitle: string,
+  //   problemLevel: string,
+  //   algoScore: number,
+  //   siteName: string,
+  //   url: string,
+  // } [] = [
+  //   {
+  //   problemId: 30,
+  //   problemNum: "1103",
+  //   problemTitle: "집에 가라",
+  //   problemLevel: "master",
+  //   algoScore: 200,
+  //   siteName: "baekjoon",
+  //   url: "ssss"},
+  // ];
 
   return (
     <Card className={`'max' ${classes['solved100-container']} p-1`}>
@@ -65,18 +66,14 @@ function UserSolvedProblem() {
         </p>
         <span className="pt-2">
           여기에 문제 풀 때마다 표시<br />
-          <UserProblem list={list}/>
+          <UserProblem problems={problems}/>
         </span>
       </CardBody>
       <CardFooter className="gap-3">
         <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-large">{problems}개 문제 해결</p>
-          <p className=" text-default-400 text-large">= 계산식</p>
+          <p className="font-semibold text-default-400 text-large">{problems.length}개 문제 해결</p>
+          {/* <p className=" text-default-400 text-large"></p> */}
         </div>
-        {/* <div className="flex gap-1">
-          <p className="font-semibold text-default-400 text-small">1K</p>
-          <p className="text-default-400 text-small">Followers</p>
-        </div> */}
       </CardFooter>
     </Card>
   );
