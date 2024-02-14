@@ -1,12 +1,12 @@
 .streakTable {
-  overflow: scroll;
-  
+  margin-top: 50px;
 }
 
 .streak {
   border-radius: 2px;
-  background-color: rgb(177, 177, 177);
+  background-color: #EBEDF0;
   min-width: 10px;
   min-height: 10px;
-  border:solid black 1px;
+  width: 100px;
+  border:solid white 3px;
 }
