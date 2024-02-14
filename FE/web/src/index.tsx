@@ -68,7 +68,7 @@ const router = createBrowserRouter([
     element: <UserNicknameSetting />,
   },
   {
-    path: "/collaborative",
+    path: "/collaborative/:roomName",
     element: <CollaborativeEditorPage />,
   },
   {
