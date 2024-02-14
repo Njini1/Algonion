@@ -135,11 +135,6 @@ export default function Header() {
           <NavbarItem>    
             {/* 프로필 페이지 - 티어에 따라서 프로필 테두리 색 다르게 주기 (예정) */}
             <div className="flex gap-4 items-center">
-              {/* <Avatar isBordered color="bronze" src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" /> */}
-              {/* <Avatar isBordered color="#C0C0C0" src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" />
-              <Avatar isBordered color="#FFBF00 " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" />
-              <Avatar isBordered color="#02B7AE " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" />
-            <Avatar isBordered color="#00FFFF " src="https://i.ibb.co/vZDFkkQ/1587535553105.jpg" /> */}
               <Dropdown>
               <DropdownTrigger>
               <div className="profile_wrapper">

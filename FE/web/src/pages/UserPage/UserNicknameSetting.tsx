@@ -26,7 +26,8 @@ const validateDuplicate = async (nickname: string): Promise<boolean> => {
     const [nickname, setNickname] = useState("");
     const [nicknameMsg, setNicknameMsg] = useState("");
 
-    const onChangeNickname = useCallback((e) => {
+    const onChangeNickname = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+      
       const currNickname = e.target.value;
       setNickname(currNickname);
 
@@ -42,7 +43,7 @@ const validateDuplicate = async (nickname: string): Promise<boolean> => {
       }
     }, []);
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: { preventDefault: () => void; }) => {
       e.preventDefault();
       const isValidLength = validateLength(nickname);
       const isValidNickname = validateNickname(nickname);

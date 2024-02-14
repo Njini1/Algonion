@@ -3,7 +3,7 @@ import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, T
 import { EditIcon } from "./CodeLogList/editIcon.tsx";
 import { DeleteIcon  } from "./CodeLogList/deleteIcon.tsx";
 
-import { deleteCodeLog, getCodeLog } from "../../api/CodeLogAPI.ts"
+import { deleteCodeLog, getCodeLog } from "../../api/codeLogAPI.ts"
 // import {columns, logs} from "./CodeLogList/data";
 
 import classes from './CodeLogList.module.scss'
@@ -45,7 +45,7 @@ export default function CodeLogList() {
       if (username === nickname) {
         setIsMe(true)
       }
-    }
+    } 
     getAxios()
   }, []);
    
