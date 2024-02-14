@@ -73,8 +73,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                     updatedSolvedProblemReq.getProblemCategories());
         }
 
-//        System.out.println("solvedProblemReq" + solvedProblemReq);
-
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
 
         SolvedProblemRequest finalSolvedProblemReq = solvedProblemReq;

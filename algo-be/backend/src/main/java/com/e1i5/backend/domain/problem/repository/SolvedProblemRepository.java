@@ -31,6 +31,15 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
                                                       @Param("endDate") String endDate,
                                                       @Param("startDate") String startDate);
 
-    @Query("SELECT COUNT(sp) FROM SolvedProblem sp JOIN sp.user u WHERE u.nickname = :nickname AND sp.visible = true")
+    @Query("SELECT COUNT(sp) " +
+            "FROM SolvedProblem sp " +
+            "JOIN sp.user u " +
+            "WHERE u.nickname = :nickname AND sp.visible = true")
     int countVisibleSolvedProblemsByUserNickname(@Param("nickname") String nickname);
+
+    @Query("SELECT sp.user.userId " +
+            "FROM SolvedProblem sp " +
+            "WHERE sp.problem.problemId = :problemId")
+    List<Integer> findDistinctUsersByProblem_ProblemId(@Param("problemId") int problemId);
+
 }
