@@ -1,21 +1,18 @@
 // https://apexcharts.com/docs/react-charts/
-import { useState } from "react";
-
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
 function BoardLinearGraph(props: any) {
   console.log(props);
-  // const [states, setState] = useState(); 
-  
-  // useEffect(() => {
-  //   if (props.items !== undefined) {
-  //     // console.log(JSON.parse(props.items));
-  //     setState(props.items);
+  const [series, setSeries] = useState<number[]>([]); 
 
-  //     // console.log(props.items)
-  //   }
-  // }, [props.items]); 
+  useEffect(() => {
+    // console.log(props)
+    if (props) {
+      setSeries(props.series);
+      console.log(series)
+    }
+  }, [props]); 
   
   const [state] = useState({
     options: {

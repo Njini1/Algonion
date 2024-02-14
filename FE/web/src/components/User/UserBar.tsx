@@ -38,7 +38,6 @@ function UserBar() {
           {selectedTab === 'userinfo' && 
             <UserInformation/>
           }
-
           {selectedTab === 'userDashboard' && 
           <UserDashboard/>
           }

@@ -2,37 +2,25 @@ import BoardRadarGraph from "../Board/BoardRadarGraph";
 import BoardLinearGraph from "../Board/BoardLinearGraph";
 import BoardRoundGraph from "../Board/BoardRoundGraph";
 import classes from "./UserDashboard.module.scss"
-// import { getNickname } from "../../api/nicknameAPI.ts";
-// import {getCategoryGraph, getLevelGraph, getProblemStackGraph, getPointStackGraph} from '../../api/dashboardAPI.ts'
-import {getLevelGraph, getProblemStackGraph} from '../../api/dashboardAPI.ts'
+
+import {getCategoryGraph, getLevelGraph, getProblemStackGraph, getPointStackGraph} from '../../api/dashboardAPI.ts'
 
 import { useEffect, useState } from "react";
 
 function UserDashboard() {
   const nickname = decodeURIComponent(window.location.href.split('/')[4]);
-  console.log(nickname);
-  // const [nickname, setNickname] = useState("");
-  
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const results = await getNickname();
-  //     setNickname(results);
-  //   };
-  
-  //   fetchData();
-  // }, [nickname]);
-  
+  console.log(nickname);  
   
   // const [categoryData, setCategoryData] = useState();
   const [levelData, setLevelData] = useState();
   const [problemData, setProblemData] = useState();
-  // const [pointData, setPointData] = useState();
+  const [pointData, setPointData] = useState();
   
   useEffect(() => {
     async function getAxios(){
       // - [방사형 그래프] 문제 유형
-      // let res1 =await getCategoryGraph();
-      // setData1(res1);
+      // let res1 =await getCategoryGraph(nickname);
+      // setLevelData(res1);
       // - [원형 그래프] 문제 난이도 (우리 티어) 
       let res2 =await getLevelGraph(nickname);
       setLevelData(res2);
@@ -40,9 +28,8 @@ function UserDashboard() {
       let res3 =await getProblemStackGraph(nickname);
       setProblemData(res3);
       // - [선형 그래프] 기간별 포인트 상승량 누적 추이
-      // let res4 =await getPointStackGraph();
-      // setData4(res4); 
-
+      let res4 =await getPointStackGraph(nickname);
+      setPointData(res4); 
     }
     getAxios()
   },[]);
@@ -66,7 +53,7 @@ function UserDashboard() {
         <div className={classes.graph}>
         {/* <BoardRoundGraph/> */}
 
-          <BoardRoundGraph items={levelData}/>
+          <BoardRoundGraph series={levelData}/>
         </div>
       </div>
 
@@ -84,7 +71,7 @@ function UserDashboard() {
         <div className={classes.graph}>
         {/* <BoardLinearGraph/> */}
 
-          {/* <BoardLinearGraph items={pointData}/> */}
+          <BoardLinearGraph items={pointData}/>
         </div>
       </div>
 
