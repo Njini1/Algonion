@@ -20,8 +20,28 @@ function UserSolvedProblem() {
     getAxios()
   }, [nickname]);
 
+  // 예시 유저 문제 푼거 정보
+  const list: { 
+    problemId: number,
+    problemNum: string,
+    problemTitle: string,
+    problemLevel: string,
+    algoScore: number,
+    siteName: string,
+    url: string,
+  } [] = [
+    {
+    problemId: 30,
+    problemNum: "1103",
+    problemTitle: "집에 가라",
+    problemLevel: "19",
+    algoScore: 200,
+    siteName: "baekjoon",
+    url: "ssss"},
+  ];
+
   return (
-    <Card className={`'max' ${classes['solved100-container']}`}>
+    <Card className={`'max' ${classes['solved100-container']} p-1`}>
       <CardHeader className="justify-between">
         <Chip
           size="lg"
@@ -31,8 +51,8 @@ function UserSolvedProblem() {
             base: `bg-gradient-to-br from-indigo-500 to-pink-500 border-small border-bronze/50 shadow-silver-500/50 ${classes.chip}`,
             content: `drop-shadow shadow-black text-white`,
           }}>
-          <p className="text-xlarge font-bold tracking-tight text-default-300 mb-2">Algo Rating</p>
-          <p className="text-large font-bold leading-none ">티어 + 총 점수</p>
+          <p className="text-xlarge font-bold tracking-tight text-default-300">Algo Rating</p>
+          <p className="text-large font-bold ">티어 + 총 점수</p>
         </Chip>
         <div className="flex gap-5">
           <div className="flex flex-col gap-1 items-start justify-center">
@@ -45,7 +65,7 @@ function UserSolvedProblem() {
         </p>
         <span className="pt-2">
           여기에 문제 풀 때마다 표시<br />
-          <UserProblem items={problems}/>
+          <UserProblem list={list}/>
         </span>
       </CardBody>
       <CardFooter className="gap-3">
