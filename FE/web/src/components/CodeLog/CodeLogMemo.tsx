@@ -1,5 +1,5 @@
 // src/Tiptap.jsx
-import {Button} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import { useEditor, EditorContent, FloatingMenu, BubbleMenu } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import dayjs from "dayjs";
@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import classes from "./CodeLogMemo.module.scss";
 
 import { useEffect, useState } from "react";
-import { putCodeLogMemo } from "../../api/codeLogAPI.ts";
+import { putCodeLogMemo, shareCodeLog } from "../../api/codeLogAPI.ts";
 
 // define your extension array
 const extensions = [
@@ -67,6 +67,26 @@ const Tiptap = (props: MemoProps) => {
     editor!.commands.setContent(memo)
   }
 
+  // modal - 노션 내보내기
+  const {isOpen, onOpen, onClose} = useDisclosure();
+
+  const handleOpen = () => {
+    onOpen();
+  }
+
+  const [apiKey, setAPIKey] = useState('');
+  const [dbid, setDBId] = useState('');
+
+  async function shareAxios(){
+    // const problemId = window.location.href.split('/')[5];
+    console.log(props.problemId)
+    const json = {"apiKey": apiKey, "dbId": dbid, "solvedProblemId": Number(props.problemId)};
+    await shareCodeLog(json);
+  }
+  const share = () => {
+      shareAxios()
+      onClose()
+  }
 
   return (
     <div>
@@ -77,13 +97,48 @@ const Tiptap = (props: MemoProps) => {
       </div>
       <div className={classes.buttons}>
         {isSaved && <p>{now}</p>}
-      <Button color="secondary" variant="bordered" onClick={() => putAxios()}>
+      <Button color="secondary" variant="bordered" onPress={() => putAxios()}>
         SAVE
       </Button>
-      <Button color="secondary" variant="solid">
+      <Button color="secondary" variant="solid" onPress={() => handleOpen()}>
         NOTION
       </Button>
       </div>
+      
+      <Modal backdrop="opaque" isOpen={isOpen} onClose={onClose}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">Notion 으로 내보내기</ModalHeader>
+              <ModalBody>
+              <div className={classes.formbox}>
+                <form>
+                  <input
+                    type="text"
+                    placeholder="Notion API Key"
+                    onChange={(e) => setAPIKey(e.target.value)}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Notion DB ID"
+                    onChange={(e) => setDBId(e.target.value)}
+                  />
+                </form>
+              </div>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="secondary" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="secondary" onPress={share}>
+                  Share
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+
     </div>
   )
 }

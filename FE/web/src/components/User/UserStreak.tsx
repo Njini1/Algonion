@@ -1,10 +1,50 @@
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import classes from "./UserStreak.module.scss";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
+import { getStreak } from "../../api/mainInfoAPI";
+import {CardHeader, CardBody, CardFooter, Button, Card, Chip} from "@nextui-org/react";
+
 function UserStreak() {
+  // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
+  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
+  
+  // getAxios
+  interface StreakData {
+    [key: string]: any;
+  }
+
+  const [data, setData] = useState<StreakData>({});
+  useEffect(() => {
+    async function getAxios(){
+      let res =await getStreak(nickname, from2, to2);
+      setData(res);
+      
+      // console.log(res['2024-02-13'])
+    }
+    const to = dayjs()
+    const oneYearAgo = to.subtract(1, "year");
+    const weekOfMonth = to.week() - to.startOf("month").week();
+    const sameWeek = oneYearAgo.startOf("month").add(weekOfMonth, "week");
+    const from = sameWeek.subtract(sameWeek.day(), "day");
+
+    const to2 = to.format('YYYY-MM-DD')
+    const from2 = from.format('YYYY-MM-DD')
+
+    getAxios()
+  },[]);
+
+  // dayjs
   dayjs.extend(weekOfYear);
+  const [continuity, setContinuity] = useState(0);
+  // const [continuityData, setContinuityData] = useState(0);
+  let continuityData = 0
+
+  useEffect(() => {
+    setContinuity(continuityData)
+  },[continuityData])
 
   const table = (
     from?: dayjs.Dayjs | undefined,
@@ -24,24 +64,65 @@ function UserStreak() {
     ]);
     const diff = to.diff(from, "day");
     let date = from;
+
+    let continuityTemp = 0
     for (let i = 0; i <= diff; i++) {
+      const key = date.format("YYYY-MM-DD");
+      let streakOnOrOff = classes.streakOff;
+      if (data[key] !== undefined) {
+        streakOnOrOff = classes.streakOn;
+        continuityTemp = continuityTemp + 1
+        // setContinuity(0);                                     // streak가 있을 때만 continuity를 초기화
+      } else {
+        continuityTemp = 0
+        // setContinuity(prevContinuity => prevContinuity + 1);  // streak가 없을 때 continuity를 증가
+      }
       td[date.day()].push(
         <Tippy content={date.format("YYYY-MM-DD")}>
           <td
             key={date.format("YYYY-MM-DD")}
-            className={classes.streak}
+            className={streakOnOrOff}
           ></td>
         </Tippy>
       );
       date = date.add(1, "day");
     }
     const tr = td.map((v, i) => <tr key={dayOfWeekList[i]}>{v}</tr>);
+    continuityData = continuityTemp
+    // setContinuityData(continuityTemp)
+    console.log(continuityData)
     return tr;
   };
+
+
   return (
-    <table className={classes.streakTable}>
-      <tbody>{table()}</tbody>
+  <Card className={`'max' ${classes['solved100-container']} p-1 mt-10`}>
+  <CardHeader className="justify-between">
+        <Chip
+          size="lg"
+          variant="shadow"
+          radius="md"
+          classNames={{
+            base: `bg-gradient-to-br from-indigo-500 to-pink-500 border-small border-bronze/50 shadow-silver-500/50 ${classes.chip}`,
+            content: `drop-shadow shadow-black text-white`,
+          }}>
+          <p className="text-xlarge font-bold tracking-tight text-default-300">Algo Streak</p>
+          <p className="text-large font-bold ">현재 {continuity}일!</p>
+        </Chip>
+  </CardHeader>
+  <CardBody className="px-3 py-0 text-small text-default-400">
+    <p className="ms-2">
+      1년 간의 스트릭이 표시됩니다.
+    </p>
+    <span className="pt-2">
+      <table>
+    <tbody>{table()}</tbody>
     </table>
+    </span>
+  </CardBody>
+  <CardFooter className="gap-3">
+  </CardFooter>
+</Card>
   );
 }
 

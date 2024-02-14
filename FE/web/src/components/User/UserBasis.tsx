@@ -4,29 +4,28 @@ import {Button} from "@nextui-org/react";
 import classes from './UserBasis.module.scss';
 import { getNickname } from '../../api/nicknameAPI';
 
-import userImage from './user_image.png';
+import bImage from './background_image.png';
+import pImage from './profile_image.png';
 
 export default function UserBasis() {
-  // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
-  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
+   // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
+   const nickname = decodeURIComponent(window.location.href.split('/')[4]);
 
-  const [username, setUsername] = useState('');
-  const [isMe, setIsMe] = useState(false);
-
-  useEffect(() => {
-    async function getAxios(){
-      let name = await getNickname()
-      setUsername(name)
-      if (username === nickname) {
-        setIsMe(true)
-      }
-    }
-    getAxios()
-  }, []);
+   const [isMe, setIsMe] = useState(false);
+ 
+   useEffect(() => {
+     async function getAxios(){
+       const username = await getNickname();
+       if (username == nickname) {
+         setIsMe(true);
+       }
+     }
+     getAxios();
+   }, []);
 
   // 기본 제공 이미지
-  const defaultBackgroundImage = userImage; 
-  const defaultProfileImage = "https://i.ibb.co/vZDFkkQ/1587535553105.jpg";
+  const defaultBackgroundImage = bImage; 
+  const defaultProfileImage = pImage;
 
   const [backgroundImage, setBackgroundImage] = useState<string | null>(defaultBackgroundImage);
   const [profileImage, setProfileImage] = useState<string | null>(defaultProfileImage);
@@ -87,6 +86,7 @@ export default function UserBasis() {
           style={{backgroundImage: `url(${profileImage})` }} 
           onClick={ProfileImageClick}>
           </div>
+
           <div className={classes.Buttons}>
           {/* 팔로우 기능 */}
           { isMe &&
@@ -117,7 +117,7 @@ export default function UserBasis() {
             {isFollowed ? "친구 해제" : "친구 추가"}
           </Button>
           }
-          </div>
+          </div>    
         </div>
   
         {/* 닉네임 */}
@@ -125,23 +125,25 @@ export default function UserBasis() {
           <h2>{nickname}</h2>
         </div>
 
-        {/* 경험치 바 */}
-        <Progress
-          aria-label="Loading..."
-          size='lg'
-          color="secondary"
-          label={`${'경험치'} ${label}`}
-          value={value}
-          showValueLabel={true}
-          classNames={{
-            track: "drop-shadow-md border border-default",
-            indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
-            label: "tracking-wider font-medium text-default-600",
-            value: "text-foreground/60",
-          }}
-          className={classes.expBar}/>
-
+        <div className={classes.progress}>
+          {/* 경험치 바 */}
+          <Progress
+            aria-label="Loading..."
+            size='lg'
+            color="secondary"
+            label={`${'경험치'} ${label}`}
+            value={value}
+            showValueLabel={true}
+            classNames={{
+              track: "drop-shadow-md border border-default",
+              indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
+              label: "tracking-wider font-medium text-default-600",
+              value: "text-foreground/60",
+            }}
+            />
+        </div>
     </div>
+
         {/* 파일 업로드 */}
         <input
           id="backgroundImageInput"

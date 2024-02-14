@@ -35,20 +35,18 @@ export default function CodeLogList() {
   // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
   const nickname = decodeURIComponent(window.location.href.split('/')[4]);
 
-  const [username, setUsername] = useState('');
   const [isMe, setIsMe] = useState(false);
 
   useEffect(() => {
     async function getAxios(){
-      let name = await getNickname()
-      setUsername(name)
-      if (username === nickname) {
-        setIsMe(true)
+      const username = await getNickname();
+      if (username == nickname) {
+        setIsMe(true);
       }
     }
-    getAxios()
+    getAxios();
   }, []);
-   
+
   // logs 받아 오기
   const [logs, setlogs] = useState<Log[]>([]);
   useEffect(() => {
@@ -106,7 +104,7 @@ export default function CodeLogList() {
             <p className={`text-bold text-sm capitalize ${classes.center}`}>{log.submissionTime}</p>
           </div>
         );
-      case "delete":
+      case "detail":
         return (
           <div>
           {isMe &&
@@ -128,7 +126,7 @@ export default function CodeLogList() {
       default:
         return cellValue;
     }
-  }, []);
+  }, [isMe]);
 
   return (
   <Table aria-label="Example table with custom cells">

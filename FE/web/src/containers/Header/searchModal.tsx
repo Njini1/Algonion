@@ -12,13 +12,14 @@ import {
 import getAsset from "../../utils/getAsset";
 import { MyInput } from "./MyInput";
 import classes from "./searchModal.module.scss";
-import { axiosApi } from "../../utils/instance";
+import { axiosAuthApi } from "../../utils/instance";
 
 interface SearchResults {
   nickname: string;
   tier: string;
   userScore: number;
 }
+
 
 export default function SearchModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -27,7 +28,7 @@ export default function SearchModal() {
   useEffect(() => {
     // 검색창 입력값이 바뀌면 타이머 등록
     const delayDebounceTimer = setTimeout(() => {
-      axiosApi()
+      axiosAuthApi()
         .get(`/v1/friendship/search?nickname=${keyword}`)
         .then(({ data }) => setSearchResults(data));
     }, 1000); // 1초 지연시간

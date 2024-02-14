@@ -8,7 +8,7 @@ export const getFriendList = async () => {
    return results.data
 };
 
-export const postNewFriend = async (nickname: string) => {
+export const getIsFriend = async (nickname: string) => {
    // const results = await axios.post(`${api}/v1/friendship?nickname=${nickname}`);
    const results = await axiosAuthApi().get(`/v1/friendship?nickname=${nickname}`);
   
