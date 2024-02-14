@@ -4,6 +4,7 @@ import {Button} from "@nextui-org/react";
 import classes from './UserBasis.module.scss';
 import { getNickname } from '../../api/nicknameAPI';
 
+import userImage from './user_image.png';
 
 export default function UserBasis() {
   // nickname 불러 오기
@@ -18,7 +19,7 @@ export default function UserBasis() {
   }, []);
 
   // 기본 제공 이미지
-  const defaultBackgroundImage = "https://i.ibb.co/W0fNK2m/1600w-rssv-Ab9-JL4-I.webp";
+  const defaultBackgroundImage = userImage; 
   const defaultProfileImage = "https://i.ibb.co/vZDFkkQ/1587535553105.jpg";
 
   const [backgroundImage, setBackgroundImage] = useState<string | null>(defaultBackgroundImage);
