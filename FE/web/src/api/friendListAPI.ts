@@ -10,6 +10,12 @@ export const getFriendList = async () => {
 
 export const getIsFriend = async (nickname: string) => {
    // const results = await axios.post(`${api}/v1/friendship?nickname=${nickname}`);
+   const results = await axiosAuthApi().get(`/v1/friendship/${nickname}`);
+   return results.data
+};
+
+export const toggleIsFriend = async (nickname: string) => {
+   // const results = await axios.post(`${api}/v1/friendship?nickname=${nickname}`);
    const results = await axiosAuthApi().get(`/v1/friendship?nickname=${nickname}`);
   
    return results.data
