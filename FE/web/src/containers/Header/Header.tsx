@@ -24,7 +24,7 @@ export default function Header() {
   const NicknameSet = () => {
     // 페이지 이동 함수
     const navigate = () => {
-      window.location.href = "/nickname-setting";
+      window.location.href = "/user/nickname";
     };
   
     // 확인 메시지
