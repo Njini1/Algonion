@@ -26,7 +26,6 @@ public class SolvedProblemRequest {
     private String memo;
     private String codeLength; //코드 길이
     private String submissionTime; //제출한 시간
-//    private LocalDateTime submissionTime; //제출한 시간
     private String url;
     private List<String> problemCategories; // 문제 카테고리 리스트
 
@@ -53,10 +52,5 @@ public class SolvedProblemRequest {
 //                .algoScore(algoScore)
                 .url(url)
                 .build();
-    }
-
-    public SolvedProblemRequest isNullUpateLevel(String problemLevel) {
-        this.problemLevel = problemLevel;
-        return this;
     }
 }

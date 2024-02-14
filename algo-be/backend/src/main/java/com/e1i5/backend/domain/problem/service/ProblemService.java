@@ -8,19 +8,9 @@ import com.e1i5.backend.domain.user.entity.User;
 import java.util.List;
 
 public interface ProblemService {
-
-    //    @Override
-//    public Problem saveOrUpdateProblem(Problem problem, String siteName) {
-//        problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName)
-//                .map(entity -> entity.updateLevel(problem.getProblemLevel(), problem.getAlgoScore()))
-//                .orElse(problem);
-//
-//        return problemRepo.save(problem);
-//    }
-
     int getOldAlgoScore(String problemNum, String siteName);
 
-    Problem saveOrUpdateProblem(Problem problem, String siteName);
+    Problem saveOrUpdateProblem(Problem problem, String siteName, List<String> problemCategories);
     void saveBojProblemAndClassification(int problemNum);
 
 }

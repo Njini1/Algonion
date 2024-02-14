@@ -64,7 +64,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         }
         System.out.println("solvedProblemReq" + solvedProblemReq);
 
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, null);
 
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
                 .ifPresentOrElse( //TODO orElseGet으로?
@@ -79,7 +79,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName);
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, solvedProblemReq.getProblemCategories());
 
         saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore);
     }
