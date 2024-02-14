@@ -3,26 +3,31 @@ import {Progress} from "@nextui-org/react";
 import {Button} from "@nextui-org/react";
 import classes from './UserBasis.module.scss';
 import { getNickname } from '../../api/nicknameAPI';
-// import axios from 'axios';
 
 import bImage from './background_image.png';
 import pImage from './profile_image.png';
+import { getIsFriend, toggleIsFriend } from '../../api/friendListAPI';
 
 export default function UserBasis() {
    // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
    const nickname = decodeURIComponent(window.location.href.split('/')[4]);
 
-   const [isMe, setIsMe] = useState(false);
+  // + 팔로우 기능
+  const [isFriend, setIsFriend] = useState(0);
+  const [isMe, setIsMe] = useState(false);
  
    useEffect(() => {
      async function getAxios(){
        const username = await getNickname();
+       const res = await getIsFriend(nickname)
+       setIsFriend(res)
        if (username == nickname) {
          setIsMe(true);
        }
      }
      getAxios();
    }, []);
+
 
   // 기본 제공 이미지
   const defaultBackgroundImage = bImage; 
@@ -99,18 +104,23 @@ const backgroundImageData = new FormData();
 //   }
 // };
 
-  // 팔로우 기능
-  const [isFollowed, setIsFollowed] = React.useState(false);
-  const [isEdited, setIsEdited] = React.useState(false);
 
+  const [isEdited, setIsEdited] = React.useState(false);
   
   // expBar 기능
   const [value] = React.useState(50);
   const [label] = React.useState('티어');
 
+  const friend = () => {
+    async function getAxios() {
+      const res = await toggleIsFriend(nickname);
+      setIsFriend(res)
+    }
+    getAxios();
+  }
+
   return (
     <div>
-      
       <div 
       className={`${classes.profileBackground} ${isEdited ? classes.hover : ''}`} 
       style={{backgroundImage: `url(${backgroundImage})`}} 
@@ -145,15 +155,15 @@ const backgroundImageData = new FormData();
           { !isMe &&
           <Button
             className={
-              `${isFollowed ? "bg-transparent text-foreground border-default-200" : ""} ${classes.followButton}`
+              `${isFriend == 1? "bg-transparent text-foreground border-default-200" : ""} ${classes.followButton}`
             }
             color="secondary"
             radius="full"
             size="lg"
-            variant={isFollowed ? "bordered" : "solid"}
-            onPress={() => setIsFollowed(!isFollowed)}
+            variant={isFriend == 1? "bordered" : "solid"}
+            onPress={friend}
               >
-            {isFollowed ? "친구 해제" : "친구 추가"}
+            {isFriend == 1? "친구 해제" : "친구 추가"}
           </Button>
           }
           </div>    
