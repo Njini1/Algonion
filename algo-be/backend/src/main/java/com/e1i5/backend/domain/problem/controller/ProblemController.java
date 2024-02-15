@@ -150,7 +150,9 @@ public class ProblemController {
     // TODO solved.ac test
     @GetMapping("/solved-ac")
     public void saveSolvedAcApiProblem() {
-        problemService.saveBojProblemAndClassification(3);
+        for (int i = 1; i <= 30; i++) {
+            problemService.saveBojProblemAndClassification(i);
+        }
     }
 
 }
