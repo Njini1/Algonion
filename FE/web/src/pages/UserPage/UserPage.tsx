@@ -14,7 +14,7 @@ function UserPage() {
   useEffect(() => {
     async function getAxios(){
       let isValid = await isRealUser(nickname)
-      console.log(nickname, isValid)
+      // console.log(nickname, isValid)
       if (!isValid) {
         // 페이지 이동 함수
         window.location.href = "/*";

@@ -17,34 +17,58 @@ function UserStreak() {
   }
 
   const [data, setData] = useState<StreakData>({});
+  const [continuity, setContinuity] = useState(0);
+
   useEffect(() => {
     async function getAxios(){
-      let res =await getStreak(nickname, from2, to2);
+      let res =await getStreak(nickname, fromFormated, toFormated);
       setData(res);
-      
-      // console.log(res['2024-02-13'])
     }
+    
+    const to = dayjs()
+    const oneYearAgo = to.subtract(1, "year");
+    const weekOfMonth = to.week() - to.startOf("month").week();
+    const sameWeek = oneYearAgo.startOf("month").add(weekOfMonth, "week");
+    const from = sameWeek.subtract(sameWeek.day(), "day");
+    
+    const toFormated = to.format('YYYY-MM-DD')
+    const fromFormated = from.format('YYYY-MM-DD')
+    
+    getAxios()
+
+  }, []);
+
+  useEffect(() => {
     const to = dayjs()
     const oneYearAgo = to.subtract(1, "year");
     const weekOfMonth = to.week() - to.startOf("month").week();
     const sameWeek = oneYearAgo.startOf("month").add(weekOfMonth, "week");
     const from = sameWeek.subtract(sameWeek.day(), "day");
 
-    const to2 = to.format('YYYY-MM-DD')
-    const from2 = from.format('YYYY-MM-DD')
+    const diff = to.diff(from, "day");
+    let date = to;
+    
+    let continuityTemp = 0
+    for (let i = 0; i <= diff; i++) {
+      const key = date.format("YYYY-MM-DD");
+      // console.log(key)
 
-    getAxios()
-  },[]);
-
+      if (data.hasOwnProperty(key)) {
+        continuityTemp = continuityTemp + 1
+      } else {
+        setContinuity(continuityTemp);
+        break;
+      }
+      date = date.subtract(1, "day");
+      console.log(key, continuityTemp)
+      
+    }
+    setContinuity(continuityTemp)
+    // console.log(res['2024-02-13'])
+  }, [data]);
+  
   // dayjs
   dayjs.extend(weekOfYear);
-  const [continuity, setContinuity] = useState(0);
-  // const [continuityData, setContinuityData] = useState(0);
-  let continuityData = 0
-
-  useEffect(() => {
-    setContinuity(continuityData)
-  },[continuityData])
 
   const table = (
     from?: dayjs.Dayjs | undefined,
@@ -65,18 +89,13 @@ function UserStreak() {
     const diff = to.diff(from, "day");
     let date = from;
 
-    let continuityTemp = 0
     for (let i = 0; i <= diff; i++) {
       const key = date.format("YYYY-MM-DD");
       let streakOnOrOff = classes.streakOff;
       if (data[key] !== undefined) {
         streakOnOrOff = classes.streakOn;
-        continuityTemp = continuityTemp + 1
-        // setContinuity(0);                                     // streak가 있을 때만 continuity를 초기화
-      } else {
-        continuityTemp = 0
-        // setContinuity(prevContinuity => prevContinuity + 1);  // streak가 없을 때 continuity를 증가
       }
+
       td[date.day()].push(
         <Tippy content={date.format("YYYY-MM-DD")}>
           <td
@@ -88,9 +107,7 @@ function UserStreak() {
       date = date.add(1, "day");
     }
     const tr = td.map((v, i) => <tr key={dayOfWeekList[i]}>{v}</tr>);
-    continuityData = continuityTemp
-    // setContinuityData(continuityTemp)
-    console.log(continuityData)
+
     return tr;
   };
 
