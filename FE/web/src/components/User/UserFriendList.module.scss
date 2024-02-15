@@ -1,3 +1,9 @@
 .center {
     text-align: center;
 }
+
+.cursor {
+    &:hover{
+        cursor: pointer;
+    }
+}

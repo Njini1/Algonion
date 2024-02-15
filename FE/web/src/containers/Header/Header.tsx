@@ -8,19 +8,33 @@ import getAsset from "../../utils/getAsset";
 import SearchModal from "./searchModal";
 import { deleteCookie } from "../../utils/cookieUtil";
 import { getNickname } from "../../api/nicknameAPI";
-import { getUserProfile } from "../../api/getUserDataAPI";
 
 import pImage from './profile_image.png';
 
 export default function Header() {
+    // nickname 받아오기
+    const [nickname, setNickname] = useState('');
+    const [menuItems, setMenuItems] = React.useState<string[]>([]);
+  
+    useEffect(() => {
+      async function getAxios(){
+        let name = await getNickname()
+        setNickname(name)
+        console.log(name)
+        if (name) {
+          setMenuItems([
+            "나의정보",
+            "코드로그",
+            "커뮤니티",
+            "로그아웃",
+            "회원탈퇴",
+          ]);
+        }
+      }
+      getAxios()
+    }, []);
+
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const menuItems = [
-    "나의정보",
-    "코드로그",
-    "커뮤니티",
-    "로그아웃",
-    "회원탈퇴",
-  ];
 
   // 닉네임 변경 페이지로 이동
   const NicknameSet = () => {
@@ -41,6 +55,7 @@ export default function Header() {
   // 로그아웃 처리
   const Logout = () => {
     localStorage.removeItem("access_token");
+    window.location.reload()
   }
   
   // 회원탈퇴 처리
@@ -57,8 +72,8 @@ export default function Header() {
           localStorage.removeItem("access_token");
           deleteCookie("refresh_token")
           console.log("회원탈퇴 성공!");
-          
           window.location.href = "/";
+          window.location.reload()
         } else {
           console.log("회원탈퇴 실패!");
         }
@@ -67,23 +82,10 @@ export default function Header() {
         console.log("회원탈퇴 API 호출 오류:", err);
       });
     }
+    
 
 
-  // nickname 받아오기
-  const [nickname, setNickname] = useState('');
-  
-  useEffect(() => {
-    async function getAxios(){
-      let name = await getNickname()
-      setNickname(name)
-    }
-    getAxios()
-  }, []);
-  console.log(nickname, 'nickname')
-
-  // user 데이터 가져오기
-  const userProfile = getUserProfile(nickname)
-  console.log(userProfile, 'userprofile')
+  // console.log(nickname, 'nickname')
 
 
   return (
@@ -133,7 +135,7 @@ export default function Header() {
           {/* <NavbarItem className="hidden lg:flex">
             <Link href="#">Login</Link>
           </NavbarItem> */}
-
+          { nickname &&
           <NavbarItem>    
             {/* 프로필 페이지 - 티어에 따라서 프로필 테두리 색 다르게 주기 (예정) */}
             <div className="flex gap-4 items-center">
@@ -166,6 +168,7 @@ export default function Header() {
             </Dropdown>
             </div>
           </NavbarItem>
+          }
         </NavbarContent>
         <NavbarMenu>
 
