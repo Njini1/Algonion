@@ -46,8 +46,8 @@ function BoardRadarGraph(props: any) {
         categories: ['수학', '구현', '그리디', '문자열', '자료 구조', '그래프 이론', 'DP', '기하학']
       },
       yaxis: {
-        max: 15,
-        tickAmount: 5,
+        max: 30,
+        tickAmount: 6,
         labels: {
           formatter: function(val: number) {
             return val.toString();
