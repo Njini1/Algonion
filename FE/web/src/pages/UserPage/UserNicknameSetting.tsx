@@ -46,6 +46,7 @@ function UserPage() {
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+
     const isValidLength = validateLength(nickname);
     const isValidNickname = validateNickname(nickname);
 
@@ -59,7 +60,6 @@ function UserPage() {
     }
 
     const isDuplicate = await validateDuplicate(nickname);
-
     if (!isDuplicate) {
       alert("이미 존재하는 닉네임입니다.");
       return;
@@ -70,7 +70,7 @@ function UserPage() {
       localStorage.setItem("nickname", nickname);
       alert("닉네임이 변경되었습니다!");
     } catch (err) {
-      console.log(err);
+      console.log(err, 'error');
     }
   };
 
