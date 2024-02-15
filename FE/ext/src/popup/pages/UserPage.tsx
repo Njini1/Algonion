@@ -42,7 +42,7 @@ function UserPage(props: { data: any }) {
   return (
     <motion.main className="container" variants={container} initial="hidden" animate="visible">
       <div className="first-line">
-        <TierBox item={item} nickname={props.data?.nickname} />
+        <TierBox item={item} nickname={props.data?.nickname} tier={props.data.tier} />
         <div>
           <LogoBox item={item} />
           <TodayBox item={item} problemCnt={problemCnt} />

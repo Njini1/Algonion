@@ -8,7 +8,7 @@ const modalMutationOption = {
 };
 
 const parseData = () => {
-  const problemCategory = (document.querySelector('.breadcrumb > ol > li:nth-child(2) > a') as HTMLLIElement).value;
+  const problemCategory = [(document.querySelector('.breadcrumb > li:nth-child(2) > a') as HTMLAnchorElement).innerText];
   const problemNum = (document.querySelector('div.main > div.lesson-content') as HTMLDivElement).getAttribute(
     'data-lesson-id',
   );
