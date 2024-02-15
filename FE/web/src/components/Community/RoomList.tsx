@@ -21,7 +21,7 @@ export default function RoomList() {
   useEffect(() => {}, []);
 
   return (
-    <div>
+    <div className={classes.container}>
       <div className={classes.buttonContainer}>
         <h1 className={classes.communityTitle}>커뮤니티</h1>
         <h2 className="text-foreground-500">
@@ -38,7 +38,7 @@ export default function RoomList() {
         <br />
         <Button
           as={Link}
-          color="primary"
+          color="secondary"
           className="w-full"
           onClick={handleClick}
           href={`/collaborative/${roomName}`}
