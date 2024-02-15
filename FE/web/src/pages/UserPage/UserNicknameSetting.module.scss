@@ -1,24 +1,42 @@
 .page {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 250px;
   margin: 5rem auto;
 
   // background-color: aquamarine;
 }
 
 .textbox {
-  margin: 1.5rem 0.5rem;
-  font-size: 1.2rem;
+  margin: 1.5rem 0.5rem 0.5rem;
+  font-size: 1.5rem;
 }
 
 .formbox{
   margin: 0 0.5rem;
-  border: solid 1px black;
+  
+  input {
+    width: 100%;
+    margin: 0.5rem 0rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #cdd6f4;
+    border-radius: 0.5rem;
+    outline: none;
+
+    font-size: 0.9rem;
+    &:focus {
+      border-color: #9f22ff;
+      box-shadow: 0 0 0 1.3px #cba6f7;
+      
+      &::placeholder {
+        color: transparent;
+      }
+    }
+  }
   
   button {
     width: 100%;
-    margin: 0.2rem 2rem;
+    margin: 0.2rem 0rem;
     padding: 0.5rem 1rem;
     border: 1px solid #cdd6f4;
     border-radius: 0.5rem;

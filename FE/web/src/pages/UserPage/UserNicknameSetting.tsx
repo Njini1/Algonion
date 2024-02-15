@@ -83,6 +83,7 @@ function UserPage() {
         <p>닉네임을 변경합니다.</p>
       </div>
 
+
       <form onSubmit={onSubmit}>
         <div className={classes.formbox}>
           <input
