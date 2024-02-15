@@ -302,7 +302,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
 
             LocalDate today = LocalDate.now();
             System.out.println("lastDate: " + user.getLastSolvedDate() + "today: " + LocalDate.now());
-            if (!user.getLastSolvedDate().equals(today)) {
+            if (user.getLastSolvedDate() !=null && !user.getLastSolvedDate().equals(today)) {
                 user.updateStreakCountAndlastSolvedDate(user.getTodayStreakCount() + 1, today);
                 authRepo.save(user);
             }

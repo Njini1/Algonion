@@ -127,8 +127,9 @@ export default function Header() {
             <Link href="/">
               {/* <img className={classes.img} src={getAsset('logo/icon_square.svg')} alt="algo_logo_dark" /> */}
               <img
+                className={classes.logo}
                 src={getAsset("logo/logo_light.svg")}
-                alt="algo_logo_light"
+                alt="Algonion 로고"
               />
             </Link>
           </NavbarBrand>

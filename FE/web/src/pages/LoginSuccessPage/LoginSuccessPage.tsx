@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { deleteCookie, getCookie } from "../../utils/cookieUtil";
 import { CircularProgress } from "@nextui-org/react";
 import { getNickname } from "../../api/nicknameAPI";
@@ -6,39 +6,32 @@ import { useNavigate } from "react-router-dom";
 
 function LoginSuccessPage() {
   const navigate = useNavigate();
-  const [isFinished, setIsFinished] = useState(false);
-
-  // access token 가져오기
-  useEffect(() => {
-    const accessToken = getCookie("access_token");
-    if (accessToken) {
-      localStorage.setItem('access_token', accessToken)
-      deleteCookie("access_token");
-    }
-  }, []);
-
-  // nickname 가져오기
-  const [nickname, setNickname] = useState("");
+  
   useEffect(() => {
     const fetchData = async () => {
+      // access token 가져오기
+      const accessToken = getCookie("access_token");
+      if (accessToken) {
+        localStorage.setItem('access_token', accessToken)
+        deleteCookie("access_token");
+      }
+
+      // nickname 가져오기
       const results = await getNickname();
-      setNickname(results.data);
+      console.log(results, 'result');
+      const nickname = results;
+
       localStorage.setItem("nickname", nickname);
-    };
-
-    fetchData();
-
-    setIsFinished(true);
-  }, [nickname]);
-
-  // 작업이 완료되면 메인 페이지로 이동
-  useEffect(() => {
-    if (isFinished) {
+      
+      // 작업이 완료되면 메인 페이지로 이동
       setTimeout(() => {
         navigate("/");
       }, 2000);
-    }
-  }, [isFinished, navigate]);
+    };
+
+    fetchData();
+  }, [navigate]);
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <CircularProgress

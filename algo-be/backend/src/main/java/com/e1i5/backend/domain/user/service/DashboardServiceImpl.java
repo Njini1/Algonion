@@ -124,6 +124,7 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     private int getUserIdByNickname(String nickname) {
+        System.out.println(nickname);
         return userInfoRepo.findByNickname(nickname)
                 .orElseThrow(() -> new RuntimeException("User not found for nickname: " + nickname))
                 .getUserId();
@@ -247,45 +248,33 @@ public class DashboardServiceImpl implements DashboardService {
 
         List<Object[]> firstSubmissionDatesAndAccumulatedAlgoScores = dashboardRepo.findFirstSubmissionDateAndAccumulatedAlgoScoreByUserId(userId);
 
-        for (Object[] entry : firstSubmissionDatesAndAccumulatedAlgoScores) {
-            String firstSubmissionDate = entry[0] != null ? entry[0].toString() : "null";
-            int accumulatedAlgoScore = entry[1] != null ? Integer.parseInt(entry[1].toString()) : 0;
-//            int problemId = entry[2] != null ? Integer.parseInt(entry[2].toString()) : 0;
-        }
-
         LinkedHashMap<String, Long> dateList = makeDateList(totalDays);
-
-        for (Object[] entry : firstSubmissionDatesAndAccumulatedAlgoScores) {
-            String submissionDate = entry[0] != null ? entry[0].toString() : null; // 첫 번째 제출일을 문자열로 변환합니다.
-            if (submissionDate == null) {
-                continue; // 첫 번째 제출일이 null인 경우 다음 반복으로 넘어갑니다.
-            }
-            int accumulatedAlgoScore = Integer.parseInt(entry[1].toString()); // 누적 알고리즘 점수를 가져옵니다.
-
-            // 해당 날짜에 누적 알고리즘 점수를 저장합니다.
-            if (dateList.containsKey(submissionDate)) {
-                dateList.put(submissionDate, (long) accumulatedAlgoScore);
-            }
-        }
-
         long[] data = new long[totalDays];
         long accumulatedScore = 0;
 
-        for (int i = 0; i < totalDays; i++) {
-            LocalDate currentDate = startDate.plusDays(i);
-            String currentDateStr = currentDate.toString();
-
-            // 해당 날짜에 누적된 알고리즘 점수를 가져옵니다.
-            if (dateList.containsKey(currentDateStr)) {
-                accumulatedScore = dateList.get(currentDateStr);
+        // 각 날짜마다 누적된 알고리즘 점수를 계산하여 맵에 저장
+        for (Object[] entry : firstSubmissionDatesAndAccumulatedAlgoScores) {
+            String submissionDate = entry[0] != null ? entry[0].toString() : null;
+            if (submissionDate == null) {
+                continue;
             }
-            data[i] = accumulatedScore;
+            int dailyAlgoScore = Integer.parseInt(entry[1].toString());
+            accumulatedScore += dailyAlgoScore;
+
+            // 현재 날짜까지의 누적 점수를 맵에 저장
+            if (dateList.containsKey(submissionDate)) {
+                dateList.put(submissionDate, accumulatedScore);
+            }
         }
 
-        String[] categories = new String[totalDays];
-        for (int i = 0; i < totalDays; i++) {
-            categories[i] = startDate.plusDays(i).toString();
+        // 누적된 점수 배열 초기화
+        int index = 0;
+        for (Map.Entry<String, Long> entry : dateList.entrySet()) {
+            data[index++] = entry.getValue();
         }
+
+        // 날짜 배열 초기화
+        String[] categories = dateList.keySet().toArray(new String[0]);
 
         return AccCountGraphResponse.builder()
                 .categories(categories)
