@@ -13,4 +13,5 @@ public interface AuthService {
     String changeNickname(String nickname, int userId);
     ResponseEntity<Void> withdrawUser(int userId);
     NicknameResponse getLoginNickname(int userId);
+    boolean checkUserExistence(String nickname);
 }
