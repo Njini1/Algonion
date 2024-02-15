@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, Key } from 'react';
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip} from "@nextui-org/react";
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, Pagination, PaginationItemRenderProps} from "@nextui-org/react";
 import { EditIcon } from "./CodeLogList/editIcon.tsx";
 import { DeleteIcon  } from "./CodeLogList/deleteIcon.tsx";
 
-import { deleteCodeLog, getCodeLog } from "../../api/codeLogAPI.ts"
+import { deleteCodeLog, getCodeLog, getCodeLogNumber } from "../../api/codeLogAPI.ts"
 // import {columns, logs} from "./CodeLogList/data";
 
 import classes from './CodeLogList.module.scss'
@@ -11,6 +11,7 @@ import { getNickname } from '../../api/nicknameAPI.ts';
 
 
 export default function CodeLogList() {
+
   interface Log {
     solvedId: string,
     siteName: string;
@@ -47,12 +48,16 @@ export default function CodeLogList() {
     getAxios();
   }, []);
 
-  // logs 받아 오기
-  const [logs, setlogs] = useState<Log[]>([]);
+  // logs 받아 오기, 페이지 숫자 받아 오기
+  const [logs, setLogs] = useState<Log[]>([]);
+  const [pageNumber, setPageNumber] = useState<number>();
+
   useEffect(() => {
     async function getAxios(){
-      let res = await getCodeLog(nickname);
-      setlogs(res);
+      let res1 = await getCodeLog(nickname, 0);
+      setLogs(res1);
+      let res2 = await getCodeLogNumber(nickname);
+      setPageNumber(res2)
     }
     getAxios()
   }, [nickname]);
@@ -78,7 +83,7 @@ export default function CodeLogList() {
     switch (columnKey) {
       case "title":
         return (
-          <div className="flex flex-col">
+          <div className={`flex flex-col ${classes.title}`}>
               <p className="text-bold text-sm capitalize">{log.problemNum}. {log.problemTitle}</p>
               <p className="text-bold text-sm capitalize text-default-400">{log.strClassification}</p>
             </div>
@@ -128,7 +133,18 @@ export default function CodeLogList() {
     }
   }, [isMe]);
 
+  // 페이지네이션
+
+  const axiosPage = (page: number) => {
+    async function getAxios(){
+    let res = await getCodeLog(nickname, page - 1);
+    setLogs(res); 
+      }
+      getAxios()
+  }
+
   return (
+    <div>
   <Table aria-label="Example table with custom cells">
       <TableHeader columns={columns}>
         {(column) => (
@@ -145,5 +161,9 @@ export default function CodeLogList() {
         )}
       </TableBody>
     </Table>
+      <div className={classes.pagenationContainer}>
+        <Pagination className={classes.pagenation} loop boundaries={2} color="secondary" showControls total={pageNumber || 10} onChange={(page: number) => axiosPage(page)} />
+      </div>
+    </div>
   );
 }
