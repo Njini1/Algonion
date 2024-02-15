@@ -25,7 +25,7 @@ function startLoader() {
     // 제출 후 채점하기 결과가 성공적으로 나왔다면 코드를 파싱하고,
     // 결과 페이지로 안내한다.
     if (getSolvedResult().includes('pass입니다')) {
-      console.log('정답입니다. 코드를 파싱합니다');
+      window.alert('정답입니다. 3초 뒤 페이지로 이동합니다.');
       stopLoader();
       // chrome.storage.local.clear()
       try {
@@ -39,7 +39,7 @@ function startLoader() {
               + `/main/code/problem/problemSolver.do?`
               + `contestProbId=${ProbCodedata.contestProbId}&`
               + `nickName=${getNickname()}&`;
-        }, 6000);
+        }, 2000);
           
           // makeSubmitButton(`${window.location.origin}`
           //   + `/main/code/problem/problemSolver.do?`

@@ -99,8 +99,6 @@ function UserPage() {
         </div>
       </form>
     </div>
-
-    // 중복 확인 코드 필요
   );
 }
 

@@ -8,7 +8,7 @@ import getAsset from "../../utils/getAsset";
 import SearchModal from "./searchModal";
 import { deleteCookie } from "../../utils/cookieUtil";
 import { getNickname } from "../../api/nicknameAPI";
-import { getUserProfile } from "../../api/getUserDataAPI";
+// import { getUserProfile } from "../../api/getUserDataAPI";
 
 import pImage from './profile_image.png';
 
