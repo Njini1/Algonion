@@ -5,11 +5,32 @@ import { getSolved100 } from "../../api/mainInfoAPI";
 
 import classes from './UserSolvedProblem.module.scss'
 import { useEffect, useState } from "react";
+import { getUserProfile } from "../../api/getUserDataAPI";
+
+interface ProfileData {
+  tier: number;
+  userId: number;
+  score: number;
+  problemCount: number;
+  friendship: number;
+}
 
 function UserSolvedProblem() {
   // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
   const nickname = decodeURIComponent(window.location.href.split('/')[4]);
   
+
+  // 유저 정보 가져오기 
+  const [profile, setProfile] = useState<ProfileData>();
+
+  useEffect(() => {
+    async function getAxios() {
+      const res = await getUserProfile(nickname);
+      setProfile(res);
+    }
+    getAxios();
+  }, [])
+
   // problems 정보 가져 오기
   const [problems, setProblems] = useState<{ problemId: number; problemNum: string; problemTitle: string; problemLevel: string; algoScore: number; siteName: string; url: string; }[]>([]);
   useEffect(() => {
@@ -32,7 +53,7 @@ function UserSolvedProblem() {
             content: `drop-shadow shadow-black text-white`,
           }}>
           <p className="text-xlarge font-bold tracking-tight text-default-300">Algo Rating</p>
-          <p className="text-large font-bold ">티어 + 총 점수</p>
+          <p className="text-large font-bold ">점수 총합 {profile?.score}!!</p>
         </Chip>
         <div className="flex gap-5">
           <div className="flex flex-col gap-1 items-start justify-center">

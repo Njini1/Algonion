@@ -9,11 +9,9 @@ function UserInfo() {
         <div className={classes.userSolvedProblem}>
           <UserSolvedProblem/>
         </div>
-      <div className={classes.page}>
         <div className={classes.userStreak}>
           <UserStreak/>
         </div>
-      </div>
     </>
   )
 }
