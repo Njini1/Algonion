@@ -73,7 +73,7 @@ export default function Header() {
   const Logout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("nickname");
-    window.location.reload();
+    window.location.href = "/";
   };
 
   // 회원탈퇴 처리
