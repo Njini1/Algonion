@@ -64,12 +64,11 @@ export const algoScoreLevel: Record<number, string> = {
       D8: 'Master',
     },
     Programmers: {
-      0: 'Unrated',
-      1: 'Bronze',
-      2: 'Silver',
-      3: 'Gold',
-      4: 'Platinum',
-      5: 'Diamond',
-      6: 'Master',
+      0: 'Bronze',
+      1: 'Silver',
+      2: 'Gold',
+      3: 'Platinum',
+      4: 'Diamond',
+      5: 'Master',
     },
   };
