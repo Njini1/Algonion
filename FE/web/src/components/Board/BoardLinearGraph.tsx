@@ -1,5 +1,6 @@
 // https://apexcharts.com/docs/react-charts/
 import { useEffect, useState } from "react";
+import classes from './BoardLinearGraph.module.scss'
 import Chart from "react-apexcharts";
 
 function BoardLinearGraph(props: any) {
@@ -44,18 +45,20 @@ function BoardLinearGraph(props: any) {
     }));
   }, [props.categories, props.data]);
 
-  return (<div className="app">
-    <div className="row">
-      <div className="mixed-chart">
-        <Chart
-          options={state.options}
-          series={state.series}
-          type="line"
-          width="500"
-        />
+  return(
+      <div className="app">
+        <div className="row">
+          <div className={`mixed-chart ${classes.chart}`}>
+            <Chart
+              options={state.options}
+              series={state.series}
+              type="line"
+              width="700"
+            />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>)
+  );
 }
 
 export default BoardLinearGraph;

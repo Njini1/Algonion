@@ -1,7 +1,7 @@
 .component {
   .graphTable {
     margin: 1rem 0.1rem 3rem;
-
+    width: 100%;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -16,7 +16,7 @@
     }
     .graph {
       background-color: #FFFFFF; 
-
+      width: 100%;
       padding: 1rem;
       display: inline-flex;
       justify-content: center;
