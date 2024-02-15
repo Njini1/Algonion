@@ -259,8 +259,10 @@ public class DashboardServiceImpl implements DashboardService {
             }
             int dailyAlgoScore = Integer.parseInt(entry[1].toString());
 
+            // 현재 날짜까지의 누적 점수를 계산하되, 0인 경우에도 이전 누적 점수를 사용
+            accumulatedScore = Math.max(accumulatedScore + dailyAlgoScore, accumulatedScore);
+
             // 현재 날짜까지의 누적 점수를 맵에 저장
-            accumulatedScore += dailyAlgoScore;
             if (dateList.containsKey(submissionDate)) {
                 dateList.put(submissionDate, accumulatedScore);
             }
@@ -280,6 +282,7 @@ public class DashboardServiceImpl implements DashboardService {
                 .data(data)
                 .build();
     }
+
 
 
     /**
