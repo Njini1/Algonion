@@ -23,7 +23,7 @@ public class SolvedProblemRequest {
     private String codeLength; //코드 길이
     private String submissionTime; //제출한 시간
     private String url;
-    private List<String> problemCategories; // 문제 카테고리 리스트
+    private List<String> problemCategory; // 문제 카테고리 리스트
 
     public SolvedProblem toSolvedProblemEntity() {
         return SolvedProblem.builder()
@@ -77,20 +77,20 @@ public class SolvedProblemRequest {
         this.codeLength = codeLength;
         this.submissionTime = submissionTime;
         this.url = url;
-        this.problemCategories = problemCategories;
+        this.problemCategory = problemCategories;
     }
 
     @Builder
     public SolvedProblemRequest(String problemTitle, String problemLevel, List<String> problemCategory) {
         this.problemTitle = problemTitle;
         this.problemLevel = problemLevel;
-        this.problemCategories = problemCategory;
+        this.problemCategory = problemCategory;
     }
 
     public void updateProblemInfo(String problemTitle, String problemLevel, List<String> problemCategory) {
         this.problemTitle = problemTitle;
         this.problemLevel = problemLevel;
-        this.problemCategories = problemCategory;
+        this.problemCategory = problemCategory;
 //        return this;
     }
 

@@ -16,11 +16,11 @@ import com.e1i5.backend.domain.user.service.DashboardService;
 import com.e1i5.backend.global.error.GlobalErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
@@ -60,17 +60,15 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
-        // 임시방편 코드
+
         if (solvedProblemReq.getProblemLevel() == null) {
-//            solvedProblemReq.isNullUpateLevel("0");
             // 문제 정보를 업데이트하기 위해 getUpdatedSolvedProblemRequest 호출
             SolvedProblemRequest updatedSolvedProblemReq = getUpdatedSolvedProblemRequest(Integer.parseInt(solvedProblemReq.getProblemNum()));
-//            System.out.println("solvedProblemReq" + solvedProblemReq);
 
             // 가져온 문제 정보를 기존의 solvedProblemReq에 복사하여 업데이트
             solvedProblemReq.updateProblemInfo(updatedSolvedProblemReq.getProblemTitle(),
                     updatedSolvedProblemReq.getProblemLevel(),
-                    updatedSolvedProblemReq.getProblemCategories());
+                    updatedSolvedProblemReq.getProblemCategory());
         }
 
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, null);
@@ -89,7 +87,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     public void saveNotBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, solvedProblemReq.getProblemCategories());
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, solvedProblemReq.getProblemCategory());
 
         saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore);
     }
@@ -127,11 +125,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                         .block();
 
         assert response != null;
-//        log.info(response.toString());
-//        Map<String, Object> item = (Map<String, Object>) response.get("items");
 
-//        if (item != null) {
-//            int problemId = (int) item.get("problemId");
         String problemTitle = (String) response.get("titleKo");
         String problemLevel = String.valueOf(response.get("level"));
         List<String> problemCategories = new ArrayList<>();
@@ -140,11 +134,6 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
             List<Map<String, Object>> displayNames = (List<Map<String, Object>>) tag.get("displayNames");
             problemCategories.add((String) displayNames.get(0).get("name"));
         }
-
-//        System.out.println("problemTitle : " + problemTitle);
-//        System.out.println("problemLevel : " + problemLevel);
-//        System.out.println("problemCategories : " + problemCategories);
-//        System.out.println("problemNum: " + problemNum);
 
 //        SolvedProblemRequest updatedRequest = new SolvedProblemRequest(); //merge 때문인지 오류나서 수정함
 //        updatedRequest.updateProblemInfo(problemTitle, problemLevel, problemCategories);
