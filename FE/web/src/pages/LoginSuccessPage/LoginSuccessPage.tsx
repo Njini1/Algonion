@@ -19,16 +19,22 @@ function LoginSuccessPage() {
 
   // nickname 가져오기
   const [nickname, setNickname] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       const results = await getNickname();
+      console.log(results, 'result')
       setNickname(results.data);
-      localStorage.setItem("nickname", nickname);
     };
-
+    
     fetchData();
-
+    
+    localStorage.setItem("nickname", nickname);
     setIsFinished(true);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("nickname", nickname);
   }, [nickname]);
 
   // 작업이 완료되면 메인 페이지로 이동
