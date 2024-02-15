@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, Key } from 'react';
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, Pagination, PaginationItemRenderProps} from "@nextui-org/react";
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, Pagination} from "@nextui-org/react";
 import { EditIcon } from "./CodeLogList/editIcon.tsx";
 import { DeleteIcon  } from "./CodeLogList/deleteIcon.tsx";
 
