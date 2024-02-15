@@ -29,3 +29,4 @@ export const shareCodeLog = async (data: {}) => {
    const results = await axiosAuthApi().post(`/v1/notion/save`, data);
    return results.data;
 };
+

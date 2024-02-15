@@ -65,9 +65,9 @@ export default function CodeLogList() {
     window.location.href = `/code-log/${name}/${problemId}`;
   }
 
-  function deleteLog(problemId: string) {
-    deleteCodeLog(problemId);
-    console.log(problemId);
+  async function deleteLog(problemId: string) {
+    await deleteCodeLog(problemId);
+  
     window.location.reload();
   }
 
