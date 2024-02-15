@@ -15,7 +15,6 @@ function UserSolvedProblem() {
   useEffect(() => {
     async function getAxios(){
       let res = await getSolved100(nickname);
-      console.log(res, 'res')
       setProblems(res);
     }
     getAxios()

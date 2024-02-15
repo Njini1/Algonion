@@ -41,6 +41,7 @@ export default function Header() {
   // 로그아웃 처리
   const Logout = () => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("nickname");
   }
   
   // 회원탈퇴 처리
