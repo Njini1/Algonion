@@ -1,15 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import Header from '../../containers/Header/Header.tsx';
-import CodeLogProblem from '../../components/CodeLog/CodeLogProblem.tsx'
-import CodeLog from '../../components/CodeLog/CodeLog.tsx'
-import CodeLogMemo from '../../components/CodeLog/CodeLogMemo.tsx'
-import Footer from '../../containers/Footer/Footer.tsx';
+import CodeLogProblem from "../../components/CodeLog/CodeLogProblem.tsx";
+import CodeLog from "../../components/CodeLog/CodeLog.tsx";
+import CodeLogMemo from "../../components/CodeLog/CodeLogMemo.tsx";
 
-import {getCodeLogDetail} from '../../api/codeLogAPI.ts'
-import classes from "./CodeLogDetailPage.module.scss"
-import { isRealUser } from '../../api/userAPI.ts';
-
+import { getCodeLogDetail } from "../../api/codeLogAPI.ts";
+import classes from "./CodeLogDetailPage.module.scss";
+import { isRealUser } from "../../api/userAPI.ts";
 
 interface Data {
   siteName: string;
@@ -30,53 +27,49 @@ interface Data {
 
 function CodeLogDetailPage() {
   // nickname 받아오기 + 존재하지 않는 사용자 404 처리
-  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
+  const nickname = decodeURIComponent(window.location.href.split("/")[4]);
 
   useEffect(() => {
-    async function getAxios(){
-      let isValid = await isRealUser(nickname)
-      console.log(nickname, isValid)
+    async function getAxios() {
+      let isValid = await isRealUser(nickname);
+      console.log(nickname, isValid);
       if (!isValid) {
         // 페이지 이동 함수
         window.location.href = "/*";
       }
     }
-    getAxios()
+    getAxios();
   }, []);
-    
-  const problemId = window.location.href.split('/')[5];
+
+  const problemId = window.location.href.split("/")[5];
   // console.log(problemId)
-  
-  const [data, setData] = useState<Data>();;
-  
+
+  const [data, setData] = useState<Data>();
+
   useEffect(() => {
-    async function getAxios(){
+    async function getAxios() {
       let res = await getCodeLogDetail(problemId);
       // console.log(res)
       setData(res);
     }
-    getAxios()
+    getAxios();
   }, []);
-  
-  
-	return (
+
+  return (
     <div className={classes.page}>
-      <Header/>
       <div className={classes.codeLogDetailPage}>
         <CodeLogProblem
-                  problemId={problemId} 
-                  siteName={data?.siteName || ''}
-                  problemNum={data?.problemNum || ''}
-                  problemTitle={data?.problemTitle || ''}
-                  url={data?.url || ''}
-                  />
-        <CodeLog code={data?.submissionCode || ''}/>
-        <CodeLogMemo problemId={problemId} 
-                     memo={data?.memo || ''} />
+          problemId={problemId}
+          siteName={data?.siteName || ""}
+          problemNum={data?.problemNum || ""}
+          problemTitle={data?.problemTitle || ""}
+          url={data?.url || ""}
+        />
+        <CodeLog code={data?.submissionCode || ""} />
+        <CodeLogMemo problemId={problemId} memo={data?.memo || ""} />
       </div>
-      <Footer/>
     </div>
-  )
+  );
 }
-  
-export default CodeLogDetailPage
+
+export default CodeLogDetailPage;
