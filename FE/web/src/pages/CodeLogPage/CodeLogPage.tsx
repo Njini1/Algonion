@@ -8,12 +8,26 @@ import CodeLogRecommendation from '../../components/CodeLog/CodeLogRecommendatio
 import Footer from '../../containers/Footer/Footer.tsx';
 
 import classes from "./CodeLogPage.module.scss"
+import { useEffect } from 'react';
+import { isRealUser } from '../../api/userAPI.ts';
 
 
 export default function CodeLogPage() {
-  // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
+  // nickname 받아오기 + 존재하지 않는 사용자 404 처리
   const nickname = decodeURIComponent(window.location.href.split('/')[4]);
-	
+
+  useEffect(() => {
+    async function getAxios(){
+      let isValid = await isRealUser(nickname)
+      console.log(nickname, isValid)
+      if (!isValid) {
+        // 페이지 이동 함수
+        window.location.href = "/*";
+      }
+    }
+    getAxios()
+  }, []);
+  
   return (
     <div>
     <Header/>

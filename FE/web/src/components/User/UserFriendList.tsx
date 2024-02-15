@@ -2,36 +2,9 @@
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { getFriendList } from "../../api/friendListAPI";
-// import classes from './UserFriendList.module.scss'
+import classes from './UserFriendList.module.scss'
 
 type item = { count: number; nickname: string; tier: string ; userScore: number;}[]
-
-// const rows = [
-//   {
-//     key: "1",
-//     name: "Tony Reichert",
-//     role: "CEO",
-//     status: "Active",
-//   },
-//   {
-//     key: "2",
-//     name: "Zoey Lang",
-//     role: "Technical Lead",
-//     status: "Paused",
-//   },
-//   {
-//     key: "3",
-//     name: "Jane Fisher",
-//     role: "Senior Developer",
-//     status: "Active",
-//   },
-//   {
-//     key: "4",
-//     name: "William Howard",
-//     role: "Community Manager",
-//     status: "Vacation",
-//   },
-// ];
 
 const columns = [
   {
@@ -78,7 +51,7 @@ function UserFriendList() {
       </TableHeader>
       <TableBody items={friendList}>
         {(item) => (
-          <TableRow key={item.nickname}>
+          <TableRow key={item.nickname} className={classes.cursor} onClick={() => window.location.href = `/profile/${item.nickname}`}>
             {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
           </TableRow>
         )}
