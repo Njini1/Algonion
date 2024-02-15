@@ -25,30 +25,44 @@ Algonion은 여러 온라인 저지 사이트에서 자신이 해결한 문제�
     - 여러 온라인 저지 사이트에서 문제를 풀면 자동으로 Algonion 사이트에 저장됩니다.
     - 여러 온라인 저지 사이트에서 해결한 문제를 한 눈에 볼 수 있습니다.
 
+</br>
+
 - ### 기록 관리
     - 해결한 문제를 볼 수 있고, 메모를 남기거나 Notion에 저장할 수 있습니다.
     - 해결한 문제를 통합하여 그래프 등을 활용해 시각화하여 볼 수 있습니다.
     - 스트릭을 활용하여 푼 날짜를 확인할 수 있습니다.
 
 ## 개발 환경
-Management Tool </br>
+Management Tool 
+
+</br>
+
 <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 <img src="https://img.shields.io/badge/Mattermost-0058CC?style=for-the-badge&logo=Mattermost&logoColor=white">
 <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white">
 
-Infra </br>
+Infra 
+
+</br>
+
 <img src="https://img.shields.io/badge/AmazonAWS-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=white">
 <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
 <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white"> 
 <img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white"/>
 
-Front </br>
+Front 
+
+</br>
+
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white"/>
 <img src="https://img.shields.io/badge/scss-CC6699?style=for-the-badge&logo=sass&logoColor=white"/>
 <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white"/>
 
-Backend </br>
+Backend 
+
+</br>
+
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
 <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white">
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
