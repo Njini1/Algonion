@@ -10,7 +10,7 @@ function ExtAlert() {
     <>
       {!isInstalled && (
         <div className={classes.alert}>
-          🚀 chrome 웹 스토어에서 Algonion 확장앱을 설치해주세요!
+          <span className="pr-3">🚀 chrome 웹 스토어에서 Algonion 확장앱을 설치해주세요!</span>
           <Button
             radius="full"
             className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
