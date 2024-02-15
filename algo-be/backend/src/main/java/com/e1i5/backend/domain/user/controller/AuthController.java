@@ -103,4 +103,10 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/check-user")
+    public ResponseEntity<Boolean> checkUserExistence(@RequestParam String nickname) {
+        boolean userExists = authService.checkUserExistence(nickname);
+        return ResponseEntity.ok(userExists);
+    }
+
 }

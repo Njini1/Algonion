@@ -30,6 +30,8 @@ const NotFound = lazy(() => import("./pages/NotFound.tsx"));
 const CollaborativeEditorPage = lazy(
   () => import("./pages/CollaborativeEditorPage/CollaborativeEditorPage.tsx")
 );
+
+// 
 const router = createBrowserRouter([
   {
     path: "/",
