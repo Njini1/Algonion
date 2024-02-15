@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +72,9 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                     updatedSolvedProblemReq.getProblemCategory());
         }
 
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, null);
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, solvedProblemReq.getProblemCategory());
+
+        updateTodayStreak(userId, solvedProblemReq.getProblemNum(), siteName);
 
         SolvedProblemRequest finalSolvedProblemReq = solvedProblemReq;
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
@@ -81,6 +84,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                         },
                         () -> saveSolvedProblem(finalSolvedProblemReq, userId, problem, oldAlgoScore)
                 );
+
     }
 
     @Transactional
@@ -89,6 +93,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
         Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, solvedProblemReq.getProblemCategory());
 
+        updateTodayStreak(userId, solvedProblemReq.getProblemNum(), siteName);
         saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore);
     }
 
@@ -267,11 +272,40 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
         return solvedProblemRepo.countVisibleSolvedProblemsByUserNickname(nickname);
     }
 
+    /**
+     * 로그인 유저와 수정할 푼 문제 유저와 같은지 검사
+     * @param userId
+     * @param solvedProblemId
+     * @return
+     */
     public SolvedProblem checkAuth(int userId, int solvedProblemId) {
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected solvedProblem"));
 
         if (solvedProblem.getUser().getUserId() == userId) return solvedProblem;
         else throw new IllegalArgumentException("Unexpected writer");
+    }
+
+    /**
+     * 오늘로부터 문제 푼 개수 구하는 메서드
+     * @param userId
+     * @param problemNum
+     * @param siteName
+     */
+    public void updateTodayStreak(int userId, String problemNum, String siteName) {
+        boolean existsSovledProblem = solvedProblemRepo.existsByUser_UserIdAndProblem_SiteNameAndProblem_ProblemNum(userId, siteName, problemNum);
+
+        if (!existsSovledProblem) {
+//            LocalDate lastSolvedDate = authRepo.findLastSolvedDateByUserId(userId);
+            User user = authRepo.findUserByUserId(userId)
+                    .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+
+            LocalDate today = LocalDate.now();
+            System.out.println("lastDate: " + user.getLastSolvedDate() + "today: " + LocalDate.now());
+            if (!user.getLastSolvedDate().equals(today)) {
+                user.updateStreakCountAndlastSolvedDate(user.getTodayStreakCount() + 1, today);
+                authRepo.save(user);
+            }
+        }
     }
 }

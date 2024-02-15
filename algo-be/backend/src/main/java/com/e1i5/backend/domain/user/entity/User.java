@@ -29,6 +29,12 @@ public class User{
     @Column(name = "user_score")
     private int userScore;
 
+    @Column(name = "today_streak_count")
+    private int todayStreakCount; //오늘로부터 스트릭 계수
+
+    @Column(name = "last_solved_date")
+    private LocalDate lastSolvedDate; //마지막으로 문제 푼 날짜
+
     @Column(name = "reg_date")
     private LocalDate regDate;
 
@@ -40,10 +46,6 @@ public class User{
 
     @OneToMany(mappedBy = "user")
     private List<SolvedProblem> solvedProblems; // 사용자별 푼 문제수를 위함
-
-//    @OneToOne(mappedBy = "user")
-//    private ProfileFileInfo userProfile;
-
 
     @Builder
     public User(int userId, String nickname, String email, LocalDate regDate, int tier, int userScore) {
@@ -62,6 +64,12 @@ public class User{
     public void withdrawUser(boolean status, LocalDate delDate) {
         this.status = status;
         this.delDate = delDate;
+    }
+
+    public User updateStreakCountAndlastSolvedDate(int count, LocalDate today) {
+        this.todayStreakCount = count;
+        this.lastSolvedDate = today;
+        return this;
     }
 
 }
