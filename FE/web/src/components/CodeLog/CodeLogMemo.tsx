@@ -96,7 +96,7 @@ const Tiptap = (props: MemoProps) => {
         <BubbleMenu editor={editor ? editor : undefined}> </BubbleMenu>
       </div>
       <div className={classes.buttons}>
-        {isSaved && <p>{now}</p>}
+        {isSaved && <p>{now} 저장됨</p>}
       <Button color="secondary" variant="bordered" onPress={() => putAxios()}>
         SAVE
       </Button>
