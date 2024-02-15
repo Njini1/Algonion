@@ -1,45 +1,25 @@
 // import React from "react";
 import {CardHeader, CardBody, CardFooter, Chip, Card} from "@nextui-org/react";
 import UserProblem from './UserProblem'
-// import { getSolved100 } from "../../api/mainInfoAPI";
+import { getSolved100 } from "../../api/mainInfoAPI";
 
 import classes from './UserSolvedProblem.module.scss'
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function UserSolvedProblem() {
   // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
-  // const nickname = decodeURIComponent(window.location.href.split('/')[4]);
+  const nickname = decodeURIComponent(window.location.href.split('/')[4]);
   
   // problems 정보 가져 오기
-  // const [problems, setProblems] = useState<{ problemId: number; problemNum: string; problemTitle: string; problemLevel: string; algoScore: number; siteName: string; url: string; }[]>([]);
-  // useEffect(() => {
-  //   async function getAxios(){
-  //     let res = await getSolved100(nickname);
-  //     console.log(res, 'res')
-  //     setProblems(res);
-  //   }
-  //   getAxios()
-  // }, [nickname]);
-
-  // 예시 유저 문제 푼거 정보
-  const problems: { 
-    problemId: number,
-    problemNum: string,
-    problemTitle: string,
-    problemLevel: string,
-    algoScore: number,
-    siteName: string,
-    url: string,
-  } [] = [
-    {
-    problemId: 30,
-    problemNum: "1103",
-    problemTitle: "집에 가라",
-    problemLevel: "master",
-    algoScore: 200,
-    siteName: "baekjoon",
-    url: "ssss"},
-  ];
+  const [problems, setProblems] = useState<{ problemId: number; problemNum: string; problemTitle: string; problemLevel: string; algoScore: number; siteName: string; url: string; }[]>([]);
+  useEffect(() => {
+    async function getAxios(){
+      let res = await getSolved100(nickname);
+      console.log(res, 'res')
+      setProblems(res);
+    }
+    getAxios()
+  }, [nickname]);
 
   return (
     <Card className={`'max' ${classes['solved100-container']} p-1`}>

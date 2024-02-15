@@ -81,11 +81,6 @@ export default function Header() {
   }, []);
   console.log(nickname, 'nickname')
 
-  // user 데이터 가져오기
-  const userProfile = getUserProfile(nickname)
-  console.log(userProfile, 'userprofile')
-
-
   return (
     <NextUIProvider className={classes.header}>
       <Navbar onMenuOpenChange={setIsMenuOpen}>
