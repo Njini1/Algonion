@@ -2,14 +2,13 @@ import getAsset from '../../utils/getAsset';
 import classes from './UserProblem.module.scss'
 import { Tooltip } from '@nextui-org/react';
 
-
 export default function Problem100({ problems }: {
   problems: {
+    algoScore: number;
     problemId: number;
     problemNum: string;
     problemTitle: string;
     problemLevel: string;
-    algoScore: number;
     siteName: string;
     url: string;
   }[];
@@ -24,9 +23,9 @@ export default function Problem100({ problems }: {
       const index = i * 10 + j;
 
       if (index < problems.length) {
-        const { problemId, problemNum, problemTitle, problemLevel, siteName, url } = problems[index];
+        const { problemId, problemNum, problemTitle, problemLevel,algoScore, siteName, url } = problems[index];
         
-        const tierImg = getAsset(`tier/level_${problemLevel}.png`)
+        const tierImg = getAsset(`tier/level_${algoScore}.png`)
 
           gridListItems.push(
             <div key={problemId}>

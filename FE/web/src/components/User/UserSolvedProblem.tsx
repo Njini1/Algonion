@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 function UserSolvedProblem() {
   // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
   const nickname = decodeURIComponent(window.location.href.split('/')[4]);
-  
+  console.log(nickname, 'nickname')
   // problems 정보 가져 오기
   const [problems, setProblems] = useState<{ problemId: number; problemNum: string; problemTitle: string; problemLevel: string; algoScore: number; siteName: string; url: string; }[]>([]);
   useEffect(() => {
