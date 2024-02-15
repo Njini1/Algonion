@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { deleteCookie, getCookie } from "../../utils/cookieUtil";
 import { CircularProgress } from "@nextui-org/react";
-import { getNickname } from "../../api/nicknameAPI";
 import { useNavigate } from "react-router-dom";
 
 function LoginSuccessPage() {
