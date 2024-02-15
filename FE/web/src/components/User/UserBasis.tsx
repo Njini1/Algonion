@@ -9,6 +9,7 @@ import pImage from './profile_image.png';
 import { getIsFriend, toggleIsFriend } from '../../api/friendListAPI';
 import { getUserProfile } from '../../api/getUserDataAPI';
 import getAsset from '../../utils/getAsset';
+import { algoScoreLevel } from '../../utils/variable';
 
 interface ProfileData {
     tier: number;
@@ -23,7 +24,13 @@ export default function UserBasis() {
   const nickname = decodeURIComponent(window.location.href.split('/')[4]);
 
   // 유저 정보 가져오기 
-  const [profile, setProfile] = useState<ProfileData>();
+  const [profile, setProfile] = useState<ProfileData>({
+    tier: 0,
+    userId: 0,
+    score: 0,
+    problemCount: 0,
+    friendship: 0,
+  });
 
   useEffect(() => {
     async function getAxios() {
@@ -143,13 +150,16 @@ export default function UserBasis() {
   useEffect(() => {
     const updateTierImg = () => {
       if (profile?.tier) {
-        setTierImg(String(profile?.tier));
+        setTierImg(String(profile.tier));
       }
     };
     // profile.tier 변화 감지
      updateTierImg;
   }, [profile?.tier]);
   
+  // 티어 이름 바꾸기
+  const changeTier = algoScoreLevel[profile.tier]
+
   return (
     <div>
       <div
@@ -212,7 +222,7 @@ export default function UserBasis() {
             aria-label="Loading..."
             size='lg'
             color="secondary"
-            label={`${'경험치'} ${profile?.tier}`}
+            label={`${'경험치'} ${changeTier}`}
             value={profile?.score}
             showValueLabel={true}
             classNames={{

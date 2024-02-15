@@ -1,4 +1,5 @@
 import getAsset from '../../utils/getAsset';
+import { variableProblemLevel } from '../../utils/variable';
 import classes from './UserProblem.module.scss'
 import { Tooltip } from '@nextui-org/react';
 
@@ -13,18 +14,18 @@ export default function Problem100({ problems }: {
     url: string;
   }[];
 }) {
-  
   const gridLists: React.ReactNode[] = [];
-
+  
   for (let i = 0; i < 10; i++) {
     const gridListItems: React.ReactNode[] = [];
-
+    
     for (let j = 0; j < 10; j++) {
       const index = i * 10 + j;
-
+      
       if (index < problems.length) {
         const { problemId, problemNum, problemTitle, problemLevel, algoScore, siteName, url } = problems[index];
         
+        const changeLevel = variableProblemLevel[siteName][problemLevel]
         const tierImg = getAsset(`tier/level_${algoScore}.png`)
 
           gridListItems.push(
@@ -33,8 +34,9 @@ export default function Problem100({ problems }: {
                 showArrow
                 content = {
                   <div className="px-1 py-2">
-                    <div className="text-tiny">{problemLevel} / {siteName} </div>
-                    <div className="text-small font-bold">{problemNum} {problemTitle}</div>
+                    <div className="text-tiny">{siteName}. {problemNum} </div>
+                    <div >{changeLevel} </div>   
+                    <div className="text-small font-bold">{problemTitle}</div>
                   </div>
               }
                 classNames={{
