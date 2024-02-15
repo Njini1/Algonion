@@ -6,11 +6,16 @@
     rgba(255, 166, 0, 1) 100%
   );
   padding: 0.5rem;
-  text-align: center;
   color: white;
   position: sticky;
   z-index: 10;
-  .close{
-    float: right;
+  .center {
+    text-align: center;
+  }
+  .close {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
