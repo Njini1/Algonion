@@ -24,6 +24,7 @@ const Tiptap = (props: MemoProps) => {
   const [memo, setMemo] = useState(props.memo);
 
   if (!memo) {
+    // setMemo('<h1>📝메모</h1>')
     setMemo('<h1>📝메모</h1><p></p><h2>- 문제 요약</h2><p></p><p></p><h2>- 사용한 알고리즘</h2><ul><li></li><li></li></ul><h2>- 풀이</h2><p></p><p></p>')
     }
   

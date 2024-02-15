@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import classes from "./UserNicknameSetting.module.scss";
-import { axiosApi } from "../../utils/instance";
+import { axiosApi as axiosAuthApi } from "../../utils/instance";
 
 const validateLength = (nickname: string): boolean => {
   return nickname.length >= 2 && nickname.length <= 20;
@@ -12,7 +12,7 @@ const validateNickname = (nickname: string): boolean => {
 };
 
 const validateDuplicate = async (nickname: string): Promise<boolean> => {
-  const { data } = await axiosApi().get("/v1/user/nickname", {
+  const { data } = await axiosAuthApi().get("/v1/user/nickname", {
     params: {
       nickname,
     },
@@ -66,7 +66,7 @@ function UserPage() {
     }
 
     try {
-      await axiosApi().put("/v1/user/nickname", { nickname });
+      await axiosAuthApi().put("/v1/user/nickname", { nickname });
       localStorage.setItem("nickname", nickname);
       alert("닉네임이 변경되었습니다!");
     } catch (err) {

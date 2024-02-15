@@ -53,7 +53,7 @@ function UserSolvedProblem() {
             content: `drop-shadow shadow-black text-white`,
           }}>
           <p className="text-xlarge font-bold tracking-tight text-default-300">Algo Rating</p>
-          <p className="text-large font-bold ">점수 총합 {profile?.score}!!</p>
+          <p className="text-large font-bold ">점수 총합 {profile?.score}!</p>
         </Chip>
         <div className="flex gap-5">
           <div className="flex flex-col gap-1 items-start justify-center">
