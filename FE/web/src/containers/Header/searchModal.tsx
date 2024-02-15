@@ -20,7 +20,6 @@ interface SearchResults {
   userScore: number;
 }
 
-
 export default function SearchModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [keyword, setKeyword] = useState("");
@@ -31,7 +30,7 @@ export default function SearchModal() {
       axiosAuthApi()
         .get(`/v1/friendship/search?nickname=${keyword}`)
         .then(({ data }) => setSearchResults(data));
-    }, 1000); // 1초 지연시간
+    }, 500); // 0.5초 지연시간
     // 이전에 설정한 타이머를 클리어하여 디바운스 취소
     return () => clearTimeout(delayDebounceTimer);
   }, [keyword]);
@@ -76,7 +75,11 @@ export default function SearchModal() {
                 />
                 <ul>
                   {searchResults.map((v, i) => (
-                    <li key={i}>{v.nickname}</li>
+                    <li key={i}>
+                      <Link href={`/profile/${v.nickname}`} color="foreground">
+                        {v.nickname}
+                      </Link>
+                    </li>
                   ))}
                 </ul>
               </ModalBody>
