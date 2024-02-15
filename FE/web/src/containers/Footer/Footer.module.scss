@@ -1,24 +1,22 @@
-.footer{
+.footer {
   position: relative;
   // transform: translateY(0%);
   // margin: 5rem;
-  border-top: 1px solid black;
-  padding: 50px;
+  padding: 3% 10%;
 
   display: flex;
-  flex-direction : column;
-  background-color: lightgray;
+  flex-direction: column;
+  background-color: #191f28;
+  color: #6b7684;
 }
 
-
-.contents{
+.contents {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr));
   height: 100%;
   gap: 32px 16px;
-  
-  
-  .contents-container{
+
+  .contents-container {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -28,8 +26,9 @@
 .contents-container span {
   font-size: 1.2em;
   font-weight: bold;
+  color: #b0b8c1;
 }
 
-.block{
+.block {
   height: 16px;
 }
