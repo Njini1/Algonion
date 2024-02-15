@@ -59,7 +59,7 @@ function SearchResults() {
           {(item) => (
             <TableRow key={item.nickname}>
               {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                <TableCell className={classes.cursor} onClick={() => window.location.href = `/profile/${item.nickname}`}>{getKeyValue(item, columnKey)}</TableCell>
               )}
             </TableRow>
           )}
