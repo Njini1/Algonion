@@ -6,13 +6,14 @@
 1. [개요](#개요)
 2. [주요 기능](#주요-기능)
 3. [개발 환경](#개발-환경)
-4. [기술 소개](#기술-소개)
-5. [서비스 화면](#서비스-화면)
-6. [팀원 소개](#팀원-소개)
+4. [프로젝트 파일 구조](#프로젝트-파일-구조)
+5. [기술 소개](#기술-소개)
+6. [서비스 화면](#서비스-화면)
+7. [팀원 소개](#팀원-소개)
 
 ## 개요
 
-> ## 모든 코드, 모두 모아
+> **모든 코드, 모두 모아**
 
 Algonion은 Algorithm과 Union의 합성어 입니다.</br>
 Algonion은 여러 온라인 저지 사이트에서 자신이 해결한 문제를 통합, 관리할 수 있는 서비스입니다.
@@ -25,50 +26,113 @@ Algonion은 여러 온라인 저지 사이트에서 자신이 해결한 문제�
     - 여러 온라인 저지 사이트에서 문제를 풀면 자동으로 Algonion 사이트에 저장됩니다.
     - 여러 온라인 저지 사이트에서 해결한 문제를 한 눈에 볼 수 있습니다.
 
-</br>
-
 - ### 기록 관리
     - 해결한 문제를 볼 수 있고, 메모를 남기거나 Notion에 저장할 수 있습니다.
     - 해결한 문제를 통합하여 그래프 등을 활용해 시각화하여 볼 수 있습니다.
     - 스트릭을 활용하여 푼 날짜를 확인할 수 있습니다.
 
 ## 개발 환경
-Management Tool 
-
-</br>
-
+Management Tool </br>
 <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
 <img src="https://img.shields.io/badge/Mattermost-0058CC?style=for-the-badge&logo=Mattermost&logoColor=white">
 <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white">
 
-Infra 
-
-</br>
-
+Infra </br>
 <img src="https://img.shields.io/badge/AmazonAWS-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=white">
 <img src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
 <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white"> 
 <img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white"/>
 
-Front 
-
-</br>
-
+Front </br>
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
 <img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white"/>
 <img src="https://img.shields.io/badge/scss-CC6699?style=for-the-badge&logo=sass&logoColor=white"/>
 <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white"/>
 
-Backend 
-
-</br>
-
+Backend </br>
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
 <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=for-the-badge&logo=Spring Security&logoColor=white">
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
 <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white">
 
+## 프로젝트 파일 구조
+### Front-end
+```
+frontend
+    ├─public
+    └─src
+        ├─api
+        ├─assets
+        │  ├─img
+        │  ├─logo
+        │  ├─social_login
+        │  │  └─kakao
+        │  └─tier
+        ├─components
+        │  ├─Board
+        │  ├─CodeLog
+        │  │  └─CodeLogList
+        │  ├─Community
+        │  ├─Main
+        │  ├─Search
+        │  ├─svg
+        │  └─User
+        ├─containers
+        │  ├─Footer
+        │  └─Header
+        ├─pages
+        │  ├─CodeLogDetailPage
+        │  ├─CodeLogPage
+        │  ├─CollaborativeEditorPage
+        │  ├─CommunityPage
+        │  ├─LoginSuccessPage
+        │  ├─MainPage
+        │  ├─RoomDetailPage
+        │  ├─SearchPage
+        │  └─UserPage
+        ├─routes
+        └─utils
+```
+
+### Back-end
+```
+backend
+    ├─domain
+    │  ├─problem
+    │  │  ├─controller
+    │  │  ├─exception
+    │  │  ├─model
+    │  │  │  └─entity
+    │  │  ├─repository
+    │  │  ├─request
+    │  │  ├─response
+    │  │  └─service
+    │  └─user
+    │      ├─controller
+    │      ├─dto
+    │      │  ├─request
+    │      │  └─response
+    │      ├─entity
+    │      ├─exception
+    │      ├─repository
+    │      └─service
+    └─global
+        ├─annotation
+        ├─config
+        ├─error
+        ├─jwt
+        ├─oauth
+        └─util
+```
+
 ## 서비스 화면
+### 메인 화면
+- Algonion의 메인 화면입니다
+- 로그인을 할 수 있고, 상단 바를 통해 메뉴를 이용할 수 있습니다
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/67f834b8-d78f-4fbb-9ca9-c4bc8fd9e368" width="500">
+
 ### 마이페이지
 - 해결한 문제의 점수에 따라 개인 레벨을 보여줍니다
 - 해결한 문제들을 보여줍니다
@@ -103,11 +167,18 @@ Backend
 
 <img src="https://github.com/ksh4030/public-wifi/assets/124498333/64a597cb-045b-4f9a-80b7-735d05815b37" width="500">
 
+### webRTC
+- webRTC를 통해 다른 유저와 마크다운 형태로 코드를 공유하거나 채팅을 이용할 수 있습니다
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/5af08882-04c0-4c1a-ad11-39ffacacb2c4" width="500">
+
 ## 설계 문서
 - [기능/요구사항 명세서](https://algonion.notion.site/77994c2f2c9347f3a6a52fde80166b80?v=7d72d856fd6d40aba986395d3c7eb4da)
 - [API](https://algonion.notion.site/API-6c8ab9b1e67e47f19295e7840431081a?pvs=74)
 - [컨벤션](https://algonion.notion.site/40b4b7d9c3004b2cb76c03247e3dfde7)
 - [기획서](https://algonion.notion.site/242a078ba4444c5b8f97a176a2660b51)
+- [ERD](https://algonion.notion.site/ERD-9af2aabb48144ad58d93ca0c13b31741?pvs=25)
 
 ## 팀원 소개
 - 엄예진 (팀장)
