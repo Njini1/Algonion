@@ -20,7 +20,7 @@ export default function Header() {
       async function getAxios(){
         let name = await getNickname()
         // setNickname(name)
-        console.log(name)
+        // console.log(name)
         if (name) {
           setMenuItems([
             "나의정보",
@@ -96,7 +96,7 @@ export default function Header() {
     }
     getAxios()
   }, []);
-  console.log(nickname, 'nickname')
+  // console.log(nickname, 'nickname')
 
 
 
