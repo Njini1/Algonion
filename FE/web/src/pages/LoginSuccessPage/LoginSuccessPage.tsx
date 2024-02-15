@@ -23,7 +23,7 @@ function LoginSuccessPage() {
     const fetchData = async () => {
       const results = await getNickname();
       setNickname(results.data);
-      console.log(nickname, "nickname");
+      localStorage.setItem("nickname", nickname);
     };
 
     fetchData();

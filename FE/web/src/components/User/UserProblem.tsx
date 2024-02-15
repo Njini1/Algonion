@@ -23,7 +23,7 @@ export default function Problem100({ problems }: {
       const index = i * 10 + j;
 
       if (index < problems.length) {
-        const { problemId, problemNum, problemTitle, problemLevel,algoScore, siteName, url } = problems[index];
+        const { problemId, problemNum, problemTitle, problemLevel, algoScore, siteName, url } = problems[index];
         
         const tierImg = getAsset(`tier/level_${algoScore}.png`)
 
