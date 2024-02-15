@@ -48,7 +48,7 @@ export default function CodeLogList() {
       }
     }
     getAxios();
-  }, []);
+  }, [nickname]);
 
   // logs 받아 오기, 페이지 숫자 받아 오기
   const [logs, setLogs] = useState<Log[]>([]);
