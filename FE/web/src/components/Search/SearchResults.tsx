@@ -1,70 +1,72 @@
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  getKeyValue,
+} from "@nextui-org/react";
 
-import classes from './SearchResults.module.scss'
+import classes from "./SearchResults.module.scss";
+import { useEffect, useState } from "react";
+import { axiosAuthApi } from "../../utils/instance";
 
-const rows = [
-  {
-    key: "1",
-    name: "Tony Reichert",
-    role: "CEO",
-    status: "Active",
-  },
-  {
-    key: "2",
-    name: "Zoey Lang",
-    role: "Technical Lead",
-    status: "Paused",
-  },
-  {
-    key: "3",
-    name: "Jane Fisher",
-    role: "Senior Developer",
-    status: "Active",
-  },
-  {
-    key: "4",
-    name: "William Howard",
-    role: "Community Manager",
-    status: "Vacation",
-  },
-];
+interface User {
+  tier: string;
+  nickname: string;
+  userScore: number;
+}
 
 const columns = [
   {
-    key: "name",
-    label: "NAME",
+    key: "nickname",
+    label: "닉네임",
   },
   {
-    key: "role",
-    label: "ROLE",
+    key: "tier",
+    label: "티어",
   },
   {
-    key: "status",
-    label: "STATUS",
+    key: "userScore",
+    label: "점수",
   },
 ];
 
 function SearchResults() {
   const params = new URLSearchParams(location.search);
-  let query = params.get("q");
-	return (
+  const query = params.get("q");
+  const [rows, setRows] = useState<User[]>([]);
+
+  useEffect(() => {
+    axiosAuthApi()
+      .get(`/v1/friendship/search?nickname=${query}`)
+      .then(({ data }) => {
+        setRows(data);
+        console.log(data);
+      });
+  }, [query]);
+  return (
     <div>
       <h2 className={classes.result}>"{query}"의 검색 결과입니다.</h2>
       <Table aria-label="Example table with dynamic content">
-      <TableHeader columns={columns}>
-        {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-      </TableHeader>
-      <TableBody items={rows}>
-        {(item) => (
-          <TableRow key={item.key}>
-            {(columnKey) => <TableCell>{getKeyValue(item, columnKey)}</TableCell>}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.key}>{column.label}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody items={rows} emptyContent={"일치하는 사용자가 없습니다."}>
+          {(item) => (
+            <TableRow key={item.nickname}>
+              {(columnKey) => (
+                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
     </div>
-  )
+  );
 }
-  
-export default SearchResults
 
+export default SearchResults;
