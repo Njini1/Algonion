@@ -84,7 +84,6 @@ export default function Header() {
         console.log("회원탈퇴 API 호출 오류:", err);
       });
     }
-    
 
   // nickname 받아오기
   const [nickname, setNickname] = useState('');
@@ -97,8 +96,6 @@ export default function Header() {
     getAxios()
   }, []);
   console.log(nickname, 'nickname')
-
-
 
   return (
     <NextUIProvider className={classes.header}>
