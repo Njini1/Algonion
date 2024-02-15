@@ -58,7 +58,15 @@ function CollaborativeEditorPage() {
     ],
   });
 
-  return <EditorContent className="editor" editor={editor} />;
+  return (
+    <>
+      <p className="pl-7">방 제목</p>
+      <h1 className="font-bold text-3xl pl-7">
+        {decodeURI(window.location.pathname.split("/")[2])}
+      </h1>
+      <EditorContent className="editor" editor={editor} />
+    </>
+  );
 }
 
 export default CollaborativeEditorPage;
