@@ -15,13 +15,6 @@ function LoginSuccessPage() {
         localStorage.setItem('access_token', accessToken)
         deleteCookie("access_token");
       }
-
-      // nickname 가져오기
-      const results = await getNickname();
-      console.log(results, 'result');
-      const nickname = results;
-
-      localStorage.setItem("nickname", nickname);
       
       // 작업이 완료되면 메인 페이지로 이동
       setTimeout(() => {
