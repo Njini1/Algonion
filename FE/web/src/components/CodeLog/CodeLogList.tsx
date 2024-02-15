@@ -1,20 +1,5 @@
-<<<<<<< HEAD
 import { useState, useEffect, useCallback, Key } from 'react';
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Chip, Tooltip, Pagination} from "@nextui-org/react";
-=======
-import { useState, useEffect, useCallback, Key } from "react";
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  Chip,
-  Tooltip,
-  Pagination,
-} from "@nextui-org/react";
->>>>>>> 631ca4bc960560f845227917335c0b5d5d326efc
 import { EditIcon } from "./CodeLogList/editIcon.tsx";
 import { DeleteIcon } from "./CodeLogList/deleteIcon.tsx";
 
