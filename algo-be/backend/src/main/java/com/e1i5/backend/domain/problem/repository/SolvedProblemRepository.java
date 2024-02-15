@@ -48,4 +48,7 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
             "JOIN problem p ON sp.problem_id = p.problem_id\n" +
             "WHERE sp.user_id = :userId", nativeQuery = true)
     Long countUserSolvedProblem(int userId);
+
+    boolean existsByUser_UserIdAndProblem_SiteNameAndProblem_ProblemNum(int userId, String siteName, String problemNum);
+
 }
