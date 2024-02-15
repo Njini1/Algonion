@@ -55,6 +55,7 @@ export default function Header() {
   // 로그아웃 처리
   const Logout = () => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("nickname");
     window.location.reload()
   }
   
@@ -70,6 +71,7 @@ export default function Header() {
       .then((res) => {
         if (res.status === 200) {
           localStorage.removeItem("access_token");
+          localStorage.removeItem("nickname");
           deleteCookie("refresh_token")
           console.log("회원탈퇴 성공!");
           window.location.href = "/";

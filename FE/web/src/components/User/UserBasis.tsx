@@ -13,7 +13,7 @@ export default function UserBasis() {
    // nickname 과 username(현재 로그인 되어 있는 유저) 불러 오기
    const nickname = decodeURIComponent(window.location.href.split('/')[4]);
 
-  // 유저 정보 가져오기 
+   // 유저 정보 가져오기 
   const [profile, setProfile] = useState<{
     tier: number;
     userId: number;
