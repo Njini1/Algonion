@@ -29,7 +29,6 @@ function startLoader() {
       stopLoader();
       // chrome.storage.local.clear()
       try {
-        console.log('try code parsing')
         const ProbCodedata = await parseCode();
         
         setTimeout(() => {

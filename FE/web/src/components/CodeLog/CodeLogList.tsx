@@ -98,7 +98,8 @@ export default function CodeLogList() {
           return (
             <div className="flex flex-col">
               <p className={`text-bold text-sm capitalize ${classes.center}`}>
-                {log.problemLevel}
+
+                {log.siteName === "Programmers" ? "Level " + log.problemLevel : log.problemLevel}
               </p>
               <p
                 className={`text-bold text-sm capitalize text-default-400 ${classes.center}`}

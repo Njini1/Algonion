@@ -9,7 +9,7 @@ import pImage from './profile_image.png';
 import { getIsFriend, toggleIsFriend } from '../../api/friendListAPI';
 import { getUserProfile } from '../../api/getUserDataAPI';
 import getAsset from '../../utils/getAsset';
-import { algoScoreLevel } from '../../utils/variable';
+import { TierLevel, scoreRanges } from '../../utils/variable';
 
 interface ProfileData {
     tier: number;
@@ -158,7 +158,25 @@ export default function UserBasis() {
   }, [profile?.tier]);
   
   // 티어 이름 바꾸기
-  const changeTier = algoScoreLevel[profile.tier]
+  const changeTier = TierLevel[profile.tier]
+
+  // 경험치 바 백분율
+  const scoreHandlers: Record<string, (score: number) => void> = {
+    "Bronze": (score) => {
+      console.log(`Bronze 티어: ${score}`);
+    },
+    "Silver": (score) => {
+      console.log(`Silver 티어: ${score}`);
+    },
+    // ...
+  };
+  
+  const currentTier = Object.keys(scoreRanges).find((tier) => {
+    return scoreRanges[tier][0] <= profile.score && profile.score <= scoreRanges[tier][1];
+  })
+
+  const handler = scoreHandlers[currentTier];
+  handler(profile.score)
 
   return (
     <div>
@@ -222,8 +240,8 @@ export default function UserBasis() {
             aria-label="Loading..."
             size='lg'
             color="secondary"
-            label={`${'경험치'} ${changeTier}`}
-            value={profile?.score}
+            label={`${'현재티어'} ${changeTier}`}
+            value={profile.score}
             showValueLabel={true}
             classNames={{
               track: "drop-shadow-md border border-default",

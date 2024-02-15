@@ -1,11 +1,20 @@
-export const tierLevel = {
-    0: 'Unrated',
+export const TierLevel: Record<number, string> = {
+   0: 'Unrated',
     1: 'Bronze',
     2: 'Silver',
     3: 'Gold',
     4: 'Platinum',
     5: 'Diamond',
     6: 'Master',
+  };
+  
+export const scoreRanges: Record<string, number[]> = {
+    "Bronze": [0, 99],
+    "Silver": [100, 799],
+    "Gold": [800, 3999],
+    "Platinum": [4000, 19999],
+    "Diamond": [20000, 99999],
+    "Master": [100000, Infinity],
   };
 
 export const algoScoreLevel: Record<number, string> = {
