@@ -4,20 +4,28 @@ import Main from "../../components/Main/Main"
 import MainDescription from "../../components/Main/MainDescription"
 import { getNickname } from "../../api/nicknameAPI";
 import { useEffect } from "react";
+import getAsset from "../../utils/getAsset";
+// import getAsset from "../../utils/getAsset";
 
 
 const items = [
     {
         "title": '코드·통계',
         "description": ['내 코드 관리', '난이도부터 분류까지'],
+        "image": getAsset(`/tier/level_Silver.png`),
+
     },
     {
         "title": '코드·기록',
         "description": ['내 코드 기록', '성장의 기쁨까지'],
+        "image": getAsset(`/tier/level_Silver.png`),
+
     },                                                                                                                                                                                         
     {
         "title": '커뮤니티',
         "description": ['모각코·모함코', '실시간 피드백까지'],
+        "image": getAsset(`/tier/level_Gold.png`),
+
     },
 ]
 
@@ -50,11 +58,17 @@ useEffect(() => {
           <div>
             <Description items={items[0]} />
           </div>
+
           <div className={classes.description_right}>
             <Description items={items[1]} />
           </div>
+          
           <div>
             <Description items={items[2]} />
+            {/* <img
+                src={'../../assets/tier/level_Bronze.png'}
+                className={classes.description_image}
+              /> */}
           </div>
         </div>
 

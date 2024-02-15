@@ -3,7 +3,11 @@ import { motion } from "framer-motion";
 import classes from "./Description.module.scss";
 
 // type items = { title: string, description: string[] };
-type items = { items: { title: string; description: string[] } };
+type items = { items: { 
+  title: string; 
+  description: string[];
+  image: string; 
+} };
 
 function Description(props: items) {
   return (
@@ -34,6 +38,7 @@ function Description(props: items) {
       >
         <p>{props.items.description[0]}</p>
         <p>{props.items.description[1]}</p>
+        
       </motion.div>
     </div>
   );
