@@ -3,7 +3,6 @@ import { isNull } from "./util";
 export async function saveObjectInLocalStorage(obj) {
     return new Promise((resolve, reject) => {
         // chrome.storage.local.clear() 
-        console.log('local save')
         try {
             chrome.storage.local.set(obj, function () {
                 resolve();

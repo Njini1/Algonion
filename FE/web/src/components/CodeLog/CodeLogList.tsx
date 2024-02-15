@@ -48,7 +48,7 @@ export default function CodeLogList() {
       }
     }
     getAxios();
-  }, []);
+  }, [nickname]);
 
   // logs 받아 오기, 페이지 숫자 받아 오기
   const [logs, setLogs] = useState<Log[]>([]);
@@ -98,7 +98,8 @@ export default function CodeLogList() {
           return (
             <div className="flex flex-col">
               <p className={`text-bold text-sm capitalize ${classes.center}`}>
-                {log.problemLevel}
+
+                {log.siteName === "Programmers" ? "Level " + log.problemLevel : log.problemLevel}
               </p>
               <p
                 className={`text-bold text-sm capitalize text-default-400 ${classes.center}`}

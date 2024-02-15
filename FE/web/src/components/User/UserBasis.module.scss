@@ -44,6 +44,15 @@
   margin: 1.5rem 0.5rem 0rem;
   font-size: 30px;
   font-weight: bold;
+  gap: 5px;
+
+  display: flex;
+  align-items: center;
+}
+
+.nickname img {
+  width: 30px; // nickname의 font-size와 동일
+  height: 30px; // nickname의 font-size와 동일
 }
 
 .progress {

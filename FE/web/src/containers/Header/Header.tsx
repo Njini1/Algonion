@@ -55,18 +55,18 @@ export default function Header() {
 
   // 닉네임 변경 페이지로 이동
   const NicknameSet = () => {
-    // 페이지 이동 함수
-    const navigate = () => {
-      window.location.href = "/user/nickname";
-    };
+    window.location.href = "/user/nickname";
+    // // 페이지 이동 함수
+    // const navigate = () => {
+    // };
 
-    // 확인 메시지
-    const confirm = window.confirm("닉네임 변경 페이지로 이동하시겠습니까?");
+    // // 확인 메시지
+    // const confirm = window.confirm("닉네임 변경 페이지로 이동하시겠습니까?");
 
-    // 확인 메시지에 따라 페이지 이동
-    if (confirm) {
-      navigate();
-    }
+    // // 확인 메시지에 따라 페이지 이동
+    // if (confirm) {
+    //   navigate();
+    // }
   };
 
   // 로그아웃 처리

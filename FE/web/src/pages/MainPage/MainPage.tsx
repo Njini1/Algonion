@@ -6,8 +6,6 @@ import { getNickname } from "../../api/nicknameAPI";
 import { useEffect } from "react";
 
 
-
-
 const items = [
     {
         "title": '코드·통계',
@@ -24,17 +22,18 @@ const items = [
 ]
 
 export default function MainPage() {
-  useEffect(() => {
-    const fetchData = async () => {
-      // nickname 가져오기      
-      const nickname = await getNickname();
-      localStorage.setItem("nickname", nickname);
+  
+useEffect(() => {
+  const fetchData = async () => {
+    // nickname 가져오기
+    const results = await getNickname();
+    const nickname = results;
+    localStorage.setItem("nickname", nickname);
+  };
 
-      fetchData();
-    };
+  fetchData();
+}, [])
 
-    fetchData();
-  }, [])
 
 	return (
     <div className={classes.page}>

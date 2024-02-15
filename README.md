@@ -6,14 +6,14 @@
 1. [개요](#개요)
 2. [주요 기능](#주요-기능)
 3. [개발 환경](#개발-환경)
-4. [기술 소개](#기술-소개)
-5. [설계 문서](#설계-문서)
-6. [팀원 소개](#팀원-소개)
-
+4. [프로젝트 파일 구조](#프로젝트-파일-구조)
+5. [기술 소개](#기술-소개)
+6. [서비스 화면](#서비스-화면)
+7. [팀원 소개](#팀원-소개)
 
 ## 개요
 
-> 모든 코드, 모두 모아
+> **모든 코드, 모두 모아**
 
 Algonion은 Algorithm과 Union의 합성어 입니다.</br>
 Algonion은 여러 온라인 저지 사이트에서 자신이 해결한 문제를 통합, 관리할 수 있는 서비스입니다.
@@ -35,7 +35,6 @@ Algonion은 여러 온라인 저지 사이트에서 자신이 해결한 문제�
 
 ## 개발 환경
 Management Tool 
-
 </br>
 
 <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white">
@@ -43,7 +42,6 @@ Management Tool
 <img src="https://img.shields.io/badge/Jira-0052CC?style=for-the-badge&logo=Jira&logoColor=white">
 
 Infra 
-
 </br>
 
 <img src="https://img.shields.io/badge/AmazonAWS-232F3E?style=for-the-badge&logo=AmazonAWS&logoColor=white">
@@ -52,7 +50,6 @@ Infra
 <img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white"/>
 
 Front 
-
 </br>
 
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
@@ -61,7 +58,6 @@ Front
 <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=Vite&logoColor=white"/>
 
 Backend 
-
 </br>
 
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
@@ -69,13 +65,130 @@ Backend
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
 <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=Swagger&logoColor=white">
 
-## 기술 소개
+## 프로젝트 파일 구조
+### Front-end
+```
+frontend
+    ├─public
+    └─src
+        ├─api
+        ├─assets
+        │  ├─img
+        │  ├─logo
+        │  ├─social_login
+        │  │  └─kakao
+        │  └─tier
+        ├─components
+        │  ├─Board
+        │  ├─CodeLog
+        │  │  └─CodeLogList
+        │  ├─Community
+        │  ├─Main
+        │  ├─Search
+        │  ├─svg
+        │  └─User
+        ├─containers
+        │  ├─Footer
+        │  └─Header
+        ├─pages
+        │  ├─CodeLogDetailPage
+        │  ├─CodeLogPage
+        │  ├─CollaborativeEditorPage
+        │  ├─CommunityPage
+        │  ├─LoginSuccessPage
+        │  ├─MainPage
+        │  ├─RoomDetailPage
+        │  ├─SearchPage
+        │  └─UserPage
+        ├─routes
+        └─utils
+```
+
+### Back-end
+```
+backend
+    ├─domain
+    │  ├─problem
+    │  │  ├─controller
+    │  │  ├─exception
+    │  │  ├─model
+    │  │  │  └─entity
+    │  │  ├─repository
+    │  │  ├─request
+    │  │  ├─response
+    │  │  └─service
+    │  └─user
+    │      ├─controller
+    │      ├─dto
+    │      │  ├─request
+    │      │  └─response
+    │      ├─entity
+    │      ├─exception
+    │      ├─repository
+    │      └─service
+    └─global
+        ├─annotation
+        ├─config
+        ├─error
+        ├─jwt
+        ├─oauth
+        └─util
+```
+
+## 서비스 화면
+### 메인 화면
+- Algonion의 메인 화면입니다
+- 로그인을 할 수 있고, 상단 바를 통해 메뉴를 이용할 수 있습니다
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/67f834b8-d78f-4fbb-9ca9-c4bc8fd9e368" width="500">
+
+### 마이페이지
+- 해결한 문제의 점수에 따라 개인 레벨을 보여줍니다
+- 해결한 문제들을 보여줍니다
+- 해결한 날짜를 기준으로 스트릭을 채울 수 있습니다 
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/9dbadeed-6ba7-4ad0-ad00-b6a215174e67" width="500">
+
+### 해결한 문제 리스트
+- 해결한 문제들을 리스트로 볼 수 있습니다 
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/80ea60c1-d457-4d95-8183-8ac485c5f519" width="500">
+
+
+### 메모
+- 해결한 문제를 선택해서 메모를 남길 수 있습니다
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/387c3465-1f4d-4972-98ac-dfa65daee2f4" width="500">
+
+### 노션에 저장
+- 해결한 문제를 선택해서 노션에 저장할 수 있습니다
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/f9c5406c-1d88-4668-9ff4-5a413042c4c4" width="500">
+
+### 유저 조회
+- 다른 유저를 조회할 수 있습니다
+- 조회한 유저의 해결한 문제나 스트릭 등을 확인할 수 있습니다
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/64a597cb-045b-4f9a-80b7-735d05815b37" width="500">
+
+### webRTC
+- webRTC를 통해 다른 유저와 마크다운 형태로 코드를 공유하거나 채팅을 이용할 수 있습니다
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/5af08882-04c0-4c1a-ad11-39ffacacb2c4" width="500">
 
 ## 설계 문서
 - [기능/요구사항 명세서](https://algonion.notion.site/77994c2f2c9347f3a6a52fde80166b80?v=7d72d856fd6d40aba986395d3c7eb4da)
 - [API](https://algonion.notion.site/API-6c8ab9b1e67e47f19295e7840431081a?pvs=74)
 - [컨벤션](https://algonion.notion.site/40b4b7d9c3004b2cb76c03247e3dfde7)
 - [기획서](https://algonion.notion.site/242a078ba4444c5b8f97a176a2660b51)
+- [ERD](https://algonion.notion.site/ERD-9af2aabb48144ad58d93ca0c13b31741?pvs=25)
 
 ## 팀원 소개
 - 엄예진 (팀장)

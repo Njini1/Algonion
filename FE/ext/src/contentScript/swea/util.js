@@ -39,12 +39,6 @@ export function makeSubmitButton(link) {
 }
 
 export function uploadData(data) {
-  // fetch(`${api}/api/v1/solved-problems/swea`, {
-  //     method: 'POST',
-  // })
-  // .then(res => {
-  //     console.log("[ALGO] 업로드 성공");
-  // });
 
   chrome.storage.sync.get(["access_token"], (res) => {
     axios.post(`${api}/v1/solved-problems/swea`, data, { headers: { "Authorization": `Bearer ${res.access_token}` } })
