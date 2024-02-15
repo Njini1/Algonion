@@ -233,7 +233,7 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     /**
-     * 누적 문제 푼 개수 합 그래프
+     * 누적 알고리즘 점수 그래프
      * @param nickname 원하는 사용자의 그래프
      * @return 날짜 배열과 누적 합 배열을 담은 스트링 반환
      */
@@ -254,16 +254,13 @@ public class DashboardServiceImpl implements DashboardService {
         // 각 날짜마다 누적된 알고리즘 점수를 계산하여 맵에 저장
         for (Object[] entry : firstSubmissionDatesAndAccumulatedAlgoScores) {
             String submissionDate = entry[0] != null ? entry[0].toString() : null;
-            if (submissionDate == null) {
-                continue;
-            }
-            int dailyAlgoScore = Integer.parseInt(entry[1].toString());
+            int dailyAlgoScore = entry[1] != null ? Integer.parseInt(entry[1].toString()) : 0;
 
             // 현재 날짜까지의 누적 점수를 계산하되, 0인 경우에도 이전 누적 점수를 사용
             accumulatedScore = Math.max(accumulatedScore + dailyAlgoScore, accumulatedScore);
 
             // 현재 날짜까지의 누적 점수를 맵에 저장
-            if (dateList.containsKey(submissionDate)) {
+            if (submissionDate != null && dateList.containsKey(submissionDate)) {
                 dateList.put(submissionDate, accumulatedScore);
             }
         }
@@ -274,6 +271,13 @@ public class DashboardServiceImpl implements DashboardService {
             data[index++] = entry.getValue();
         }
 
+        // 누적된 점수 배열의 중간에 있는 0을 앞에 있는 누적된 값으로 채움
+        for (int i = 1; i < totalDays; i++) {
+            if (data[i] == 0) {
+                data[i] = data[i - 1];
+            }
+        }
+
         // 날짜 배열 초기화
         String[] categories = dateList.keySet().toArray(new String[0]);
 
@@ -282,6 +286,7 @@ public class DashboardServiceImpl implements DashboardService {
                 .data(data)
                 .build();
     }
+
 
 
 
