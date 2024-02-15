@@ -7,15 +7,6 @@ export const TierLevel: Record<number, string> = {
     5: 'Diamond',
     6: 'Master',
   };
-  
-export const scoreRanges: Record<string, number[]> = {
-    "Bronze": [0, 99],
-    "Silver": [100, 799],
-    "Gold": [800, 3999],
-    "Platinum": [4000, 19999],
-    "Diamond": [20000, 99999],
-    "Master": [100000, Infinity],
-  };
 
 export const algoScoreLevel: Record<number, string> = {
     0: 'Unrated',
@@ -62,22 +53,23 @@ export const algoScoreLevel: Record<number, string> = {
       30: "Master",
     },
     Swea: {
-      D1: 'bronze',
-      D2: 'silver',
-      D3: 'gold',
-      D4: 'gold',
-      D5: 'platinum',
-      D6: 'platinum',
-      D7: 'diamond',
-      'D8': 'master',
+      Unrated: 'Unrated',
+      D1: 'Bronze',
+      D2: 'Silver',
+      D3: 'Gold',
+      D4: 'Gold',
+      D5: 'Platinum',
+      D6: 'Platinum',
+      D7: 'Diamond',
+      D8: 'Master',
     },
     Programmers: {
-      0: 'unrated',
-      1: 'bronze',
-      2: 'silver',
-      3: 'gold',
-      4: 'platinum',
-      5: 'diamond',
-      6: 'master',
+      0: 'Unrated',
+      1: 'Bronze',
+      2: 'Silver',
+      3: 'Gold',
+      4: 'Platinum',
+      5: 'Diamond',
+      6: 'Master',
     },
   };

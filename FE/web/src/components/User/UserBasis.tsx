@@ -9,7 +9,7 @@ import pImage from './profile_image.png';
 import { getIsFriend, toggleIsFriend } from '../../api/friendListAPI';
 import { getUserProfile } from '../../api/getUserDataAPI';
 import getAsset from '../../utils/getAsset';
-import { TierLevel, scoreRanges } from '../../utils/variable';
+import { TierLevel } from '../../utils/variable';
 
 interface ProfileData {
     tier: number;
@@ -158,25 +158,55 @@ export default function UserBasis() {
   }, [profile?.tier]);
   
   // 티어 이름 바꾸기
-  const changeTier = TierLevel[profile.tier]
+  const currentTier = TierLevel[profile.tier]
 
   // 경험치 바 백분율
-  const scoreHandlers: Record<string, (score: number) => void> = {
-    "Bronze": (score) => {
-      console.log(`Bronze 티어: ${score}`);
-    },
-    "Silver": (score) => {
-      console.log(`Silver 티어: ${score}`);
-    },
-    // ...
-  };
-  
-  const currentTier = Object.keys(scoreRanges).find((tier) => {
-    return scoreRanges[tier][0] <= profile.score && profile.score <= scoreRanges[tier][1];
-  })
+  const [expScore, setExpScore] = useState(0);
 
-  const handler = scoreHandlers[currentTier];
-  handler(profile.score)
+  useEffect(() => {
+    const newExpScore = calculateExpScore(profile.score);
+    setExpScore(newExpScore);
+  }, [profile.score]);
+
+  const calculateExpScore = (score: number): number => {
+    const currentLevel = profile.tier;
+    let levelMinScore = 0;
+    let levelMaxScore = 0;
+  
+    // 각 레벨별 범위 및 expScore 계산 로직 정의
+    switch (currentLevel) {
+      case 1: // Bronze
+        levelMinScore = 0;
+        levelMaxScore = 100;
+        break;
+      case 2: // Silver
+        levelMinScore = 100;
+        levelMaxScore = 800;
+        break;
+      case 3: // Gold
+        levelMinScore = 800;
+        levelMaxScore = 4000;
+        break;
+      case 4: // Platinum
+        levelMinScore = 4000;
+        levelMaxScore = 20000;
+        break;
+      case 5: // Diamond
+        levelMinScore = 20000;
+        levelMaxScore = 100000;
+        break;
+      case 6: // Master
+        levelMinScore = 100000;
+        levelMaxScore = 300000;
+        break;
+      default:
+        return 0;
+    }
+  
+    if (score < levelMinScore) return 0;
+    if (score >= levelMaxScore) return 100;
+    return Math.round((score - levelMinScore) * 100 / (levelMaxScore - levelMinScore));
+  };
 
   return (
     <div>
@@ -230,9 +260,9 @@ export default function UserBasis() {
 
         {/* 닉네임 */}
         <div className={classes.nickname}>
-          <img src={getAsset(`tier/level_${tierImg}.png`)} alt={tierImg}/>
+          <img src={getAsset(`tier/level_${currentTier}.png`)} alt={tierImg}/>
           {nickname}
-        </div>
+          </div>
 
         <div className={classes.progress}>
           {/* 경험치 바 */}
@@ -240,8 +270,8 @@ export default function UserBasis() {
             aria-label="Loading..."
             size='lg'
             color="secondary"
-            label={`${'현재티어'} ${changeTier}`}
-            value={profile.score}
+            label={`${currentTier} ${profile.score}`}
+            value={expScore}
             showValueLabel={true}
             classNames={{
               track: "drop-shadow-md border border-default",
