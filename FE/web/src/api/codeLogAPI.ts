@@ -15,8 +15,6 @@ export const getCodeLog = async (nickname: string) => {
 };
 
 
-
-
 export const getCodeLogDetail = async (solvedProblemPK: string) => {
    // const result = await axios.get(`${api}/v1/solved-problems/mysolved?solvednum=${solvedProblemPK}`);
    const results = await axiosAuthApi().get(`/v1/solved-problems/mysolved/detail?solvednum=${solvedProblemPK}`);
