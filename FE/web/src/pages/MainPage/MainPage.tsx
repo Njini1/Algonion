@@ -2,6 +2,11 @@ import Description from "../../components/Main/Description"
 import classes from "./MainPage.module.scss"
 import Main from "../../components/Main/Main"
 import MainDescription from "../../components/Main/MainDescription"
+import { getNickname } from "../../api/nicknameAPI";
+import { useEffect } from "react";
+
+
+
 
 const items = [
     {
@@ -19,6 +24,18 @@ const items = [
 ]
 
 export default function MainPage() {
+  useEffect(() => {
+    const fetchData = async () => {
+      // nickname 가져오기      
+      const nickname = await getNickname();
+      localStorage.setItem("nickname", nickname);
+
+      fetchData();
+    };
+
+    fetchData();
+  }, [])
+
 	return (
     <div className={classes.page}>
       <div className={classes.mainPage}>
