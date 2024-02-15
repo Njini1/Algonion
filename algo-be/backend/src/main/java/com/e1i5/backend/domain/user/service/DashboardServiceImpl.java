@@ -124,7 +124,6 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     private int getUserIdByNickname(String nickname) {
-        System.out.println(nickname);
         return userInfoRepo.findByNickname(nickname)
                 .orElseThrow(() -> new RuntimeException("User not found for nickname: " + nickname))
                 .getUserId();
