@@ -122,4 +122,9 @@ public class AuthServiceImpl implements AuthService{
         }
     }
 
+    @Override
+    public boolean checkUserExistence(String nickname) {
+        return authRepo.existsByNickname(nickname);
+    }
+
 }
