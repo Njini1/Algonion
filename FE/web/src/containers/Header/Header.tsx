@@ -56,6 +56,7 @@ export default function Header() {
       .then((res) => {
         if (res.status === 200) {
           localStorage.removeItem("access_token");
+          localStorage.removeItem("nickname");
           deleteCookie("refresh_token")
           console.log("회원탈퇴 성공!");
           
