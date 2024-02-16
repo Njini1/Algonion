@@ -183,6 +183,17 @@ backend
 
 <img src="https://github.com/ksh4030/public-wifi/assets/124498333/5af08882-04c0-4c1a-ad11-39ffacacb2c4" width="500">
 
+### 해결한 문제 가져오기
+- 해결한 문제를 크롬 확장프로그램을 통해 자동으로 저장합니다
+- 지금은 설문을 통해 가장 많은 사용자가 있는 백준, 프로그래머스, SWEA만 가능합니다
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/8d110e5e-72f9-438c-8336-0e8683c9aa55" width="500">
+
+</br>
+
+<img src="https://github.com/ksh4030/public-wifi/assets/124498333/37ea753b-7ac9-4112-878a-6e218c3b38b0" width="500">
+
 ## 설계 문서
 - [기능/요구사항 명세서](https://algonion.notion.site/77994c2f2c9347f3a6a52fde80166b80?v=7d72d856fd6d40aba986395d3c7eb4da)
 - [API](https://algonion.notion.site/API-6c8ab9b1e67e47f19295e7840431081a?pvs=74)
