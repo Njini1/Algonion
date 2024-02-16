@@ -6,7 +6,6 @@ import classes from "./Description.module.scss";
 type items = { items: { 
   title: string; 
   description: string[];
-  image: string; 
 } };
 
 function Description(props: items) {

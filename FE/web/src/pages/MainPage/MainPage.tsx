@@ -4,28 +4,22 @@ import Main from "../../components/Main/Main"
 import MainDescription from "../../components/Main/MainDescription"
 import { getNickname } from "../../api/nicknameAPI";
 import { useEffect } from "react";
-import getAsset from "../../utils/getAsset";
-// import getAsset from "../../utils/getAsset";
 
 
 const items = [
     {
         "title": '코드·통계',
         "description": ['내 코드 관리', '난이도부터 분류까지'],
-        "image": getAsset(`/tier/level_Silver.png`),
 
     },
     {
         "title": '코드·기록',
         "description": ['내 코드 기록', '성장의 기쁨까지'],
-        "image": getAsset(`/tier/level_Silver.png`),
 
     },                                                                                                                                                                                         
     {
         "title": '커뮤니티',
         "description": ['모각코·모함코', '실시간 피드백까지'],
-        "image": getAsset(`/tier/level_Gold.png`),
-
     },
 ]
 
