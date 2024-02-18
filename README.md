@@ -202,6 +202,7 @@ backend
 - [컨벤션](https://algonion.notion.site/40b4b7d9c3004b2cb76c03247e3dfde7)
 - [기획서](https://algonion.notion.site/242a078ba4444c5b8f97a176a2660b51)
 - [ERD](https://algonion.notion.site/ERD-9af2aabb48144ad58d93ca0c13b31741?pvs=25)
+- [Components](https://algonion.notion.site/Components-bfbf439605ac478983e5618f6eec47cc?pvs=4)
 
 ## 팀원 소개
 - 엄예진 (팀장)
