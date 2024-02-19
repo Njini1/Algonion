@@ -16,8 +16,6 @@ public class CookieUtil {
         cookie.setMaxAge(maxAge);
 
         response.addCookie(cookie);
-//        ResponseCookie cookie= ResponseCookie.from("refresh_token", refreshToken).maxAge(30 * 60 * 60).path("/").domain("localhost").httpOnly(false).secure(true).sameSite("None").build();
-//        response.addHeader("Set-Cookie", cookie.toString());
     }
 
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {

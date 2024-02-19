@@ -1,6 +1,5 @@
 package com.e1i5.backend.global.oauth;
 
-import com.e1i5.backend.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,15 +15,6 @@ public class OAuthAttributes {
     private String nameAttributesKey;
     private String nickname;
     private String email;
-//    private Platform platform;
-//    private User user;
-
-//    @Builder
-//    public OAuthAttributes(Map<String, Object> attributes, String nameAttributesKey, User user) {
-//        this.attributes = attributes;
-//        this.nameAttributesKey = nameAttributesKey;
-//        this.user = user;
-//    }
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributesKey, String nickname, String email) {
@@ -32,7 +22,6 @@ public class OAuthAttributes {
         this.nameAttributesKey = nameAttributesKey;
         this.nickname = nickname;
         this.email = email;
-//        this.platform = platform;
     }
 
 
@@ -47,16 +36,10 @@ public class OAuthAttributes {
     }
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
-//        User user = User.builder()
-//                .platform(Platform.GOOGLE)
-//                .nickname(String.valueOf(attributes.get("name")))
-//                .email(String.valueOf(attributes.get("email"))).build();
         return OAuthAttributes.builder()
                 .nickname(String.valueOf(attributes.get("name")))
                 .email(String.valueOf(attributes.get("email")))
-//                .platform(Platform.GOOGLE)
                 .attributes(attributes)
-//                .user(user)
                 .nameAttributesKey(userNameAttributeName)
                 .build();
     }
@@ -65,26 +48,11 @@ public class OAuthAttributes {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
 
-//        User user = User.builder()
-//                .platform(Platform.KAKAO)
-//                .nickname(String.valueOf(kakaoProfile.get("nickname")))
-//                .email(String.valueOf(kakaoAccount.get("email"))).build();
         return OAuthAttributes.builder()
                 .nickname(String.valueOf(kakaoProfile.get("nickname")))
                 .email(String.valueOf(kakaoAccount.get("email")))
-//                .platform(Platform.KAKAO)
                 .attributes(attributes)
-//                .user(user)
                 .nameAttributesKey(userNameAttributeName)
                 .build();
     }
-
-//    private static User buildUserFromAttributes(Map<String, Object> attributes) {
-//
-//        // User 객체를 생성하고 속성 설정
-//        return User.builder()
-//                .nickname(String.valueOf(attributes.get("name")))
-//                .email(String.valueOf(attributes.get("email")))
-//                .build();
-//    }
 }

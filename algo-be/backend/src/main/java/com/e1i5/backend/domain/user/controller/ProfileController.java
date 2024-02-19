@@ -20,14 +20,13 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/v1/profile")
 @Slf4j
 public class ProfileController {
 
     @Autowired
-    private ProfileService profileService; //TODO 이 방식 또는 RequiredArguments 방식으로 통일
+    private ProfileService profileService;
     @Autowired
     private DashboardService dashboardService;
     @Autowired

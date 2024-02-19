@@ -35,16 +35,14 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
         Map<String, Object> attributes = oAuth2User.getAttributes();
         OAuthAttributes oAuthAttributes = OAuthAttributes.of(registrationId, attributes);
 
-        String email = (String) oAuthAttributes.getEmail();
-        String name = (String) oAuthAttributes.getNickname();
-//        Platform platform = oAuthAttributes.getPlatform();
+        String email = oAuthAttributes.getEmail();
+        String name = oAuthAttributes.getNickname();
 
         System.out.println("email: " + email);
         System.out.println(name);
         String nickname = authService.generateRandomNickname();
 
         User user = authRepo.findByEmail(email) // email로 이미 회원가입 여부 확인
-//                .map(entity -> entity.updateNickname(name))
                 .orElse(User.builder()
                         .email(email)
                         .nickname(nickname)
@@ -57,7 +55,6 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
                 oAuthAttributes.getNameAttributesKey(),
                 email,
                 nickname
-//                platform
         );
     }
 }

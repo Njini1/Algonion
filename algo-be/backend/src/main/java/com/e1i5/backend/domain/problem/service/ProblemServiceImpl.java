@@ -11,6 +11,7 @@ import com.e1i5.backend.global.util.AlgoScoreUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.*;
@@ -32,6 +33,7 @@ public class ProblemServiceImpl implements ProblemService {
      * @param problemNum
      */
     @Override
+    @Transactional
     public void saveBojProblemAndClassification(int problemNum) {
         String code = "myCode";
 
@@ -101,12 +103,14 @@ public class ProblemServiceImpl implements ProblemService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getOldAlgoScore(String problemNum, String siteName) {
         Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problemNum, siteName);
         return existingProblem.map(Problem::getAlgoScore).orElse(0);
     }
 
     @Override
+    @Transactional
     public Problem saveOrUpdateProblem(Problem problem, String siteName, List<String> problemCategories) {
         Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName);
 

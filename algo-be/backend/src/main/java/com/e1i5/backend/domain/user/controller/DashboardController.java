@@ -1,7 +1,6 @@
 package com.e1i5.backend.domain.user.controller;
 
 import com.e1i5.backend.domain.user.dto.response.AccCountGraphResponse;
-import com.e1i5.backend.domain.user.dto.response.AlgoScoreCountResponse;
 import com.e1i5.backend.domain.user.dto.response.DashBoardProblemListResponse;
 import com.e1i5.backend.domain.user.service.DashboardService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-@CrossOrigin("*")
+
 @RestController
 @RequestMapping("/v1/dashboard")
 public class DashboardController {

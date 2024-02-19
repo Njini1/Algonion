@@ -10,6 +10,7 @@ import com.e1i5.backend.global.error.GlobalBaseException;
 import com.e1i5.backend.global.error.GlobalErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class FriendServiceImpl implements FriendService{
     private AuthRepository authRepo;
 
     @Override
+    @Transactional
     public int makeFriendship(int userId, String friendNickname) {
         User user = getUserByUserId(userId);
         User friend = getUserByNickname(friendNickname);
@@ -53,6 +55,7 @@ public class FriendServiceImpl implements FriendService{
      *         2: 두 사용자가 친구 아님
      */
     @Override
+    @Transactional(readOnly = true)
     public int checkFriendship(User user, User friend) {
         if (user.getUserId() == friend.getUserId()) return 0;
 
@@ -62,6 +65,7 @@ public class FriendServiceImpl implements FriendService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int checkFriendship(int userId, String friendNickname) {
         User user = getUserByUserId(userId);
         User friend = getUserByNickname(friendNickname);
@@ -74,23 +78,27 @@ public class FriendServiceImpl implements FriendService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FriendListInterfaceResponse> listFriendship(int userId) {
 
         return friendRepo.getFriendInfoByFriendId(userId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FriendListInterfaceResponse> searchNickname(String nickname) {
 
         return authRepo.findByNicknameContaining(nickname);
     }
 
-    private User getUserByNickname(String nickname) {
+    @Transactional(readOnly = true)
+    public User getUserByNickname(String nickname) {
         return authRepo.findByNickname(nickname)
                 .orElseThrow(() -> new GlobalBaseException(GlobalErrorCode.USER_NOT_FOUND));
     }
 
-    private User getUserByUserId(int userId) {
+    @Transactional(readOnly = true)
+    public User getUserByUserId(int userId) {
         return authRepo.findById(userId)
                 .orElseThrow(() -> new GlobalBaseException(GlobalErrorCode.USER_NOT_FOUND));
     }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -18,6 +19,7 @@ public class NotionServiceImpl implements NotionService {
     @Autowired
     SolvedProblemRepository solvedProblemRepo;
 
+    @Transactional(readOnly = true)
     @Override
     public ResponseEntity<String> saveNotion(String apiKey, String dbId, int solvedProblemId) {
 

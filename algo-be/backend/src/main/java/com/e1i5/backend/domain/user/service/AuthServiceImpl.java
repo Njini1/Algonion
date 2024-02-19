@@ -1,6 +1,6 @@
 package com.e1i5.backend.domain.user.service;
 
-import com.e1i5.backend.domain.user.dto.RandomNickname;
+import com.e1i5.backend.global.util.RandomNicknameUtil;
 import com.e1i5.backend.domain.user.dto.response.NicknameResponse;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.exception.DuplicateNickname;
@@ -34,12 +34,14 @@ public class AuthServiceImpl implements AuthService{
     private final static String TOKEN_PREFIX = "Bearer ";
 
     @Override
+    @Transactional(readOnly = true)
     public User findByEmail(String email) {
         return authRepo.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findById(int userId) {
             return authRepo.findById(userId).orElseThrow(()
                     -> new IllegalArgumentException("Unexpected user")); //통일 예정
@@ -65,6 +67,7 @@ public class AuthServiceImpl implements AuthService{
      * @return true 사용 가능한 닉네임, false 이미 존재하는 닉네임
      */
     @Override
+    @Transactional(readOnly = true)
     public boolean duplicateCheckNickname(String nickname) {
         return !authRepo.existsByNickname(nickname);
     }
@@ -78,16 +81,16 @@ public class AuthServiceImpl implements AuthService{
         Random random = new Random();
 
         while(true) {
-            String adjective = RandomNickname.ADJECTIVES[random.nextInt(RandomNickname.ADJECTIVES.length)];
-            String noun = RandomNickname.NOUNS[random.nextInt(RandomNickname.NOUNS.length)];
+            String adjective = RandomNicknameUtil.ADJECTIVES[random.nextInt(RandomNicknameUtil.ADJECTIVES.length)];
+            String noun = RandomNicknameUtil.NOUNS[random.nextInt(RandomNicknameUtil.NOUNS.length)];
             String newNickname = adjective + " " + noun;
 
             if (duplicateCheckNickname(newNickname)) return newNickname;
         }
     }
 
-    @Transactional
     @Override
+    @Transactional
     public String changeNickname(String nickname, int userId) {
 
         if (authRepo.existsByNickname(nickname)) { //이미 존재하는 닉네임이면
@@ -102,6 +105,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public NicknameResponse getLoginNickname(int userId) {
 
         return authRepo.findByUserId(userId).orElseThrow(()
@@ -109,6 +113,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<Void> withdrawUser(int userId) {
         User user = authRepo.findById(userId).orElseThrow(()
                 -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
@@ -123,6 +128,7 @@ public class AuthServiceImpl implements AuthService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean checkUserExistence(String nickname) {
         return authRepo.existsByNickname(nickname);
     }

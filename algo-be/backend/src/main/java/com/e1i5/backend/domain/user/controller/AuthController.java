@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/v1/user")
 @Slf4j

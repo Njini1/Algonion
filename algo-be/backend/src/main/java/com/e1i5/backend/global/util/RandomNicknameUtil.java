@@ -1,6 +1,6 @@
-package com.e1i5.backend.domain.user.dto;
+package com.e1i5.backend.global.util;
 
-public class RandomNickname {
+public class RandomNicknameUtil {
     public static final String[] ADJECTIVES = {
             "즐거운", "행복한", "신나는", "아름다운", "활기찬", "쾌활한", "싱그러운", "화려한", "따뜻한", "신선한",
             "기쁜", "자유로운", "밝은", "창의적인", "우아한", "자연스러운", "편안한", "건강한", "풍요로운", "흐린",

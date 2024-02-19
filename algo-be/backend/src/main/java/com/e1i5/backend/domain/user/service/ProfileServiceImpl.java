@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -39,6 +40,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final FriendService friendService;
 
     @Override
+    @Transactional
     public void saveUserProfile(int userId, MultipartFile profileImg) {
         //TODO File값이 null일 때 처리
         //TODO File 확장자도 검사
@@ -82,6 +84,7 @@ public class ProfileServiceImpl implements ProfileService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public Map<String, Long> getUserSevenStreak(int userId) {
         LocalDate endDate = LocalDate.now();
         LocalDate startDate = endDate.minusDays(6);
@@ -107,6 +110,7 @@ public class ProfileServiceImpl implements ProfileService {
      * @return 사용자 아이디, 티어, 점수, 프로필 이미지, 문제 푼 개수
      */
     @Override
+    @Transactional(readOnly = true)
     public UserInfoResponse getUserInfo(int userId, String friendNickname) {
 
         log.info("ProfileServiceImpl getUserInfo 진입 userId: {}, nickname: {}", userId, friendNickname);
@@ -133,6 +137,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProblemResponse> recommandProblem(int userId) {
 
         int[] unsolvedProblemsByUserId = problemRepo.findUnsolvedProblemsIdsByUserId(userId);
@@ -167,7 +172,8 @@ public class ProfileServiceImpl implements ProfileService {
         return recommandProblem;
     }
 
-    private int getUserIdByNickname(String nickname) {
+    @Transactional(readOnly = true)
+    public int getUserIdByNickname(String nickname) {
 
         return authRepo.findUserIdByNickname(nickname)
                 .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND))

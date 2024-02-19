@@ -158,6 +158,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param problem          문제 정보
      */
     @Override
+    @Transactional
     public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem, int oldAlgoScore) {
         User user = authRepo.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
@@ -173,8 +174,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param solvedProblemId  수정할 문제 인덱스
      * @param memo 수정할 문제 메모
      */
-    @Transactional
     @Override
+    @Transactional
     public SolvedProblemDetailResponse updateSolvedProblem(int userId, int solvedProblemId, String memo) {
 
         SolvedProblem solvedProblem = checkAuth(userId, solvedProblemId);
@@ -190,8 +191,8 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * 사용자가 문제 푼 데이터에서 visible 수정
      * @param solvedProblemId  수정할 문제 인덱스
      */
-    @Transactional
     @Override
+    @Transactional
     public SolvedProblemDetailResponse updateVisibility(int userId, int solvedProblemId) {
         //TODO 추후 상태코드로 변경, checkAuth 로직 추가
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
@@ -209,6 +210,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @return 사용자가 푼 문제 리스트
      */
     @Override
+    @Transactional(readOnly = true)
     public List<SolvedProblemListResponse> getSolvedProblemListByUser(String nickname, int pageNum) {
 
         Pageable pageable = PageRequest.of(pageNum, PAGE_SIZE);
@@ -253,6 +255,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @return 사용자가 푼 데이터와 문제 데이터
      */
     @Override
+    @Transactional(readOnly = true)
     public SolvedProblemDetailResponse getSolvedProblemDetail(int solvedProblemId) {
 
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
@@ -268,6 +271,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @return
      */
     @Override
+    @Transactional(readOnly = true)
     public int countUserSolvedProblem(String nickname) {
         return solvedProblemRepo.countVisibleSolvedProblemsByUserNickname(nickname);
     }
@@ -278,6 +282,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param solvedProblemId
      * @return
      */
+    @Transactional(readOnly = true)
     public SolvedProblem checkAuth(int userId, int solvedProblemId) {
         SolvedProblem solvedProblem = solvedProblemRepo.findById(solvedProblemId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected solvedProblem"));
@@ -292,11 +297,11 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param problemNum
      * @param siteName
      */
+    @Transactional(readOnly = true)
     public void updateTodayStreak(int userId, String problemNum, String siteName) {
         boolean existsSovledProblem = solvedProblemRepo.existsByUser_UserIdAndProblem_SiteNameAndProblem_ProblemNum(userId, siteName, problemNum);
 
         if (!existsSovledProblem) {
-//            LocalDate lastSolvedDate = authRepo.findLastSolvedDateByUserId(userId);
             User user = authRepo.findUserByUserId(userId)
                     .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
