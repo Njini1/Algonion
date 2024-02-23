@@ -2,6 +2,7 @@ package com.e1i5.backend.domain.problem.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class Problem {
     @Column(name = "url")
     private String url;
 
+//    @BatchSize(size = 20)
     @OneToMany(mappedBy = "problem")
     private List<AlgoGroup> algoGroup;
 
@@ -51,10 +53,9 @@ public class Problem {
         this.siteName = siteName;
     }
 
-    public Problem updateLevel(String level, int algoScore) { //TODO 레벨과 점수를 동시에 세팅하므로 메서드 이름을 updateLevelAndScore로 변경
+    public void updateLevelAndScore(String level, int algoScore) {
         this.problemLevel = level;
         this.algoScore = algoScore;
-        return this;
     }
 
 }

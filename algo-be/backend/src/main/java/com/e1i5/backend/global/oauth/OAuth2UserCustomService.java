@@ -24,10 +24,7 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User user = super.loadUser(userRequest); // ❶ 요청을 바탕으로 유저 정보를 담은 객체 반환
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        CustomOAuth2User customOAuth2User = saveOrUpdate(user, registrationId);
-        System.out.println("CustomService user: " + user.toString());
-        System.out.println("CustomService customOAuth2User: " + customOAuth2User.toString());
-        return customOAuth2User;
+        return saveOrUpdate(user, registrationId);
     }
 
     // ❷ 유저가 있으면 업데이트, 없으면 유저 생성

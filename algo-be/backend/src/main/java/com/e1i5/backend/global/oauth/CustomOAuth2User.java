@@ -17,7 +17,6 @@ public class CustomOAuth2User extends DefaultOAuth2User {
 
     private final String email;
     private final String nickname;
-//    private final Platform platform;
 
     public CustomOAuth2User(Collection<? extends GrantedAuthority> authorities,
                             Map<String, Object> attributes,
@@ -27,7 +26,6 @@ public class CustomOAuth2User extends DefaultOAuth2User {
         super(authorities, attributes, nameAttributeKey);
         this.email = email;
         this.nickname = nickname;
-//        this.platform = platform;
     }
 
     public String getEmail() {
@@ -38,8 +36,5 @@ public class CustomOAuth2User extends DefaultOAuth2User {
         return nickname;
     }
 
-//    public Platform getPlatform() {
-//        return platform;
-//    }
 }
 

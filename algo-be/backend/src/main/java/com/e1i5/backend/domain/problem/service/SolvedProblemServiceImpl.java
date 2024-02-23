@@ -54,7 +54,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * : solved T에서 이미 해당 제출 번호가 있는 지 확인 후(백준)
      * -> 없다면 solved T에 저장
      *
-     * @param solvedProblemReq 사용자가 푼 문제 데이터
+     * @param solvedProblemReq 사용자가 푼 문제 데이1
      * @param siteName         문제 푼 사이트
      */
     @Transactional

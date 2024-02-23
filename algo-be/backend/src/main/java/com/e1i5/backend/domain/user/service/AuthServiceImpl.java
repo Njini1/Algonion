@@ -44,7 +44,7 @@ public class AuthServiceImpl implements AuthService{
     @Transactional(readOnly = true)
     public User findById(int userId) {
             return authRepo.findById(userId).orElseThrow(()
-                    -> new IllegalArgumentException("Unexpected user")); //통일 예정
+                    -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
     }
 
     @Override
@@ -53,10 +53,9 @@ public class AuthServiceImpl implements AuthService{
         // refresh token 유효성 검사
         try {
             tokenProvider.getClaims(refreshToken);
-            // ExpiredJwtException 예외가 catch되지 않았을 때 AccessDeniedException
             return tokenProvider.createNewAccessToken(refreshToken);
         } catch (ExpiredJwtException e) {
-            System.out.println("refresh token 재발급 오류" + e.getMessage());
+            log.info("refresh token 재발급 오류: {}", e.getMessage());
             throw new UserNotFoundException(GlobalErrorCode.ACCESS_DENIED);
         }
     }
@@ -77,6 +76,7 @@ public class AuthServiceImpl implements AuthService{
      * @return 랜덤 닉네임
      */
     @Override
+    @Transactional(readOnly = true)
     public String generateRandomNickname() {
         Random random = new Random();
 

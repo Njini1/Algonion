@@ -3,6 +3,7 @@ package com.e1i5.backend.domain.user.repository;
 import com.e1i5.backend.domain.user.dto.response.FriendListInterfaceResponse;
 import com.e1i5.backend.domain.user.entity.Friend;
 import com.e1i5.backend.domain.user.entity.User;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

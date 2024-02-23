@@ -117,7 +117,7 @@ public class ProblemServiceImpl implements ProblemService {
         if (existingProblem.isPresent()) {
             // 문제가 이미 존재하면, 난이도와 algoScore 업데이트
             Problem updatedProblem = existingProblem.get();
-            updatedProblem.updateLevel(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));
+            updatedProblem.updateLevelAndScore(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));
             return problemRepo.save(updatedProblem);
         } else {
             // 분류값이 들어올 경우
@@ -135,7 +135,7 @@ public class ProblemServiceImpl implements ProblemService {
 
             // 문제가 존재하지 않으면, 새로운 문제 저장
             problem.updateSiteName(siteName);
-            problem.updateLevel(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));
+            problem.updateLevelAndScore(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));
             return problemRepo.save(problem);
         }
     }

@@ -21,7 +21,7 @@ import java.io.IOException;
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Value("${jwt.refresh-token-expiration-time}")
-    private long REFRESH_TOKEN_EXPIRATION; // 60초 * 60 * 24 * 7 -> 2주
+    private long REFRESH_TOKEN_EXPIRATION;
     @Value("${jwt.access-token-expiration-time}")
     private long ACCESS_TOKEN_EXPIRATION;
     public static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
