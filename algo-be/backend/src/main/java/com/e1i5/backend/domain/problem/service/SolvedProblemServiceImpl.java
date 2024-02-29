@@ -57,14 +57,15 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param solvedProblemReq 사용자가 푼 문제 데이1
      * @param siteName         문제 푼 사이트
      */
-    @Transactional
     @Override
+    @Transactional
     public void saveBOJSolvedProblemAndProblem(SolvedProblemRequest solvedProblemReq, String siteName, int userId) {
         int oldAlgoScore = problemService.getOldAlgoScore(solvedProblemReq.getProblemNum(), siteName);
 
         if (solvedProblemReq.getProblemLevel() == null) {
-            // 문제 정보를 업데이트하기 위해 getUpdatedSolvedProblemRequest 호출
-            SolvedProblemRequest updatedSolvedProblemReq = getUpdatedSolvedProblemRequest(Integer.parseInt(solvedProblemReq.getProblemNum()));
+            // 문제 정보를 업데이트하기 위해 solved api 호출
+            SolvedProblemRequest updatedSolvedProblemReq
+                    = getUpdatedSolvedProblemRequest(Integer.parseInt(solvedProblemReq.getProblemNum()));
 
             // 가져온 문제 정보를 기존의 solvedProblemReq에 복사하여 업데이트
             solvedProblemReq.updateProblemInfo(updatedSolvedProblemReq.getProblemTitle(),
@@ -72,17 +73,19 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
                     updatedSolvedProblemReq.getProblemCategory());
         }
 
-        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(), siteName, solvedProblemReq.getProblemCategory());
+        Problem problem = problemService.saveOrUpdateProblem(solvedProblemReq.toProblemEntity(),
+                siteName, solvedProblemReq.getProblemCategory());
 
         updateTodayStreak(userId, solvedProblemReq.getProblemNum(), siteName);
 
-        SolvedProblemRequest finalSolvedProblemReq = solvedProblemReq;
+//        SolvedProblemRequest finalSolvedProblemReq = solvedProblemReq;
         solvedProblemRepo.findBySubmissionId(solvedProblemReq.getSubmissionId())
-                .ifPresentOrElse( //TODO orElseGet으로?
+                .ifPresentOrElse(
                         solvedProblem -> {
-                            log.info("ProblemServiceImpl saveSolvedProblem already exist solvedProblem");
+                            log.info("already exist solvedProblem: {}"
+                                    , solvedProblem.getSolvedProblemId());
                         },
-                        () -> saveSolvedProblem(finalSolvedProblemReq, userId, problem, oldAlgoScore)
+                        () -> saveSolvedProblem(solvedProblemReq, userId, problem, oldAlgoScore)
                 );
 
     }
@@ -107,6 +110,7 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      */
     @Override
     public SolvedProblemRequest getUpdatedSolvedProblemRequest(int problemNum) {
+        // TODO 반환값 SolvedProblemRequest에서 response로 바꾸기
         String code = "myCode";
 
         // webClient 기본 설정
@@ -160,12 +164,16 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
     @Override
     @Transactional
     public void saveSolvedProblem(SolvedProblemRequest solvedProblemReq, int userId, Problem problem, int oldAlgoScore) {
+        log.info("saveSolvedProblem 진입 userId: {}", userId);
         User user = authRepo.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
         SolvedProblem solvedProblemEntity = solvedProblemReq.toSolvedProblemEntity();
         solvedProblemEntity.updateUserAndProblem(user, problem);
+
+        System.out.println("dashboardService updateUserScore");
         dashboardService.updateUserScore(userId, problem.getProblemId(), oldAlgoScore);
+        System.out.println("사용자가 푼 문제 저장");
         solvedProblemRepo.save(solvedProblemEntity);
     }
 
@@ -297,17 +305,16 @@ public class SolvedProblemServiceImpl implements SolvedProblemService {
      * @param problemNum
      * @param siteName
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public void updateTodayStreak(int userId, String problemNum, String siteName) {
-        boolean existsSovledProblem = solvedProblemRepo.existsByUser_UserIdAndProblem_SiteNameAndProblem_ProblemNum(userId, siteName, problemNum);
+        boolean existsSolvedProblem = solvedProblemRepo.existsByUser_UserIdAndProblem_SiteNameAndProblem_ProblemNum(userId, siteName, problemNum);
 
-        if (!existsSovledProblem) {
+        if (!existsSolvedProblem) {
             User user = authRepo.findUserByUserId(userId)
                     .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
             LocalDate today = LocalDate.now();
-            System.out.println("lastDate: " + user.getLastSolvedDate() + "today: " + LocalDate.now());
-            if (user.getLastSolvedDate() !=null && !user.getLastSolvedDate().equals(today)) {
+            if (user.getLastSolvedDate() != null && !user.getLastSolvedDate().equals(today)) {
                 user.updateStreakCountAndlastSolvedDate(user.getTodayStreakCount() + 1, today);
                 authRepo.save(user);
             }

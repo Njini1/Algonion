@@ -94,9 +94,9 @@ public class ProfileController {
 
     @Operation(summary = "문제 추천하기")
     @GetMapping("/recommand")
-    public ResponseEntity<?> recommandLevelProblem() {
-
-        List<ProblemResponse> problemResponses = profileService.recommandProblem(1);
+    public ResponseEntity<List<ProblemResponse>> recommandLevelProblem(Principal principal) {
+        int userId = Integer.parseInt(principal.getName());
+        List<ProblemResponse> problemResponses = profileService.recommandProblem(userId);
 
         return new ResponseEntity<>(problemResponses, HttpStatus.OK);
     }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,9 +36,9 @@ public class Problem {
     @Column(name = "url")
     private String url;
 
-//    @BatchSize(size = 20)
+    @BatchSize(size = 20)
     @OneToMany(mappedBy = "problem")
-    private List<AlgoGroup> algoGroup;
+    private List<AlgoGroup> algoGroup = new ArrayList<>();
 
     @Builder
     public Problem(String siteName, String problemNum, String problemTitle, String problemLevel, int algoScore, String url) {

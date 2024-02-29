@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -45,7 +46,7 @@ public class User{
     private LocalDate delDate;
 
     @OneToMany(mappedBy = "user")
-    private List<SolvedProblem> solvedProblems; // 사용자별 푼 문제수를 위함
+    private List<SolvedProblem> solvedProblems = new ArrayList<>(); // 사용자별 푼 문제수를 위함
 
     @Builder
     public User(int userId, String nickname, String email, LocalDate regDate, int tier, int userScore) {

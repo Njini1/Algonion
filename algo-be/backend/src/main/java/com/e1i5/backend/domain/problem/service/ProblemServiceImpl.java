@@ -109,6 +109,51 @@ public class ProblemServiceImpl implements ProblemService {
         return existingProblem.map(Problem::getAlgoScore).orElse(0);
     }
 
+    /**
+     * 백준 문제 저장
+     * @param problem
+     * @param siteName
+     * @param problemCategories
+     * @return
+     */
+    @Override
+    @Transactional
+    public Problem saveOrUpdateBojProblem(Problem problem, String siteName, List<String> problemCategories) {
+        Optional<Problem> existingProblem = problemRepo.findByProblemNumAndSiteName(problem.getProblemNum(), siteName);
+
+        if (existingProblem.isPresent()) {
+            // 문제가 이미 존재하면, 난이도와 algoScore 업데이트
+            Problem updatedProblem = existingProblem.get();
+            updatedProblem.updateLevelAndScore(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));
+            return problemRepo.save(updatedProblem);
+        } else {
+            // 분류값이 들어올 경우
+            if (problemCategories != null && !problemCategories.isEmpty()) {
+                List<AlgoGroup> algoGroupList = new ArrayList<>();
+
+                for (String algo : problemCategories) {
+                    algoGroupList.add(AlgoGroup.builder()
+                            .problem(problem)
+                            .classification(algo).build());
+                }
+
+                algoGroupRepo.saveAll(algoGroupList);
+            }
+
+            // 문제가 존재하지 않으면, 새로운 문제 저장
+            problem.updateSiteName(siteName);
+            problem.updateLevelAndScore(problem.getProblemLevel(), getAlgoScoreForSite(problem.getProblemLevel(), siteName));
+            return problemRepo.save(problem);
+        }
+    }
+
+    /**
+     * 백준 외 SWEA, 프로그래머스 문제 저장
+     * @param problem
+     * @param siteName
+     * @param problemCategories
+     * @return
+     */
     @Override
     @Transactional
     public Problem saveOrUpdateProblem(Problem problem, String siteName, List<String> problemCategories) {
@@ -139,6 +184,7 @@ public class ProblemServiceImpl implements ProblemService {
             return problemRepo.save(problem);
         }
     }
+
 
     private int getAlgoScoreForSite(String problemLevel, String siteName) {
         switch (siteName) {

@@ -46,9 +46,11 @@ public class SecurityConfig{
 //        http.addFilterBefore(new TokenAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), tokenProvider), BasicAuthenticationFilter.class);
 
         http.authorizeRequests()
-//                .requestMatchers("/**").permitAll();
-                .requestMatchers("/v1/user/token").permitAll()
-                .anyRequest().authenticated();
+                .requestMatchers("/**").permitAll();
+
+//                .requestMatchers("/v1/solved-problems/solved-ac").permitAll()
+//                .requestMatchers("/v1/us0r/token").permitAll()
+//                .anyRequest().authenticated();
 //                .requestMatchers("/**").authenticated();
 
         http.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint);

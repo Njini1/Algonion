@@ -115,14 +115,12 @@ public class ProfileServiceImpl implements ProfileService {
 
         log.info("ProfileServiceImpl getUserInfo 진입 userId: {}, nickname: {}", userId, friendNickname);
 
-//        int userId = getUserIdByNickname(nickname);
-//        UserInfoResponse user = authRepo.getUserInfoByUserId(nickname)
-//                .orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
-
         int findFriendUserId = getUserIdByNickname(friendNickname);
 
-        User loginUser = authRepo.findById(userId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
-        User friend = authRepo.findById(findFriendUserId).orElseThrow(() -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+        User loginUser = authRepo.findById(userId).orElseThrow(()
+                -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
+        User friend = authRepo.findById(findFriendUserId).orElseThrow(()
+                -> new UserNotFoundException(GlobalErrorCode.USER_NOT_FOUND));
 
         Long problemCount = solvedProblemRepo.countUserSolvedProblem(findFriendUserId);
         int checkFriendship = friendService.checkFriendship(loginUser, friend);

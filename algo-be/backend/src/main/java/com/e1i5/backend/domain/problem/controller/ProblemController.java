@@ -34,6 +34,7 @@ public class ProblemController {
     public ResponseEntity<Void> saveBojProblem(
             @RequestBody SolvedProblemRequest problem, Principal principal){
         int userId = Integer.parseInt(principal.getName());
+//        int userId = 1;
 
         log.info("ProblemController 백준 SolvedProblemRequest problem: {}", problem.toString());
 
@@ -146,10 +147,9 @@ public class ProblemController {
      * solved.ac에서 데이터 받아와서 분류하고 저장하는 메서드
      */
     @Operation(summary = "solved.ac에서 데이터 받아와서 분류하고 저장하는 메서드")
-    // TODO solved.ac test
     @GetMapping("/solved-ac")
-    public void saveSolvedAcApiProblem() {
-        for (int i = 1; i <= 30; i++) {
+    public void saveSolvedAcApiProblem(@RequestParam("page") int page) {
+        for (int i = page; i <= 30 * page; i++) {
             problemService.saveBojProblemAndClassification(i);
         }
     }

@@ -15,9 +15,13 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
 
     Optional<SolvedProblem> findBySubmissionId(String submissionId);
 
-    @Query("SELECT sp FROM SolvedProblem sp join fetch sp.problem where sp.visible = :visible " +
+    @Query("SELECT sp " +
+            "FROM SolvedProblem sp " +
+            "JOIN FETCH sp.problem " +
+            "WHERE sp.visible = :visible " +
             "AND sp.user.nickname = :nickname")
     Page<SolvedProblem> findAllByUser_NicknameAndVisible(String nickname, boolean visible, Pageable pageable);
+
     boolean existsByUser_UserIdAndProblem_ProblemId(int userId, int problemId);
 
     @Query("SELECT minTime AS submissionTime, COUNT(*) AS count " +
@@ -44,11 +48,9 @@ public interface SolvedProblemRepository extends JpaRepository<SolvedProblem, In
             "WHERE sp.problem.problemId = :problemId")
     List<Integer> findDistinctUsersByProblem_ProblemId(@Param("problemId") int problemId);
 
-
-    @Query(value = "SELECT COUNT(DISTINCT p.site_name, p.num) " +
-            "FROM solved_problem sp" +
-            "JOIN problem p ON sp.problem_id = p.problem_id" +
-            "WHERE sp.user_id = :userId", nativeQuery = true)
+    @Query("SELECT COUNT(DISTINCT sp.problem.problemId) " +
+            "FROM SolvedProblem sp " +
+            "WHERE sp.user.userId = :userId")
     Long countUserSolvedProblem(int userId);
 
     boolean existsByUser_UserIdAndProblem_SiteNameAndProblem_ProblemNum(int userId, String siteName, String problemNum);

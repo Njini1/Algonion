@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ProblemService {
     int getOldAlgoScore(String problemNum, String siteName);
-
+    Problem saveOrUpdateBojProblem(Problem problem, String siteName, List<String> problemCategories);
     Problem saveOrUpdateProblem(Problem problem, String siteName, List<String> problemCategories);
     void saveBojProblemAndClassification(int problemNum);
 
