@@ -1,7 +1,7 @@
-package com.e1i5.backend.domain.problem.request;
+package com.e1i5.backend.domain.problem.dto.request;
 
-import com.e1i5.backend.domain.problem.model.entity.Problem;
-import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
+import com.e1i5.backend.domain.problem.entity.Problem;
+import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import lombok.*;
 
 import java.time.LocalDate;

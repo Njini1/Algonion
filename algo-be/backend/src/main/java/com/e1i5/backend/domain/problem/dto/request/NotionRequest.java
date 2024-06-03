@@ -1,4 +1,4 @@
-package com.e1i5.backend.domain.problem.request;
+package com.e1i5.backend.domain.problem.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Builder;

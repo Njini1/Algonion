@@ -1,6 +1,6 @@
-package com.e1i5.backend.domain.problem.response;
+package com.e1i5.backend.domain.problem.dto.response;
 
-import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
+import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import lombok.*;
 
 import java.util.List;

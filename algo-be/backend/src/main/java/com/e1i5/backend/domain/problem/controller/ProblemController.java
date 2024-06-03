@@ -1,10 +1,10 @@
 package com.e1i5.backend.domain.problem.controller;
 
-import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
-import com.e1i5.backend.domain.problem.request.MemoRequest;
-import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
-import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
-import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
+import com.e1i5.backend.domain.problem.entity.ProblemSite;
+import com.e1i5.backend.domain.problem.dto.request.MemoRequest;
+import com.e1i5.backend.domain.problem.dto.request.SolvedProblemRequest;
+import com.e1i5.backend.domain.problem.dto.response.SolvedProblemDetailResponse;
+import com.e1i5.backend.domain.problem.dto.response.SolvedProblemListResponse;
 import com.e1i5.backend.domain.problem.service.ProblemService;
 import com.e1i5.backend.domain.problem.service.SolvedProblemService;
 import io.swagger.v3.oas.annotations.Operation;

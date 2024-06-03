@@ -1,6 +1,6 @@
 package com.e1i5.backend.domain.problem.repository;
 
-import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
+import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;

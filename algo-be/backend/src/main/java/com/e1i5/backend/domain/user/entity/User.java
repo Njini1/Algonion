@@ -1,6 +1,6 @@
 package com.e1i5.backend.domain.user.entity;
 
-import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
+import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import jakarta.persistence.*;
 import lombok.*;
 

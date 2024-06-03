@@ -1,14 +1,14 @@
 package com.e1i5.backend.domain.problem.service;
 
 import com.e1i5.backend.domain.problem.exception.SolvedProblemNotFoundException;
-import com.e1i5.backend.domain.problem.model.entity.AlgoGroup;
-import com.e1i5.backend.domain.problem.model.entity.Problem;
-import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
+import com.e1i5.backend.domain.problem.entity.AlgoGroup;
+import com.e1i5.backend.domain.problem.entity.Problem;
+import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
-import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
-import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
-import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
+import com.e1i5.backend.domain.problem.dto.request.SolvedProblemRequest;
+import com.e1i5.backend.domain.problem.dto.response.SolvedProblemDetailResponse;
+import com.e1i5.backend.domain.problem.dto.response.SolvedProblemListResponse;
 import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.exception.UserNotFoundException;
 import com.e1i5.backend.domain.user.repository.AuthRepository;

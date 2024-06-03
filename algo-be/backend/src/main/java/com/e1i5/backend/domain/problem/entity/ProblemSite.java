@@ -1,4 +1,4 @@
-package com.e1i5.backend.domain.problem.model.entity;
+package com.e1i5.backend.domain.problem.entity;
 
 public enum ProblemSite {
     PROGRAMMERS("Programmers"), BAEKJOON("Baekjoon"), SWEA("Swea");

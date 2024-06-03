@@ -1,6 +1,6 @@
 package com.e1i5.backend.domain.problem.controller;
 
-import com.e1i5.backend.domain.problem.request.NotionRequest;
+import com.e1i5.backend.domain.problem.dto.request.NotionRequest;
 import com.e1i5.backend.domain.problem.service.NotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

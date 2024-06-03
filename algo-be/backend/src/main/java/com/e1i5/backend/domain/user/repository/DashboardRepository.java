@@ -1,6 +1,6 @@
 package com.e1i5.backend.domain.user.repository;
 
-import com.e1i5.backend.domain.problem.model.entity.Problem;
+import com.e1i5.backend.domain.problem.entity.Problem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

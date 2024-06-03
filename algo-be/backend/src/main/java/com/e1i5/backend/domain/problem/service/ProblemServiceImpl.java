@@ -1,8 +1,8 @@
 package com.e1i5.backend.domain.problem.service;
 
-import com.e1i5.backend.domain.problem.model.entity.AlgoGroup;
-import com.e1i5.backend.domain.problem.model.entity.Problem;
-import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
+import com.e1i5.backend.domain.problem.entity.AlgoGroup;
+import com.e1i5.backend.domain.problem.entity.Problem;
+import com.e1i5.backend.domain.problem.entity.ProblemSite;
 import com.e1i5.backend.domain.problem.repository.AlgoGroupRepository;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 //import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;

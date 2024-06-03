@@ -1,14 +1,12 @@
 package com.e1i5.backend.domain.user.service;
 
-import com.e1i5.backend.domain.problem.model.entity.Problem;
+import com.e1i5.backend.domain.problem.entity.Problem;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
 import com.e1i5.backend.domain.user.dto.response.AccCountGraphResponse;
-import com.e1i5.backend.domain.problem.service.SolvedProblemService;
 import com.e1i5.backend.domain.user.dto.response.AlgoScoreCountResponse;
 import com.e1i5.backend.domain.user.dto.response.DashBoardProblemListResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
-import com.e1i5.backend.domain.user.entity.User;
 import com.e1i5.backend.domain.user.repository.DashboardRepository;
 import com.e1i5.backend.domain.user.repository.UserInfoRepository;
 import com.e1i5.backend.global.util.TierUtil;

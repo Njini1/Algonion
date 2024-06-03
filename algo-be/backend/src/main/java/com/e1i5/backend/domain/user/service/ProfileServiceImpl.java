@@ -1,10 +1,9 @@
 package com.e1i5.backend.domain.user.service;
 
-import com.e1i5.backend.domain.problem.model.entity.Problem;
 import com.e1i5.backend.domain.problem.repository.ProblemRepository;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
-import com.e1i5.backend.domain.problem.response.ProblemInterfaceResponse;
-import com.e1i5.backend.domain.problem.response.ProblemResponse;
+import com.e1i5.backend.domain.problem.dto.response.ProblemInterfaceResponse;
+import com.e1i5.backend.domain.problem.dto.response.ProblemResponse;
 import com.e1i5.backend.domain.user.dto.response.StreakResponseInterface;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
 import com.e1i5.backend.domain.user.entity.ProfileFileInfo;

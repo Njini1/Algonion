@@ -1,9 +1,9 @@
 package com.e1i5.backend.domain.problem.service;
 
-import com.e1i5.backend.domain.problem.model.entity.ProblemSite;
-import com.e1i5.backend.domain.problem.model.entity.SolvedProblem;
+import com.e1i5.backend.domain.problem.entity.ProblemSite;
+import com.e1i5.backend.domain.problem.entity.SolvedProblem;
 import com.e1i5.backend.domain.problem.repository.SolvedProblemRepository;
-import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
+import com.e1i5.backend.domain.problem.dto.response.SolvedProblemDetailResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;

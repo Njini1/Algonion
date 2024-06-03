@@ -1,9 +1,9 @@
 package com.e1i5.backend.domain.problem.service;
 
-import com.e1i5.backend.domain.problem.model.entity.Problem;
-import com.e1i5.backend.domain.problem.request.SolvedProblemRequest;
-import com.e1i5.backend.domain.problem.response.SolvedProblemDetailResponse;
-import com.e1i5.backend.domain.problem.response.SolvedProblemListResponse;
+import com.e1i5.backend.domain.problem.entity.Problem;
+import com.e1i5.backend.domain.problem.dto.request.SolvedProblemRequest;
+import com.e1i5.backend.domain.problem.dto.response.SolvedProblemDetailResponse;
+import com.e1i5.backend.domain.problem.dto.response.SolvedProblemListResponse;
 
 import java.util.List;
 

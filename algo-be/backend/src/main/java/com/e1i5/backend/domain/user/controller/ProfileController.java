@@ -1,7 +1,7 @@
 package com.e1i5.backend.domain.user.controller;
 
 
-import com.e1i5.backend.domain.problem.response.ProblemResponse;
+import com.e1i5.backend.domain.problem.dto.response.ProblemResponse;
 import com.e1i5.backend.domain.user.dto.response.ExtUserInfoResponse;
 import com.e1i5.backend.domain.user.dto.response.UserInfoResponse;
 import com.e1i5.backend.domain.user.entity.User;
